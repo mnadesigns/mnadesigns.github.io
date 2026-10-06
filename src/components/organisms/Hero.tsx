@@ -1,6 +1,5 @@
 import { hero, site } from "@/data/site";
 import { BtnSec } from "@/components/atoms/Buttons";
-import { HeroGrid } from "@/components/organisms/HeroGrid";
 
 // Splits text into per-letter spans (index drives the stagger). Words matching `accent` are red.
 function Letters({ text, accent, start }: { text: string; accent?: string; start: number }) {
@@ -32,7 +31,6 @@ export function Hero() {
   const ghost = "PLACEHOLDER · YOUR NAME · PORTFOLIO · ";
   return (
     <header className="hero shell" id="hero">
-      <HeroGrid />
       <div className="hero-band">
         <div className="hero-id">
           <b>{site.name}</b>
