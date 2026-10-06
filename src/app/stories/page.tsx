@@ -1,0 +1,75 @@
+import Link from "next/link";
+import { storiesIndex as s } from "@/data/pages";
+import { Doors } from "@/components/organisms/Doors";
+import { Reveal } from "@/components/atoms/Reveal";
+
+export const metadata = { title: "Stories — Your Name" };
+
+export default function Stories() {
+  return (
+    <main>
+      <header className="sti-hero shell">
+        <Reveal className="sti-hero-in">
+          <div className="sti-kicker"><span className="sti-kicker-rule" />Stories<span className="sti-kicker-rule" /></div>
+          <h1 className="sti-title">The <em>work.</em></h1>
+          <p className="sti-lede">{s.lede}</p>
+          <div className="sti-stats">
+            {s.stats.map((x) => (
+              <div className="stat" key={x.l}><div className="stat-v">{x.v}</div><div className="stat-l">{x.l}</div></div>
+            ))}
+          </div>
+        </Reveal>
+      </header>
+
+      <section className="sti-feats shell">
+        {s.features.map((f) => (
+          <Reveal key={f.slug}>
+            <Link href={`/stories/${f.slug}/`} className="sti-feat">
+              <div>
+                <div className="sti-feat-eyebrow">{f.eyebrow}</div>
+                <h2 className="sti-feat-name">{f.name}</h2>
+                <p className="sti-feat-sub">{f.sub}</p>
+                <div className="sti-feat-metrics">
+                  {f.metrics.map((m) => <span key={m.l}><strong>{m.v}</strong>{m.l}</span>)}
+                </div>
+                <span className="btn-circle"><span className="big"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12L12 4M5 4h7v7" /></svg></span></span>
+              </div>
+              <div className="sti-feat-visual">
+                <div className="sti-logo-panel">
+                  <div className="sti-logo-box">Logo</div>
+                  <div className="sti-logo-rule" />
+                  <div className="sti-logo-cap">{f.cap}</div>
+                </div>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </section>
+
+      <section className="sti-rest shell">
+        <Reveal>
+          <div className="sec-intro">
+            <div>
+              <h2 className="h2">And <em>more.</em></h2>
+              <p className="sec-sub">{s.moreSub}</p>
+            </div>
+          </div>
+          <div className="sti-index">
+            {s.more.map((m) => (
+              <Link key={m.slug} href={`/stories/${m.slug}/`} className="sti-row">
+                <div className="sti-row-meta">
+                  <span className="sti-row-name">{m.name}</span>
+                  <span className="sti-row-stat"><b>{m.v}</b><i>{m.l}</i></span>
+                  <span className="sti-row-line">{m.line}</span>
+                </div>
+                <div className="sti-row-logo"><div className="sti-logo-box">Logo</div></div>
+              </Link>
+            ))}
+          </div>
+          <p className="sti-more" dangerouslySetInnerHTML={{ __html: s.footer }} />
+        </Reveal>
+      </section>
+      <Doors />
+    </main>
+  );
+}
