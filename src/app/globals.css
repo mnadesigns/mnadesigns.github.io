@@ -4,6 +4,15 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Tanker by Indian Type Foundry (ITF Free Font License): self-hosted, unmodified. */
+@font-face {
+  font-family: "Tanker";
+  src: url("/fonts/Tanker-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -137,7 +146,7 @@
   --emerald: #0e9f6e;
   --emerald-ink: #0a7b55;
 
-  --display: var(--font-display), "Anton", sans-serif;
+  --display: "Tanker", Impact, "Arial Narrow", sans-serif;
   --sans: var(--font-sans-ui), "Inter", sans-serif;
   --serif: var(--font-serif-body), "Literata", serif;
 
