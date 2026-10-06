@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { hero, site } from "@/data/site";
 import { BtnSec } from "@/components/atoms/Buttons";
 
@@ -28,15 +29,18 @@ function Letters({ text, accent, start }: { text: string; accent?: string; start
 }
 
 export function Hero() {
-  const ghost = "PLACEHOLDER · YOUR NAME · PORTFOLIO · ";
+  const ghost = "SREDIO · QUODARCA · PEERS · APPLIED ELECTRONICS · ";
   return (
     <header className="hero shell" id="hero">
       <div className="hero-band">
         <div className="hero-id">
+          <Image src="/images/dp.webp" alt={site.name} width={96} height={96} className="hero-dp" priority />
           <b>{site.name}</b>
           <span>{site.role}</span>
         </div>
-        <BtnSec href="/consulting/">{hero.cta}</BtnSec>
+        <div className="hero-actions">
+          <BtnSec href={`mailto:${site.email}`}>{hero.cta}</BtnSec>
+        </div>
       </div>
       <h1 className="hero-claim" id="heroClaim">
         <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>

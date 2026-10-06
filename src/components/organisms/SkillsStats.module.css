@@ -1,0 +1,53 @@
+/* Cards ~30px radius, ~10px gap; circle 366px #1d1f26; chips 44px tall, 28px radius, in the brand colour or white.
+   Fonts follow the rest of the site: Inter for chips and labels, Tanker (display) for the numbers via the global .stat styles.
+   Responsive: the chips scale with the circle through --k (set from the circle's width in ChipsCircle). */
+.band { background: transparent; padding: 16px var(--gutter, 48px) var(--sp-sec-bot, 120px); }
+.grid { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 0.94fr 1.06fr; gap: 10px; }
+
+.cardLeft {
+  position: relative; min-height: 460px; border-radius: 30px; overflow: hidden; background: #fff; padding: 20px;
+  background-image: radial-gradient(rgba(11, 11, 10, 0.16) 1px, transparent 1.3px); background-size: 14px 14px;
+  box-shadow: inset 0 0 0 1px rgba(11, 11, 10, 0.12); /* keeps the white card visible on the white page */
+  display: flex; align-items: center; justify-content: center;
+}
+.circle {
+  --k: 1; position: relative; width: 366px; max-width: 100%; aspect-ratio: 1; border-radius: 50%;
+  background: #1d1f26; overflow: hidden; touch-action: none; user-select: none; cursor: grab; flex: 0 0 auto;
+}
+.circle:active { cursor: grabbing; }
+.chip {
+  position: absolute; left: 0; top: 0; display: inline-flex; align-items: center;
+  height: calc(44px * var(--k)); padding: 0 calc(24px * var(--k)); border-radius: calc(28px * var(--k));
+  font-family: var(--sans); font-size: calc(15px * var(--k)); font-weight: 500; line-height: 1; white-space: nowrap;
+  will-change: transform; visibility: hidden; /* revealed when the drop starts */
+}
+.brandChip { background: var(--brand); color: #fff; }
+.white { background: #fff; color: #000; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.4); }
+
+.cardRight {
+  min-height: 460px; border-radius: 30px; background: var(--ink); color: #fff; padding: 40px;
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto; align-content: space-between; gap: 40px 24px;
+}
+.title {
+  grid-column: 1 / -1; margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase;
+  font-size: clamp(30px, 3.4vw, 48px); line-height: 1; color: #fff;
+}
+/* the shared stat styles restyled for the black card: white heading, brand-coloured numbers, light labels, no rule above each number */
+.cardRight :global(.stat) { border-top: 0; padding-top: 0; min-width: 0; }
+.cardRight :global(.stat-v) { color: var(--brand); overflow-wrap: anywhere; }
+.cardRight :global(.stat-v.counting) { -webkit-text-stroke-color: var(--brand); }
+.cardRight :global(.stat-l) { color: rgba(255, 255, 255, 0.85); }
+
+/* tablet and phone: the cards stack */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .cardLeft { min-height: 0; padding: 24px 20px; }
+  .cardRight { min-height: 0; padding: 28px; gap: 32px 16px; }
+}
+/* small phones: slightly smaller numbers and tighter padding so four-character values never overflow */
+@media (max-width: 480px) {
+  .cardLeft { padding: 20px 14px; border-radius: 24px; }
+  .cardRight { padding: 22px 18px; gap: 28px 14px; border-radius: 24px; }
+  .cardRight :global(.stat-v) { font-size: clamp(44px, 14vw, 64px); }
+  .cardRight :global(.stat-l) { font-size: 14px; }
+}

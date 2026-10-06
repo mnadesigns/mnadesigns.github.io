@@ -4,19 +4,19 @@
 .pg-hero > div { width: 100%; }
 .pg-kicker { display: flex; align-items: center; gap: 14px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-50); margin-bottom: 24px; }
 .pg-title { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(40px, 5vw, 64px); line-height: 0.92; color: var(--ink); max-width: 16ch; margin-bottom: 28px; }
-.pg-title em { font-style: normal; color: var(--red); }
+.pg-title em { font-style: normal; color: var(--brand); }
 .pg-lead { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.55; color: var(--ink-65); max-width: 52ch; }
 .pg-cta { margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
 .pg-sec { padding-top: var(--sp-sec-bot); padding-bottom: var(--sp-sec-bot); border-top: 1px solid var(--ink-12); }
 .pg-sec h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 0.9; color: var(--ink); margin-bottom: 40px; }
-.pg-sec h2 em { font-style: normal; color: var(--red); }
+.pg-sec h2 em { font-style: normal; color: var(--brand); }
 .pg-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .pg-prose p { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.6; color: var(--ink-80); margin-bottom: 20px; max-width: 60ch; }
 .pg-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .pg-cards.four { grid-template-columns: repeat(2, 1fr); }
 .pg-card { border: 1px solid var(--ink-12); border-radius: var(--r); padding: 28px; background: var(--white); transition: border-color var(--t-base) var(--ease); }
 .pg-card:hover { border-color: var(--ink-25); }
-.pg-card .n { font-family: var(--display); font-size: 44px; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--emerald); }
+.pg-card .n { font-family: var(--display); font-size: 44px; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--brand); }
 .pg-card h3 { font-family: var(--sans); font-weight: 600; font-size: 18px; color: var(--ink); margin: 16px 0 8px; }
 .pg-card p { font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--ink-65); }
 .pg-rows { border-top: 1px solid var(--ink-12); }
@@ -38,11 +38,11 @@ a.pg-row:hover .pg-row-name { color: var(--ink); }
 /* article: measured from the reference (740px column, 21px/1.72 body, red italic drop cap) */
 .ar-hero { padding: clamp(140px, 18vh, 200px) var(--gutter) clamp(40px, 5vh, 60px); max-width: 740px; margin: 0 auto; }
 .ar-title { font-family: var(--display); font-size: clamp(48px, 6.5vw, 96px); font-weight: 400; line-height: 0.95; letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink-80); margin-bottom: 36px; text-wrap: balance; }
-.ar-title em { font-style: normal; color: var(--red); }
+.ar-title em { font-style: normal; color: var(--brand); }
 .ar-meta { display: flex; align-items: center; gap: 16px; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-50); }
 .article-body { max-width: 740px; margin: 0 auto; padding: 0 var(--gutter) clamp(120px, 16vh, 180px); }
 .article-body p { font-family: var(--serif); font-size: 21px; line-height: 1.72; color: var(--ink-80); margin-bottom: 28px; }
-.article-body p:first-of-type::first-letter { font-family: var(--serif); font-style: italic; font-size: 5.6em; line-height: 0.88; float: left; padding: 10px 16px 0 0; color: var(--red); font-weight: 500; }
+.article-body p:first-of-type::first-letter { font-family: var(--serif); font-style: italic; font-size: 5.6em; line-height: 0.88; float: left; padding: 10px 16px 0 0; color: var(--brand); font-weight: 500; }
 .article-body h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: 40px; line-height: 1; color: var(--ink); margin: 56px 0 20px; }
 .article-body .btn-text { margin-top: 24px; }
 .res-item { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 24px 0; border-top: 1px solid var(--ink-12); }

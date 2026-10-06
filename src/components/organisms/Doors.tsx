@@ -19,8 +19,9 @@ export function Doors() {
         <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
         <span className="foot-links">
           <a href={`mailto:${site.email}`}>Email</a>
-          <a href="https://www.linkedin.com/">LinkedIn</a>
-          <a href="https://wa.me/">WhatsApp</a>
+          <a href={site.linkedin}>LinkedIn</a>
+          <a href={site.behance}>Behance</a>
+          <a href={site.medium}>Medium</a>
         </span>
       </footer>
     </section>

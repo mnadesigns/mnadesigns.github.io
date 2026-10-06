@@ -141,8 +141,8 @@
   --white-50: rgba(255, 255, 255, 0.5);
   --white-25: rgba(255, 255, 255, 0.25);
   --white-12: rgba(255, 255, 255, 0.12);
-  --red: #e11d48;
-  --red-deep: #c11540;
+  --brand: #f6580f;
+  --brand-deep: #c4440a;
   --emerald: #0e9f6e;
   --emerald-ink: #0a7b55;
 
@@ -215,11 +215,11 @@
     overflow-x: clip;
   }
   ::selection {
-    background: var(--red);
+    background: var(--brand);
     color: var(--white);
   }
   :focus-visible {
-    outline: 2px solid var(--red);
+    outline: 2px solid var(--brand);
     outline-offset: 3px;
   }
   img {
@@ -238,6 +238,6 @@
   }
   ::-webkit-scrollbar-thumb:hover,
   ::-webkit-scrollbar-thumb:active {
-    background: var(--red);
+    background: var(--brand);
   }
 }

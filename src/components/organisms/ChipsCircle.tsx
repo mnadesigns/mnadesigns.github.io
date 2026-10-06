@@ -1,0 +1,255 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import styles from "./SkillsStats.module.css";
+
+type Chip = { label: string; tone: "brand" | "white" };
+
+// A dark circle of pill chips. When the card scrolls into view the chips drop in from the top under gravity,
+// bounce a little off a bowl-shaped wall, settle, and can then be grabbed and thrown around (mouse or touch).
+// Physics: matter-js. Rendering: real DOM elements, so the text stays crisp.
+// Responsive: everything scales with the circle (chips, walls, gravity), and the simulation is rebuilt, already settled,
+// whenever the circle changes size (phone rotation, window resize, breakpoint change).
+const REF = 366; // the circle's design size (px); everything below is tuned at this size
+const GRAVITY = 1.25;
+const RESTITUTION = 0.38; // "jumps a little back up"
+const WALL_EXTRA = 12; // wall sits a bit outside the visible circle so chips poke past the edge and are clipped by it
+const BODY_SCALE = 0.93; // collision body slightly smaller than the pill, so neighbouring chips can overlap a little
+const SPIN_RESIST = 4; // pills resist tumbling, so they settle near-horizontal instead of standing on end
+
+const shuffle = <T,>(a: T[]) => {
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+};
+
+export function ChipsCircle({ chips }: { chips: Chip[] }) {
+  const wrap = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const host = wrap.current!;
+    let disposed = false;
+    let teardown = () => {};
+
+    (async () => {
+      const Matter = (await import("matter-js")).default;
+      await document.fonts.ready; // measure the chips with the final font, so their widths are right
+      if (disposed) return;
+      const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = Matter;
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const els = Array.from(host.querySelectorAll<HTMLElement>("[data-chip]"));
+
+      let started = false; // the drop has happened at least once
+      let visible = false;
+      let currentS = 0;
+      let sim: { start: (instant: boolean) => void; setVisible: (v: boolean) => void; dispose: () => void } | null = null;
+
+      const createSim = (S: number, k: number) => {
+        const R = S / 2, cx = R, cy = R;
+        const Rw = R + WALL_EXTRA * k;
+        const sizes = els.map((e) => ({ w: e.offsetWidth, h: e.offsetHeight }));
+        const engine = Engine.create({ gravity: { x: 0, y: GRAVITY * k } });
+        const world = engine.world;
+
+        // bowl: ring segments from -35deg to 215deg (opening at the top), plus short upright walls above the lip
+        const walls: Matter.Body[] = [];
+        const a0 = (-35 * Math.PI) / 180, a1 = (215 * Math.PI) / 180, N = 44, T = 80;
+        for (let i = 0; i < N; i++) {
+          const a = a0 + ((a1 - a0) * (i + 0.5)) / N;
+          const len = (Rw * (a1 - a0)) / N + 6;
+          walls.push(
+            Bodies.rectangle(cx + (Rw + T / 2) * Math.cos(a), cy + (Rw + T / 2) * Math.sin(a), len, T, {
+              isStatic: true, angle: a + Math.PI / 2, friction: 0.3, restitution: 0.1,
+            })
+          );
+        }
+        for (const a of [a0, a1]) {
+          const lx = cx + Rw * Math.cos(a), ly = cy + Rw * Math.sin(a);
+          const dir = Math.cos(a) > 0 ? 1 : -1;
+          walls.push(Bodies.rectangle(lx + dir * (T / 2), ly - 260, T, 520, { isStatic: true }));
+        }
+        Composite.add(world, walls);
+
+        // chips: pill-shaped bodies, added one by one from above the circle
+        const bodies = sizes.map((s) => {
+          const w = s.w * BODY_SCALE, h = s.h * BODY_SCALE;
+          const b = Bodies.rectangle(0, 0, w, h, {
+            chamfer: { radius: h / 2 }, restitution: RESTITUTION, friction: 0.45, frictionAir: 0.012, density: 0.002,
+          });
+          Body.setInertia(b, b.inertia * SPIN_RESIST);
+          return b;
+        });
+        const place = (b: Matter.Body, above: boolean, i: number, frac?: number) => {
+          const lip = Rw * Math.sin((55 * Math.PI) / 180);
+          Body.setPosition(b, {
+            x: cx + (frac ?? Math.random() - 0.5) * lip * 1.1,
+            y: above ? cy - Rw - (70 + Math.random() * 70) * k : cy + (i - bodies.length / 2) * 6 * k,
+          });
+          Body.setAngle(b, (Math.random() - 0.5) * 0.9);
+          Body.setAngularVelocity(b, (Math.random() - 0.5) * 0.05);
+        };
+
+        // drop order: alternate brand and white (each colour shuffled), so the pile is well mixed, never one colour in a clump
+        const idxOf = (tone: Chip["tone"]) => chips.map((c, i) => (c.tone === tone ? i : -1)).filter((i) => i >= 0);
+        const brands = shuffle(idxOf("brand"));
+        const whites = shuffle(idxOf("white"));
+        const order: number[] = [];
+        const total = chips.length;
+        for (let n = 0, firstBrand = Math.random() < 0.5; order.length < total; n++) {
+          const wantBrand = (n % 2 === 0) === firstBrand;
+          const next = (wantBrand ? brands : whites).shift() ?? (wantBrand ? whites : brands).shift();
+          if (next !== undefined) order.push(next);
+        }
+        // starting spots: each colour is spread evenly across the whole opening (shuffled, with a little jitter),
+        // so one colour can never start mostly on one side
+        const slotFrac: number[] = new Array(chips.length).fill(0);
+        for (const tone of ["brand", "white"] as const) {
+          const idx = idxOf(tone);
+          const n = idx.length;
+          const slots = shuffle(Array.from({ length: n }, (_, j) => (j + 0.5) / n - 0.5));
+          idx.forEach((ci, j) => { slotFrac[ci] = slots[j] + (Math.random() - 0.5) * (0.6 / n); });
+        }
+
+        const draw = () => {
+          bodies.forEach((b, i) => {
+            const { w, h } = sizes[i];
+            els[i].style.transform = `translate(${b.position.x - w / 2}px, ${b.position.y - h / 2}px) rotate(${b.angle}rad)`;
+          });
+        };
+
+        // drag with mouse or touch (the page can still scroll with the wheel)
+        const mouse = Mouse.create(host);
+        const m = mouse as unknown as { element: HTMLElement; mousewheel: EventListener };
+        m.element.removeEventListener("mousewheel", m.mousewheel);
+        m.element.removeEventListener("DOMMouseScroll", m.mousewheel);
+        const drag = MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2, damping: 0.12, render: { visible: false } } });
+        Composite.add(world, drag);
+
+        // matter only hears the button being released over the circle, so release the chip whenever the pointer leaves it,
+        // lets go anywhere in the window, or the window loses focus
+        const release = () => { mouse.button = -1; };
+        host.addEventListener("mouseleave", release);
+        window.addEventListener("mouseup", release);
+        window.addEventListener("touchend", release);
+        window.addEventListener("touchcancel", release);
+        window.addEventListener("blur", release);
+
+        let raf = 0, simStarted = false, simVisible = false, last = 0, dropped = 0, t0 = 0;
+        const step = (now: number) => {
+          raf = 0;
+          if (!simVisible) return;
+          const dt = Math.min(now - last || 16.7, 34);
+          last = now;
+          // release the chips one at a time (about 110ms apart)
+          while (dropped < bodies.length && now - t0 >= dropped * 110) {
+            const b = bodies[order[dropped]];
+            place(b, true, dropped, slotFrac[order[dropped]]);
+            Composite.add(world, b);
+            dropped++;
+          }
+          Engine.update(engine, dt);
+          // safety net: a chip that has rolled out over the top lip (and is hidden by the circle) is put back inside
+          if (now - t0 > 2600 && dropped === bodies.length) {
+            bodies.forEach((b) => {
+              if (b.position.y < -sizes[0].h && !drag.constraint.bodyB) {
+                Body.setPosition(b, { x: cx + (Math.random() - 0.5) * R * 0.8, y: R * 0.3 });
+                Body.setVelocity(b, { x: 0, y: 0 });
+                Body.setAngle(b, (Math.random() - 0.5) * 0.6);
+              }
+            });
+          }
+          draw();
+          raf = requestAnimationFrame(step);
+        };
+
+        return {
+          // instant = settle straight away with no animation (reduced motion, or a rebuild after a resize)
+          start(instant: boolean) {
+            if (simStarted) return;
+            simStarted = true;
+            els.forEach((e) => (e.style.visibility = "visible"));
+            if (instant) {
+              order.forEach((bi, i) => {
+                const b = bodies[bi];
+                place(b, false, i);
+                Body.setPosition(b, { x: cx + (Math.random() - 0.5) * R, y: cy - R * 0.9 + (i * R * 1.7) / bodies.length });
+                Composite.add(world, b);
+              });
+              for (let n = 0; n < 420; n++) Engine.update(engine, 16.7);
+              dropped = bodies.length;
+              draw();
+            }
+            t0 = performance.now();
+            last = t0;
+            if (simVisible && !raf && !reduced) raf = requestAnimationFrame(step);
+          },
+          setVisible(v: boolean) {
+            simVisible = v;
+            if (v && simStarted && !raf && !reduced) { last = performance.now(); raf = requestAnimationFrame(step); }
+          },
+          dispose() {
+            host.removeEventListener("mouseleave", release);
+            window.removeEventListener("mouseup", release);
+            window.removeEventListener("touchend", release);
+            window.removeEventListener("touchcancel", release);
+            window.removeEventListener("blur", release);
+            cancelAnimationFrame(raf);
+            Composite.clear(world, false);
+            Engine.clear(engine);
+          },
+        };
+      };
+
+      // (re)build the simulation for the circle's current size
+      const build = () => {
+        const S = host.clientWidth;
+        if (!S) return;
+        currentS = S;
+        const k = S / REF;
+        host.style.setProperty("--k", String(k)); // chips scale with the circle (see the module CSS)
+        void host.offsetWidth; // apply the new chip size before measuring it
+        sim?.dispose();
+        sim = createSim(S, k);
+        sim.setVisible(visible);
+        if (started) sim.start(true); // after a resize the chips are already settled, so just re-fit them
+        else if (reduced && visible) { started = true; sim.start(true); }
+      };
+
+      build();
+
+      const io = new IntersectionObserver(
+        ([e]) => {
+          visible = e.isIntersecting;
+          sim?.setVisible(visible);
+          if (visible && !started) { started = true; sim?.start(reduced); }
+        },
+        { threshold: 0.35 }
+      );
+      io.observe(host.parentElement ?? host);
+
+      // re-fit when the circle changes size
+      let timer: ReturnType<typeof setTimeout>;
+      const ro = new ResizeObserver(() => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { if (Math.abs(host.clientWidth - currentS) > 1) build(); }, 150);
+      });
+      ro.observe(host);
+
+      teardown = () => {
+        clearTimeout(timer);
+        ro.disconnect();
+        io.disconnect();
+        sim?.dispose();
+      };
+    })();
+
+    return () => { disposed = true; teardown(); };
+  }, [chips]);
+
+  return (
+    <div ref={wrap} className={styles.circle} aria-label="Skills">
+      {chips.map((c) => (
+        <span key={c.label} data-chip className={`${styles.chip} ${c.tone === "brand" ? styles.brandChip : styles.white}`}>{c.label}</span>
+      ))}
+    </div>
+  );
+}

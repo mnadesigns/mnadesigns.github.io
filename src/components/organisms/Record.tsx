@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { stats } from "@/data/site";
 import { Reveal } from "@/components/atoms/Reveal";
 
-function Stat({ value, prefix = "", suffix = "", label }: (typeof stats)[number]) {
+export function Stat({ value, prefix = "", suffix = "", label }: (typeof stats)[number]) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current;

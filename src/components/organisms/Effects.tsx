@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { site } from "@/data/site";
+import { brands, site } from "@/data/site";
 
 const motionOK = () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const fine = () => window.matchMedia("(pointer:fine)").matches;
@@ -38,14 +38,15 @@ export function Cursor() {
     let cx = innerWidth / 2, cy = innerHeight / 2, tx = cx, ty = cy, raf = 0;
     let lx = 0, ly = 0, lt = 0, li = 0;
     const live: HTMLElement[] = [];
-    const labels = ["LOGO", "WORK", "BRAND", "APP", "FILM", "SYSTEM"];
+    // each trail card shows one brand logo from site.ts `brands`; load them up front so the cards never flash empty
+    brands.forEach((b) => { new Image().src = b.src; });
 
     const onMove = (e: MouseEvent) => {
       tx = e.clientX; ty = e.clientY;
       const t = e.target as HTMLElement;
       cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
-      // hero image trail
-      if (t.closest("#hero")) {
+      // hero logo trail (not over links, buttons or other clickable things)
+      if (t.closest("#hero") && !t.closest("a, button, [role='button'], .btn, .btn-sec, .btn-circle")) {
         const now = performance.now();
         if (Math.hypot(e.clientX - lx, e.clientY - ly) < 42 || now - lt < 75) return;
         lx = e.clientX; ly = e.clientY; lt = now;
@@ -53,7 +54,10 @@ export function Cursor() {
         f.className = "trail-frame";
         f.style.left = e.clientX + (Math.random() * 40 - 20) + "px";
         f.style.top = e.clientY + (Math.random() * 40 - 20) + "px";
-        f.textContent = labels[li++ % labels.length];
+        const b = brands[li++ % brands.length];
+        const img = document.createElement("img");
+        img.src = b.src; img.alt = b.name; img.draggable = false;
+        f.appendChild(img);
         document.body.appendChild(f);
         live.push(f);
         while (live.length > 2) { const o = live.shift()!; o.classList.add("out"); setTimeout(() => o.remove(), 300); }
