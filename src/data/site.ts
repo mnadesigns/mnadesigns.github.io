@@ -42,6 +42,9 @@ export const brands = [
   { name: "Keysborough Veterinary Practice", src: "/images/brands/keysborough-ver-prac.png" },
   { name: "Specialist Clinic Pharmacy", src: "/images/brands/specialist-clicnic-phramacy.png" },
   { name: "Wonder Pies", src: "/images/brands/wonder-pies.png" },
+  { name: "Cupffee", src: "/images/brands/cupffee.png" },
+  { name: "Cytosite Bio", src: "/images/brands/cytosite-bio.png" },
+  { name: "Telco ICT", src: "/images/brands/telco-ict.png" },
 ];
 
 export const stats: { value: number; prefix?: string; suffix: string; label: string }[] = [

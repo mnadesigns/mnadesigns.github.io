@@ -22,7 +22,7 @@
 .social-icon:hover { color: var(--brand); background-color: color-mix(in srgb, var(--brand) 10%, transparent); }
 .social-icon:active { color: var(--brand-deep); background-color: color-mix(in srgb, var(--brand) 18%, transparent); transform: scale(0.92); }
 .hero-ghost { position: absolute; bottom: 0; left: 0; z-index: 0; pointer-events: none; display: flex; white-space: nowrap; font-family: var(--display); font-size: calc(var(--fs-ghost-md) * 0.8); line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--ink-12); }
-.hero-ghost span { display: block; padding-right: 0.5em; animation: tick 60s linear infinite; }
+.hero-ghost span { display: block; padding-right: 0.5em; animation: tick 60s linear infinite; will-change: transform; }
 .hero-claim { position: relative; z-index: 2; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-2xl); line-height: 0.9; color: var(--ink); }
 .hero-claim .l { display: block; overflow: hidden; padding-bottom: 0.08em; }
 .hero-claim .l:nth-child(2) { padding-left: clamp(28px, 5vw, 112px); }
