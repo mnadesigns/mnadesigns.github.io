@@ -133,6 +133,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
         window.addEventListener("touchcancel", release);
         window.addEventListener("blur", release);
 
+        const entered = new Set<Matter.Body>(); // chips that have been inside the circle at least once
         let raf = 0, simStarted = false, simVisible = false, last = 0, dropped = 0, t0 = 0;
         const step = (now: number) => {
           raf = 0;
@@ -147,16 +148,21 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
             dropped++;
           }
           Engine.update(engine, dt);
-          // safety net: a chip that has rolled out over the top lip (and is hidden by the circle) is put back inside
-          if (now - t0 > 2600 && dropped === bodies.length) {
-            bodies.forEach((b) => {
-              if (b.position.y < -sizes[0].h && !drag.constraint.bodyB) {
-                Body.setPosition(b, { x: cx + (Math.random() - 0.5) * R * 0.8, y: R * 0.3 });
-                Body.setVelocity(b, { x: 0, y: 0 });
-                Body.setAngle(b, (Math.random() - 0.5) * 0.6);
-              }
-            });
-          }
+          // safety nets. A chip that was dragged out through the wall (or rolled out over the top lip) is hidden by the circle
+          // and would fall for ever, so once it is well outside it is dropped back in from the top. A chip held far outside is let go.
+          bodies.forEach((b) => {
+            const dist = Math.hypot(b.position.x - cx, b.position.y - cy);
+            if (dist <= R * 1.1) entered.add(b);
+            if (!entered.has(b)) return; // still on its way in from the top
+            const held = drag.constraint.bodyB === b;
+            if (held) { if (dist > R * 1.35) mouse.button = -1; return; }
+            if (dist > R * 1.3 || (now - t0 > 2600 && b.position.y < -sizes[0].h)) {
+              Body.setPosition(b, { x: cx + (Math.random() - 0.5) * R * 0.6, y: cy - R * 0.55 });
+              Body.setVelocity(b, { x: 0, y: 0 });
+              Body.setAngularVelocity(b, 0);
+              Body.setAngle(b, (Math.random() - 0.5) * 0.6);
+            }
+          });
           draw();
           raf = requestAnimationFrame(step);
         };
