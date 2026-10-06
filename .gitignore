@@ -54,3 +54,4 @@ docs/research/
 # Local dev logs
 dev.log
 dev.err
+.env*

@@ -19,7 +19,11 @@ npm run check   # lint + typecheck + static export to ./out
 
 ## Deploy
 
-Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the static export and publishes it to GitHub Pages.
+The site is hosted on Vercel (project `mnalabs-portfolio`, https://mnalabs-portfolio.vercel.app). This repo is private. To publish a new version from this folder:
+
+```bash
+vercel deploy --prod
+```
 
 ## Credits
 
