@@ -19,7 +19,7 @@ npm run check   # lint + typecheck + static export to ./out
 
 ## Deploy
 
-The site is hosted on Vercel (project `mnalabs-portfolio`, https://mnalabs-portfolio.vercel.app). This repo is private. To publish a new version from this folder:
+The site is hosted on Vercel (project `muhammadnaeem`, https://muhammadnaeem.vercel.app). This repo is private. To publish a new version from this folder:
 
 ```bash
 vercel deploy --prod
