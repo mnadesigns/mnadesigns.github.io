@@ -29,7 +29,7 @@ function Letters({ text, accent, start }: { text: string; accent?: string; start
 }
 
 export function Hero() {
-  const ghost = "SREDIO · QUODARCA · PEERS · APPLIED ELECTRONICS · ";
+  const ghost = "SREDIO · QUODARCA · PEERS · APPLIED ELECTRONICS · CUPFFEE · CYTOSITE BIO · TELCO ICT · ";
   return (
     <header className="hero shell" id="hero">
       <div className="hero-band">

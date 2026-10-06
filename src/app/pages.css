@@ -79,7 +79,7 @@
 .sti-index .sti-row { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; padding: 48px 0; border-top: 1px solid var(--ink-12); text-decoration: none; transition: padding-left var(--t-base) var(--ease); }
 .sti-index .sti-row:hover { padding-left: 16px; }
 .sti-row-name { font-family: var(--display); text-transform: uppercase; font-size: var(--fs-display-index); line-height: 1; color: transparent; -webkit-text-stroke: 2px var(--ink); transition: color var(--t-med) var(--ease); }
-.sti-row:hover .sti-row-name { color: var(--brand); -webkit-text-stroke-color: var(--brand); }
+.sti-row:hover .sti-row-name { color: var(--brand); -webkit-text-stroke: 0; }
 .sti-row-meta { display: flex; flex-direction: column; gap: 12px; max-width: 64ch; }
 .sti-row-stat b { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(28px, 3vw, 44px); line-height: 1; color: var(--ink); }
 .sti-row-stat i { font-style: normal; font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--ink-50); }

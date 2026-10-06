@@ -125,6 +125,8 @@ function caretPoint(): { x: number; y: number } | null {
   return null;
 }
 
+const TAPPABLE = "a, button, [role='button'], summary, label, input, select, textarea, .btn, .btn-sec, .btn-circle, .nav-cta";
+
 export function BoomEffect() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -180,6 +182,8 @@ export function BoomEffect() {
 
     const onPointerDown = (e: PointerEvent) => {
       last = { x: e.clientX, y: e.clientY };
+      // touch (phones and tablets): only taps on buttons, links and other actions pop stickers; desktop (mouse) bursts anywhere
+      if (e.pointerType !== "mouse" && !(e.target as Element | null)?.closest?.(TAPPABLE)) return;
       burst(e.clientX, e.clientY, PER_CLICK, false);
     };
     const onPointerMove = (e: PointerEvent) => { last = { x: e.clientX, y: e.clientY }; };
