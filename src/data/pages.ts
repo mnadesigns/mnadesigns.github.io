@@ -1,7 +1,4 @@
 ﻿// About and Resume are written from the resume (muhammad-naeem-resume.pdf) plus facts confirmed in the LinkedIn project chat.
-// Other sub-pages below (consulting, stories, writing) are still placeholder content.
-const lorem = "Placeholder paragraph. Replace this with your own writing. It is here so the layout, line length and rhythm match the design exactly.";
-
 export const aboutPage = {
   kicker: "About",
   title: "Hi, I'm <em>Muhammad</em>",
@@ -23,55 +20,6 @@ export const aboutPage = {
     { n: "3x", t: "Conversion", d: "Lift for flagship e-commerce clients, with online orders up 2.5x." },
     { n: "50%", t: "Fewer revisions", d: "Design revision cycles cut by introducing a shared design system." },
   ],
-};
-
-export const consultingPage = {
-  eyebrow: "Consulting · Currently available",
-  poster: { line1: "Your headline", op: "×", line2: "goes here" },
-  desc: "One sentence describing who you help and how.",
-  descEm: "Service one. Service two. Service three. Service four.",
-  ticker: ["Service One", "Service Two", "Service Three", "Service Four", "Service Five", "Service Six"],
-  problemsLabel: "If you are nodding at any of these",
-  problems: [
-    "A common problem your clients have.",
-    "Another problem that slows their team down.",
-    "A third problem that keeps coming back.",
-    "A fourth problem nobody has time to fix.",
-  ],
-  closer: "I have solved each of these.",
-  closerSub: "Yours is next.",
-  servicesKicker: "The services",
-  servicesHeading: "Four things I do.",
-  services: [
-    { n: "01", t: "Service One", d: "A one or two sentence description of what this service delivers and why it matters to the client." },
-    { n: "02", t: "Service Two", d: "A one or two sentence description of what this service delivers and why it matters." },
-    { n: "03", t: "Service Three", d: "A one or two sentence description of what this service delivers and why it matters." },
-    { n: "04", t: "Service Four", d: "A one or two sentence description of what this service delivers and why it matters." },
-  ],
-  processKicker: "The engagement",
-  processHeading: "How it actually runs.",
-  process: [
-    { n: "01", t: "Discovery", d: "A short line about how the first phase works." },
-    { n: "02", t: "Shape", d: "A short line about how the scope gets locked." },
-    { n: "03", t: "Build", d: "A short line about how the work gets done." },
-    { n: "04", t: "Scale", d: "A short line about optional ongoing support." },
-  ],
-  testiKicker: "What they said",
-  testiHeading: "Trusted by people.",
-  testimonials: [
-    { by: "Person One", role: "Title, Company", text: "A testimonial about the consulting work, specific and short, in the client's own words." },
-    { by: "Person Two", role: "Title, Company", text: "Another testimonial about the engagement and its result." },
-    { by: "Person Three", role: "Title, Company", text: "A third, shorter testimonial." },
-  ],
-  engageKicker: "Engagement shapes",
-  engageHeading: "Four ways to work together.",
-  engage: [
-    { tag: "For specific problems", t: "Project", fit: "A scoped engagement with a fixed outcome.", range: "4 – 12 weeks", fill: 60, price: "$00k", note: "Fixed scope", inc: ["What is included, line one", "What is included, line two"], scope: "A short description of the scope", cta: "Start a project" },
-    { tag: "For ongoing support", t: "Retainer", fit: "A monthly engagement for steady access.", range: "3+ months", fill: 85, price: "$0k", note: "Per month", inc: ["What is included, line one", "What is included, line two"], scope: "A short description of the scope", cta: "Start a project", featured: true, badge: "Most popular" },
-    { tag: "For teams", t: "Workshop", fit: "A focused session to upskill a team.", range: "1 – 2 days", fill: 20, price: "$0k", note: "Per session", inc: ["What is included, line one", "What is included, line two"], scope: "A short description of the scope", cta: "Start a project" },
-    { tag: "For leaders", t: "Advisory", fit: "Occasional strategic guidance on call.", range: "Flexible", fill: 40, price: "$000", note: "Per hour", inc: ["What is included, line one", "What is included, line two"], scope: "A short description of the scope", cta: "Start a project" },
-  ],
-  cta: { eyebrow: "Currently available for new clients", l1: "Let's build", acc: "something", l3: "together.", sub: "A short line inviting people to get in touch.", foot: "Based in City · Working with teams worldwide" },
 };
 
 // Education is intentionally omitted until supplied.
@@ -165,78 +113,117 @@ export const resumePage = {
   ],
 };
 
-export const storiesIndex = {
-  lede: "A short line explaining that each project below is told in full: the stakes, the decisions and the result.",
-  stats: [
-    { v: "30+", l: "Products shipped" },
-    { v: "8", l: "Years" },
-    { v: "3", l: "Companies" },
-    { v: "6M+", l: "Users" },
-  ],
-  features: [
-    { slug: "project-one", eyebrow: "Company One · 2022", name: "Project One", sub: "A one-line summary of this project and its result.", metrics: [{ v: "4M+", l: "Users" }, { v: "700K", l: "Waitlist" }], cap: "Company One" },
-    { slug: "project-two", eyebrow: "Company Two · 2021", name: "Project Two", sub: "A one-line summary of this project and its result.", metrics: [{ v: "$10M", l: "Raised" }, { v: "0 to 1", l: "Product" }], cap: "Company Two" },
-    { slug: "project-three", eyebrow: "Company Three · 2019", name: "Project Three", sub: "A one-line summary of this project and its result.", metrics: [{ v: "Fortune 500", l: "Clients" }], cap: "Company Three" },
-  ],
-  moreSub: "Smaller engagements and earlier work.",
-  more: [
-    { slug: "project-one", name: "Project Four", v: "120K", l: "Monthly users", line: "A one-line summary of this project." },
-    { slug: "project-two", name: "Project Five", v: "35%", l: "Conversion lift", line: "A one-line summary of this project." },
-    { slug: "project-three", name: "Project Six", v: "9", l: "Markets", line: "A one-line summary of this project." },
-  ],
-  footer: "More <em>coming</em>.",
-};
 
-export const pods = [
-  { channel: "Podcast Name", title: "Episode title goes here", date: "Month 2026" },
-  { channel: "Talk Name", title: "Talk title goes here", date: "Month 2025" },
-];
-
+// Stories are written only from facts in the resume and the LinkedIn project chat; no invented chapters or metrics.
 export const stories = [
-  { slug: "project-one", name: "Project One", co: "Company One", line: "A one-line summary of this project and its result.", feature: true },
-  { slug: "project-two", name: "Project Two", co: "Company Two", line: "A one-line summary of this project and its result.", feature: true },
-  { slug: "project-three", name: "Project Three", co: "Company Three", line: "A one-line summary of this project and its result.", feature: true },
+  {
+    slug: "sred-io",
+    name: "SRED.io",
+    co: "SRED.io, Canada",
+    role: "Product Designer & Project Manager",
+    period: "Aug 2026 to Present",
+    line: "Product design and delivery for a Canadian SaaS platform that manages SR&ED tax-credit claims.",
+    eyebrow: "SRED.io · 2026",
+    cap: "Canadian tax-credit SaaS",
+    stats: [
+      { v: "70%", l: "Less vertical scroll on Staff & Teams" },
+      { v: "70%", l: "Smaller sync status bar" },
+      { v: "3", l: "Core workflows redesigned" },
+    ],
+    context: "A SaaS platform for SR&ED tax-credit claims with no design system, hidden filters and long, hard-to-scan screens. About 80% of the role is hands-on design and 20% managing front-end delivery.",
+    chapters: [
+      { t: "A first design system", ps: ["Introduced the product's first design system, built on Flowbite, to resolve consistency, accessibility and usability issues across the platform."] },
+      { t: "Staff & Teams", ps: ["Surfaced search and filters, added a member list and split long pages into tabs, cutting vertical scroll by 70%. The redesign shipped to clients."] },
+      { t: "Timesheets", ps: ["Reworked the screen around a clear action hierarchy, placing each action beside the content it affects, and reduced the sync status bar's footprint by 70%."] },
+      { t: "File Vaults", ps: ["Simplified the screen so the full view fits the viewport, with a persistent fiscal-year indicator."] },
+      { t: "Testing and delivery", ps: ["Tested two design concepts for Timesheets and File Vaults with four internal and client users, and took the stronger one forward. Designed and shipped an in-product feedback widget, and connected the Figma design system and Flowbite to Claude Code through MCP to speed up front-end build."] },
+    ],
+  },
+  {
+    slug: "quodarca",
+    name: "QuodArca",
+    co: "EISST International Ltd",
+    role: "Senior Product Designer",
+    period: "Oct 2023 to Dec 2025",
+    line: "End-to-end UX/UI across six high-security, privacy-first product lines.",
+    eyebrow: "EISST · 2023 to 2025",
+    cap: "Privacy-first product suite",
+    stats: [
+      { v: "500+", l: "Screens" },
+      { v: "6", l: "Product lines" },
+      { v: "AA", l: "WCAG 2.1 compliance" },
+    ],
+    context: "A suite of high-security, privacy-first products across mobile, web and desktop, designed under strict compliance constraints.",
+    chapters: [
+      { t: "Six product lines", ps: ["Led end-to-end UX/UI design across six high-security, privacy-first product lines, delivering 500+ screens across mobile, web and desktop while holding design quality under compliance constraints."] },
+      { t: "Core flows", ps: ["Rebuilt the core application, authenticator and setup flows, resolving critical onboarding drop-off and reducing friction across three interconnected product surfaces."] },
+      { t: "One design system", ps: ["Architected a scalable, multi-platform design system with standardized components, design tokens and responsive patterns, reducing design-to-dev handoff time and cross-platform inconsistencies."] },
+      { t: "Accessibility", ps: ["Upgraded the icon library, colour palette and typography to reach full WCAG 2.1 AA compliance, widening access and meeting enterprise client requirements."] },
+      { t: "Handoff and research", ps: ["Streamlined documentation and handoff between design, engineering and QA, which reduced revision cycles and sped up sprints. Ran competitor benchmarking and moderated usability testing to validate decisions with real users."] },
+    ],
+  },
+  {
+    slug: "mlk-group",
+    name: "MLK Group",
+    co: "MLK Group Pvt Ltd",
+    role: "Senior UX/UI Designer",
+    period: "Jun 2021 to Sep 2023",
+    line: "Digital product design strategy for 50+ Australian brands across fintech and e-commerce.",
+    eyebrow: "MLK Group · 2021 to 2023",
+    cap: "Australian fintech and e-commerce",
+    stats: [
+      { v: "50+", l: "Australian brands" },
+      { v: "3x", l: "Conversion rate" },
+      { v: "2.5x", l: "Online orders" },
+      { v: "50%", l: "Fewer revision cycles" },
+    ],
+    context: "Owned design quality from discovery through launch for a portfolio of fintech and e-commerce brands.",
+    chapters: [
+      { t: "A shared system", ps: ["Reduced design revision cycles by 50% by introducing reusable component frameworks and a shared design system, so the team could scale output without losing quality."] },
+      { t: "Conversion work", ps: ["Boosted conversion rates by 3x and increased online orders by 2.5x for flagship e-commerce clients through data-informed UX improvements and conversion-rate optimization."] },
+      { t: "Business development", ps: ["Designed pitch decks and investor-facing assets that supported business development and contributed to repeat contract wins."] },
+      { t: "Process and mentoring", ps: ["Established design roadmaps aligned with business OKRs, introduced Lean UX and Design Thinking, and mentored junior designers on UX method, Figma practice and client communication."] },
+    ],
+  },
+  {
+    slug: "bionorica",
+    name: "Bionorica",
+    co: "April & June Digital (Pvt) Ltd",
+    role: "Senior UX/UI Designer",
+    period: "Dec 2019 to May 2021",
+    line: "A modular design system, CMS interface and public front end for a pharmaceutical brand.",
+    eyebrow: "April & June Digital · 2019 to 2021",
+    cap: "Pharmaceutical brand",
+    stats: [
+      { v: "Live", l: "bionorica.com" },
+      { v: "Web + mobile", l: "Design system surfaces" },
+    ],
+    context: "Design work for Bionorica, a global pharmaceutical brand, delivered through April & June Digital while reporting directly to the CEO.",
+    chapters: [
+      { t: "Design system", ps: ["Engineered a modular, component-based design system for Bionorica, built for cross-platform scalability and visual consistency across web and mobile surfaces."] },
+      { t: "CMS and public site", ps: ["Created the UI and prototypes for the internal content management system and designed the public website's front end, which is live at bionorica.com."] },
+      { t: "Strategy", ps: ["Led design strategy across eCommerce, Web3 and pharma platforms, aligning visual systems with business KPIs and product roadmaps, and turned multi-stakeholder requirements into clear user journeys and personas."] },
+    ],
+  },
 ];
 
-export const storyPage = {
-  secondary: "A short secondary line",
-  desc: "Two sentences describing the project, your role and the outcome.",
-  stakesBig: { v: "4M+", l: "Users" },
-  stakesSupporting: [
-    { v: "$10M", l: "Raised" },
-    { v: "18", l: "Months" },
-    { v: "12", l: "Team size" },
-    { v: "3", l: "Markets" },
+export const storiesIndex = {
+  lede: "Four pieces of work, told with what I did and what changed.",
+  stats: [
+    { v: "10+", l: "Years" },
+    { v: "500+", l: "Screens at EISST" },
+    { v: "50+", l: "Brands at MLK Group" },
+    { v: "3x", l: "Conversion lift" },
   ],
-  stakesHeading: "What was <span class=\"accent\">at stake</span>",
-  stakesParas: [lorem, lorem],
-  arc: ["Brief", "Build", "Launch", "Scale"],
-  storyHeading: "How it came together",
-  storySub: "A short italic line introducing the chapters below.",
-  chapters: [
-    { n: "01", d: "Month Year", t: "The brief", ps: [lorem, lorem], pull: "A short pull quote that captures the turning point." },
-    { n: "02", d: "Month Year", t: "The approach", ps: [lorem, lorem] },
-    { n: "03", d: "Month Year", t: "The build", ps: [lorem, lorem], image: true },
-    { n: "04", d: "Month Year", t: "The result", ps: [lorem] },
-  ],
-  serviceEyebrow: "What it means for you",
-  serviceHeading: "The work, applied",
-  serviceLede: "One or two sentences connecting this project to the kind of work you do for clients.",
-  cases: [
-    { t: "Case one", p: lorem },
-    { t: "Case two", p: lorem },
-  ],
-  nextKicker: "Next story",
 };
 
+// Writing: the only published article found on Medium (@me.naeem88).
 export const essaysIndex = [
-  { slug: "essay-one", title: "A placeholder essay title about design systems", meta: "Essay · 6 min", date: "Jan 2026" },
-  { slug: "essay-two", title: "A placeholder essay title about AI and craft", meta: "Essay · 8 min", date: "Feb 2026" },
-  { slug: "essay-three", title: "A placeholder essay title about team ratios", meta: "Essay · 5 min", date: "Mar 2026" },
-  { slug: "essay-four", title: "A placeholder essay title about watching users", meta: "Essay · 7 min", date: "Apr 2026" },
+  {
+    title: "I Built a Figma Plugin Using AI Prompts and It Actually Works",
+    meta: "Medium",
+    date: "Jul 7",
+    excerpt: "What started as a quick experiment in Claude Code turned into a working Design Token Builder plugin, and how it happened step by step.",
+    href: "https://medium.com/@me.naeem88/i-built-a-figma-plugin-using-ai-prompts-and-it-actually-works-b6ba12a15e1a",
+  },
 ];
-
-export const articleBody = [
-  { p: lorem }, { p: lorem }, { h: "A section heading" }, { p: lorem }, { p: lorem }, { h: "Another section heading" }, { p: lorem },
-];
-
