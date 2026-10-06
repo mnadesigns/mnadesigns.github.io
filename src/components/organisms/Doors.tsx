@@ -16,7 +16,7 @@ export function Doors() {
         ))}
       </div>
       <footer className="foot">
-        <span>© {new Date().getFullYear()} {site.name}</span>
+        <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
         <span className="foot-links">
           <a href={`mailto:${site.email}`}>Email</a>
           <a href="https://www.linkedin.com/">LinkedIn</a>
