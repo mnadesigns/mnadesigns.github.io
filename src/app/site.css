@@ -37,53 +37,20 @@
 @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(246, 88, 15, 0.45); } 70% { box-shadow: 0 0 0 9px rgba(246, 88, 15, 0); } 100% { box-shadow: 0 0 0 0 rgba(246, 88, 15, 0); } }
 
 /* nav */
-.nav { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 36px; padding: 8px 12px 8px 24px; background: #101010; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--r-pill); box-shadow: var(--sh-nav); transition: transform var(--t-med) var(--ease); }
+.nav { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 36px; padding: 8px 12px 8px 24px; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--ink-08); border-radius: var(--r-pill); box-shadow: var(--sh-nav); transition: transform var(--t-med) var(--ease); }
 .nav.hide { transform: translate(-50%, -130%); }
-/* Border beam (dark navbar, one colour: the primary). Same build as the reference, in two layers on the nav's pseudo-elements:
-   ::after  a 1px ring (conic gradient with a hot white-orange core, cut to the border with an exclude mask) with a drop-shadow glow
-   ::before an inner bloom: soft primary blobs along the inside edge, revealed only where a rotating conic mask passes
-   Both share --beam-a, a registered angle that spins once every 1.96s, and fade in over 0.6s. */
-@property --beam-a { syntax: "<angle>"; inherits: false; initial-value: 235deg; }
-@property --beam-o { syntax: "<number>"; inherits: false; initial-value: 0; }
-@keyframes beamSpin { to { --beam-a: 595deg; } }
-@keyframes beamIn { to { --beam-o: 1; } }
-.nav { --beam: 246, 88, 15; }
-.nav::before, .nav::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; opacity: var(--beam-o);
-  animation: beamSpin 1.96s linear infinite, beamIn 0.6s ease 0.4s forwards;
-}
-.nav::after {
-  inset: 0; padding: 2px; z-index: 2;
-  background: conic-gradient(from var(--beam-a), transparent 0 46%, rgba(var(--beam), 0.05) 52%, rgba(var(--beam), 0.18) 58%, rgba(var(--beam), 0.45) 63%,
-    rgba(var(--beam), 0.8) 67%, rgba(255, 205, 170, 1) 70% 70.8%, rgba(var(--beam), 0.8) 73.5%, rgba(var(--beam), 0.45) 77%,
-    rgba(var(--beam), 0.18) 81%, rgba(var(--beam), 0.05) 85%, transparent 90%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  filter: drop-shadow(0 0 4px rgba(var(--beam), 0.9)) drop-shadow(0 0 10px rgba(var(--beam), 0.55)) brightness(1.3) saturate(1.2);
-}
-.nav::before {
-  z-index: -1;
-  background:
-    radial-gradient(80px 15px at 18% 0%, rgba(var(--beam), 0.5), transparent), radial-gradient(60px 12px at 50% 0%, rgba(var(--beam), 0.35), transparent),
-    radial-gradient(80px 15px at 82% 0%, rgba(var(--beam), 0.5), transparent), radial-gradient(16px 28px at 0% 50%, rgba(var(--beam), 0.45), transparent),
-    radial-gradient(16px 28px at 100% 50%, rgba(var(--beam), 0.45), transparent), radial-gradient(80px 15px at 20% 100%, rgba(var(--beam), 0.5), transparent),
-    radial-gradient(100px 14px at 52% 100%, rgba(var(--beam), 0.35), transparent), radial-gradient(80px 15px at 84% 100%, rgba(var(--beam), 0.5), transparent);
-  -webkit-mask-image: conic-gradient(from var(--beam-a), transparent 0 30%, rgba(0, 0, 0, 0.1) 36%, rgba(0, 0, 0, 0.35) 44%, #000 52% 80%, rgba(0, 0, 0, 0.35) 86%, rgba(0, 0, 0, 0.1) 92%, transparent 95%);
-  mask-image: conic-gradient(from var(--beam-a), transparent 0 30%, rgba(0, 0, 0, 0.1) 36%, rgba(0, 0, 0, 0.35) 44%, #000 52% 80%, rgba(0, 0, 0, 0.35) 86%, rgba(0, 0, 0, 0.1) 92%, transparent 95%);
-}
-@media (prefers-reduced-motion: reduce) { .nav::before, .nav::after { animation: none; --beam-o: 1; --beam-a: 235deg; } }
-.nav-logo { display: inline-flex; align-items: center; text-decoration: none; font-family: var(--display); font-size: 20px; text-transform: uppercase; color: var(--white); }
+.nav-logo { display: inline-flex; align-items: center; text-decoration: none; font-family: var(--display); font-size: 20px; text-transform: uppercase; color: var(--ink); }
 .nav-logo i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); margin-left: 4px; }
 .nav-links { display: flex; align-items: center; gap: 24px; }
-.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: rgba(255, 255, 255, 0.65); text-decoration: none; transition: color var(--t-fast) var(--ease); }
+.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink-65); text-decoration: none; transition: color var(--t-fast) var(--ease); }
 .nav-links a:hover { color: var(--brand); }
-.nav-links a[aria-current="page"]:not(.nav-cta) { color: var(--white); position: relative; }
+.nav-links a[aria-current="page"]:not(.nav-cta) { color: var(--ink); position: relative; }
 .nav-links a[aria-current="page"]:not(.nav-cta)::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--brand); border-radius: 1px; }
 .nav-links a.nav-cta { white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; padding: 8px 8px 8px 16px; background: var(--brand); color: var(--white); border-radius: var(--r-pill); }
 .nav-links a.nav-cta:hover { background: var(--brand-deep); color: var(--white); }
 .nav-cta-ico { width: 24px; height: 24px; border-radius: 50%; background: rgba(255, 255, 255, 0.18); display: inline-flex; align-items: center; justify-content: center; }
 .nav-cta-ico svg { width: 12px; height: 12px; }
-.nav-burger { display: none; width: 44px; height: 44px; border: 0; cursor: pointer; background: none; color: var(--white); border-radius: 50%; align-items: center; justify-content: center; }
+.nav-burger { display: none; width: 44px; height: 44px; border: 0; cursor: pointer; background: none; color: var(--ink); border-radius: 50%; align-items: center; justify-content: center; }
 .nav-burger svg { width: 20px; height: 20px; }
 .menu { position: fixed; inset: 0; z-index: 200; background: var(--coal); display: flex; flex-direction: column; justify-content: center; padding: 0 var(--gutter); opacity: 0; pointer-events: none; transition: opacity var(--t-base) var(--ease); }
 .menu.open { opacity: 1; pointer-events: auto; }
@@ -162,10 +129,4 @@ body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
 @media (prefers-reduced-motion: reduce) {
   .rv { opacity: 1; transform: none; transition: none; }
   .pill-dot { animation: none; }
-}
-
-/* Phones: keep the beam ring but drop the expensive parts (blurred glow and inner bloom repaint every frame and made scrolling stutter) */
-@media (max-width: 900px), (pointer: coarse) {
-  .nav::before { display: none; }
-  .nav::after { filter: none; }
 }
