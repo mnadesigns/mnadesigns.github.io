@@ -5,6 +5,7 @@ import "./site.css";
 import "./landing.css";
 import "./sub.css";
 import "./pages.css";
+import "./consulting.css";
 import "./story.css";
 import { Nav } from "@/components/molecules/Nav";
 import { Loader, Cursor } from "@/components/organisms/Effects";

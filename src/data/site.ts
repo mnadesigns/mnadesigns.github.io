@@ -44,7 +44,7 @@ export const chapters = [
       { v: "70%", l: "Less scroll, Staff & Teams" },
       { v: "3", l: "Workflows redesigned" },
     ],
-    href: "/stories/sred-io/",
+    href: site.behance,
     tag: "Media placeholder · kinetic ad",
   },
   {
@@ -56,7 +56,7 @@ export const chapters = [
       { v: "500+", l: "Screens" },
       { v: "6", l: "Product lines" },
     ],
-    href: "/stories/quodarca/",
+    href: site.behance,
     tag: "Media placeholder · film",
   },
   {
@@ -68,7 +68,7 @@ export const chapters = [
       { v: "3x", l: "Conversion rate" },
       { v: "2.5x", l: "Online orders" },
     ],
-    href: "/stories/mlk-group/",
+    href: site.behance,
     tag: "Media placeholder · still",
   },
   {
@@ -77,7 +77,7 @@ export const chapters = [
     role: "Senior UX/UI Designer, April & June Digital, <em>2019 to 2021</em>",
     sub: "A modular, component-based design system for a pharmaceutical brand, built to scale across web and mobile.",
     stats: [{ v: "Design system", l: "Web and mobile", word: true }],
-    href: "/stories/bionorica/",
+    href: site.behance,
     tag: "Media placeholder · still",
   },
 ];
