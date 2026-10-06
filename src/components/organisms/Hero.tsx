@@ -28,7 +28,7 @@ function Letters({ text, accent, start }: { text: string; accent?: string; start
 }
 
 export function Hero() {
-  const ghost = "PLACEHOLDER · YOUR NAME · PORTFOLIO · ";
+  const ghost = "MUHAMMAD NAEEM · PRODUCT DESIGNER · ";
   return (
     <header className="hero shell" id="hero">
       <div className="hero-band">
@@ -36,7 +36,7 @@ export function Hero() {
           <b>{site.name}</b>
           <span>{site.role}</span>
         </div>
-        <BtnSec href="/consulting/">{hero.cta}</BtnSec>
+        <BtnSec href={`mailto:${site.email}`}>{hero.cta}</BtnSec>
       </div>
       <h1 className="hero-claim" id="heroClaim">
         <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>

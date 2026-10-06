@@ -1,23 +1,28 @@
-﻿// Placeholder content for sub-pages. Replace with your own; layout does not depend on exact wording.
+﻿// About and Resume are written from the resume (muhammad-naeem-resume.pdf) plus facts confirmed in the LinkedIn project chat.
+// Other sub-pages below (consulting, stories, writing) are still placeholder content.
 const lorem = "Placeholder paragraph. Replace this with your own writing. It is here so the layout, line length and rhythm match the design exactly.";
 
 export const aboutPage = {
   kicker: "About",
-  title: "A short <em>headline</em> about you",
-  lead: "Two sentences that introduce who you are and what you care about.",
-  story: [lorem, lorem, lorem],
+  title: "Hi, I'm <em>Muhammad</em>",
+  lead: "Senior Product Designer and UX Strategist with 10+ years of end-to-end product design across fintech, healthcare and enterprise SaaS, with clients in the US, Canada, Australia and Europe.",
+  story: [
+    "I translate ambiguous business problems into scalable, system-oriented user experiences that drive measurable outcomes.",
+    "I do my best work where one designer carries a product end to end: framing the problem, mapping the flows, designing the interface, building the system behind it, and staying with the developers until it ships.",
+    "I'm based in Lahore, Pakistan, and work remotely with teams around the world. I'm open to full-time and long-term contract roles, remote or with relocation.",
+  ],
   lens: [
-    { n: "01", t: "First principle", d: "One sentence describing how you think about the work." },
-    { n: "02", t: "Second principle", d: "One sentence describing how you think about the work." },
-    { n: "03", t: "Third principle", d: "One sentence describing how you think about the work." },
+    { n: "01", t: "Design systems", d: "Multi-platform design systems, design tokens and component libraries, with a handoff strategy that removes cross-platform inconsistencies." },
+    { n: "02", t: "Product UX", d: "User research, journey mapping, information architecture and usability testing, turned into flows people can follow." },
+    { n: "03", t: "AI-augmented design", d: "AI-augmented workflows and prompt engineering for design, using Claude, Gemini and Figma AI." },
+    { n: "04", t: "Accessibility first", d: "Accessibility-first, data-informed work, including a full WCAG 2.1 AA upgrade of icons, colour and type at EISST." },
   ],
   how: [
-    { n: "01", t: "Understand", d: "How you start a project and what you look for first." },
-    { n: "02", t: "Shape", d: "How you turn findings into direction." },
-    { n: "03", t: "Build", d: "How you work with teams to ship it." },
-    { n: "04", t: "Measure", d: "How you know it worked." },
+    { n: "500+", t: "Screens", d: "Across six high-security product lines at EISST, on mobile, web and desktop." },
+    { n: "50+", t: "Brands", d: "Australian fintech and e-commerce brands directed at MLK Group." },
+    { n: "3x", t: "Conversion", d: "Lift for flagship e-commerce clients, with online orders up 2.5x." },
+    { n: "50%", t: "Fewer revisions", d: "Design revision cycles cut by introducing a shared design system." },
   ],
-  personal: [lorem, lorem],
 };
 
 export const consultingPage = {
@@ -69,27 +74,95 @@ export const consultingPage = {
   cta: { eyebrow: "Currently available for new clients", l1: "Let's build", acc: "something", l3: "together.", sub: "A short line inviting people to get in touch.", foot: "Based in City · Working with teams worldwide" },
 };
 
+// Education is intentionally omitted until supplied.
 export const resumePage = {
-  name: "Your Name",
-  title: "Your Title · Your Specialty",
-  contact: ["City, Country", "hello@example.com", "linkedin.com/in/yourname"],
-  summary: lorem,
-  experience: [
-    { company: "Company One", role: "Role Title", meta: "2022 – Present", desc: "One line describing the company.", bullets: [lorem, lorem, lorem] },
-    { company: "Company Two", role: "Role Title", meta: "2019 – 2022", desc: "One line describing the company.", bullets: [lorem, lorem] },
-    { company: "Company Three", role: "Role Title", meta: "2015 – 2019", desc: "One line describing the company.", bullets: [lorem, lorem] },
+  name: "Muhammad Naeem",
+  title: "Senior Product Designer · UX Strategist · AI-Augmented Design",
+  contact: [
+    { label: "Lahore, Pakistan" },
+    { label: "me.naeem88@gmail.com", href: "mailto:me.naeem88@gmail.com" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
+    { label: "Portfolio", href: "https://www.behance.net/muhammadnaeem" },
   ],
-  consulting: [
-    { name: "Client One", meta: "2024", desc: "One line describing the engagement." },
-    { name: "Client Two", meta: "2023", desc: "One line describing the engagement." },
+  summary:
+    "Senior Product Designer and UX Strategist with 10+ years of experience delivering end-to-end product design across fintech, healthcare and enterprise SaaS, with clients across the US, Canada, Australia and Europe. Expert in translating ambiguous business problems into scalable, system-oriented user experiences that drive measurable outcomes. Experienced in AI-augmented design workflows and committed to accessibility-first, data-informed design.",
+  experience: [
+    {
+      company: "SRED.io",
+      role: "Product Designer & Project Manager",
+      meta: "Aug 2026 – Present · Canada, Remote",
+      desc: "",
+      bullets: [
+        "Introduced the product's first design system, built on Flowbite, and redesigned core workflows including Staff & Teams, Timesheets and File Vaults.",
+        "Connected the Figma design system to Claude Code through MCP to speed up front-end build.",
+      ],
+    },
+    {
+      company: "EISST International Ltd",
+      role: "Senior Product Designer",
+      meta: "Oct 2023 – Dec 2025 · Remote",
+      desc: "",
+      bullets: [
+        "Led end-to-end UX/UI design across 6 high-security, privacy-first product lines, delivering 500+ screens across mobile, web and desktop under strict compliance constraints.",
+        "Rebuilt core application, authenticator and setup flows, resolving critical onboarding drop-off across 3 interconnected product surfaces.",
+        "Architected a scalable, multi-platform design system with standardized components, design tokens and responsive patterns, reducing design-to-dev handoff time.",
+        "Upgraded the icon library, colour palette and typography to achieve full WCAG 2.1 AA compliance.",
+        "Streamlined design documentation and handoff, reducing revision cycles and accelerating sprint velocity.",
+        "Conducted competitor benchmarking and moderated usability testing to validate design decisions with real users.",
+      ],
+    },
+    {
+      company: "MLK Group Pvt Ltd",
+      role: "Senior UX/UI Designer",
+      meta: "Jun 2021 – Sep 2023 · Remote",
+      desc: "",
+      bullets: [
+        "Directed digital product design strategy for 50+ Australian brands across fintech and e-commerce, owning design quality from discovery through launch.",
+        "Reduced design revision cycles by 50% by introducing reusable component frameworks and a shared design system.",
+        "Boosted conversion rates by 3x and increased online orders by 2.5x for flagship e-commerce clients through data-informed UX improvements.",
+        "Designed pitch decks and investor-facing assets that supported business development and repeat contract wins.",
+        "Established design roadmaps aligned with business OKRs, implemented Lean UX and Design Thinking, and mentored junior designers.",
+      ],
+    },
+    {
+      company: "April & June Digital (Pvt) Ltd",
+      role: "Senior UX/UI Designer",
+      meta: "Dec 2019 – May 2021 · Lahore, Pakistan",
+      desc: "",
+      bullets: [
+        "Engineered a modular, component-based design system for Bionorica (pharmaceutical brand), ensuring scalability and visual consistency across web and mobile surfaces.",
+        "Designed high-fidelity interfaces and interaction models for Web3 and crypto platforms, navigating novel UX paradigms.",
+        "Translated complex, multi-stakeholder requirements into clear user journeys, personas and measurable design outcomes.",
+        "Led design strategy for eCommerce, Web3 and pharma platforms, reporting directly to the CEO.",
+      ],
+    },
+    {
+      company: "Quantum CPH A/S",
+      role: "UX/UI Designer",
+      meta: "Aug 2017 – Oct 2019 · Lahore, Pakistan",
+      desc: "",
+      bullets: [
+        "Architected the end-to-end web experience for Viavana, a hotel and ticket management booking engine, from information architecture through high-fidelity prototyping and developer handoff.",
+        "Developed high-fidelity interactive prototypes for a data management mobile app, surfacing usability issues before development investment.",
+        "Built scalable design systems and ran systematic heuristic UX audits to enforce interface standards.",
+      ],
+    },
+    {
+      company: "Earlier experience",
+      role: "Brainlogix Pvt Ltd, Lahore: Sr. Graphic Designer / Web Designer (Jun 2014 – Jul 2017). iApp11 Technologies, Lahore: Graphic Designer (Jan 2014 – Jun 2014).",
+      meta: "",
+      desc: "",
+      bullets: [],
+    },
   ],
   expertise: [
-    { cat: "Design", items: "Product design, design systems, prototyping, research" },
-    { cat: "Leadership", items: "Hiring, mentoring, roadmaps, stakeholder management" },
-    { cat: "Strategy", items: "Product strategy, positioning, experimentation" },
-    { cat: "Tools", items: "Figma, Notion, Linear, Claude" },
+    { cat: "UX practice", items: "User research, journey mapping, usability testing, information architecture, service blueprinting, A/B testing, heuristic evaluation, accessibility (WCAG 2.1 AA/AAA)" },
+    { cat: "Design systems", items: "Multi-platform design systems, design tokens, component libraries, responsive and adaptive layouts, dev handoff strategy" },
+    { cat: "Strategy & leadership", items: "UX strategy, product roadmapping, design thinking, pre-sales engagement, cross-functional collaboration, stakeholder management, Agile/Scrum" },
+    { cat: "AI & innovation", items: "AI-augmented workflows, prompt engineering for design, ethical AI governance. Gemini, Claude, UX Pilot, Figma AI" },
+    { cat: "Design tools", items: "Figma, FigJam, Adobe XD, Photoshop, Illustrator, Sketch, InVision, Zeplin" },
+    { cat: "Collaboration tools", items: "Jira, Confluence, Notion, Miro, Slack, Trello" },
   ],
-  education: [{ school: "University Name", degree: "Degree, Field", year: "2011 – 2015" }],
 };
 
 export const storiesIndex = {
