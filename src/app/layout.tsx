@@ -22,8 +22,8 @@ const serif = Literata({
 });
 
 export const metadata: Metadata = {
-  title: "Muhammad Naeem — Senior Product Designer",
-  description: "Senior Product Designer and UX Strategist in Lahore with 10+ years of end-to-end product design. Design systems and AI-augmented design workflows.",
+  title: "Your Name — Your headline goes here",
+  description: "Placeholder portfolio description.",
 };
 
 export default function RootLayout({

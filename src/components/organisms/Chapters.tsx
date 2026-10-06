@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { adBeats, chapters, site } from "@/data/site";
+import { adBeats, chapters } from "@/data/site";
 import { Arrow, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -84,7 +84,7 @@ function Plate({ c }: { c: (typeof chapters)[number] }) {
           <div className="chap-stat" key={s.l}><b>{s.v}</b><i>{s.l}</i></div>
         ))}
       </div>
-      <span className="btn-text">See the work <Arrow /></span>
+      <span className="btn-text">Read the story <Arrow /></span>
     </div>
   );
 }
@@ -129,9 +129,9 @@ export function Chapters() {
           <div className="sec-intro" style={{ marginBottom: 0 }}>
             <div>
               <h2 className="h2">Selected <em>work</em></h2>
-              <p className="sec-sub">Four pieces of work, from a tax-credit SaaS to a pharma design system.</p>
+              <p className="sec-sub">A short line introducing the three projects below.</p>
             </div>
-            <BtnCircle href={site.behance} label="On Behance" />
+            <BtnCircle href="/stories/" label="All stories" />
           </div>
         </Reveal>
       </div>
@@ -141,9 +141,9 @@ export function Chapters() {
       <div className="shell">
         <div className="chap-out">
           <div className="chap-out-left">
-            <p>Want to see more? The full portfolio and case studies are on Behance.</p>
+            <p>Want the full archive? Every project has a longer story behind it.</p>
           </div>
-          <BtnCircle href={site.behance} label="Open Behance" />
+          <BtnCircle href="/stories/" label="Open archive" />
         </div>
       </div>
     </section>
