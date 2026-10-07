@@ -7,7 +7,7 @@
 .hero { position: relative; overflow: hidden; min-height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding-top: 128px; padding-bottom: clamp(152px, 18vh, 220px); }
 .hero-band { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid var(--ink-12); border-bottom: 1px solid var(--ink-12); padding: 16px 0; margin-bottom: clamp(40px, 6vh, 72px); }
 .hero-id { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; font-family: var(--sans); }
-.hero-id b { display: inline-block; font-weight: 600; font-size: 16px; line-height: 1.3; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); border-top: 3px solid var(--brand); padding-top: 8px; }
+.hero-id b { display: inline-block; font-family: var(--display); font-weight: 400; font-size: 18.6px; line-height: 1.2; text-transform: uppercase; letter-spacing: calc(0.06em + 1pt); color: var(--ink); border-top: 3px solid var(--brand); padding-top: 8px; }
 .hero-id span { font-size: 16px; color: var(--ink-50); font-weight: 500; }
 
 /* social icons beside the hero button: gray at rest, brand blue on hover, deeper blue and a press-in when clicked */
@@ -19,15 +19,14 @@
 .social-icon:active { color: var(--brand-deep); background-color: color-mix(in srgb, var(--brand) 18%, transparent); transform: scale(0.92); }
 .hero-ghost { position: absolute; bottom: 0; left: 0; z-index: 0; pointer-events: none; display: flex; white-space: nowrap; font-family: var(--display); font-size: calc(var(--fs-ghost-md) * 0.8); line-height: 1; color: transparent; -webkit-text-stroke: 1.5px var(--ink-12); }
 .hero-ghost span { display: block; padding-right: 0.5em; animation: tick 60s linear infinite; will-change: transform; }
-.hero-claim { position: relative; z-index: 2; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-2xl); line-height: 0.9; color: var(--ink); }
+.hero-claim { position: relative; z-index: 2; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-2xl); line-height: 0.9; color: var(--heading); }
 .hero-claim .l { display: block; overflow: hidden; padding-bottom: 0.08em; }
-.hero-claim .l:nth-child(2) { padding-left: clamp(28px, 5vw, 112px); }
 .hero-claim .ch { display: inline-block; transform: translateY(118%) rotate(4deg); }
 body.loaded .hero-claim .ch { animation: chLift 0.85s var(--ease) forwards; animation-delay: calc(0.15s + var(--i) * 0.035s); }
-.hero-claim .l:nth-child(2) .ch { color: transparent; -webkit-text-stroke: 2.5px var(--ink); transition: color var(--t-fill-lg) var(--ease); }
-body.filled .hero-claim .l:nth-child(2) .ch { color: var(--ink); -webkit-text-stroke: 0; }
+.hero-claim .l:nth-child(2) .ch { color: transparent; -webkit-text-stroke: 2.5px var(--heading); transition: color var(--t-fill-lg) var(--ease); }
+body.filled .hero-claim .l:nth-child(2) .ch { color: var(--heading); -webkit-text-stroke: 0; }
 .hero-claim .ch.red { color: var(--brand); -webkit-text-stroke: 0; }
-.hero-sub { position: relative; z-index: 2; font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.55; color: var(--ink-65); max-width: 46ch; margin-top: 32px; white-space: pre-line; }
+.hero-sub { position: relative; z-index: 2; font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.55; color: var(--ink-65); max-width: 58ch; margin-top: 32px; }
 .hero-band, .hero-sub, .hero-ghost { opacity: 0; }
 body.loaded .hero-band { animation: fade var(--t-reveal) var(--ease) 0.3s forwards; }
 body.loaded .hero-sub { animation: fade var(--t-reveal) var(--ease) 0.5s forwards; }
@@ -38,17 +37,20 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 .statrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 112px; }
 
 /* chapters */
-html { scroll-snap-type: y proximity; }
 .chap-stack { position: relative; }
-.chap { position: sticky; top: 0; height: 100svh; display: block; overflow: hidden; text-decoration: none; background: var(--coal); border-top: 1px solid var(--ink-12); scroll-snap-align: start; scroll-snap-stop: always; }
+.chap { position: sticky; top: 0; height: 100svh; display: block; overflow: hidden; text-decoration: none; background: var(--coal); }
 .chap-media { position: absolute; inset: 0; z-index: 1; }
+/* the bars beside (or above and below) a clip use its own edge colours, so the film melts into the panel */
+.chap-film { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.chap-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; } /* the whole clip, never cropped, unless the clip asks to cover (see FilmClip.fit) */
+.chap-video.is-on { opacity: 1; z-index: 1; }
 .ph-box { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, #1a1a19, #1a1a19 16px, #222221 16px, #222221 32px); color: var(--white-50); font-family: var(--sans); font-size: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
 .ph-tag { position: absolute; left: var(--gutter); top: 24px; z-index: 2; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(10, 10, 9, 0.72); padding: 6px 10px; border-radius: 4px; }
 .chap-plate { position: absolute; z-index: 3; left: var(--gutter); bottom: 48px; background: var(--paper); border-radius: var(--r); padding: 32px 36px 28px; max-width: 560px; box-shadow: var(--sh-card-up); transition: transform var(--t-fill) var(--ease), opacity var(--t-fill) var(--ease); }
 .chap.plate-rest .chap-plate { transform: translateY(calc(100% + 64px)); opacity: 0; }
 .chap-name { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(36px, 3.6vw, 56px); line-height: 1; color: var(--ink); }
 .chap-role { font-family: var(--sans); font-size: 15px; color: var(--ink-50); margin-top: 8px; letter-spacing: 0.01em; }
-.chap-role em { font-style: normal; color: var(--brand); }
+.chap-role em { font-style: normal; color: var(--cyan); }
 .chap-sub { font-family: var(--sans); font-size: 16px; color: var(--ink-80); line-height: 1.4; margin-top: 16px; }
 .chap-stats { display: flex; gap: 36px; margin-top: 32px; flex-wrap: wrap; }
 .chap-stat b { display: block; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(30px, 3vw, 44px); line-height: 1; color: var(--ink); }
@@ -65,9 +67,23 @@ html { scroll-snap-type: y proximity; }
 .sl-card.on { opacity: 1; z-index: 2; transition: opacity 0.16s var(--ease); animation: slDrift var(--beat, 4000ms) linear both; }
 @keyframes slDrift { from { transform: scale(0.99); } to { transform: scale(1.03); } }
 .sl-hero { grid-row: 2; }
-.sl-line { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(44px, 7vw, 128px); line-height: 0.95; max-width: 16ch; }
-.sl-line em { font-style: normal; color: var(--brand); }
+.sl-line { margin-inline: auto; text-align: center; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(44px, 7vw, 128px); line-height: 0.95; max-width: 16ch; }
+.sl-line em { font-style: normal; color: var(--sl-accent, #42b7f0); }
 .sl-giant { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(72px, 11vw, 208px); line-height: 1; font-variant-numeric: tabular-nums; }
+/* product screens fill the whole slide and drift in slowly when it comes on */
+.sl-screen { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); }
+.sl-screen--contain { object-fit: contain; padding: 2vh 2vw; box-sizing: border-box; } /* show the whole picture, nothing cropped */
+.sl-card.on .sl-screen { opacity: 1; transform: scale(1); transition: opacity 0.8s var(--ease), transform 4.2s var(--ease); }
+/* stat slides between the scenes of a chapter film: the same kicker, number and tag as the Sred.io beats, fading in and out as a whole */
+.film-slide { z-index: 3; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; } /* a slide only fades in and out */
+.film-slide.on { opacity: 1; }
+.film-slide .sl-card { transition: none; }
+.sl-kicker { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: clamp(16px, 2.4vw, 34px); font-family: var(--sans); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: clamp(12px, 1.3vw, 19px); }
+.sl-icons { display: flex; align-items: center; justify-content: center; width: 100%; gap: clamp(20px, 3vw, 48px); margin-bottom: clamp(16px, 2.4vw, 36px); }
+.sl-icons svg { height: clamp(36px, 5vw, 80px); width: auto; display: block; }
+.sl-icons svg:nth-child(2) { height: clamp(21px, 2.9vw, 46px); margin: 0 clamp(12px, 2vw, 32px); } /* the MCP mark is smaller, with extra room either side */
+.sl-brand { display: flex; flex-direction: column; align-items: flex-start; gap: clamp(8px, 1.2vw, 18px); }
+.sl-brand img { height: clamp(80px, 11vw, 190px); width: auto; display: block; }
 .sl-tag { font-family: var(--sans); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: clamp(16px, 1.8vw, 26px); opacity: 0.8; }
 .sloop.static .sl-card { opacity: 0; animation: none; }
 .sloop.static .sl-card.sl-park { opacity: 1; }
@@ -132,7 +148,6 @@ html { scroll-snap-type: y proximity; }
   .hero-band { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: clamp(32px, 5vh, 48px); }
   .hero-actions { width: 100%; }
   .hero-band .btn-sec { width: 100%; justify-content: space-between; }
-  .hero-claim .l:nth-child(2) { padding-left: 6vw; }
   .hero-claim .l:nth-child(2) .ch { -webkit-text-stroke-width: 1.5px; }
   .hero-ghost { bottom: 4%; }
   .statrow { grid-template-columns: 1fr; gap: 24px; margin-bottom: 64px; }
@@ -150,7 +165,7 @@ html { scroll-snap-type: y proximity; }
 @media (prefers-reduced-motion: reduce) {
   .hero-band, .hero-sub, .hero-ghost { opacity: 1; animation: none; }
   .hero-claim .ch { transform: none; }
-  .hero-claim .l:nth-child(2) .ch { color: var(--ink); }
+  .hero-claim .l:nth-child(2) .ch { color: var(--heading); }
   .br-ghost span, .hero-ghost span { animation: none; }
   .receipts-belt { overflow-x: auto; }
 }

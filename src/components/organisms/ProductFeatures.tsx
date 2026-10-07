@@ -1,0 +1,130 @@
+"use client";
+
+import { motion, type Easing } from "motion/react";
+import { Scene, type SceneProps } from "./QuodarcaScenes";
+import styles from "./ProductFeatures.module.css";
+
+const IMG = "/images/work/quodarca";
+const T = 15.04; // seconds: the length of the whole scene
+
+// The five clips. start/end are seconds from the Figma file; each device is an exported render with its position and size on the 1920 x 1080 stage.
+type Dev = { f: string; x: number; y: number; w: number; h: number };
+// the ground of each view: the colours change from one view to the next, each fading in over the last
+const GROUNDS = ["#302f7f", "#6643be", "#763aa1", "#24243b", "#6643be"];
+const CLIPS: { head: string; line: string[]; start: number; end: number; devices: Dev[] }[] = [
+  {
+    head: "Arca:", line: ["Organize your data", "with contextual links."], start: 0, end: 3.3,
+    devices: [
+      { f: "c1-imac", x: 310, y: 205, w: 1073, h: 866 }, { f: "c1-iphone", x: 103, y: 355, w: 356, h: 701 }, { f: "c1-ipad", x: 1065, y: 436, w: 832, h: 578 },
+    ],
+  },
+  {
+    head: "Quod:", line: ["Modular blocks for your", "structured data"], start: 3.28, end: 6.1,
+    devices: [
+      { f: "c2-macbook", x: 396, y: 117, w: 1489, h: 963 }, { f: "c2-iphone-a", x: 66, y: 283, w: 318, h: 754 }, { f: "c2-iphone-b", x: 411, y: 437, w: 318, h: 643 },
+    ],
+  },
+  {
+    head: "Files:", line: ["Supports multimedia files and", "over 30 other file types"], start: 6.06, end: 8.8,
+    devices: [{ f: "c3-ipad", x: 0, y: 0, w: 1920, h: 1080 }, { f: "c3-hand", x: 1081, y: 243, w: 840, h: 838 }],
+  },
+  {
+    head: "Users:", line: ["Roles & access control,", "Data usage rules."], start: 8.84, end: 11.6,
+    devices: [{ f: "c4-laptop", x: 72, y: 186, w: 1848, h: 895 }, { f: "c4-iphone", x: 0, y: 227, w: 903, h: 854 }],
+  },
+  {
+    head: "Messages:", line: ["End-to-end encrypted messaging", "for secure collaboration"], start: 11.62, end: 14.4,
+    devices: [{ f: "c5-imac", x: 455, y: 212, w: 1088, h: 868 }, { f: "c5-iphone", x: 255, y: 344, w: 361, h: 711 }],
+  },
+];
+
+// One motion for every device in every view, so the whole scene moves the same way: a smooth zoom.
+// Each device starts a little large, then eases down to full size as it fades up (devices of a view follow
+// one another 0.12 s apart); just before the next view takes over it eases slightly smaller while it fades out.
+const EXPO: Easing = [0.16, 1, 0.3, 1];
+const eases = (...e: Easing[]): Easing[] => e;
+const ZOOM_IN = 1.4; // seconds to settle
+const FADE_IN = 0.5;
+const OUT = 0.35;
+const frac = (s: number) => Math.min(1, Math.max(0, s / T));
+const HIDDEN = { opacity: 0, scale: 1.08 };
+
+function deviceMotion(start: number, end: number, index: number) {
+  const a = start + 0.35 + index * 0.12; // starts zooming in
+  const o = end - OUT; // starts leaving
+  const times = (t: number[]) => t.map(frac);
+  return {
+    animate: {
+      opacity: [0, 0, 1, 1, 0, 0],
+      scale: [1.08, 1.08, 1, 1, 0.97, 0.97],
+    },
+    transition: {
+      opacity: { duration: T, times: times([0, a, a + FADE_IN, o, o + OUT, T]), ease: eases("linear", "easeOut", "linear", "easeIn", "linear") },
+      scale: { duration: T, times: times([0, a, a + ZOOM_IN, o, o + OUT, T]), ease: eases("linear", EXPO, "linear", "easeIn", "linear") },
+    },
+  };
+}
+
+// The heading and the line rise in as their view begins and lift away as it ends.
+function textMotion(start: number, end: number) {
+  const o = end - OUT;
+  const t = [0, start, start + 0.4, o, o + 0.3, T].map(frac);
+  return {
+    animate: { opacity: [0, 0, 1, 1, 0, 0], y: [60, 60, 0, 0, -60, -60] },
+    transition: { duration: T, times: t, ease: eases("linear", EXPO, "linear", "easeIn", "linear") },
+  };
+}
+
+// "Product Features": five views (Arca, Quod, Files, Users, Messages) over one purple backdrop (Figma frame 193:13946).
+export function ProductFeatures(props: SceneProps) {
+  const on = props.active;
+  return (
+    <Scene
+      {...props}
+      bars="#302f7f"
+      stage="purple"
+      base="#302f7f"
+      backdrop={
+        <>
+          {CLIPS.map((c, i) => i > 0 && (
+            <motion.div
+              key={c.head}
+              className={styles.ground}
+              style={{ background: GROUNDS[i] }}
+              initial={{ opacity: 0 }}
+              animate={on ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }}
+              transition={{ duration: T, times: [0, c.start - 0.2, c.start + 0.2, T].map(frac), ease: "linear" }}
+            />
+          ))}
+        </>
+      }
+    >
+      {CLIPS.map((c) => {
+        const tm = textMotion(c.start, c.end);
+        return (
+          <div key={c.head}>
+            <motion.p className={styles.heading} initial={{ opacity: 0, y: 60 }} animate={on ? tm.animate : { opacity: 0, y: 60 }} transition={tm.transition}>{c.head}</motion.p>
+            <motion.p className={styles.line} initial={{ opacity: 0, y: 60 }} animate={on ? tm.animate : { opacity: 0, y: 60 }} transition={tm.transition}>
+              {c.line.map((l, i) => <span key={l}>{i > 0 && <br />}{l}</span>)}
+            </motion.p>
+            {c.devices.map((d, i) => {
+              const dm = deviceMotion(c.start, c.end, i);
+              return (
+                <motion.img
+                  key={d.f}
+                  className={styles.device}
+                  alt=""
+                  src={`${IMG}/features/${d.f}.webp`}
+                  style={{ left: d.x, top: d.y, width: d.w, height: d.h }}
+                  initial={HIDDEN}
+                  animate={on ? dm.animate : HIDDEN}
+                  transition={dm.transition}
+                />
+              );
+            })}
+          </div>
+        );
+      })}
+    </Scene>
+  );
+}

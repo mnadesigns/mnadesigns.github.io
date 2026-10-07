@@ -1,3 +1,5 @@
+import type { FilmItem } from "@/types/film";
+import type { ToolIconName } from "@/components/atoms/ToolIcons";
 // Home page content. Sourced from the "Linkdein Profile Optimization" Claude project; only claims confirmed there are used.
 export const site = {
   name: "Muhammad Naeem",
@@ -29,7 +31,7 @@ export const hero = {
   line1: "Design with AI.",
   line2: "Ship in days.",
   accent: "AI.",
-  sub: "I turn hard ideas into simple apps with AI.\n10+ years, 50+ brands, 3x more conversions.",
+  sub: "I turn hard ideas into simple apps with AI. I have 10+ years of design in SaaS, Fintech, Data, Health and e-commerce. I design the systems, then ship the code.",
   cta: "Get in touch",
 };
 
@@ -60,13 +62,14 @@ export const chapters = [
     kind: "ad",
     name: "SRED.io",
     role: "Product Designer & Project Manager, <em>2026 to Present</em>",
-    sub: "Introduced the platform's first design system and redesigned its core workflows.",
+    sub: "Introduced the platform's first design system, then designed four products: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.",
     stats: [
-      { v: "70%", l: "Less scroll, Staff & Teams" },
-      { v: "3", l: "Workflows redesigned" },
+      { v: "4", l: "Projects" },
+      { v: "12", l: "Flows" },
+      { v: "50+", l: "Screens" },
     ],
     href: site.behance,
-    tag: "kinetic ad",
+    tag: "",
   },
   {
     kind: "film",
@@ -78,10 +81,27 @@ export const chapters = [
       { v: "6", l: "Product lines" },
     ],
     href: site.behance,
-    tag: "film",
+    // Clips, scenes drawn in code and slides play one after another and loop. A clip is preloaded while the item before it shows.
+    film: {
+      poster: "/images/work/quodarca/poster.webp",
+      items: [
+        { type: "scene", id: "welcome", dur: 4500 },
+        { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The scope", giant: 6, tag: "Product lines" },
+        { type: "scene", id: "process-challenges", dur: 10000 },
+        { type: "slide", bg: "#763aa1", dark: true, dur: 3200, kicker: "The work", giant: 500, suffix: "+", tag: "Screens designed" },
+        { type: "scene", id: "approach", dur: 9000 },
+        { type: "slide", bg: "#302f7f", dark: true, dur: 3200, kicker: "The foundation", giant: 100, suffix: "%", tag: "Custom design system, from scratch" },
+        { type: "scene", id: "design-system", dur: 4000 },
+        { type: "slide", bg: "#6643be", dark: true, dur: 3000, kicker: "The reach", giant: 3, tag: "Platforms: desktop, tablet, mobile" },
+        { type: "scene", id: "product-features", dur: 14500 },
+        { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The standard", line: "WCAG 2.1 AA", tag: "Accessible on every screen" },
+        { type: "scene", id: "projects-delivered", dur: 4000 },
+      ] as FilmItem[],
+    },
+    tag: "",
   },
   {
-    kind: "still",
+    kind: "film",
     name: "MLK Group",
     role: "Senior UX/UI Designer, <em>2021 to 2023</em>",
     sub: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.",
@@ -90,7 +110,20 @@ export const chapters = [
       { v: "2.5x", l: "Online orders" },
     ],
     href: site.behance,
-    tag: "still",
+    // The Zero Gaspi scene, the Applied Electronics and Vyno videos, the Keysborough scene, then a few plain stat slides, on a loop.
+    film: {
+      poster: "/images/work/zerogaspi/phone-tilt.webp",
+      items: [
+        { type: "scene", id: "zerogaspi", dur: 12500 },
+        { type: "clip", src: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560", fit: "cover" },
+        { type: "clip", src: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3", fit: "cover" },
+        { type: "scene", id: "keysborough", dur: 4000 },
+        { type: "slide", bg: "#302f7f", dark: true, dur: 3000, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
+        { type: "slide", bg: "#763aa1", dark: true, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
+        { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The growth", line: "2.5x", tag: "Online orders" },
+      ] as FilmItem[],
+    },
+    tag: "",
   },
   {
     kind: "still",
@@ -105,16 +138,16 @@ export const chapters = [
 
 // Kinetic ad beats for the SRED.io plate: background colour, dark text, line and optional counter.
 export const adBeats = [
-  { bg: "#ffffff", dark: false, dur: 2400, tag: "SRED.io" },
-  { bg: "#02c3a3", dark: false, dur: 2900, line: "A tax-credit platform with no design system" },
-  { bg: "#0b0b0a", dark: true, dur: 2700, line: "Hidden filters. <em>Long</em> screens." },
-  { bg: "#ffffff", dark: false, dur: 3600, giant: 70, suffix: "%", tag: "Less vertical scroll" },
-  { bg: "#02c3a3", dark: false, dur: 3200, line: "The first design system, built on Flowbite" },
-  { bg: "#ff7b66", dark: false, dur: 3400, giant: 3, tag: "Core workflows redesigned" },
-  { bg: "#1c9ce5", dark: false, dur: 5400, line: "Staff & Teams, Timesheets, File Vaults" },
-  { bg: "#02c3a3", dark: false, dur: 2900, line: "Figma to code through MCP" },
-  { bg: "#ffffff", dark: false, dur: 3600, line: "Shipped to <em>clients</em>" },
-  { bg: "#ffffff", dark: false, dur: 2600, tag: "SRED.io" },
+  { bg: "#ffffff", dark: false, dur: 2400, logo: { src: "/images/brands/sredio.png", name: "Sred.io" } },
+  { bg: "#1297D9", dark: true, dur: 2900, line: "Built fast. <span style=\"white-space:nowrap\">Never designed.</span>", kicker: "The problem" },
+  { bg: "#0b0b0a", dark: true, dur: 2700, line: "Too much scrolling.", kicker: "The pain point" },
+  { bg: "#ffffff", dark: false, dur: 3600, giant: 70, suffix: "%", kicker: "The first win", tag: "Shorter. Same page." },
+  { bg: "#003A66", dark: true, dur: 3200, line: "The first design system, built on Flowbite", kicker: "The foundation" },
+  { bg: "#ffffff", dark: false, dur: 4000, shot: { src: "/images/work/sredio/design-system.webp", alt: "The Sred.io design system: components built on Flowbite", fit: "contain" as const } },
+  { bg: "#1297D9", dark: true, dur: 5400, line: "Staff & Teams, File Vaults, Timesheets, Feedback Widget" },
+  { bg: "#1E2939", dark: true, dur: 4000, shot: { src: "/images/work/sredio/products-collage.webp", alt: "Screens from the four Sred.io products" } },
+  { bg: "#003A66", dark: true, dur: 2900, line: "Figma to code through MCP", kicker: "Design to code, with AI", icons: ["figma", "mcp", "claude", "cursor"] as ToolIconName[] },
+  { bg: "#ffffff", dark: false, dur: 3600, line: "Shipped, <em>with AI</em> <span style=\"white-space:nowrap\">in the loop</span>" },
 ];
 
 export const breakerWords = ["design systems", "SaaS products", "AI-augmented workflows", "accessible interfaces", "e-commerce that converts"];
@@ -138,7 +171,7 @@ export const doors = [
 ];
 
 // Skills circle (below the hero): generic placeholder labels; replace with your own words.
-export const skillChips: { label: string; tone: "brand" | "white" }[] = [
+export const skillChips: { label: string; tone: "brand" | "white"; icon?: "claude" | "cursor" | "figma" }[] = [
   { label: "Design Systems", tone: "brand" },
   { label: "Prototyping", tone: "brand" },
   { label: "User Research", tone: "white" },
@@ -150,8 +183,9 @@ export const skillChips: { label: string; tone: "brand" | "white" }[] = [
   { label: "Design Tokens", tone: "white" },
   { label: "Handoff", tone: "brand" },
   { label: "Quality", tone: "brand" },
-  { label: "Claude Code", tone: "brand" },
-  { label: "Cursor", tone: "white" },
+  { label: "Claude Code", tone: "brand", icon: "claude" },
+  { label: "Cursor", tone: "white", icon: "cursor" },
+  { label: "Figma", tone: "white", icon: "figma" },
   { label: "Vibe Coder", tone: "brand" },
   { label: "First AI Designer", tone: "white" },
 ];

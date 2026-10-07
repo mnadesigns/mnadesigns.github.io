@@ -1,0 +1,27 @@
+/* "Zero Gaspi" scene, from the Zero Gaspi Figma file (frames 2005:2535 and 2048:7656): a tilted phone between two steel brackets, which straightens
+   and grows while the brackets and text leave; then the app's long screen scrolls inside the phone. The phone is positioned in stage pixels (1920 x 1080); the brackets and text sit in the Scene corner anchors, so they hug the panel corners and the scene covers the whole view. */
+.metal { position: absolute; max-width: none; pointer-events: none; will-change: transform, opacity; }
+.metalTl { left: 0.6px; top: -209.3px; width: 631.8px; height: 709.2px; }
+.metalBr { left: -575.8px; top: -508.5px; width: 575.8px; height: 658.5px; }
+
+.persp { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; perspective: 2400px; perspective-origin: 960px 540px; pointer-events: none; }
+/* the tilted phone and its (already warped) screen, moved as one */
+.tilted { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 984px 537.3px; pointer-events: none; will-change: transform, opacity; }
+.tilted img { position: absolute; max-width: none; }
+.body { left: 604px; top: 141.9px; width: 759.8px; height: 790.8px; }
+.warp { left: 610px; top: 136.7px; width: 766.6px; height: 774.9px; -webkit-mask: url("/images/work/zerogaspi/screen-mask.svg") 23.99px 13.46px / 719.02px 744.37px no-repeat; mask: url("/images/work/zerogaspi/screen-mask.svg") 23.99px 13.46px / 719.02px 744.37px no-repeat; mask-mode: luminance; }
+
+/* the upright phone (it runs past the bottom of the stage) with the long screen inside it */
+.upright { position: absolute; left: 513px; top: 117px; width: 895px; height: 1846px; transform-origin: 447px 520px; pointer-events: none; will-change: transform, opacity; }
+.shell { position: absolute; left: 0; top: 0; width: 895px; height: 1846px; max-width: none; }
+.screen { position: absolute; left: 38px; top: 29px; width: 820px; height: 1788px; border-radius: 131px; overflow: hidden; background: #f6f2ee; }
+.long { position: absolute; left: 0; top: 0; width: 820px; height: 3878px; max-width: none; will-change: transform; }
+.status { position: absolute; left: 0; top: 0; width: 820px; height: 104px; background: #f6f2ee url("/images/work/zerogaspi/screen-long.webp") 0 0 / 820px 3878px no-repeat; }
+.island { position: absolute; left: 285px; top: 26px; width: 250px; height: 72px; border-radius: 36px; background: #000; }
+
+/* text */
+.lockup { position: absolute; left: 211px; top: -423.4px; display: flex; align-items: center; gap: 38.4px; will-change: transform, opacity; }
+.mark { display: block; width: 100.85px; height: 100.85px; }
+.wordmark { margin: 0; font-family: var(--sans); font-weight: 600; font-size: 60px; line-height: 68.7px; letter-spacing: -0.01em; color: #000; white-space: nowrap; }
+.tagline { position: absolute; left: 211px; top: -294px; margin: 0; white-space: nowrap; font-family: var(--sans); font-weight: 400; font-size: 42.6px; line-height: 51.9px; letter-spacing: -0.01em; color: #000; will-change: transform, opacity; }
+.native { position: absolute; left: -511px; top: 185px; width: 387px; margin: 0; font-family: var(--sans); font-weight: 500; font-size: 38.8px; line-height: 48.5px; letter-spacing: -0.025em; color: #000; will-change: transform, opacity; }

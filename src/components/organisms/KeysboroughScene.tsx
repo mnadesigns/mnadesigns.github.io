@@ -1,0 +1,23 @@
+"use client";
+
+import { motion, type Easing } from "motion/react";
+import { Scene, type SceneProps } from "./QuodarcaScenes";
+
+const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
+
+// "Keysborough Veterinary Practice": the website on a desktop, a tablet and a phone as one picture on white, kept whole inside the 16:9 stage, resting on its bottom edge (not stretched
+// across the panel), with the same simple entrance as the Sred.io screens (work 1): it fades in over 0.8 s while easing from 106% down to 100% over 4.2 s.
+export function KeysboroughScene(props: SceneProps) {
+  return (
+    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff">
+      <motion.img
+        alt="The Keysborough Veterinary Practice website on a desktop, a tablet and a phone."
+        src="/images/work/keysborough/composite.webp"
+        style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, objectFit: "contain", objectPosition: "50% 100%", transformOrigin: "50% 100%", padding: "40px 60px 0", boxSizing: "border-box" }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={props.active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
+        transition={{ opacity: { duration: 0.8, ease: EASE }, scale: { duration: 4.2, ease: EASE } }}
+      />
+    </Scene>
+  );
+}

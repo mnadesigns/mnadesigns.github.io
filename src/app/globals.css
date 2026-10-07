@@ -130,6 +130,8 @@
 :root {
   --paper: #ffffff;
   --ink: #0b0b0a;
+  --cyan: #1297d9; /* accent used inside the work slides instead of the primary orange */
+  --heading: #3c3c3b; /* colour of the dark headings */
   --coal: #0a0a09;
   --white: #ffffff;
   --ink-80: rgba(11, 11, 10, 0.8);
@@ -141,8 +143,8 @@
   --white-50: rgba(255, 255, 255, 0.5);
   --white-25: rgba(255, 255, 255, 0.25);
   --white-12: rgba(255, 255, 255, 0.12);
-  --brand: #f6580f;
-  --brand-deep: #c4440a;
+  --brand: #1297d9;
+  --brand-deep: #0d77ad;
   --emerald: #0e9f6e;
   --emerald-ink: #0a7b55;
 

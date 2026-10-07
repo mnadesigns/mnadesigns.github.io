@@ -1,0 +1,70 @@
+/* "Process & UX Challenges" scene, built from the QuodArca Figma file (frame 72:8516). Drawn on the 1920 x 1080 stage of Scene.
+   First "The Process" (title, rocket, three cards and fifteen bubbles) plays and lifts away; then "Key UX Challenges" (a title and
+   five sticky notes that drop in). Times are the Figma times of its 10 second animation. Parts start hidden and only animate
+   while the scene is showing (the frame carries data-active). */
+.t { position: absolute; margin: 0; color: #000; font-family: var(--display); font-weight: 400; text-transform: uppercase; white-space: nowrap; font-feature-settings: "liga" 0; }
+.groupA, .groupB { position: absolute; inset: 0; }
+.lower { position: absolute; inset: 0; transform: translateY(-72px); } /* the three cards and their bubbles sit closer to the title, so more of the scene fits the viewport */
+.groupB { opacity: 0; }
+.fade { opacity: 0; will-change: transform, opacity; }
+
+/* ---- The Process ---- */
+.processTitle { opacity: 0; left: 257px; top: 139px; font-size: 92px; line-height: 92px; letter-spacing: 0.01em; }
+.rocket { position: absolute; left: 400px; top: 136px; width: 98px; height: 98px; opacity: 0; }
+.rocket img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.card { position: absolute; top: 448px; height: 612px; border-radius: 24px; opacity: 0; }
+.cardName { position: absolute; top: 499px; width: 405px; margin: 0; color: #fff; font-family: var(--sans); font-weight: 700; font-size: 64px; line-height: 81px; letter-spacing: -0.02em; font-feature-settings: "liga" 0; opacity: 0; }
+.cardText { position: absolute; top: 595px; width: 400px; height: 55px; margin: 0; color: #fff; font-family: var(--sans); font-weight: 500; line-height: 33px; font-feature-settings: "liga" 0; opacity: 0; }
+.intro { position: absolute; left: 854px; top: 115px; width: 803px; height: 228px; opacity: 0; }
+.introPop { position: absolute; inset: 0; opacity: 0; }
+.introBg { position: absolute; inset: 0; background: #f9fafb; }
+.introBar { position: absolute; left: 0; top: 0; width: 9px; height: 228px; background: #5c5ae8; }
+.introText { position: absolute; left: 63px; top: 18px; width: 701px; margin: 0; color: #111827; font-family: var(--sans); font-weight: 500; font-size: 29px; line-height: 44px; font-feature-settings: "liga" 0; }
+.bubble { position: absolute; opacity: 0; will-change: transform, opacity; }
+.bubble img { display: block; }
+.ebox { position: absolute; display: flex; align-items: center; justify-content: center; }
+.eturn { flex: none; }
+.einner { position: relative; }
+.einner img, .eplain img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; }
+.tbox { position: absolute; display: flex; align-items: center; justify-content: center; }
+.tturn { flex: none; }
+.tt { margin: 0; color: #374151; font-family: var(--sans); font-weight: 700; letter-spacing: -0.02em; text-align: center; font-feature-settings: "salt" 1, "liga" 0; word-break: break-word; }
+
+/* ---- Key UX Challenges ---- */
+.challengeTitle { font-size: 84px; line-height: 78px; letter-spacing: 0.01em; left: 319px; opacity: 0; }
+.siren { position: absolute; left: 565.71px; top: 114.75px; width: 71.37px; height: 71.37px; opacity: 0; }
+.siren img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lead { position: absolute; left: 328px; top: 312px; width: 383px; margin: 0; color: #1f2937; font-family: var(--sans); font-weight: 500; font-size: 26px; line-height: 38px; opacity: 0; }
+.note { position: absolute; width: 408px; height: 455px; opacity: 0; will-change: transform, opacity; }
+.shadow { position: absolute; left: -12.75%; right: 96.32%; top: 19.9px; bottom: 14.76px; }
+.shadow img { position: absolute; left: -44.78%; right: -29.85%; top: -7.14%; bottom: -7.14%; width: 174.63%; height: 114.28%; max-width: none; }
+.paper { position: absolute; left: 2.21%; right: 2.21%; top: 1.7%; bottom: 2.71%; }
+.paper img { position: absolute; left: -1.54%; right: -1.03%; top: 0; bottom: -2.3%; width: 102.57%; height: 102.3%; max-width: none; }
+.noteText { position: absolute; left: 39px; top: 39px; width: 330px; display: flex; flex-direction: column; gap: 16px; color: #222; word-break: break-word; }
+.noteText h3 { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; }
+.noteText p { margin: 0; font-family: var(--sans); font-weight: 400; font-size: 24px; line-height: 1.38; }
+
+/* ---- timeline ---- */
+[data-active="true"] .groupA { animation: aOut 0.3s ease-in 4.6s forwards; }
+[data-active="true"] .groupB { animation: bShow 0.01s linear 5s both, bOut 0.3s ease-in 9.6s forwards; }
+[data-active="true"] .processTitle { animation: rise48 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+[data-active="true"] .rocket { animation: rocketIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+[data-active="true"] .col1 { animation: rise80 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+[data-active="true"] .col2 { animation: rise80 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.57s both; }
+[data-active="true"] .col3 { animation: rise80 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.69s both; }
+[data-active="true"] .introPop { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 1.14s both; }
+[data-active="true"] .intro { animation: rise48 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+[data-active="true"] .bubble { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d) both; }
+[data-active="true"] .challengeTitle { animation: rise48 0.6s cubic-bezier(0.16, 1, 0.3, 1) 5.1s both; }
+[data-active="true"] .siren { animation: sirenIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 5.22s both; }
+[data-active="true"] .lead { animation: rise48 0.6s cubic-bezier(0.16, 1, 0.3, 1) 5.4s both; }
+[data-active="true"] .note { animation: drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) var(--d) both; }
+@keyframes aOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }
+@keyframes bShow { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }
+@keyframes rise48 { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
+@keyframes rise80 { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: none; } }
+@keyframes rocketIn { from { opacity: 0; transform: translate(-160px, 160px) rotate(25deg); } to { opacity: 1; transform: none; } }
+@keyframes popIn { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: none; } }
+@keyframes sirenIn { 0% { opacity: 0; transform: translateY(48px) rotate(12deg); } 45% { opacity: 1; transform: rotate(-8deg); } 100% { opacity: 1; transform: none; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-140px) rotate(6deg); } to { opacity: 1; transform: none; } }

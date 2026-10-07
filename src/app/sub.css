@@ -8,7 +8,7 @@
 .pg-lead { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.55; color: var(--ink-65); max-width: 52ch; }
 .pg-cta { margin-top: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
 .pg-sec { padding-top: var(--sp-sec-bot); padding-bottom: var(--sp-sec-bot); border-top: 1px solid var(--ink-12); }
-.pg-sec h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 0.9; color: var(--ink); margin-bottom: 40px; }
+.pg-sec h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 0.9; color: var(--heading); margin-bottom: 40px; }
 .pg-sec h2 em { font-style: normal; color: var(--brand); }
 .pg-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
 .pg-prose p { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.6; color: var(--ink-80); margin-bottom: 20px; max-width: 60ch; }

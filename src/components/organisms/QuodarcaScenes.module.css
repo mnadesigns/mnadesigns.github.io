@@ -1,0 +1,69 @@
+/* QuodArca scenes drawn in code from the Figma file: "Welcome" (frame 253:22383) and "Projects delivered" (frame 72:10492).
+   Each is a fixed 1920 x 1080 stage scaled to fit its panel. Timings follow the Figma animations: parts rise in one after another,
+   hold, then lift away. Parts start hidden and only animate while their scene is showing (.on). */
+.frame { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); }
+.stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; overflow: hidden; isolation: isolate; }
+.welcome { background: transparent; } /* the colour is drawn on the frame, across the whole panel */
+.purple { background: transparent; }
+.white { background: transparent; } /* the dotted paper is drawn on the frame behind it */
+
+/* full-panel background layers (see Scene) */
+.fill { position: absolute; inset: 0; mix-blend-mode: luminosity; }
+.fill img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.cover { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform, opacity; }
+/* a 543 x 280 box in the bottom-right corner of the panel itself (not the 16:9 stage), scaled like the stage */
+.corner { position: absolute; right: 0; width: 543px; height: 280px; transform-origin: bottom right; pointer-events: none; }
+/* four zero-size boxes at the corners of the panel itself (not the 16:9 stage), scaled like the stage: whatever sits in one hugs that corner at any panel shape,
+   using stage coordinates measured from that corner (so the bottom-right box takes negative offsets) */
+.anchor { position: absolute; width: 0; height: 0; pointer-events: none; }
+.tl { left: 0; top: 0; transform-origin: 0 0; }
+.tr { right: 0; top: 0; transform-origin: 100% 0; }
+.bl { left: 0; bottom: 0; transform-origin: 0 100%; }
+.br { right: 0; bottom: 0; transform-origin: 100% 100%; }
+/* bleed: what sits on the stage may run past its 16:9 edges to the edges of the panel (the frame still clips it) */
+.bleed { overflow: visible; }
+.stageLayer { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; pointer-events: none; }
+
+/* ---- Welcome ---- */
+.texture { position: absolute; left: 0; right: 0; top: -1.76%; bottom: -1.76%; mix-blend-mode: luminosity; }
+.texture img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.wordmarkWrap { position: absolute; left: 299.14px; top: -60.16px; width: 1075.38px; height: 382.1px; display: flex; align-items: center; justify-content: center; opacity: 0; }
+.wordmark { flex: none; width: 1073.5px; height: 131.6px; transform: rotate(-13.71deg) skewX(0.55deg); }
+.wordmark img { display: block; width: 100%; height: 100%; }
+.monitor { position: absolute; left: 327px; top: 38.99px; width: 1590.1px; height: 1261.1px; opacity: 0; }
+.monitor img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+.on .wordmarkWrap { animation: wRiseIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both, wRiseOut 0.3s ease-in 4.03s forwards; }
+.on .monitor { animation: wMonitorIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both, wMonitorOut 0.3s ease-in 4.06s forwards; }
+@keyframes wRiseIn { from { opacity: 0; transform: translateY(120px); } to { opacity: 1; transform: none; } }
+@keyframes wRiseOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }
+@keyframes wMonitorIn { from { opacity: 0; transform: translateY(320px) rotate(-4deg); } to { opacity: 1; transform: none; } }
+@keyframes wMonitorOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-160px); } }
+
+/* ---- Projects delivered ---- */
+.rocketWrap { position: absolute; z-index: 1; left: 797.85px; top: 5.31px; width: 288.296px; height: 288.296px; display: flex; align-items: center; justify-content: center; opacity: 0; }
+.rocketTurn { flex: none; transform: rotate(-38.83deg); }
+.rocket { position: relative; width: 205.042px; height: 205.042px; }
+.rocket img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.title { position: absolute; left: 425px; top: 155px; width: 1071px; margin: 0; text-align: center; white-space: pre; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 108px; line-height: 100px; letter-spacing: 0.01em; color: #000; font-feature-settings: "liga" 0; opacity: 0; }
+.rings { position: absolute; left: 946px; top: 663.83px; width: 990px; transform: translate(-50%, -50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 65px 68.499px; }
+.ring { position: relative; flex: none; width: 284.334px; height: 284.334px; opacity: 0; }
+.ring img { display: block; }
+.base { position: absolute; inset: 0; width: 100%; height: 100%; }
+.arc { position: absolute; }
+.arc img { width: 100%; height: 100%; }
+.label { position: absolute; margin: 0; white-space: nowrap; text-align: center; font-family: var(--sans); font-weight: 700; font-size: 38px; line-height: 1.15; letter-spacing: -0.02em; color: #1f2937; }
+.label small { display: block; font-size: 26px; line-height: 1.15; }
+
+.on .rocketWrap { animation: rkIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both, rkOut 0.3s ease-in 3.52s forwards; }
+.on .rocketTurn { animation: rkTurn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+.on .title { animation: titleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both, titleOut 0.3s ease-in 3.5s forwards; }
+.on .ring { animation: ringIn 0.7s cubic-bezier(0.34, 1.45, 0.64, 1) var(--d) both, ringOut 0.3s ease-in var(--x) forwards; }
+@keyframes rkIn { from { opacity: 0; transform: translateY(200px); } to { opacity: 1; transform: none; } }
+@keyframes rkTurn { from { transform: rotate(-13.834deg); } to { transform: rotate(-38.83deg); } }
+@keyframes rkOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }
+@keyframes titleIn { from { opacity: 0; transform: translateY(48px); } to { opacity: 1; transform: none; } }
+@keyframes titleOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }
+@keyframes ringIn { from { opacity: 0; transform: rotate(90deg) scale(0); } to { opacity: 1; transform: none; } }
+@keyframes ringOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-64px); } }

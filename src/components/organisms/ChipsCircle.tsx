@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ToolIcon, type ToolIconName } from "@/components/atoms/ToolIcons";
 import styles from "./SkillsStats.module.css";
 
-type Chip = { label: string; tone: "brand" | "white" };
+type Chip = { label: string; tone: "brand" | "white"; icon?: ToolIconName };
 
 // A dark circle of pill chips. When the card scrolls into view the chips drop in from the top under gravity,
 // bounce a little off a bowl-shaped wall, settle, and can then be grabbed and thrown around (mouse or touch).
@@ -273,7 +274,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
   return (
     <div ref={wrap} className={styles.circle} aria-label="Skills">
       {chips.map((c) => (
-        <span key={c.label} data-chip className={`${styles.chip} ${c.tone === "brand" ? styles.brandChip : styles.white}`}>{c.label}</span>
+        <span key={c.label} data-chip className={`${styles.chip} ${c.tone === "brand" ? styles.brandChip : styles.white}`}>{c.icon && <ToolIcon name={c.icon} className={styles.chipIcon} />}{c.label}</span>
       ))}
     </div>
   );

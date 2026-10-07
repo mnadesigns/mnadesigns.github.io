@@ -21,6 +21,7 @@
   font-family: var(--sans); font-size: calc(14px * var(--k)); font-weight: 500; line-height: 1; white-space: nowrap;
   will-change: transform; visibility: hidden; /* revealed when the drop starts */
 }
+.chipIcon { width: 1.15em; height: 1.15em; margin-right: 0.5em; flex: 0 0 auto; }
 .brandChip { background: var(--brand); color: #fff; }
 .white { background: #fff; color: #000; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.4); }
 
@@ -35,7 +36,6 @@
 /* the shared stat styles restyled for the black card: white heading, brand-coloured numbers, light labels, no rule above each number */
 .cardRight :global(.stat) { border-top: 0; padding-top: 0; min-width: 0; }
 .cardRight :global(.stat-v) { color: var(--brand); overflow-wrap: anywhere; }
-.cardRight :global(.stat-v.counting) { -webkit-text-stroke-color: var(--brand); }
 .cardRight :global(.stat-l) { color: rgba(255, 255, 255, 0.85); }
 
 /* tablet and phone: the cards stack */
