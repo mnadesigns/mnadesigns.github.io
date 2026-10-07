@@ -1,6 +1,6 @@
 // Home page content. Sourced from the "Linkdein Profile Optimization" Claude project; only claims confirmed there are used.
 export const site = {
-  name: "M Naeem",
+  name: "Muhammad Naeem",
   role: "Senior Product Designer, Lahore, Pakistan",
   logo: "MNA",
   email: "me.naeem88@gmail.com",

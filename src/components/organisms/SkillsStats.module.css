@@ -17,8 +17,8 @@
 .circle:active { cursor: grabbing; }
 .chip {
   position: absolute; left: 0; top: 0; display: inline-flex; align-items: center;
-  height: calc(44px * var(--k)); padding: 0 calc(24px * var(--k)); border-radius: calc(28px * var(--k));
-  font-family: var(--sans); font-size: calc(15px * var(--k)); font-weight: 500; line-height: 1; white-space: nowrap;
+  height: calc(40px * var(--k)); padding: 0 calc(20px * var(--k)); border-radius: calc(28px * var(--k));
+  font-family: var(--sans); font-size: calc(14px * var(--k)); font-weight: 500; line-height: 1; white-space: nowrap;
   will-change: transform; visibility: hidden; /* revealed when the drop starts */
 }
 .brandChip { background: var(--brand); color: #fff; }

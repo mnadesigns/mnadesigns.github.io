@@ -14,7 +14,10 @@ const REF = 366; // the circle's design size (px); everything below is tuned at 
 const GRAVITY = 1.25;
 const RESTITUTION = 0.38; // "jumps a little back up"
 const WALL_EXTRA = 12; // wall sits a bit outside the visible circle so chips poke past the edge and are clipped by it
-const BODY_SCALE = 0.93; // collision body slightly smaller than the pill, so neighbouring chips can overlap a little
+const BODY_SCALE = 1.02; // collision body just larger than the pill, so neighbouring chips keep a small gap and never overlap
+const CALM_SPEED = 0.3; // below this speed (px per step) and spin, a chip counts as at rest
+const CALM_SPIN = 0.006;
+const CALM_FRAMES = 40; // this many calm frames in a row and the pile goes to sleep
 const SPIN_RESIST = 4; // pills resist tumbling, so they settle near-horizontal instead of standing on end
 
 const shuffle = <T,>(a: T[]) => {
@@ -47,7 +50,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
         const R = S / 2, cx = R, cy = R;
         const Rw = R + WALL_EXTRA * k;
         const sizes = els.map((e) => ({ w: e.offsetWidth, h: e.offsetHeight }));
-        const engine = Engine.create({ gravity: { x: 0, y: GRAVITY * k } });
+        const engine = Engine.create({ gravity: { x: 0, y: GRAVITY * k }, positionIterations: 14, velocityIterations: 10 }); // extra solver passes keep the pile from sinking into itself
         const world = engine.world;
 
         // bowl: ring segments from -35deg to 215deg (opening at the top), plus short upright walls above the lip
@@ -134,7 +137,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
         window.addEventListener("blur", release);
 
         const entered = new Set<Matter.Body>(); // chips that have been inside the circle at least once
-        let raf = 0, simStarted = false, simVisible = false, last = 0, dropped = 0, t0 = 0;
+        let raf = 0, simStarted = false, simVisible = false, last = 0, dropped = 0, t0 = 0, calm = 0;
         const step = (now: number) => {
           raf = 0;
           if (!simVisible) return;
@@ -164,8 +167,23 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
             }
           });
           draw();
+          // once everything has stopped for a moment, put the chips to sleep: the solver otherwise keeps nudging the pile by a
+          // fraction of a pixel every frame, which shows up as trembling. A grab (wake) starts the simulation again.
+          if (dropped === bodies.length && !drag.constraint.bodyB) {
+            const still = bodies.every((b) => b.speed < CALM_SPEED && Math.abs(b.angularSpeed) < CALM_SPIN);
+            calm = still ? calm + 1 : 0;
+            if (calm > CALM_FRAMES) {
+              bodies.forEach((b) => { Body.setVelocity(b, { x: 0, y: 0 }); Body.setAngularVelocity(b, 0); });
+              return;
+            }
+          } else calm = 0;
           raf = requestAnimationFrame(step);
         };
+        const wake = () => {
+          calm = 0;
+          if (simVisible && simStarted && !raf && !reduced) { last = performance.now(); raf = requestAnimationFrame(step); }
+        };
+        host.addEventListener("pointerdown", wake, { passive: true });
 
         return {
           // instant = settle straight away with no animation (reduced motion, or a rebuild after a resize)
@@ -193,6 +211,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
             if (v && simStarted && !raf && !reduced) { last = performance.now(); raf = requestAnimationFrame(step); }
           },
           dispose() {
+            host.removeEventListener("pointerdown", wake);
             host.removeEventListener("mouseleave", release);
             window.removeEventListener("mouseup", release);
             window.removeEventListener("touchend", release);

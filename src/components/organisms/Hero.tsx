@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { hero, site } from "@/data/site";
 import { BtnSec } from "@/components/atoms/Buttons";
 
@@ -34,13 +33,10 @@ export function Hero() {
     <header className="hero shell" id="hero">
       <div className="hero-band">
         <div className="hero-id">
-          <Image src="/images/dp.webp" alt={site.name} width={96} height={96} className="hero-dp" priority />
           <b>{site.name}</b>
           <span>{site.role}</span>
         </div>
-        <div className="hero-actions">
-          <BtnSec href={`mailto:${site.email}`}>{hero.cta}</BtnSec>
-        </div>
+        <BtnSec href={`mailto:${site.email}`}>{hero.cta}</BtnSec>
       </div>
       <h1 className="hero-claim" id="heroClaim">
         <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>
