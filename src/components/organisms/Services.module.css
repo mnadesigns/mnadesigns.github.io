@@ -1,0 +1,81 @@
+/* AI-augmented services: dark bento grid. Tiles share one structure; the pointer glow and the staggered rise-in are the only motion. */
+.section { background: #07090d; color: #e9eef5; padding: var(--sp-sec-top) 0 var(--sp-sec-bot); position: relative; overflow: hidden; }
+.section::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%); pointer-events: none; }
+.section::after { content: ""; position: absolute; left: 50%; top: -240px; width: 900px; height: 520px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(18, 151, 217, 0.28), transparent); pointer-events: none; }
+.section > :global(.shell) { position: relative; z-index: 1; }
+
+.intro { max-width: 860px; margin-bottom: clamp(36px, 5vw, 64px); }
+.h2 { margin: 0; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(30px, 7.4vw, 104px); line-height: 0.92; color: #fff; white-space: nowrap; }
+.h2 em { font-style: normal; color: #38b6f2; }
+.sub { margin: 22px 0 0; max-width: 60ch; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.55; color: rgba(233, 238, 245, 0.7); }
+
+.grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.t1, .t2 { grid-column: span 3; }
+.t3, .t4, .t5 { grid-column: span 2; }
+.t6 { grid-column: span 6; }
+
+.tile { --mx: 50%; --my: 0%; position: relative; display: flex; flex-direction: column; gap: 16px; padding: 28px 28px 30px; border-radius: 20px; background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)); border: 1px solid rgba(255, 255, 255, 0.09); overflow: hidden; opacity: 0; transform: translateY(36px); filter: blur(14px); transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.tile::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(420px circle at var(--mx) var(--my), rgba(56, 182, 242, 0.2), transparent 55%); opacity: 0; transition: opacity 0.35s var(--ease); pointer-events: none; }
+.tile:hover::before { opacity: 1; }
+.in .tile { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 0.09s) forwards; }
+.in .tile:hover { border-color: rgba(56, 182, 242, 0.7); box-shadow: inset 0 0 0 1px rgba(56, 182, 242, 0.7); } /* 1px border + 1px inside it = a 2px edge on hover, without moving anything */
+@keyframes rise { from { opacity: 0; transform: translateY(36px); filter: blur(14px); } to { opacity: 1; transform: none; filter: blur(0); } }
+
+/* each tile's border is drawn by a bright line that runs round it once, then fades, as the tile comes in */
+.trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.trace rect { fill: none; stroke: #38b6f2; stroke-width: 1.6; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; filter: drop-shadow(0 0 6px rgba(56, 182, 242, 0.9)); }
+.in .trace rect { animation: trace 1.5s cubic-bezier(0.45, 0, 0.2, 1) calc(var(--i) * 0.09s) forwards; }
+@keyframes trace { 0% { stroke-dashoffset: 1; opacity: 1; } 70% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+
+
+.head { display: flex; align-items: center; justify-content: space-between; }
+.num { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; letter-spacing: 0.14em; color: #6fd0ff; }
+.num::before { content: "["; opacity: 0.5; margin-right: 4px; }
+.num::after { content: "]"; opacity: 0.5; margin-left: 4px; }
+.badge { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #07090d; background: #6fd0ff; padding: 4px 10px; border-radius: 999px; }
+.title { margin: 0; font-family: var(--sans); font-weight: 600; font-size: clamp(22px, 2vw, 30px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; }
+.promise { flex: 1; margin: 0; font-family: var(--sans); font-size: 15.5px; line-height: 1.55; color: rgba(233, 238, 245, 0.72); }
+.group { display: flex; flex-direction: column; gap: 10px; }
+.label { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(233, 238, 245, 0.45); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.chips li { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 14px; color: #fff; background: rgba(56, 182, 242, 0.12); border: 1px solid rgba(56, 182, 242, 0.34); cursor: default; outline: none; translate: var(--lx, 0px) var(--ly, 0px); transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), translate 0.18s var(--ease); }
+.chips li:hover, .chips li:focus-visible { background: rgba(56, 182, 242, 0.24); border-color: rgba(56, 182, 242, 0.7); transform: translateY(-2px); }
+/* the name of the tool, shown above the icon on hover or keyboard focus */
+.chips li::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translate(-50%, 4px); white-space: nowrap; font-family: var(--sans); font-weight: 600; font-size: 12.5px; color: #07090d; background: #fff; padding: 6px 10px; border-radius: 8px; opacity: 0; pointer-events: none; transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); z-index: 3; }
+.chips li:hover::after, .chips li:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+/* the stacks of the add-on stay as words */
+.words li { width: auto; height: auto; padding: 8px 14px; font-family: var(--sans); font-weight: 600; font-size: 14px; border-radius: 999px; }
+.words li::after { display: none; }
+.ico { width: 24px; height: 24px; flex: none; color: #fff; }
+.list { margin: 0; padding: 0; list-style: none; }
+.list li { position: relative; padding: 7px 0 7px 20px; font-family: var(--sans); font-size: 14.5px; line-height: 1.4; color: rgba(233, 238, 245, 0.86); }
+.list li::before { content: ""; position: absolute; left: 0; top: 14px; width: 8px; height: 8px; border-radius: 2px; background: #38b6f2; box-shadow: 0 0 10px rgba(56, 182, 242, 0.7); }
+/* on hover the bullets light up one after another, top to bottom, like data passing down a pipeline */
+.tile:hover .list li::before { animation: bulletOn 0.7s ease calc(var(--k) * 0.09s) both; }
+.tile:hover .list li { animation: itemOn 0.7s ease calc(var(--k) * 0.09s) both; }
+@keyframes bulletOn { 0% { transform: scale(1); } 35% { transform: scale(1.7); box-shadow: 0 0 18px #6fd0ff; background: #6fd0ff; } 100% { transform: scale(1); } }
+@keyframes itemOn { 0%, 100% { color: rgba(233, 238, 245, 0.86); } 35% { color: #fff; } }
+
+/* the add-on runs the whole width, with its content set out in columns */
+.addon { display: grid; grid-template-columns: 1.2fr 1fr 1fr; column-gap: 40px; row-gap: 16px; align-items: start; }
+.addon .head { grid-column: 1 / -1; }
+
+/* in the row of three the titles take two lines, so that tools and deliverables start at the same height in every tile */
+.t3 .title, .t4 .title, .t5 .title { min-height: 2.3em; }
+
+@media (max-width: 1000px) {
+  .t3 .title, .t4 .title, .t5 .title { min-height: 0; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .t1, .t2, .t3, .t4, .t5 { grid-column: span 1; }
+  .t6 { grid-column: span 2; }
+  .addon { display: flex; }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .t1, .t2, .t3, .t4, .t5, .t6 { grid-column: auto; }
+  .tile { padding: 24px 20px 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trace { display: none; }
+  .tile { filter: none; opacity: 1; transform: none; animation: none !important; transition: none; }
+}
