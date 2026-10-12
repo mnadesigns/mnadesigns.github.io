@@ -120,6 +120,7 @@ export const chapters = [
         { type: "scene", id: "keysborough", dur: 4000 },
         { type: "scene", id: "spoonful", dur: 4000 },
         { type: "scene", id: "wonderpies", dur: 4000 },
+        { type: "scene", id: "telcoict", dur: 4000 },
         { type: "slide", bg: "#302f7f", dark: true, dur: 3000, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
         { type: "slide", bg: "#6643be", dark: true, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The growth", line: "2.5x", tag: "Online orders" },

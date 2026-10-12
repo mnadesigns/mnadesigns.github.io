@@ -125,6 +125,19 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
         const m = mouse as unknown as { element: HTMLElement; mousewheel: EventListener };
         m.element.removeEventListener("mousewheel", m.mousewheel);
         m.element.removeEventListener("DOMMouseScroll", m.mousewheel);
+        m.element.removeEventListener("wheel", m.mousewheel); // matter 0.20 listens to "wheel", and its handler blocks the page from scrolling over the circle
+        // touch: only a finger that lands on a chip drags it; a finger on the empty part of the circle scrolls the page as usual
+        const tm = mouse as unknown as { mousedown: EventListener; mousemove: EventListener; mouseup: EventListener };
+        m.element.removeEventListener("touchstart", tm.mousedown);
+        m.element.removeEventListener("touchmove", tm.mousemove);
+        m.element.removeEventListener("touchend", tm.mouseup);
+        let grabbing = false;
+        const tStart = (e: TouchEvent) => { grabbing = !!(e.target as HTMLElement | null)?.closest("[data-chip]"); if (grabbing) tm.mousedown(e); };
+        const tMove = (e: TouchEvent) => { if (grabbing) tm.mousemove(e); };
+        const tEnd = (e: TouchEvent) => { if (grabbing) tm.mouseup(e); grabbing = false; };
+        host.addEventListener("touchstart", tStart, { passive: false });
+        host.addEventListener("touchmove", tMove, { passive: false });
+        host.addEventListener("touchend", tEnd, { passive: false });
         const drag = MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2, damping: 0.12, render: { visible: false } } });
         Composite.add(world, drag);
 
@@ -213,6 +226,9 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
           },
           dispose() {
             host.removeEventListener("pointerdown", wake);
+            host.removeEventListener("touchstart", tStart);
+            host.removeEventListener("touchmove", tMove);
+            host.removeEventListener("touchend", tEnd);
             host.removeEventListener("mouseleave", release);
             window.removeEventListener("mouseup", release);
             window.removeEventListener("touchend", release);

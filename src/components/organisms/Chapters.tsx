@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { adBeats, chapters, site } from "@/data/site";
-import { Arrow, BtnCircle } from "@/components/atoms/Buttons";
+import { Btn, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
 import { ProjectsDelivered, WelcomeScene } from "./QuodarcaScenes";
 import { ProcessChallenges } from "./ProcessChallenges";
@@ -12,12 +11,12 @@ import { ZeroGaspiScene } from "./ZeroGaspiScene";
 import { KeysboroughScene } from "./KeysboroughScene";
 import { SpoonfulScene } from "./SpoonfulScene";
 import { WonderPiesScene } from "./WonderPiesScene";
+import { TelcoIctScene } from "./TelcoIctScene";
 import { DesignSystemScene } from "./DesignSystemScene";
 import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { useFullPageScroll } from "@/hooks/useFullPageScroll";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -25,7 +24,7 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 // `run` changes whenever the current segment starts over, so its fill restarts.
 // What the bar sits on, so it can be white on dark backgrounds and black on light ones.
 type Tone = "light" | "dark";
-const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light" };
+const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light", telcoict: "light" };
 const toneOfColour = (hex: string): Tone => {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return "light";
@@ -291,6 +290,7 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
           if (it.id === "process-challenges") return <ProcessChallenges key={i} active={active} holdMs={holdMs} />;
           if (it.id === "approach") return <ApproachScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "wonderpies") return <WonderPiesScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "telcoict") return <TelcoIctScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "spoonful") return <SpoonfulScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "keysborough") return <KeysboroughScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "zerogaspi") return <ZeroGaspiScene key={i} active={active} holdMs={holdMs} />;
@@ -316,7 +316,7 @@ function Plate({ c }: { c: (typeof chapters)[number] }) {
           <div className="chap-stat" key={s.l}><b>{s.v}</b><i>{s.l}</i></div>
         ))}
       </div>
-      <Link href={c.href} className="chap-cta"><span>See the work</span><Arrow /></Link>
+      <Btn href={c.href} className="chap-cta">See the work</Btn>
     </div>
   );
 }
@@ -354,8 +354,6 @@ function Chapter({ c }: { c: (typeof chapters)[number] }) {
 }
 
 export function Chapters() {
-  const stack = useRef<HTMLDivElement>(null);
-  useFullPageScroll(stack, ".chap");
   return (
     <section className="chapters" id="chapters">
       <div className="shell">
@@ -369,7 +367,7 @@ export function Chapters() {
           </div>
         </Reveal>
       </div>
-      <div className="chap-stack" ref={stack}>
+      <div className="chap-stack">
         {chapters.map((c) => <Chapter key={c.name} c={c} />)}
       </div>
       <div className="shell">

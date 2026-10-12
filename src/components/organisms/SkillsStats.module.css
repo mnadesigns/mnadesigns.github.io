@@ -12,10 +12,11 @@
 }
 .circle {
   --k: 1; position: relative; width: 366px; max-width: 100%; aspect-ratio: 1; border-radius: 50%;
-  background: #1d1f26; overflow: hidden; touch-action: none; user-select: none; cursor: grab; flex: 0 0 auto;
+  background: #1d1f26; overflow: hidden; touch-action: pan-y; user-select: none; cursor: grab; flex: 0 0 auto;
 }
 .circle:active { cursor: grabbing; }
 .chip {
+  touch-action: none;
   position: absolute; left: 0; top: 0; display: inline-flex; align-items: center;
   height: calc(40px * var(--k)); padding: 0 calc(20px * var(--k)); border-radius: calc(28px * var(--k));
   font-family: var(--sans); font-size: calc(14px * var(--k)); font-weight: 500; line-height: 1; white-space: nowrap;
