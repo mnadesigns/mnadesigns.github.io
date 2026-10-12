@@ -10,12 +10,14 @@ import { ProcessChallenges } from "./ProcessChallenges";
 import { ApproachScene } from "./ApproachScene";
 import { ZeroGaspiScene } from "./ZeroGaspiScene";
 import { KeysboroughScene } from "./KeysboroughScene";
+import { SpoonfulScene } from "./SpoonfulScene";
+import { WonderPiesScene } from "./WonderPiesScene";
 import { DesignSystemScene } from "./DesignSystemScene";
 import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { FullPageStack } from "./FullPageStack";
+import { useFullPageScroll } from "@/hooks/useFullPageScroll";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -23,7 +25,7 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 // `run` changes whenever the current segment starts over, so its fill restarts.
 // What the bar sits on, so it can be white on dark backgrounds and black on light ones.
 type Tone = "light" | "dark";
-const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light" };
+const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light" };
 const toneOfColour = (hex: string): Tone => {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return "light";
@@ -288,6 +290,8 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
           if (it.id === "welcome") return <WelcomeScene key={i} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
           if (it.id === "process-challenges") return <ProcessChallenges key={i} active={active} holdMs={holdMs} />;
           if (it.id === "approach") return <ApproachScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "wonderpies") return <WonderPiesScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "spoonful") return <SpoonfulScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "keysborough") return <KeysboroughScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "zerogaspi") return <ZeroGaspiScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "design-system") return <DesignSystemScene key={i} active={active} holdMs={holdMs} />;
@@ -304,7 +308,7 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
 function Plate({ c }: { c: (typeof chapters)[number] }) {
   return (
     <div className="chap-plate">
-      <span className="chap-name">{c.name}</span>
+      <div className="chap-head"><span className="chap-name">{c.name}</span><span className="chap-go"><Arrow /></span></div>
       <div className="chap-role" dangerouslySetInnerHTML={{ __html: c.role }} />
       <p className="chap-sub">{c.sub}</p>
       <div className="chap-stats">
@@ -350,6 +354,8 @@ function Chapter({ c }: { c: (typeof chapters)[number] }) {
 }
 
 export function Chapters() {
+  const stack = useRef<HTMLDivElement>(null);
+  useFullPageScroll(stack, ".chap");
   return (
     <section className="chapters" id="chapters">
       <div className="shell">
@@ -363,9 +369,9 @@ export function Chapters() {
           </div>
         </Reveal>
       </div>
-      <FullPageStack className="chap-stack">
+      <div className="chap-stack" ref={stack}>
         {chapters.map((c) => <Chapter key={c.name} c={c} />)}
-      </FullPageStack>
+      </div>
       <div className="shell">
         <div className="chap-out">
           <div className="chap-out-left">

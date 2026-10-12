@@ -110,7 +110,7 @@ export const chapters = [
       { v: "2.5x", l: "Online orders" },
     ],
     href: site.behance,
-    // The Zero Gaspi scene, the Applied Electronics and Vyno videos, the Keysborough scene, then a few plain stat slides, on a loop.
+    // The Zero Gaspi scene, the Applied Electronics and Vyno videos, the Keysborough, Spoonful OS and Wonder Pies scenes, then a few plain stat slides, on a loop.
     film: {
       poster: "", // no poster: the film opens on a scene, and a picture of the phone would show before it plays
       items: [
@@ -118,6 +118,8 @@ export const chapters = [
         { type: "clip", src: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560", fit: "cover" },
         { type: "clip", src: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3", fit: "cover" },
         { type: "scene", id: "keysborough", dur: 4000 },
+        { type: "scene", id: "spoonful", dur: 4000 },
+        { type: "scene", id: "wonderpies", dur: 4000 },
         { type: "slide", bg: "#302f7f", dark: true, dur: 3000, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
         { type: "slide", bg: "#6643be", dark: true, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The growth", line: "2.5x", tag: "Online orders" },

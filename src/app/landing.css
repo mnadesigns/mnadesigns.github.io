@@ -37,13 +37,7 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 .statrow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 112px; }
 
 /* chapters */
-/* the work stack is one full-screen viewport; its panels slide through it (see FullPageStack) */
-.chap-stack { position: relative; height: 100svh; overflow: hidden; }
-.fp-slide { position: absolute; inset: 0; will-change: transform; }
-.fp-slide > .chap { position: absolute; inset: 0; height: auto; }
-.chap-stack.fp-off { height: auto; overflow: visible; }
-.chap-stack.fp-off .fp-slide { position: relative; height: 100svh; transform: none !important; }
-.chap-stack.fp-off .fp-slide > .chap { position: relative; height: 100%; }
+.chap-stack { position: relative; }
 .chap { position: relative; height: 100svh; display: block; overflow: hidden; text-decoration: none; background: var(--coal); }
 /* progress along the top of a work: a segment per slide or clip */
 .film-progress { position: absolute; left: var(--gutter); right: var(--gutter); top: 18px; z-index: 30; display: flex; gap: 4px; pointer-events: none; }
@@ -63,6 +57,7 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 .ph-tag { position: absolute; left: var(--gutter); top: 24px; z-index: 2; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(10, 10, 9, 0.72); padding: 6px 10px; border-radius: 4px; }
 .chap-plate { position: absolute; z-index: 3; left: var(--gutter); bottom: 48px; background: var(--paper); border-radius: var(--r); padding: 32px 36px 28px; max-width: 560px; box-shadow: var(--sh-card-up); transition: transform var(--t-fill) var(--ease), opacity var(--t-fill) var(--ease); }
 .chap.plate-rest .chap-plate { transform: translateY(calc(100% + 64px)); opacity: 0; }
+.chap-go { display: none; }
 .chap-name { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(36px, 3.6vw, 56px); line-height: 1; color: var(--ink); }
 .chap-role { font-family: var(--sans); font-size: 15px; color: var(--ink-50); margin-top: 8px; letter-spacing: 0.01em; }
 .chap-role em { font-style: normal; color: var(--cyan); }
@@ -174,9 +169,18 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
   .wr-wall { grid-template-columns: 1fr; gap: 24px; }
   .chap-out { flex-direction: column; align-items: flex-start; gap: 32px; }
   .receipt { width: 300px; height: 190px; }
-  .chap-plate { left: var(--gutter); right: var(--gutter); bottom: 24px; max-width: none; padding: 20px 24px 24px; }
-  .chap-stats { gap: 20px 24px; margin-top: 16px; }
-  .chap .btn-text { margin-top: 16px; }
+  /* phone: each work is one full screen, the film on top and a copy panel under it */
+  .chap { display: flex; flex-direction: column; }
+  .chap-media { position: relative; inset: auto; flex: 1 1 0; min-height: 0; }
+  .chap-plate { position: static; flex: none; max-width: none; border-radius: 0; box-shadow: none; padding: 20px var(--gutter) 28px; }
+  .chap.plate-rest .chap-plate { transform: none; opacity: 1; }
+  .chap-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .chap-name { font-size: 32px; }
+  .chap-go { display: inline-flex; color: var(--ink); }
+  .chap-go svg { width: 22px; height: 22px; }
+  .chap-role { margin-top: 6px; font-size: 14px; }
+  .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .chap-stats, .chap .btn-text { display: none; }
   .sl-line { max-width: 12ch; }
   .quote-grid { grid-template-columns: 1fr; gap: 12px; }
   .quote-card--feature { grid-column: auto; grid-row: auto; padding: 28px; }
