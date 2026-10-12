@@ -169,9 +169,10 @@ html { scroll-snap-type: y proximity; }
   .chap-out { flex-direction: column; align-items: flex-start; gap: 32px; }
   .receipt { width: 300px; height: 190px; }
   /* phone: each work is one full screen, the film on top and a copy panel under it */
-  .chap { display: flex; flex-direction: column; }
+  /* the copy box is pinned to the bottom of the screen (fixed, and clipped to its own work so it only shows while that work is on screen); the film fills what is above it */
+  .chap { --plate-h: 330px; display: flex; flex-direction: column; height: 100svh; height: 100dvh; padding-bottom: var(--plate-h); clip-path: inset(0); }
   .chap-media { position: relative; inset: auto; flex: 1 1 0; min-height: 0; }
-  .chap-plate { position: static; flex: none; max-width: none; border-radius: 0; box-shadow: none; padding: 20px var(--gutter) 28px; }
+  .chap-plate { position: fixed; left: 0; right: 0; bottom: 0; height: var(--plate-h); max-width: none; border-radius: 0; box-shadow: none; padding: 20px var(--gutter) 28px; overflow: hidden; }
   .chap.plate-rest .chap-plate { transform: none; opacity: 1; }
   .chap-name { font-size: 32px; }
   .chap-role { margin-top: 6px; font-size: 14px; }

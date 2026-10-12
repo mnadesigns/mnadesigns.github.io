@@ -16,8 +16,10 @@ export function useFullPageScroll(stack: RefObject<HTMLElement | null>, panelSel
     const mq = window.matchMedia("(max-width: 900px) and (pointer: coarse)");
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const count = () => el.querySelectorAll(panelSelector).length;
+    const panels = () => Array.from(el.querySelectorAll<HTMLElement>(panelSelector));
     const top = () => el.getBoundingClientRect().top + window.scrollY;
-    const vh = () => window.innerHeight;
+    const vh = () => panels()[0]?.offsetHeight || window.innerHeight; // a work is one screen tall, measured, so the phone's collapsing address bar cannot throw the steps off
+    const at = (index: number) => { const p = panels()[index]; return p ? p.getBoundingClientRect().top + window.scrollY : top() + index * vh(); };
 
     let pending = false;
     let touchY = 0;
@@ -27,11 +29,12 @@ export function useFullPageScroll(stack: RefObject<HTMLElement | null>, panelSel
     const go = (index: number) => {
       pending = true;
       ctl?.stop();
-      ctl = animate(window.scrollY, top() + index * vh(), {
+      document.documentElement.style.scrollSnapType = "none"; // the page's own snapping would fight the glide
+      ctl = animate(window.scrollY, at(index), {
         duration: DURATION,
         ease: EASE,
         onUpdate: (v) => window.scrollTo({ top: v, behavior: "instant" }),
-        onComplete: () => { pending = false; },
+        onComplete: () => { pending = false; document.documentElement.style.scrollSnapType = ""; },
       });
     };
 
@@ -66,6 +69,7 @@ export function useFullPageScroll(stack: RefObject<HTMLElement | null>, panelSel
     window.addEventListener("touchmove", onTouchMove, { passive: false });
     return () => {
       ctl?.stop();
+      document.documentElement.style.scrollSnapType = "";
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
