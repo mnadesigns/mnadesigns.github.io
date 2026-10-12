@@ -18,7 +18,9 @@ export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fil
   useEffect(() => {
     const el = frame.current!;
     const measure = () => {
-      const s = Math.min(el.clientWidth / 1920, el.clientHeight / 1080);
+      const fitW = Math.min(el.clientWidth / 1920, el.clientHeight / 1080);
+      const cover = Math.max(el.clientWidth / 1920, el.clientHeight / 1080);
+      const s = el.clientWidth < 700 ? Math.max(fitW, Math.min(cover, fitW * 1.6)) : fitW; // on a phone the stage grows to fill more of the panel, but by at most 1.6x so little is cropped
       setFit({ scale: s, ox: (el.clientWidth - 1920 * s) / 2, oy: (el.clientHeight - 1080 * s) / 2 });
     };
     measure();

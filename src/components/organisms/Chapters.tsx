@@ -17,7 +17,6 @@ import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { useFullPageScroll } from "@/hooks/useFullPageScroll";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -355,8 +354,6 @@ function Chapter({ c }: { c: (typeof chapters)[number] }) {
 }
 
 export function Chapters() {
-  const stack = useRef<HTMLDivElement>(null);
-  useFullPageScroll(stack, ".chap");
   return (
     <section className="chapters" id="chapters">
       <div className="shell">
@@ -370,7 +367,7 @@ export function Chapters() {
           </div>
         </Reveal>
       </div>
-      <div className="chap-stack" ref={stack}>
+      <div className="chap-stack">
         {chapters.map((c) => <Chapter key={c.name} c={c} />)}
       </div>
       <div className="shell">
