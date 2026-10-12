@@ -38,6 +38,9 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 
 /* chapters */
 .chap-stack { position: relative; }
+/* the works cannot be picked up: no dragging, selecting or long-press saving of the pictures and videos (a deterrent only: whatever a browser shows can still be captured) */
+.chap-stack img, .chap-stack video, .chap-stack svg { -webkit-user-drag: none; user-drag: none; -webkit-touch-callout: none; pointer-events: none; }
+.chap-stack { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 /* each work pulls to the top of the screen as you scroll (proximity snap, so the rest of the page scrolls free); no stacking or parallax */
 html { scroll-snap-type: y proximity; }
 .chap { position: relative; height: 100svh; display: block; overflow: hidden; text-decoration: none; background: var(--coal); scroll-snap-align: start; scroll-snap-stop: always; }

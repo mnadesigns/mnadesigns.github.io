@@ -293,6 +293,9 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
           poster={!started && k === 0 && poster ? poster : undefined}
           muted
           playsInline
+          controlsList="nodownload noremoteplayback"
+          disablePictureInPicture
+          disableRemotePlayback
           preload="auto"
           aria-hidden="true"
           onLoadedMetadata={(e) => { const v = e.currentTarget; if (v.duration && isFinite(v.duration)) { const key = v.getAttribute("src") ?? ""; setClipMs((m) => (m[key] === Math.round(v.duration * 1000) ? m : { ...m, [key]: Math.round(v.duration * 1000) })); } }}
@@ -392,7 +395,7 @@ export function Chapters() {
           </div>
         </Reveal>
       </div>
-      <div className="chap-stack">
+      <div className="chap-stack" onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} onCopy={(e) => e.preventDefault()}>
         {chapters.map((c) => <Chapter key={c.name} c={c} />)}
       </div>
       <div className="shell">
