@@ -18,8 +18,7 @@ export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fil
   useEffect(() => {
     const el = frame.current!;
     const measure = () => {
-      const narrow = el.clientWidth < 700; // on a phone the stage fills the panel (cropping the sides) instead of leaving bands above and below
-      const s = (narrow ? Math.max : Math.min)(el.clientWidth / 1920, el.clientHeight / 1080);
+      const s = Math.min(el.clientWidth / 1920, el.clientHeight / 1080);
       setFit({ scale: s, ox: (el.clientWidth - 1920 * s) / 2, oy: (el.clientHeight - 1080 * s) / 2 });
     };
     measure();

@@ -179,8 +179,6 @@ html { scroll-snap-type: y proximity; }
   .chap-stats { gap: 20px 28px; margin-top: 16px; }
   .chap-stat b { font-size: 28px; }
   .chap-stat i { margin-top: 4px; font-size: 12px; }
-  .chap-video { object-fit: cover; }
-  .sl-screen--contain { object-fit: cover; padding: 0; }
   .chap-cta { margin-top: 16px; }
   .sl-line { max-width: 12ch; }
   .quote-grid { grid-template-columns: 1fr; gap: 12px; }
