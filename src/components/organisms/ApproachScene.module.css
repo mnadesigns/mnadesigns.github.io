@@ -1,3 +1,9 @@
 /* "Approach" scene, second view: the heading of Figma frame 293:56631, set live in Tanker so its size can follow the design. */
 .heading { position: absolute; left: 0; top: 96px; width: 1920px; margin: 0; text-align: center; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 138px; line-height: 150px; letter-spacing: 0.01em; white-space: nowrap; font-feature-settings: "liga" 0; }
 .heading span { color: var(--cyan); }
+
+/* phone layout of the second view (Scene's portrait prop): the heading over the laptop and phone at the full width of the panel */
+.pTwo { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 0 0; overflow: hidden; }
+.pHeading { margin: 0; text-align: center; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 62px; line-height: 1; letter-spacing: 0.01em; }
+.pHeading span { color: var(--cyan); }
+.pTwo img { display: block; flex: none; width: 90%; height: auto; margin-bottom: -4%; } /* a margin either side; the devices run off the bottom edge, where the white box starts, and the heading sits right above them */

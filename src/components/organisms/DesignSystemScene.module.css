@@ -1,0 +1,5 @@
+/* phone layout: the board at the full height of the panel, panning from its left edge to its right edge while the slide is showing */
+.pBoard { position: absolute; inset: 0; overflow: hidden; background: #fff; }
+.pBoard img { display: block; height: 100%; width: auto; max-width: none; will-change: transform; }
+[data-active="true"] .pBoard img { animation: boardPan 3.6s cubic-bezier(0.45, 0, 0.25, 1) 0.2s both; }
+@keyframes boardPan { from { transform: translateX(0); } to { transform: translateX(calc(100cqw - 100%)); } }

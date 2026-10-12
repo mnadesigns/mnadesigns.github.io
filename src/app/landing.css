@@ -48,6 +48,10 @@ html { scroll-snap-type: y proximity; }
 .fpb-seg { position: relative; display: block; flex: 1 1 0; height: 4px; border-radius: 2px; overflow: hidden; background: var(--fpb-track); transition: background-color 0.3s var(--ease); }
 .fpb-seg i { position: absolute; inset: 0; background: var(--fpb-fill); border-radius: 2px; transform-origin: left center; transition: background-color 0.3s var(--ease); }
 .fpb-done { transform: none; }
+.film-total { display: none; position: absolute; left: 0; right: 0; bottom: 0; z-index: 30; height: 4px; background: rgba(11, 11, 10, 0.16); pointer-events: none; transition: background-color 0.3s var(--ease); }
+.film-total.on-dark { background: rgba(255, 255, 255, 0.3); }
+.film-total i { display: block; height: 100%; background: var(--brand); transform-origin: left center; transform: scaleX(var(--from)); animation: fpbTotal linear forwards; }
+@keyframes fpbTotal { from { transform: scaleX(var(--from)); } to { transform: scaleX(var(--to)); } }
 .fpb-run { transform: scaleX(0); animation: fpbRun linear forwards; }
 @keyframes fpbRun { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 .chap-media { position: absolute; inset: 0; z-index: 1; }
@@ -59,6 +63,8 @@ html { scroll-snap-type: y proximity; }
 .ph-tag { position: absolute; left: var(--gutter); top: 24px; z-index: 2; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(10, 10, 9, 0.72); padding: 6px 10px; border-radius: 4px; }
 .chap-plate { position: absolute; z-index: 3; left: var(--gutter); bottom: 48px; background: var(--paper); border-radius: var(--r); padding: 32px 36px 28px; max-width: 560px; box-shadow: var(--sh-card-up); transition: transform var(--t-fill) var(--ease), opacity var(--t-fill) var(--ease); }
 .chap.plate-rest .chap-plate { transform: translateY(calc(100% + 64px)); opacity: 0; }
+.chap-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.chap-years { flex: none; font-family: var(--sans); font-size: 15px; font-weight: 500; letter-spacing: 0.01em; color: var(--cyan); white-space: nowrap; }
 .chap-name { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(36px, 3.6vw, 56px); line-height: 1; color: var(--ink); }
 .chap-role { font-family: var(--sans); font-size: 15px; color: var(--ink-50); margin-top: 8px; letter-spacing: 0.01em; }
 .chap-role em { font-style: normal; color: var(--cyan); }
@@ -178,10 +184,10 @@ html { scroll-snap-type: y proximity; }
   .chap-name { font-size: 32px; }
   .chap-role { margin-top: 6px; font-size: 14px; }
   .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .film-progress { display: none; } /* no progress bars on phones */
-  .chap-stats { gap: 20px 28px; margin-top: 16px; }
-  .chap-stat b { font-size: 28px; }
-  .chap-stat i { margin-top: 4px; font-size: 12px; }
+  .film-progress { display: none; } /* no segmented bars on phones: one bar per work along the bottom instead */
+  .film-total { display: block; }
+  .sl-screen--contain { object-fit: cover; padding: 0; } /* the Sred.io design system picture fills the panel on phones */
+  .chap-stats { display: none; } /* no stats in the copy box on phones */
   .chap-cta { margin-top: 16px; }
   .sl-line { max-width: 12ch; }
   .quote-grid { grid-template-columns: 1fr; gap: 12px; }

@@ -74,10 +74,27 @@ function BubbleView({ b }: { b: Bubble }) {
   );
 }
 
+// Phone layout: only the first part, the three steps stacked (the Figma bubbles are laid out for 16:9). The Key UX Challenges part is left out on phones.
+function PortraitProcess() {
+  return (
+    <div className={styles.pRoot}>
+      <div className={styles.pA}>
+        <div className={styles.pHead}><p className={styles.pTitle}>The Process</p><img className={styles.pIcon} alt="" src={`${A}/rocket.png`} /></div>
+        {COLS.map((c, i) => (
+          <div key={c.name} className={styles.pCard} style={{ background: c.bg, "--i": i } as React.CSSProperties}>
+            <p className={styles.pCardName}>{c.name}</p>
+            <p className={styles.pCardText}>{c.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // "Process & UX Challenges": the QuodArca framework (Define, Design, Deliver) and then the five UX problems found in the audit (Figma frame 72:8516).
 export function ProcessChallenges(props: SceneProps) {
   return (
-    <Scene {...props} focus={[0.4, 0.5]} bars="#ffffff" stage="white">
+    <Scene {...props} portrait={<PortraitProcess />} bars="#ffffff" stage="white">
       <div className={styles.groupA}>
         <p className={`${styles.t} ${styles.processTitle}`}>The<br />Process</p>
         <div className={styles.rocket}><img alt="" src={`${A}/rocket.png`} /></div>

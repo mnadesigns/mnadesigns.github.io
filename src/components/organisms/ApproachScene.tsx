@@ -39,6 +39,12 @@ export function ApproachScene(props: SceneProps) {
       bars="#24243b"
       stage="purple"
       bleed
+      portrait={
+        <motion.div className={styles.pTwo} initial={HIDDEN} animate={on ? two.animate : HIDDEN} transition={two.transition}>
+          <p className={styles.pHeading}>Think Across<br />Devices<span>.</span></p>
+          <img alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-tight.webp`} />
+        </motion.div>
+      }
       base="#24243b"
       cover={
         <>

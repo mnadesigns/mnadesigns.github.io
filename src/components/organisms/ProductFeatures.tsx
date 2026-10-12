@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Easing } from "motion/react";
-import { Scene, type SceneProps } from "./QuodarcaScenes";
+import { PortraitCanvas, Scene, type SceneProps } from "./QuodarcaScenes";
 import styles from "./ProductFeatures.module.css";
 
 const IMG = "/images/work/quodarca";
@@ -73,6 +73,26 @@ function textMotion(start: number, end: number) {
   };
 }
 
+// Phone layout: each view is its heading and line over its devices, which are laid out in the box that just contains them (the Figma stage positions, as percentages), full width.
+function PortraitView({ c, on }: { c: (typeof CLIPS)[number]; on: boolean }) {
+  const x0 = Math.min(...c.devices.map((d) => d.x)), y0 = Math.min(...c.devices.map((d) => d.y));
+  const x1 = Math.max(...c.devices.map((d) => d.x + d.w)), y1 = Math.max(...c.devices.map((d) => d.y + d.h));
+  const W = x1 - x0, H = y1 - y0;
+  const tm = textMotion(c.start, c.end);
+  return (
+    <motion.div className={styles.pView} initial={{ opacity: 0, y: 40 }} animate={on ? tm.animate : { opacity: 0, y: 40 }} transition={tm.transition}>
+      <p className={styles.pHead}>{c.head}</p>
+      <p className={styles.pLine}>{c.line.join(" ")}</p>
+      <div className={styles.pDevices} style={{ aspectRatio: `${W} / ${H}` }}>
+        {c.devices.map((d) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img key={d.f} alt="" src={`${IMG}/features/${d.f}.webp`} style={{ left: `${((d.x - x0) / W) * 100}%`, top: `${((d.y - y0) / H) * 100}%`, width: `${(d.w / W) * 100}%`, height: `${(d.h / H) * 100}%` }} />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 // "Product Features": five views (Arca, Quod, Files, Users, Messages) over one dark indigo background picture (Figma frame 193:13946).
 export function ProductFeatures(props: SceneProps) {
   const on = props.active;
@@ -84,6 +104,7 @@ export function ProductFeatures(props: SceneProps) {
       base="#1d1c4e"
       // eslint-disable-next-line @next/next/no-img-element
       cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
+      portrait={<PortraitCanvas>{CLIPS.map((c) => <PortraitView key={c.head} c={c} on={on} />)}</PortraitCanvas>}
     >
       {CLIPS.map((c) => {
         const tm = textMotion(c.start, c.end);

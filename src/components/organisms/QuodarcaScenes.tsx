@@ -8,14 +8,19 @@ const IMG = "/images/work/quodarca";
 // idle: not playing, but its background is on show (the film's first frame, before the panel scrolls into view), so the art can rise into it
 export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean; focus?: [number, number] };
 
+// A 390 x 514 drawing board for the phone layouts of a scene (its portrait prop): what is drawn on it is scaled, as one piece, to fit the panel.
+export function PortraitCanvas({ children }: { children: React.ReactNode }) {
+  return <div className={styles.canvas}>{children}</div>;
+}
+
 // A fixed 1920 x 1080 drawing, scaled to fit whatever panel it is shown in. It is a layer of a chapter film: it fades in and out with the
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
 // covers the panel, backdrop is artwork placed in stage coordinates that may spill past the stage edges.
-export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
+export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   const [fx, fy] = focus;
-  const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
+  const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0, narrow: false, pu: 1, pw: 0 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
   useEffect(() => {
     const el = frame.current!;
     const measure = () => {
@@ -25,10 +30,10 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], ba
         const s = Math.max(w / 1920, h / 1080);
         const lim = (stageSize: number, panel: number) => Math.max(0, (stageSize * s - panel) / 2);
         const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
-        setFit({ scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
+        setFit({ narrow: true, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
         return;
       }
-      setFit({ scale: Math.min(w / 1920, h / 1080), tx: 0, ty: 0 });
+      setFit({ narrow: false, pu: 1, pw: 0, scale: Math.min(w / 1920, h / 1080), tx: 0, ty: 0 });
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -43,7 +48,8 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], ba
         {anchors && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
         {corner && <div className={styles.corner} style={{ bottom: 20 * fit.scale, transform: `scale(${fit.scale})` }}>{corner}</div>}
         {backdrop && <div className={styles.stageLayer} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>{backdrop}</div>}
-        <div className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>
+        {portrait && fit.narrow && <div className={styles.portrait} style={{ "--pu": fit.pu, "--pw": fit.pw } as React.CSSProperties}>{portrait}</div>}
+        <div hidden={!!portrait && fit.narrow} className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>
           {children}
         </div>
       </div>
@@ -62,6 +68,12 @@ export function WelcomeScene(props: SceneProps) {
       stage="welcome"
       base="#1d1c4e"
       cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
+      portrait={
+        <div className={styles.pFit}>
+          <div className={styles.pWordmark}><img alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
+          <div className={styles.pMonitor}><img alt="" src={`${IMG}/welcome/monitor.webp`} /></div>
+        </div>
+      }
     >
       <div className={styles.wordmarkWrap}>
         <div className={styles.wordmark}><img alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
@@ -83,28 +95,44 @@ const RINGS = [
 const IN = [0.55, 0.61, 0.67, 0.73, 0.79, 0.85]; // seconds: when each ring spins in
 const OUT = [3.54, 3.55, 3.56, 3.57, 3.58, 3.59]; // seconds: when each ring lifts away
 
-// "Projects delivered": a rocket between the two words and six progress rings (Figma frame 72:10492).
-export function ProjectsDelivered(props: SceneProps) {
+function RingView({ r, i }: { r: (typeof RINGS)[number]; i: number }) {
   return (
-    <Scene {...props} bars="#ffffff" stage="white">
+    <div className={styles.ring} style={{ "--d": `${IN[i]}s`, "--x": `${OUT[i]}s` } as React.CSSProperties}>
+      <img className={styles.base} alt="" src={`${IMG}/projects/ring.svg`} />
+      <div className={styles.arc} style={r.box}><img alt="" src={`${IMG}/projects/${r.arc}`} /></div>
+      <p className={styles.label} style={{ left: r.x, top: r.y ?? 91.76 }}>
+        {r.small ? <small>{r.lines[0]}</small> : r.lines[0]}
+        {r.small ? r.lines[1] : <><br />{r.lines[1]}</>}
+      </p>
+    </div>
+  );
+}
+
+// The drawing itself, in 1920 x 1080 stage coordinates: the rocket, the title and the six rings.
+function ProjectsStage() {
+  return (
+    <>
       <div className={styles.rocketWrap}>
         <div className={styles.rocketTurn}>
           <div className={styles.rocket}><img alt="" src={`${IMG}/projects/rocket.png`} /></div>
         </div>
       </div>
       <p className={styles.title}>{"Projects   delivered"}</p>
-      <div className={styles.rings}>
-        {RINGS.map((r, i) => (
-          <div key={r.arc} className={styles.ring} style={{ "--d": `${IN[i]}s`, "--x": `${OUT[i]}s` } as React.CSSProperties}>
-            <img className={styles.base} alt="" src={`${IMG}/projects/ring.svg`} />
-            <div className={styles.arc} style={r.box}><img alt="" src={`${IMG}/projects/${r.arc}`} /></div>
-            <p className={styles.label} style={{ left: r.x, top: r.y ?? 91.76 }}>
-              {r.small ? <small>{r.lines[0]}</small> : r.lines[0]}
-              {r.small ? r.lines[1] : <><br />{r.lines[1]}</>}
-            </p>
-          </div>
-        ))}
-      </div>
+      <div className={styles.rings}>{RINGS.map((r, i) => <RingView key={r.arc} r={r} i={i} />)}</div>
+    </>
+  );
+}
+
+// "Projects delivered": a rocket between the two words and six progress rings (Figma frame 72:10492). On a phone the same drawing, scaled to the width of the panel less 16px either side.
+export function ProjectsDelivered(props: SceneProps) {
+  return (
+    <Scene
+      {...props}
+      bars="#ffffff"
+      stage="white"
+      portrait={<div className={styles.pFitBox}><div className={styles.pStage}><ProjectsStage /></div></div>}
+    >
+      <ProjectsStage />
     </Scene>
   );
 }

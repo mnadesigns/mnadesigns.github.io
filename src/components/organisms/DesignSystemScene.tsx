@@ -1,14 +1,22 @@
 "use client";
+/* eslint-disable @next/next/no-img-element */
 
 import { motion, type Easing } from "motion/react";
 import { Scene, type SceneProps } from "./QuodarcaScenes";
+import styles from "./DesignSystemScene.module.css";
 
 // "QuodArca design system" (Figma frame 209:21342): the whole component board on plain white, scaled so its right-hand column stays in view, with the same entrance as the Sred.io screens (work 1): it fades in over 0.8 s while easing from 106% down to 100% over 4.2 s.
 const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
 
 export function DesignSystemScene(props: SceneProps) {
   return (
-    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff">
+    <Scene
+      {...props}
+      bars="#ffffff"
+      stage="purple"
+      base="#ffffff"
+      portrait={<div className={styles.pBoard}><img alt="The QuodArca design system: navigation, buttons, calendar, notifications, forms, media controls and menus." src="/images/work/quodarca/system/board.webp" /></div>}
+    >
       <motion.img
         alt="The QuodArca design system: navigation, buttons, calendar, notifications, forms, media controls and menus."
         src="/images/work/quodarca/system/board.webp"

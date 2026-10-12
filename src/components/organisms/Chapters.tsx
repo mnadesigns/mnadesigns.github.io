@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { adBeats, chapters, site } from "@/data/site";
 import { Btn, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
@@ -17,6 +17,7 @@ import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { usePhone } from "@/hooks/usePhone";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -43,15 +44,24 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
     return () => clearTimeout(t);
   }, [swap, playing, run]);
   const shown = swap && swapped === run ? swap.tone : tone;
+  const total = durs.reduce((a, b) => a + b, 0) || 1;
+  const from = durs.slice(0, index).reduce((a, b) => a + b, 0) / total;
+  const to = from + durs[index] / total;
   return (
-    <div className={`film-progress on-${shown}`} aria-hidden="true">
-      {durs.map((d, i) => (
-        <span key={i} className="fpb-seg">
-          {i < index && <i className="fpb-done" />}
-          {i === index && <i key={run} className="fpb-run" style={{ animationDuration: d + "ms", animationPlayState: playing ? "running" : "paused" }} />}
-        </span>
-      ))}
-    </div>
+    <>
+      <div className={`film-progress on-${shown}`} aria-hidden="true">
+        {durs.map((d, i) => (
+          <span key={i} className="fpb-seg">
+            {i < index && <i className="fpb-done" />}
+            {i === index && <i key={run} className="fpb-run" style={{ animationDuration: d + "ms", animationPlayState: playing ? "running" : "paused" }} />}
+          </span>
+        ))}
+      </div>
+      {/* phones: one bar along the bottom of the whole work, filling in the primary colour as the slides play */}
+      <div className={`film-total on-${shown}`} aria-hidden="true">
+        <i key={run} style={{ "--from": from, "--to": to, animationDuration: durs[index] + "ms", animationPlayState: playing ? "running" : "paused" } as React.CSSProperties} />
+      </div>
+    </>
   );
 }
 
@@ -189,7 +199,10 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
 // is swapped in underneath; when the slide ends it fades out over that clip, which is already in place. Clips are shown whole,
 // never cropped; the bars beside them are one colour per clip, the same on both sides (see .chap-film).
 const FADE_MS = 400;
-function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
+function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
+  const phone = usePhone();
+  // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
+  const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 5000 } : it)) : all), [all, phone]);
   const els = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
   const root = useRef<HTMLDivElement>(null);
   const still = useReducedMotion();
@@ -306,10 +319,12 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
 }
 
 function Plate({ c }: { c: (typeof chapters)[number] }) {
+  const m = c.role.match(/^(.*?),?\s*<em>(.*)<\/em>\s*$/); // the role, then the years in <em>: the years go beside the name
+  const role = m ? m[1] : c.role;
   return (
     <div className="chap-plate">
-      <span className="chap-name">{c.name}</span>
-      <div className="chap-role" dangerouslySetInnerHTML={{ __html: c.role }} />
+      <div className="chap-head"><span className="chap-name">{c.name}</span>{m && <span className="chap-years">{m[2]}</span>}</div>
+      <div className="chap-role">{role}</div>
       <p className="chap-sub">{c.sub}</p>
       <div className="chap-stats">
         {c.stats.map((s) => (
