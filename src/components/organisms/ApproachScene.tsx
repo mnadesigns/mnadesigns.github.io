@@ -42,7 +42,12 @@ export function ApproachScene(props: SceneProps) {
       portrait={
         <motion.div className={styles.pTwo} initial={HIDDEN} animate={on ? two.animate : HIDDEN} transition={two.transition}>
           <p className={styles.pHeading}>Think Across<br />Devices<span>.</span></p>
-          <div className={styles.pRegion}><img alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-tight.webp`} /></div>
+          <div className={styles.pRegion}>
+            {/* on a phone the devices start close up and glide out to the full picture, once the second view has arrived */}
+            <motion.div className={styles.pZoom} style={{ transformOrigin: "50% 100%" }} initial={{ scale: 1.55 }} animate={on ? { scale: 1 } : { scale: 1.55 }} transition={{ duration: 3.2, delay: SPLIT, ease: [0.45, 0, 0.25, 1] }}>
+              <img alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-tight.webp`} />
+            </motion.div>
+          </div>
         </motion.div>
       }
       base="#24243b"

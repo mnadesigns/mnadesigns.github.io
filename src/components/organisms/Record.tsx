@@ -17,8 +17,8 @@ export function Stat({ value, prefix = "", suffix = "", label }: (typeof stats)[
           io.unobserve(e.target);
           el.classList.add("counting");
           const t0 = performance.now();
-          const tick = (t: number) => {
-            const p = Math.min((t - t0) / 1400, 1);
+          const tick = () => {
+            const p = Math.min((performance.now() - t0) / 1400, 1); // the same clock as t0
             el.textContent = prefix + Math.round((1 - Math.pow(1 - p, 3)) * value) + suffix;
             if (p < 1) requestAnimationFrame(tick);
             else el.classList.remove("counting");

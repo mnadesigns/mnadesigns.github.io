@@ -106,6 +106,7 @@ export const chapters = [
     role: "Senior UX/UI Designer, <em>2021 to 2023</em>",
     sub: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.",
     stats: [
+      { v: "25+", l: "Industries" },
       { v: "3x", l: "Conversion rate" },
       { v: "2.5x", l: "Online orders" },
     ],
@@ -123,10 +124,11 @@ export const chapters = [
         { type: "slide", bg: "#302f7f", dark: true, dur: 3000, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
         // more websites, a figure in the middle and one at the end
         { type: "scene", id: "keysborough", dur: 4000 },
+        { type: "slide", bg: "#302f7f", dark: true, dur: 3600, kicker: "From fintech to fashion", giant: 25, suffix: "+", tag: "Industries served. One team. Every solution." },
         { type: "scene", id: "wonderpies", dur: 4000 },
         { type: "slide", bg: "#ffffff", dark: false, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "scene", id: "telcoict", dur: 4000 },
-        { type: "scene", id: "pharmacy", dur: 10000 },
+        { type: "scene", id: "pharmacy", dur: 8333 },
         { type: "scene", id: "zigbis", dur: 4000 },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The growth", line: "2.5x", tag: "Online orders" },
       ] as FilmItem[],
@@ -141,6 +143,7 @@ export const adBeats = [
   { bg: "#1297D9", dark: true, dur: 2900, line: "Built fast. <span style=\"white-space:nowrap\">Never designed.</span>", kicker: "The problem" },
   { bg: "#0b0b0a", dark: true, dur: 2700, line: "Too much scrolling.", kicker: "The pain point" },
   { bg: "#ffffff", dark: false, dur: 3600, giant: 70, suffix: "%", kicker: "The first win", tag: "Shorter. Same page." },
+  { bg: "#eef3f8", dark: false, dur: 4000, shot: { src: "/images/work/sredio/file-vaults.webp", alt: "The Sred.io File Vaults screen: vaults on the left, the files of Cloud Migration Hub on the right", fit: "card" as const } },
   { bg: "#003A66", dark: true, dur: 3200, line: "The first design system, built on Flowbite", kicker: "The foundation" },
   { bg: "#ffffff", dark: false, dur: 4000, shot: { src: "/images/work/sredio/design-system.webp", alt: "The Sred.io design system: components built on Flowbite", fit: "contain" as const } },
   { bg: "#1297D9", dark: true, dur: 5400, line: "Staff & Teams, File Vaults, Timesheets, Feedback Widget" },

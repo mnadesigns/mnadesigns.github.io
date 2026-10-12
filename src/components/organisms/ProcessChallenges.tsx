@@ -53,7 +53,7 @@ function BubbleView({ b }: { b: Bubble }) {
   const [wx, wy, ww, wh] = b.wrap;
   const { ring: r, text: t } = b;
   return (
-    <div className={styles.bubble} style={{ left: wx, top: wy, width: ww, height: wh, "--d": `${b.d}s` } as React.CSSProperties}>
+    <div className={styles.bubble} style={{ left: wx, top: wy, width: ww, height: wh, "--d": `${b.d}s`, "--dn": b.d } as React.CSSProperties}>
       <div className={styles.ebox} style={{ left: r.x - wx, top: r.y - wy, width: r.size, height: r.size }}>
         {r.rot !== undefined ? (
           <div className={styles.eturn} style={{ transform: `rotate(${r.rot}deg)` }}>
@@ -74,18 +74,25 @@ function BubbleView({ b }: { b: Bubble }) {
   );
 }
 
-// Phone layout: only the first part, the three steps stacked (the Figma bubbles are laid out for 16:9). The Key UX Challenges part is left out on phones.
+// Phone layout: the same drawing as on desktop (title, rocket, three cards with their bubbles, on the 1920 x 1080 stage) but played one step at a time. A camera shows the title first,
+// then the Define card on its own; it slides left to Design, then to Deliver. The heading stays put at the top while the cards slide under it. Each card's bubbles pop in when the camera arrives, and the card before fades away as it leaves.
+// The Key UX Challenges part and the intro box are left out on phones.
+const RANGES: [number, number][] = [[0, 720], [720, 1190], [1190, 2000]]; // which card a bubble belongs to, by its centre
 function PortraitProcess() {
   return (
-    <div className={styles.pRoot}>
-      <div className={styles.pA}>
-        <div className={styles.pHead}><p className={styles.pTitle}>The Process</p><img className={styles.pIcon} alt="" src={`${A}/rocket.png`} /></div>
-        {COLS.map((c, i) => (
-          <div key={c.name} className={styles.pCard} style={{ background: c.bg, "--i": i } as React.CSSProperties}>
-            <p className={styles.pCardName}>{c.name}</p>
-            <p className={styles.pCardText}>{c.text}</p>
-          </div>
-        ))}
+    <div className={styles.mView}>
+      <div className={styles.mHead}><p className={styles.mHeadTitle}>The Process</p><img className={styles.mHeadIcon} alt="" src={`${A}/rocket.png`} /></div>
+      <div className={styles.mWorld}>
+        <div className={styles.lower}>
+          {COLS.map((c, i) => (
+            <div key={c.name} className={`${styles.mGroup} ${styles["mG" + (i + 1)]}`}>
+              <div className={styles.card} style={{ left: c.left, width: c.w, background: c.bg }} />
+              <p className={styles.cardName} style={{ left: c.nameLeft }}>{c.name}</p>
+              <p className={styles.cardText} style={{ left: c.textLeft, fontSize: c.fs }}>{c.text}</p>
+              {BUBBLES.filter((b) => { const x = b.wrap[0] + b.wrap[2] / 2; return x >= RANGES[i][0] && x < RANGES[i][1]; }).map((b) => <BubbleView key={`${b.ring.x}-${b.ring.y}`} b={b} />)}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

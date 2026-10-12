@@ -21,6 +21,7 @@ import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { usePhone } from "@/hooks/usePhone";
+import { FILM_SPEED, useFilmClock } from "@/lib/filmSpeed";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -43,7 +44,7 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
   const [swapped, setSwapped] = useState(-1); // the run in which the switch has happened
   useEffect(() => {
     if (!swap || !playing) return;
-    const t = setTimeout(() => setSwapped(run), swap.at);
+    const t = setTimeout(() => setSwapped(run), swap.at / FILM_SPEED);
     return () => clearTimeout(t);
   }, [swap, playing, run]);
   const shown = swap && swapped === run ? swap.tone : tone;
@@ -71,6 +72,7 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
 // Kinetic-type ad: 10 beats, colour dissolves on its own layer, subject fades fast, slow scale drift.
 function KineticAd() {
   const ref = useRef<HTMLDivElement>(null);
+  useFilmClock(ref);
   const [i, setI] = useState(0);
   const [counts, setCounts] = useState<Record<number, number>>({});
   const [playing, setPlaying] = useState(false);
@@ -86,11 +88,11 @@ function KineticAd() {
       idx.current = (idx.current + 1) % adBeats.length;
       setI(idx.current);
       setRun((n) => n + 1);
-      timer.current = setTimeout(advance, adBeats[idx.current].dur);
+      timer.current = setTimeout(advance, adBeats[idx.current].dur / FILM_SPEED);
     };
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !timer.current) { timer.current = setTimeout(advance, adBeats[idx.current].dur); setPlaying(true); setRun((n) => n + 1); }
+        if (e.isIntersecting && !timer.current) { timer.current = setTimeout(advance, adBeats[idx.current].dur / FILM_SPEED); setPlaying(true); setRun((n) => n + 1); }
         else if (!e.isIntersecting && timer.current) { clearTimeout(timer.current); timer.current = null; setPlaying(false); }
       },
       { threshold: 0.3 }
@@ -105,8 +107,8 @@ function KineticAd() {
     if (!b.giant) return;
     const t0 = performance.now();
     let raf = 0;
-    const tick = (t: number) => {
-      const p = Math.min((t - t0) / 1900, 1);
+    const tick = () => {
+      const p = Math.min((performance.now() - t0) / 1900, 1); // the same clock as t0 (not the frame time, which is a different clock)
       setCounts((c) => ({ ...c, [i]: Math.round(ease(p) * b.giant!) }));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
@@ -151,7 +153,7 @@ function KineticAd() {
           </div>
         </div>
       ))}
-      {!still && <FilmProgress durs={adBeats.map((b) => b.dur)} index={cur} playing={playing} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
+      {!still && <FilmProgress durs={adBeats.map((b) => b.dur / FILM_SPEED)} index={cur} playing={playing} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
     </div>
   );
 }
@@ -163,8 +165,8 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
     if (!active || !s.giant) return;
     let raf = 0;
     const t0 = performance.now() + 250; // the count starts as the slide settles
-    const tick = (now: number) => {
-      const p = Math.min(1, Math.max(0, (now - t0) / 1300));
+    const tick = () => {
+      const p = Math.min(1, Math.max(0, (performance.now() - t0) / 1300));
       setN(Math.round(s.giant! * (1 - Math.pow(1 - p, 3))));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
@@ -205,9 +207,10 @@ const FADE_MS = 400;
 function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
   const phone = usePhone();
   // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
-  const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 5000 } : it)) : all), [all, phone]);
+  const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 9000 } : it)) : all), [all, phone]);
   const els = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
   const root = useRef<HTMLDivElement>(null);
+  useFilmClock(root);
   const still = useReducedMotion();
   const [step, setStep] = useState(0); // counts items played; the item is items[step % n]
   const [visible, setVisible] = useState(false);
@@ -259,6 +262,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
       // a clip that cannot load (missing or broken file) is skipped, so the film never stalls on it
       if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { setTimeout(() => setStep((s) => s + 1), 0); return; }
       if (v.currentTime > 0.05) v.currentTime = 0;
+      v.playbackRate = FILM_SPEED;
       v.play().then(() => setStarted(true)).catch(() => {});
     } else v.pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -267,13 +271,13 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
   // a clip shows its own element at once; during a slide, the next clip is swapped in only after the slide fully covers the old one
   useEffect(() => {
     if (item.type === "clip") { setShown(live); return; }
-    const t = setTimeout(() => setShown(live), FADE_MS + 40);
+    const t = setTimeout(() => setShown(live), (FADE_MS + 40) / FILM_SPEED);
     return () => clearTimeout(t);
   }, [step, live, item.type]);
 
   useEffect(() => {
     if (!visible || item.type === "clip") return;
-    const t = setTimeout(() => setStep((s) => s + 1), item.dur);
+    const t = setTimeout(() => setStep((s) => s + 1), item.dur / FILM_SPEED);
     return () => clearTimeout(t);
   }, [step, visible, item]);
 
@@ -319,7 +323,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
         }
         return <FilmSlideView key={i} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
       })}
-      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? clipMs[it.src] ?? 5000 : it.dur))} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
+      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? clipMs[it.src] ?? 5000 : it.dur) / FILM_SPEED)} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
     </div>
   );
 }

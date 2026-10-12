@@ -11,15 +11,18 @@ export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean; foc
 
 // Phone layout for the scenes that are one picture of devices on white: the picture at the full width of the panel, centred, with the same entrance as on desktop (fades in over 0.8 s while easing from 106% down to 100%).
 const PIC_EASE: Easing = [0.23, 1, 0.32, 1];
-export function PortraitPicture({ src, alt, active }: { src: string; alt: string; active: boolean }) {
+export function PortraitPicture({ src, alt, active, zoom }: { src: string; alt: string; active: boolean; zoom?: { from: number; to: number; origin: string } }) {
+  // zoom: instead of the small settling movement, the picture glides from one size to another (about the point origin), so it zooms in (to > from) or out (to < from)
+  const from = zoom ? zoom.from : 1.06, to = zoom ? zoom.to : 1;
   return (
     <div className={styles.pPic}>
       <motion.img
         alt={alt}
         src={src}
-        initial={{ opacity: 0, scale: 1.06 }}
-        animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
-        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: { duration: 4.2, ease: PIC_EASE } }}
+        style={zoom ? { transformOrigin: zoom.origin } : undefined}
+        initial={{ opacity: 0, scale: from }}
+        animate={active ? { opacity: 1, scale: to } : { opacity: 0, scale: from }}
+        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: zoom ? { duration: 3.2, delay: 0.5, ease: [0.45, 0, 0.25, 1] } : { duration: 4.2, ease: PIC_EASE } }}
       />
     </div>
   );
@@ -63,7 +66,7 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
         const s = Math.max(w / 1920, h / 1080);
         const lim = (stageSize: number, panel: number) => Math.max(0, (stageSize * s - panel) / 2);
         const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
-        setFit({ narrow: true, psw: 1920, psh: 1080, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
+        setFit({ narrow: true, psw: w, psh: h, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
         return;
       }
       const fitS = Math.min(w / 1920, h / 1080);
@@ -82,7 +85,7 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
         {anchors && !fit.narrow && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
         {corner && <div className={styles.corner} style={{ bottom: 20 * fit.scale, transform: `scale(${fit.scale})` }}>{corner}</div>}
         {backdrop && <div className={styles.stageLayer} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>{backdrop}</div>}
-        {portrait && fit.narrow && <div className={styles.portrait} style={{ "--pu": fit.pu, "--pw": fit.pw } as React.CSSProperties}>{portrait}</div>}
+        {portrait && fit.narrow && <div className={styles.portrait} style={{ "--pu": fit.pu, "--pw": fit.pw, "--psw": fit.psw, "--psh": fit.psh } as React.CSSProperties}>{portrait}</div>}
         <div hidden={!!portrait && fit.narrow} className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})`, "--psw": fit.psw, "--psh": fit.psh } as React.CSSProperties}>
           {children}
         </div>

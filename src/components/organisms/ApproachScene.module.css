@@ -8,4 +8,5 @@
 .pHeading span { color: var(--cyan); }
 /* the devices fill everything under the heading, down to the bottom edge (where the white box starts): sized to the height of that space, never wider than 1.65 panels, centred */
 .pRegion { flex: 1 1 0; min-height: 0; width: 100%; position: relative; container-type: size; overflow: hidden; margin-top: 12px; }
+.pZoom { position: absolute; inset: 0; }
 .pRegion img { position: absolute; left: 50%; bottom: -5cqh; transform: translateX(-50%); display: block; max-width: none; width: min(max(100cqw, calc(108cqh * 1.86)), 165cqw); height: auto; }

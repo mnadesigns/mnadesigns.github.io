@@ -89,7 +89,10 @@ html { scroll-snap-type: y proximity; }
 /* product screens fill the whole slide and drift in slowly when it comes on */
 .sl-screen { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); }
 .sl-screen--contain { object-fit: contain; padding: 2vh 2vw; box-sizing: border-box; } /* show the whole picture, nothing cropped */
+/* a screen shown as one rounded card, with a soft shadow, centred on a pale background */
+.sl-screen--card { inset: auto; left: 50%; top: 50%; width: min(1488px, 96%); height: auto; max-height: 96%; object-fit: contain; border-radius: 12px; box-shadow: 0 24px 60px rgba(16, 42, 80, 0.18), 0 2px 8px rgba(16, 42, 80, 0.08); transform: translate(-50%, -50%) scale(1.04); }
 .sl-card.on .sl-screen { opacity: 1; transform: scale(1); transition: opacity 0.8s var(--ease), transform 4.2s var(--ease); }
+.sl-card.on .sl-screen.sl-screen--card { transform: translate(-50%, -50%) scale(1); }
 /* stat slides between the scenes of a chapter film: the same kicker, number and tag as the Sred.io beats, fading in and out as a whole */
 .film-slide { z-index: 3; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; } /* a slide only fades in and out */
 .film-slide.on { opacity: 1; }
@@ -186,6 +189,7 @@ html { scroll-snap-type: y proximity; }
   .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .film-progress { display: none; } /* no segmented bars on phones: one bar per work along the bottom instead */
   .film-total { display: block; }
+  .sl-screen--card { width: 100%; border-radius: 12px; }
   .sl-screen--contain { object-fit: cover; padding: 0; } /* the Sred.io design system picture fills the panel on phones */
   .chap-stats { display: none; } /* no stats in the copy box on phones */
   .chap-cta { margin-top: 16px; }

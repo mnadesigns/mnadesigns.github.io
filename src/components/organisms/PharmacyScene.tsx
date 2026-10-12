@@ -11,9 +11,9 @@ const IMG = "/images/work/pharmacy";
 
 // The whole Specialist Clinic Pharmacy home page scrolling by itself inside a laptop (the laptop picture is the base; the page is Figma frame 59:88): the page sits behind the
 // mockup, which has its screen cut out, and scrolls from the top of the page to the bottom while the laptop stays as it is.
-function Mock() {
+function Mock({ phone = false }: { phone?: boolean }) {
   return (
-    <div className={styles.mock}>
+    <div className={`${styles.mock}${phone ? ` ${styles.phoneMock}` : ""}`}>
       <div className={styles.win}><img className={styles.page} alt="The Specialist Clinic Pharmacy home page, scrolling from the top banner to the footer." src={`${IMG}/page.webp`} /></div>
       <img className={styles.frame} alt="" src={`${IMG}/mockup.webp`} />
     </div>
@@ -32,11 +32,12 @@ export function PharmacyScene(props: SceneProps) {
         <div className={styles.pBox}>
           <motion.div
             className={styles.pMock}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={props.active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
-            transition={{ opacity: { duration: 0.8, ease: EASE }, scale: { duration: 4.2, ease: EASE } }}
+            style={{ transformOrigin: "49.94% 44.74%" }}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={props.active ? { opacity: 1, scale: 1.4 } : { opacity: 0, scale: 1 }}
+            transition={{ opacity: { duration: 0.8, ease: EASE }, scale: { duration: 0.73, delay: 0.67, ease: [0.65, 0, 0.35, 1] } }}
           >
-            <Mock />
+            <Mock phone />
           </motion.div>
         </div>
       }
