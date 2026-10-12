@@ -6,28 +6,35 @@ import styles from "./QuodarcaScenes.module.css";
 const IMG = "/images/work/quodarca";
 
 // idle: not playing, but its background is on show (the film's first frame, before the panel scrolls into view), so the art can rise into it
-export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean };
+export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean; focus?: [number, number] };
 
 // A fixed 1920 x 1080 drawing, scaled to fit whatever panel it is shown in. It is a layer of a chapter film: it fades in and out with the
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
 // covers the panel, backdrop is artwork placed in stage coordinates that may spill past the stage edges.
-export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
+export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
-  const [fit, setFit] = useState({ scale: 1, ox: 0, oy: 0 }); // scale of the 1920 x 1080 stage and where its top-left corner sits in the panel
+  const [fx, fy] = focus;
+  const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
   useEffect(() => {
     const el = frame.current!;
     const measure = () => {
-      const fitW = Math.min(el.clientWidth / 1920, el.clientHeight / 1080);
-      const cover = Math.max(el.clientWidth / 1920, el.clientHeight / 1080);
-      const s = el.clientWidth < 700 ? Math.max(fitW, Math.min(cover, fitW * 1.6)) : fitW; // on a phone the stage grows to fill more of the panel, but by at most 1.6x so little is cropped
-      setFit({ scale: s, ox: (el.clientWidth - 1920 * s) / 2, oy: (el.clientHeight - 1080 * s) / 2 });
+      const w = el.clientWidth, h = el.clientHeight;
+      if (w < 700) {
+        // phone: the stage covers the whole panel, slid so the slide's focus point (a fraction of the 1920 x 1080 stage) sits at the centre of the panel, never so far that an edge shows
+        const s = Math.max(w / 1920, h / 1080);
+        const lim = (stageSize: number, panel: number) => Math.max(0, (stageSize * s - panel) / 2);
+        const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
+        setFit({ scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
+        return;
+      }
+      setFit({ scale: Math.min(w / 1920, h / 1080), tx: 0, ty: 0 });
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
+  }, [fx, fy]);
   return (
     <div className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
       <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
@@ -35,8 +42,8 @@ export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fil
         {cover && <div className={styles.cover}>{cover}</div>}
         {anchors && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
         {corner && <div className={styles.corner} style={{ bottom: 20 * fit.scale, transform: `scale(${fit.scale})` }}>{corner}</div>}
-        {backdrop && <div className={styles.stageLayer} style={{ transform: `translate(-50%, -50%) scale(${fit.scale})` }}>{backdrop}</div>}
-        <div className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) scale(${fit.scale})` }}>
+        {backdrop && <div className={styles.stageLayer} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>{backdrop}</div>}
+        <div className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>
           {children}
         </div>
       </div>

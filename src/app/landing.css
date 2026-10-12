@@ -169,6 +169,7 @@ html { scroll-snap-type: y proximity; }
   .chap-out { flex-direction: column; align-items: flex-start; gap: 32px; }
   .receipt { width: 300px; height: 190px; }
   /* phone: each work is one full screen, the film on top and a copy panel under it */
+  html { scroll-snap-type: none; } /* phones scroll freely: no snapping to the works */
   /* the copy box is pinned to the bottom of the screen (fixed, and clipped to its own work so it only shows while that work is on screen); the film fills what is above it */
   .chap { --plate-h: 330px; display: flex; flex-direction: column; height: 100svh; height: 100dvh; padding-bottom: var(--plate-h); clip-path: inset(0); }
   .chap-media { position: relative; inset: auto; flex: 1 1 0; min-height: 0; }
