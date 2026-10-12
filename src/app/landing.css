@@ -178,6 +178,7 @@ html { scroll-snap-type: y proximity; }
   .chap-name { font-size: 32px; }
   .chap-role { margin-top: 6px; font-size: 14px; }
   .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .film-progress { display: none; } /* no progress bars on phones */
   .chap-stats { gap: 20px 28px; margin-top: 16px; }
   .chap-stat b { font-size: 28px; }
   .chap-stat i { margin-top: 4px; font-size: 12px; }
