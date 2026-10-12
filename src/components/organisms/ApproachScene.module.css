@@ -3,7 +3,9 @@
 .heading span { color: var(--cyan); }
 
 /* phone layout of the second view (Scene's portrait prop): the heading over the laptop and phone at the full width of the panel */
-.pTwo { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 14px; padding: 0 0 0; overflow: hidden; }
-.pHeading { margin: 0; text-align: center; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 62px; line-height: 1; letter-spacing: 0.01em; }
+.pTwo { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; padding-top: 26px; overflow: hidden; }
+.pHeading { margin: 0; text-align: center; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 44px; line-height: 1; letter-spacing: 0.01em; }
 .pHeading span { color: var(--cyan); }
-.pTwo img { display: block; flex: none; width: 90%; height: auto; margin-bottom: -4%; } /* a margin either side; the devices run off the bottom edge, where the white box starts, and the heading sits right above them */
+/* the devices fill everything under the heading, down to the bottom edge (where the white box starts): sized to the height of that space, never wider than 1.65 panels, centred */
+.pRegion { flex: 1 1 0; min-height: 0; width: 100%; position: relative; container-type: size; overflow: hidden; margin-top: 12px; }
+.pRegion img { position: absolute; left: 50%; bottom: -5cqh; transform: translateX(-50%); display: block; max-width: none; width: min(max(100cqw, calc(108cqh * 1.86)), 165cqw); height: auto; }

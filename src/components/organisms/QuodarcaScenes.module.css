@@ -46,7 +46,7 @@
 /* the wordmark and monitor are about as tall as they are wide, so they are sized by whichever of the panel's width and height is the tighter: both always fit whole */
 .canvas { position: absolute; left: 50%; top: 50%; width: 390px; height: 514px; transform: translate(-50%, -50%) scale(var(--pu, 1)); display: flex; flex-direction: column; align-items: center; justify-content: center; }
 /* Projects delivered, phone: the desktop drawing (stage x 425-1496, y 5-980) scaled to the panel's width less 16px each side; --pw is that width in px */
-.pFitBox { position: absolute; left: 16px; top: 50%; width: calc(var(--pw) * 1px); height: calc(var(--pw) * 1px * 975 / 1071); transform: translateY(-50%); }
+.pFitBox { position: absolute; left: 16px; top: calc(50% - 12px); width: calc(var(--pw) * 1px); height: calc(var(--pw) * 1px * 975 / 1071); transform: translateY(-50%); }
 .pStage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; transform: scale(calc(var(--pw) / 1071)) translate(-425px, -5px); }
 .pFit { flex: none; width: min(100cqw, 84cqh); display: flex; flex-direction: column; align-items: center; }
 .pWordmark { flex: none; width: 90%; margin-bottom: 1%; opacity: 0; }

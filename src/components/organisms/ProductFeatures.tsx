@@ -74,20 +74,32 @@ function textMotion(start: number, end: number) {
 }
 
 // Phone layout: each view is its heading and line over its devices, which are laid out in the box that just contains them (the Figma stage positions, as percentages), full width.
+// Where the visible picture is inside each exported device image (left, top, right, bottom as fractions): the images carry transparent margins, which would otherwise show as gaps at the sides of the phone layout.
+const TRIM: Record<string, [number, number, number, number]> = {
+  "c1-imac": [0.108, 0, 0.999, 0.991], "c1-ipad": [0.007, 0.01, 0.992, 0.989], "c1-iphone": [0.034, 0, 0.966, 0.99],
+  "c2-iphone-a": [0, 0, 0.994, 0.997], "c2-iphone-b": [0, 0, 0.994, 0.998], "c2-macbook": [0.158, 0.102, 0.967, 0.999],
+  "c3-hand": [0.021, 0.005, 0.933, 0.998], "c3-ipad": [0.024, 0.17, 0.649, 0.998],
+  "c4-iphone": [0.075, 0.047, 0.704, 0.998], "c4-laptop": [0.102, 0, 0.95, 0.999],
+  "c5-imac": [0.108, 0, 0.998, 0.998], "c5-iphone": [0.033, 0, 0.964, 0.99],
+};
+
 function PortraitView({ c, on }: { c: (typeof CLIPS)[number]; on: boolean }) {
-  const x0 = Math.min(...c.devices.map((d) => d.x)), y0 = Math.min(...c.devices.map((d) => d.y));
-  const x1 = Math.max(...c.devices.map((d) => d.x + d.w)), y1 = Math.max(...c.devices.map((d) => d.y + d.h));
+  const vis = c.devices.map((d) => { const [l, t, rr, b] = TRIM[d.f]; return { x0: d.x + l * d.w, y0: d.y + t * d.h, x1: d.x + rr * d.w, y1: d.y + b * d.h }; });
+  const x0 = Math.min(...vis.map((v) => v.x0)), y0 = Math.min(...vis.map((v) => v.y0));
+  const x1 = Math.max(...vis.map((v) => v.x1)), y1 = Math.max(...vis.map((v) => v.y1));
   const W = x1 - x0, H = y1 - y0;
   const tm = textMotion(c.start, c.end);
   return (
     <motion.div className={styles.pView} initial={{ opacity: 0, y: 40 }} animate={on ? tm.animate : { opacity: 0, y: 40 }} transition={tm.transition}>
       <p className={styles.pHead}>{c.head}</p>
       <p className={styles.pLine}>{c.line.join(" ")}</p>
-      <div className={styles.pDevices} style={{ aspectRatio: `${W} / ${H}` }}>
+      <div className={styles.pRegion}>
+      <div className={styles.pDevices} style={{ aspectRatio: `${W} / ${H}`, "--a": W / H } as React.CSSProperties}>
         {c.devices.map((d) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img key={d.f} alt="" src={`${IMG}/features/${d.f}.webp`} style={{ left: `${((d.x - x0) / W) * 100}%`, top: `${((d.y - y0) / H) * 100}%`, width: `${(d.w / W) * 100}%`, height: `${(d.h / H) * 100}%` }} />
         ))}
+      </div>
       </div>
     </motion.div>
   );
