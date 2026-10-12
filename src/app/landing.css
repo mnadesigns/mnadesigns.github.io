@@ -57,7 +57,6 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 .ph-tag { position: absolute; left: var(--gutter); top: 24px; z-index: 2; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: rgba(10, 10, 9, 0.72); padding: 6px 10px; border-radius: 4px; }
 .chap-plate { position: absolute; z-index: 3; left: var(--gutter); bottom: 48px; background: var(--paper); border-radius: var(--r); padding: 32px 36px 28px; max-width: 560px; box-shadow: var(--sh-card-up); transition: transform var(--t-fill) var(--ease), opacity var(--t-fill) var(--ease); }
 .chap.plate-rest .chap-plate { transform: translateY(calc(100% + 64px)); opacity: 0; }
-.chap-go { display: none; }
 .chap-name { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(36px, 3.6vw, 56px); line-height: 1; color: var(--ink); }
 .chap-role { font-family: var(--sans); font-size: 15px; color: var(--ink-50); margin-top: 8px; letter-spacing: 0.01em; }
 .chap-role em { font-style: normal; color: var(--cyan); }
@@ -65,9 +64,15 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
 .chap-stats { display: flex; gap: 36px; margin-top: 32px; flex-wrap: wrap; }
 .chap-stat b { display: block; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(30px, 3vw, 44px); line-height: 1; color: var(--ink); }
 .chap-stat i { display: block; font-style: normal; font-family: var(--sans); font-weight: 600; font-size: 13px; color: var(--ink-50); margin-top: 8px; }
-.chap .btn-text { margin-top: 28px; }
-.chap:hover .btn-text { color: var(--brand); }
-.chap:hover .btn-text svg { transform: translate(3px, -3px); }
+/* the only link in a work: a pill that floods with the brand colour from the left and sends its arrow off and back on hover */
+.chap-cta { position: relative; display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 14px 22px; border: 1.5px solid var(--ink); border-radius: 999px; overflow: hidden; isolation: isolate; text-decoration: none; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); transition: color 0.35s var(--ease), border-color 0.35s var(--ease), transform 0.35s var(--ease); }
+.chap-cta::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--brand); transform: translateX(-101%); transition: transform 0.45s var(--ease); }
+.chap-cta svg { position: relative; width: 12px; height: 12px; }
+.chap-cta:hover, .chap-cta:focus-visible { color: var(--white); border-color: var(--brand); }
+.chap-cta:hover::before, .chap-cta:focus-visible::before { transform: none; }
+.chap-cta:hover svg, .chap-cta:focus-visible svg { animation: ctaArrow 0.5s var(--ease); }
+.chap-cta:active { transform: scale(0.96); }
+@keyframes ctaArrow { 0% { transform: none; } 45% { transform: translate(14px, -14px); opacity: 0; } 46% { transform: translate(-14px, 14px); opacity: 0; } 100% { transform: none; opacity: 1; } }
 
 /* kinetic ad */
 .sloop { position: absolute; inset: 0; overflow: hidden; --fg: var(--ink); }
@@ -174,13 +179,11 @@ body.loaded .hero-ghost { animation: fade 1.6s var(--ease) 0.9s forwards; }
   .chap-media { position: relative; inset: auto; flex: 1 1 0; min-height: 0; }
   .chap-plate { position: static; flex: none; max-width: none; border-radius: 0; box-shadow: none; padding: 20px var(--gutter) 28px; }
   .chap.plate-rest .chap-plate { transform: none; opacity: 1; }
-  .chap-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .chap-name { font-size: 32px; }
-  .chap-go { display: inline-flex; color: var(--ink); }
-  .chap-go svg { width: 22px; height: 22px; }
   .chap-role { margin-top: 6px; font-size: 14px; }
-  .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-  .chap-stats, .chap .btn-text { display: none; }
+  .chap-sub { margin-top: 12px; font-size: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .chap-stats { display: none; }
+  .chap-cta { margin-top: 16px; padding: 12px 20px; }
   .sl-line { max-width: 12ch; }
   .quote-grid { grid-template-columns: 1fr; gap: 12px; }
   .quote-card--feature { grid-column: auto; grid-row: auto; padding: 28px; }

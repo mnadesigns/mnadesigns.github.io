@@ -308,7 +308,7 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
 function Plate({ c }: { c: (typeof chapters)[number] }) {
   return (
     <div className="chap-plate">
-      <div className="chap-head"><span className="chap-name">{c.name}</span><span className="chap-go"><Arrow /></span></div>
+      <span className="chap-name">{c.name}</span>
       <div className="chap-role" dangerouslySetInnerHTML={{ __html: c.role }} />
       <p className="chap-sub">{c.sub}</p>
       <div className="chap-stats">
@@ -316,14 +316,14 @@ function Plate({ c }: { c: (typeof chapters)[number] }) {
           <div className="chap-stat" key={s.l}><b>{s.v}</b><i>{s.l}</i></div>
         ))}
       </div>
-      <span className="btn-text">See the work <Arrow /></span>
+      <Link href={c.href} className="chap-cta"><span>See the work</span><Arrow /></Link>
     </div>
   );
 }
 
 // Theater mode: the copy plate hides after 2s of mouse stillness (fine pointers only).
 function Chapter({ c }: { c: (typeof chapters)[number] }) {
-  const ref = useRef<HTMLAnchorElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = ref.current!;
     if (!window.matchMedia("(pointer:fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -343,13 +343,13 @@ function Chapter({ c }: { c: (typeof chapters)[number] }) {
     return () => { clearTimeout(idle); io.disconnect(); el.removeEventListener("mousemove", wake); el.removeEventListener("mouseleave", wake); };
   }, []);
   return (
-    <Link href={c.href} className="chap" ref={ref}>
+    <div className="chap" ref={ref}>
       <div className="chap-media">
         {c.kind === "ad" ? <KineticAd /> : c.film ? <ChapterFilm items={c.film.items} poster={c.film.poster} /> : <div className="ph-box">{c.kind === "film" ? "Film placeholder 16:9" : "Image placeholder 16:9"}</div>}
       </div>
       {c.tag && <span className="ph-tag">{c.tag}</span>}
       <Plate c={c} />
-    </Link>
+    </div>
   );
 }
 
