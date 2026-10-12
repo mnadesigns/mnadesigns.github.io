@@ -16,7 +16,9 @@ export function useFilmClock(ref: RefObject<HTMLElement | null>) {
         if (!(a instanceof CSSAnimation || a instanceof CSSTransition)) continue;
         const target = (a.effect as KeyframeEffect | null)?.target as Element | null;
         if (target?.closest(".film-progress, .film-total")) continue;
-        if (a.playbackRate !== FILM_SPEED) a.updatePlaybackRate(FILM_SPEED);
+        const own = target?.closest("[data-speed]") as HTMLElement | null; // a slide can ask for its own speed (1 = as drawn)
+        const rate = own ? Number(own.dataset.speed) || 1 : FILM_SPEED;
+        if (a.playbackRate !== rate) a.updatePlaybackRate(rate);
       }
     };
     const id = setInterval(tick, 100);

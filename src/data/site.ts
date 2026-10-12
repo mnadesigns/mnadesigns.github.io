@@ -87,7 +87,7 @@ export const chapters = [
       items: [
         { type: "scene", id: "welcome", dur: 4500 },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The scope", giant: 6, tag: "Product lines" },
-        { type: "scene", id: "process-challenges", dur: 10000 },
+        { type: "scene", id: "process-challenges", dur: 12500 },
         { type: "slide", bg: "#1d1c4e", image: "/images/work/quodarca/bg-devices.webp", dark: true, dur: 3200, kicker: "The work", giant: 500, suffix: "+", tag: "Screens designed" },
         { type: "scene", id: "approach", dur: 9000 },
         { type: "slide", bg: "#302f7f", dark: true, dur: 3200, kicker: "The foundation", giant: 100, suffix: "%", tag: "Custom design system, from scratch" },

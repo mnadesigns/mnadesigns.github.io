@@ -101,7 +101,7 @@ function PortraitProcess() {
 // "Process & UX Challenges": the QuodArca framework (Define, Design, Deliver) and then the five UX problems found in the audit (Figma frame 72:8516).
 export function ProcessChallenges(props: SceneProps) {
   return (
-    <Scene {...props} portrait={<PortraitProcess />} bars="#ffffff" stage="white">
+    <Scene {...props} speed={1} portrait={<PortraitProcess />} bars="#ffffff" stage="white">
       <div className={styles.groupA}>
         <p className={`${styles.t} ${styles.processTitle}`}>The<br />Process</p>
         <div className={styles.rocket}><img alt="" src={`${A}/rocket.png`} /></div>

@@ -53,7 +53,7 @@ export function PortraitCanvas({ children }: { children: React.ReactNode }) {
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
 // covers the panel, backdrop is artwork placed in stage coordinates that may spill past the stage edges.
-export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bottomAnchor = false, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bottomAnchor?: boolean; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
+export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bottomAnchor = false, speed, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bottomAnchor?: boolean; speed?: number; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   const [fx, fy] = focus;
   const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0, narrow: false, pu: 1, pw: 0, psw: 1920, psh: 1080 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
@@ -78,7 +78,7 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
     return () => ro.disconnect();
   }, [fx, fy, bottomAnchor]);
   return (
-    <div className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
+    <div data-speed={speed} className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
       <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
         {fill && <div className={styles.fill}>{fill}</div>}
         {cover && <div className={styles.cover}>{cover}</div>}

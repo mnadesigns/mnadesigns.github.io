@@ -71,11 +71,11 @@
 
 /* ---- phone layout (Scene's portrait prop): the desktop drawing played one card at a time by a camera ----
    --psw, --psh: the panel in px. The camera frames 560 x 632 stage px (a card, with its margin) below a fixed heading, fitted to the panel with 24px left under the cards, and slides from card to card. */
-.mView { position: absolute; inset: 0; overflow: hidden; background: #fff; --s: min(calc(var(--psw) / 560), calc((var(--psh) - 124) / 632)); }
+.mView { position: absolute; inset: 0; overflow: hidden; background: #fff; --s: min(calc((var(--psw) - 32) / 453), calc((var(--psh) - 116) / 612)); }
 .mHead { position: absolute; left: 20px; right: 20px; top: 20px; z-index: 2; display: flex; align-items: center; gap: 10px; }
 .mHeadTitle { margin: 0; color: #000; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 44px; line-height: 1; letter-spacing: 0.01em; white-space: nowrap; opacity: 0; }
 .mHeadIcon { width: 44px; height: 44px; object-fit: contain; opacity: 0; }
-.mWorld { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; --ty: calc(92 + (var(--psh) - 92 - 24 - 632 * var(--s)) / 2 - 366 * var(--s)); transform: translate(calc((var(--psw) / 2 - var(--s) * 484) * 1px), calc(var(--ty) * 1px)) scale(var(--s)); }
+.mWorld { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; --ty: calc(92 + (var(--psh) - 92 - 24 - 612 * var(--s)) / 2 - 376 * var(--s)); transform: translate(calc((var(--psw) / 2 - var(--s) * 484) * 1px), calc(var(--ty) * 1px)) scale(var(--s)); }
 .mGroup { position: absolute; inset: 0; opacity: 0; }
 .mWorld .card, .mWorld .cardName, .mWorld .cardText { opacity: 1; }
 .mG1 { --cs: 1.5s; } .mG2 { --cs: 4.5s; } .mG3 { --cs: 7.5s; }

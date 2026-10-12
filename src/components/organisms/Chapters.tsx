@@ -207,7 +207,7 @@ const FADE_MS = 400;
 function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
   const phone = usePhone();
   // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
-  const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 9000 } : it)) : all), [all, phone]);
+  const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 11250 } : it)) : all), [all, phone]);
   const els = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
   const root = useRef<HTMLDivElement>(null);
   useFilmClock(root);
