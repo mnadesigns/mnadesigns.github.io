@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Easing } from "motion/react";
-import { Scene, type SceneProps } from "./QuodarcaScenes";
+import { PortraitPicture, Scene, type SceneProps } from "./QuodarcaScenes";
 
 const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
 
@@ -9,7 +9,7 @@ const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
 // Sred.io screens (work 1): it fades in over 0.8 s while easing from 106% down to 100% over 4.2 s.
 export function TelcoIctScene(props: SceneProps) {
   return (
-    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff">
+    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitPicture active={props.active} alt="The Telco ICT Group website on a phone, a desktop and a tablet: telecommunications and IT that works every time." src="/images/work/telcoict/devices.webp" />}>
       <motion.img
         alt="The Telco ICT Group website on a phone, a desktop and a tablet: telecommunications and IT that works every time."
         src="/images/work/telcoict/devices.webp"

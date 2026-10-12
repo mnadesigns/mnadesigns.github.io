@@ -1,12 +1,45 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, type Easing } from "motion/react";
 import styles from "./QuodarcaScenes.module.css";
 
 const IMG = "/images/work/quodarca";
 
 // idle: not playing, but its background is on show (the film's first frame, before the panel scrolls into view), so the art can rise into it
 export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean; focus?: [number, number] };
+
+// Phone layout for the scenes that are one picture of devices on white: the picture at the full width of the panel, centred, with the same entrance as on desktop (fades in over 0.8 s while easing from 106% down to 100%).
+const PIC_EASE: Easing = [0.23, 1, 0.32, 1];
+export function PortraitPicture({ src, alt, active }: { src: string; alt: string; active: boolean }) {
+  return (
+    <div className={styles.pPic}>
+      <motion.img
+        alt={alt}
+        src={src}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
+        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: { duration: 4.2, ease: PIC_EASE } }}
+      />
+    </div>
+  );
+}
+
+// Phone layout that fills the panel with one picture (cropping what does not fit): same entrance as PortraitPicture. position is where the picture is anchored when cropped.
+export function PortraitCover({ src, alt, active, position = "50% 50%" }: { src: string; alt: string; active: boolean; position?: string }) {
+  return (
+    <div className={styles.pPic}>
+      <motion.img
+        alt={alt}
+        src={src}
+        style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: position }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
+        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: { duration: 4.2, ease: PIC_EASE } }}
+      />
+    </div>
+  );
+}
 
 // A 390 x 514 drawing board for the phone layouts of a scene (its portrait prop): what is drawn on it is scaled, as one piece, to fit the panel.
 export function PortraitCanvas({ children }: { children: React.ReactNode }) {
@@ -17,10 +50,10 @@ export function PortraitCanvas({ children }: { children: React.ReactNode }) {
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
 // covers the panel, backdrop is artwork placed in stage coordinates that may spill past the stage edges.
-export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
+export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bottomAnchor = false, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bottomAnchor?: boolean; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   const [fx, fy] = focus;
-  const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0, narrow: false, pu: 1, pw: 0 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
+  const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0, narrow: false, pu: 1, pw: 0, psw: 1920, psh: 1080 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
   useEffect(() => {
     const el = frame.current!;
     const measure = () => {
@@ -30,26 +63,27 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
         const s = Math.max(w / 1920, h / 1080);
         const lim = (stageSize: number, panel: number) => Math.max(0, (stageSize * s - panel) / 2);
         const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
-        setFit({ narrow: true, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
+        setFit({ narrow: true, psw: 1920, psh: 1080, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
         return;
       }
-      setFit({ narrow: false, pu: 1, pw: 0, scale: Math.min(w / 1920, h / 1080), tx: 0, ty: 0 });
+      const fitS = Math.min(w / 1920, h / 1080);
+      setFit({ narrow: false, pu: 1, pw: 0, psw: w / fitS, psh: h / fitS, scale: fitS, tx: 0, ty: bottomAnchor ? (h - 1080 * fitS) / 2 : 0 }); // psw, psh: the size of the panel in stage px, for scenes that grow to fill it
     };
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [fx, fy]);
+  }, [fx, fy, bottomAnchor]);
   return (
     <div className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
       <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
         {fill && <div className={styles.fill}>{fill}</div>}
         {cover && <div className={styles.cover}>{cover}</div>}
-        {anchors && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
+        {anchors && !fit.narrow && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
         {corner && <div className={styles.corner} style={{ bottom: 20 * fit.scale, transform: `scale(${fit.scale})` }}>{corner}</div>}
         {backdrop && <div className={styles.stageLayer} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>{backdrop}</div>}
         {portrait && fit.narrow && <div className={styles.portrait} style={{ "--pu": fit.pu, "--pw": fit.pw } as React.CSSProperties}>{portrait}</div>}
-        <div hidden={!!portrait && fit.narrow} className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})` }}>
+        <div hidden={!!portrait && fit.narrow} className={`${styles.stage} ${styles[stage]}${bleed ? ` ${styles.bleed}` : ""}`} style={{ transform: `translate(-50%, -50%) translate(${fit.tx}px, ${fit.ty}px) scale(${fit.scale})`, "--psw": fit.psw, "--psh": fit.psh } as React.CSSProperties}>
           {children}
         </div>
       </div>

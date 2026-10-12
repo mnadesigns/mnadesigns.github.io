@@ -44,6 +44,8 @@
 /* phone layout of Welcome (see Scene's portrait prop): the wordmark across the top, the monitor under it, both using the full width instead of the 16:9 stage */
 .portrait { container-type: size; position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; }
 /* the wordmark and monitor are about as tall as they are wide, so they are sized by whichever of the panel's width and height is the tighter: both always fit whole */
+.pPic { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff; }
+.pPic img { display: block; width: 100%; height: auto; }
 .canvas { position: absolute; left: 50%; top: 50%; width: 390px; height: 514px; transform: translate(-50%, -50%) scale(var(--pu, 1)); display: flex; flex-direction: column; align-items: center; justify-content: center; }
 /* Projects delivered, phone: the desktop drawing (stage x 425-1496, y 5-980) scaled to the panel's width less 16px each side; --pw is that width in px */
 .pFitBox { position: absolute; left: 16px; top: calc(50% - 12px); width: calc(var(--pw) * 1px); height: calc(var(--pw) * 1px * 975 / 1071); transform: translateY(-50%); }

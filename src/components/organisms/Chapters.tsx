@@ -12,6 +12,9 @@ import { KeysboroughScene } from "./KeysboroughScene";
 import { SpoonfulScene } from "./SpoonfulScene";
 import { WonderPiesScene } from "./WonderPiesScene";
 import { TelcoIctScene } from "./TelcoIctScene";
+import { PharmacyScene } from "./PharmacyScene";
+import { PeersScene } from "./PeersScene";
+import { ZigbisScene } from "./ZigbisScene";
 import { DesignSystemScene } from "./DesignSystemScene";
 import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
@@ -25,7 +28,7 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 // `run` changes whenever the current segment starts over, so its fill restarts.
 // What the bar sits on, so it can be white on dark backgrounds and black on light ones.
 type Tone = "light" | "dark";
-const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light", telcoict: "light" };
+const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light", telcoict: "light", pharmacy: "light", peers: "dark", zigbis: "light" };
 const toneOfColour = (hex: string): Tone => {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return "light";
@@ -304,6 +307,9 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
           if (it.id === "approach") return <ApproachScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "wonderpies") return <WonderPiesScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "telcoict") return <TelcoIctScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "pharmacy") return <PharmacyScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "peers") return <PeersScene key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "zigbis") return <ZigbisScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "spoonful") return <SpoonfulScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "keysborough") return <KeysboroughScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "zerogaspi") return <ZeroGaspiScene key={i} active={active} holdMs={holdMs} />;

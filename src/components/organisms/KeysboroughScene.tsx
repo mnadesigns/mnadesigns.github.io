@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Easing } from "motion/react";
-import { Scene, type SceneProps } from "./QuodarcaScenes";
+import { PortraitCover, Scene, type SceneProps } from "./QuodarcaScenes";
 
 const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
 
@@ -9,7 +9,7 @@ const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
 // across the panel), with the same simple entrance as the Sred.io screens (work 1): it fades in over 0.8 s while easing from 106% down to 100% over 4.2 s.
 export function KeysboroughScene(props: SceneProps) {
   return (
-    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff">
+    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitCover active={props.active} alt="The Keysborough Veterinary Practice website on a desktop, a tablet and a phone." src="/images/work/keysborough/composite.webp" position="50% 100%" />}>
       <motion.img
         alt="The Keysborough Veterinary Practice website on a desktop, a tablet and a phone."
         src="/images/work/keysborough/composite.webp"

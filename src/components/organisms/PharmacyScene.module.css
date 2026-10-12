@@ -1,0 +1,13 @@
+/* "Specialist Clinic Pharmacy": a desktop display whose screen shows the whole home page scrolling down by itself.
+   The mockup picture has its screen cut out; the page picture sits behind it in a window that matches the screen (percentages of the mockup picture), and slides up through it. */
+.stageMock { position: absolute; left: 10px; top: 62px; width: 1900px; } /* centred; 10% bigger than the 1728 px before */
+.mock { position: relative; width: 100%; aspect-ratio: 5492 / 2763; }
+.frame { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.win { position: absolute; left: 14.26%; top: 4.71%; width: 71.36%; height: 80.06%; clip-path: inset(0px 0px); container-type: size; background: #fff; }
+.page { display: block; width: 100%; height: auto; max-width: none; will-change: transform; transform: translateY(calc(100cqh - 100%)); } /* at rest the page is at its end, so the slide fading out shows the end of the scroll, not the start */
+[data-active="true"] .page { animation: pgScrollM 8.6s cubic-bezier(0.37, 0, 0.63, 1) 0.9s both; }
+@keyframes pgScrollM { from { transform: translateY(0); } to { transform: translateY(calc(100cqh - 100%)); } }
+
+/* phone: the display at the full width of the panel */
+.pBox { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #fff; overflow: hidden; }
+.pMock { width: 110%; flex: none; }
