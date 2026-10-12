@@ -5,4 +5,3 @@
 .heading { position: absolute; left: 89px; top: 44px; margin: 0; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 128px; line-height: 118px; letter-spacing: 0.01em; white-space: nowrap; }
 .line { position: absolute; right: 88px; top: 66px; margin: 0; color: #fff; font-family: var(--sans); font-weight: 500; font-size: 33px; line-height: 46.5px; text-align: right; }
 .device { position: absolute; max-width: none; pointer-events: none; will-change: transform, opacity; }
-.ground { position: absolute; left: -3000px; top: -3000px; width: 7920px; height: 7080px; pointer-events: none; will-change: opacity; }

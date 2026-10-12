@@ -1,4 +1,3 @@
-/* "Approach" scene, from the QuodArca Figma file (frames 293:55888 and 293:56631): two views that each fill the whole panel (see Scene's cover),
-   with a purple caption card against the right edge of the panel (see Scene's corner). */
-.card { position: absolute; inset: 0; box-sizing: border-box; padding: 40px; border-radius: 12px; background: #5c5ae8; color: #fff; display: flex; align-items: center; will-change: transform, opacity; }
-.card p { margin: 0; width: 100%; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 92px; line-height: 1.09; font-feature-settings: "liga" 0; white-space: nowrap; }
+/* "Approach" scene, second view: the heading of Figma frame 293:56631, set live in Tanker so its size can follow the design. */
+.heading { position: absolute; left: 0; top: 96px; width: 1920px; margin: 0; text-align: center; color: #fff; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: 138px; line-height: 150px; letter-spacing: 0.01em; white-space: nowrap; font-feature-settings: "liga" 0; }
+.heading span { color: var(--cyan); }

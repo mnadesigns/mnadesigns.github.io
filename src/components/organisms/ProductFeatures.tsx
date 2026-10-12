@@ -9,8 +9,6 @@ const T = 15.04; // seconds: the length of the whole scene
 
 // The five clips. start/end are seconds from the Figma file; each device is an exported render with its position and size on the 1920 x 1080 stage.
 type Dev = { f: string; x: number; y: number; w: number; h: number };
-// the ground of each view: the colours change from one view to the next, each fading in over the last
-const GROUNDS = ["#302f7f", "#6643be", "#763aa1", "#24243b", "#6643be"];
 const CLIPS: { head: string; line: string[]; start: number; end: number; devices: Dev[] }[] = [
   {
     head: "Arca:", line: ["Organize your data", "with contextual links."], start: 0, end: 3.3,
@@ -75,29 +73,17 @@ function textMotion(start: number, end: number) {
   };
 }
 
-// "Product Features": five views (Arca, Quod, Files, Users, Messages) over one purple backdrop (Figma frame 193:13946).
+// "Product Features": five views (Arca, Quod, Files, Users, Messages) over one dark indigo background picture (Figma frame 193:13946).
 export function ProductFeatures(props: SceneProps) {
   const on = props.active;
   return (
     <Scene
       {...props}
-      bars="#302f7f"
+      bars="#1d1c4e"
       stage="purple"
-      base="#302f7f"
-      backdrop={
-        <>
-          {CLIPS.map((c, i) => i > 0 && (
-            <motion.div
-              key={c.head}
-              className={styles.ground}
-              style={{ background: GROUNDS[i] }}
-              initial={{ opacity: 0 }}
-              animate={on ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }}
-              transition={{ duration: T, times: [0, c.start - 0.2, c.start + 0.2, T].map(frac), ease: "linear" }}
-            />
-          ))}
-        </>
-      }
+      base="#1d1c4e"
+      // eslint-disable-next-line @next/next/no-img-element
+      cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
     >
       {CLIPS.map((c) => {
         const tm = textMotion(c.start, c.end);

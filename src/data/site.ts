@@ -3,7 +3,7 @@ import type { ToolIconName } from "@/components/atoms/ToolIcons";
 // Home page content. Sourced from the "Linkdein Profile Optimization" Claude project; only claims confirmed there are used.
 export const site = {
   name: "Muhammad Naeem",
-  role: "Senior Product Designer, Lahore, Pakistan",
+  role: "AI Product Leader, Lahore, Pakistan",
   logo: "MNA",
   email: "me.naeem88@gmail.com",
   behance: "https://www.behance.net/muhammadnaeem",
@@ -88,11 +88,11 @@ export const chapters = [
         { type: "scene", id: "welcome", dur: 4500 },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The scope", giant: 6, tag: "Product lines" },
         { type: "scene", id: "process-challenges", dur: 10000 },
-        { type: "slide", bg: "#763aa1", dark: true, dur: 3200, kicker: "The work", giant: 500, suffix: "+", tag: "Screens designed" },
+        { type: "slide", bg: "#1d1c4e", image: "/images/work/quodarca/bg-devices.webp", dark: true, dur: 3200, kicker: "The work", giant: 500, suffix: "+", tag: "Screens designed" },
         { type: "scene", id: "approach", dur: 9000 },
         { type: "slide", bg: "#302f7f", dark: true, dur: 3200, kicker: "The foundation", giant: 100, suffix: "%", tag: "Custom design system, from scratch" },
         { type: "scene", id: "design-system", dur: 4000 },
-        { type: "slide", bg: "#6643be", dark: true, dur: 3000, kicker: "The reach", giant: 3, tag: "Platforms: desktop, tablet, mobile" },
+        { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The reach", giant: 3, tag: "Platforms: desktop, tablet, mobile" },
         { type: "scene", id: "product-features", dur: 14500 },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The standard", line: "WCAG 2.1 AA", tag: "Accessible on every screen" },
         { type: "scene", id: "projects-delivered", dur: 4000 },
@@ -112,27 +112,18 @@ export const chapters = [
     href: site.behance,
     // The Zero Gaspi scene, the Applied Electronics and Vyno videos, the Keysborough scene, then a few plain stat slides, on a loop.
     film: {
-      poster: "/images/work/zerogaspi/phone-tilt.webp",
+      poster: "", // no poster: the film opens on a scene, and a picture of the phone would show before it plays
       items: [
         { type: "scene", id: "zerogaspi", dur: 12500 },
         { type: "clip", src: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560", fit: "cover" },
         { type: "clip", src: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3", fit: "cover" },
         { type: "scene", id: "keysborough", dur: 4000 },
         { type: "slide", bg: "#302f7f", dark: true, dur: 3000, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
-        { type: "slide", bg: "#763aa1", dark: true, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
+        { type: "slide", bg: "#6643be", dark: true, dur: 3000, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "slide", bg: "#24243b", dark: true, dur: 3000, kicker: "The growth", line: "2.5x", tag: "Online orders" },
       ] as FilmItem[],
     },
     tag: "",
-  },
-  {
-    kind: "still",
-    name: "Bionorica",
-    role: "Senior UX/UI Designer, April & June Digital, <em>2019 to 2021</em>",
-    sub: "A modular, component-based design system for a pharmaceutical brand, built to scale across web and mobile.",
-    stats: [{ v: "Design system", l: "Web and mobile", word: true }],
-    href: site.behance,
-    tag: "still",
   },
 ];
 

@@ -8,16 +8,6 @@ const IMG = "/images/work/quodarca";
 // idle: not playing, but its background is on show (the film's first frame, before the panel scrolls into view), so the art can rise into it
 export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean };
 
-// The dotted paper behind the white scenes, from the Figma file: a 4px square of #ebebeb every 24px, drawn across the whole panel
-// (including the margins beside the 16:9 stage) and scaled and shifted to line up with the stage.
-const DOT = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><rect x="22" y="10" width="4" height="4" fill="#ebebeb"/><rect x="-2" y="10" width="4" height="4" fill="#ebebeb"/></svg>');
-const dots = (f: { scale: number; ox: number; oy: number }): React.CSSProperties => ({
-  backgroundColor: "#fff",
-  backgroundImage: `url("${DOT}")`,
-  backgroundSize: `${24 * f.scale}px ${24 * f.scale}px`,
-  backgroundPosition: `${f.ox}px ${f.oy}px`,
-});
-
 // A fixed 1920 x 1080 drawing, scaled to fit whatever panel it is shown in. It is a layer of a chapter film: it fades in and out with the
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
@@ -38,7 +28,7 @@ export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fil
   }, []);
   return (
     <div className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
-      <div ref={frame} data-active={active} style={stage === "white" ? dots(fit) : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
+      <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
         {fill && <div className={styles.fill}>{fill}</div>}
         {cover && <div className={styles.cover}>{cover}</div>}
         {anchors && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}
@@ -54,14 +44,15 @@ export function Scene({ active, holdMs = 0, idle = false, bars, stage, base, fil
 
 /* eslint-disable @next/next/no-img-element */
 
-// "Welcome": the QuodArca wordmark and a desktop app tilting up on a solid purple field (Figma frame 253:22383).
+// "Welcome": the QuodArca wordmark and a large desktop app tilting up over the dark indigo background picture (Figma frame 253:22383).
 export function WelcomeScene(props: SceneProps) {
   return (
     <Scene
       {...props}
-      bars="#302f7f"
+      bars="#1d1c4e"
       stage="welcome"
-      base="#302f7f"
+      base="#1d1c4e"
+      cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
     >
       <div className={styles.wordmarkWrap}>
         <div className={styles.wordmark}><img alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>

@@ -4,6 +4,8 @@ import { motion, type Easing } from "motion/react";
 import { Scene, type SceneProps } from "./QuodarcaScenes";
 import styles from "./ApproachScene.module.css";
 
+/* eslint-disable @next/next/no-img-element */
+
 const IMG = "/images/work/quodarca/approach";
 const T = 9; // seconds: the length of the whole scene
 const SPLIT = 4.5; // seconds: view one ends and view two begins
@@ -24,48 +26,32 @@ function zoomIn(start: number) {
   };
 }
 
-// The caption cards rise in after the picture; the first lifts away as the second view arrives.
-function rise(start: number, end: number) {
-  const a = start + 0.8;
-  const o = end - 0.35;
-  return {
-    animate: { opacity: [0, 0, 1, 1, 0, 0], y: [60, 60, 0, 0, -60, -60] },
-    transition: { duration: T, times: times([0, a, a + 0.5, o, o + 0.3, T]), ease: eases("linear", EXPO, "linear", "easeIn", "linear") },
-  };
-}
-
 const HIDDEN = { opacity: 0, scale: 1.07 };
-const HIDDEN_RISE = { opacity: 0, y: 60 };
 
-// "Audit first, design later" over a board of screens, then "Think across devices" on devices; both fill the panel (Figma frames 293:55888 and 293:56631).
+// A board of audited screens, then "Think across devices" with a laptop and a phone (heading included in the picture so it stays aligned); both fill the panel (Figma frames 293:55888 and 293:56631).
 export function ApproachScene(props: SceneProps) {
   const on = props.active;
   const one = zoomIn(0.3);
   const two = zoomIn(SPLIT - 0.3);
-  const card1 = rise(0, SPLIT);
-  const card2 = rise(SPLIT, T);
   return (
     <Scene
       {...props}
-      bars="#f7f7f7"
+      bars="#24243b"
       stage="purple"
-      base="#f7f7f7"
+      bleed
+      base="#24243b"
       cover={
         <>
-          <motion.img alt="Screens from the QuodArca audit: sign-in, security, device approval and empty states." src={`${IMG}/audit-board.webp`} initial={HIDDEN} animate={on ? one.animate : HIDDEN} transition={one.transition} />
-          <motion.img alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-board.webp`} initial={HIDDEN} animate={on ? two.animate : HIDDEN} transition={two.transition} />
+          <motion.img alt="Screens from the QuodArca audit: sign-in, security, device approval and empty states." src={`${IMG}/audit.webp`} initial={HIDDEN} animate={on ? one.animate : HIDDEN} transition={one.transition} />
+          <motion.img alt="" src={`${IMG.replace("/approach", "")}/bg-devices.webp`} initial={{ opacity: 0 }} animate={on ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: T, times: times([0, SPLIT - 0.3, SPLIT + 0.2, T]), ease: "linear" }} />
         </>
       }
-      corner={
-        <>
-          <motion.div className={styles.card} initial={HIDDEN_RISE} animate={on ? card1.animate : HIDDEN_RISE} transition={card1.transition}>
-            <p>Audit First,<br />Design Later</p>
-          </motion.div>
-          <motion.div className={styles.card} initial={HIDDEN_RISE} animate={on ? card2.animate : HIDDEN_RISE} transition={card2.transition}>
-            <p>Think Across<br />Devices</p>
-          </motion.div>
-        </>
-      }
-    />
+    >
+      {/* the second view lives on the stage, so its heading stays aligned with the devices on any panel shape; your indigo background picture shows behind and around the devices */}
+      <motion.div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080 }} initial={HIDDEN} animate={on ? two.animate : HIDDEN} transition={two.transition}>
+        <img alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-cutout.webp`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+        <p className={styles.heading}>Think Across Devices<span>.</span></p>
+      </motion.div>
+    </Scene>
   );
 }

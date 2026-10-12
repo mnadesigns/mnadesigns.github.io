@@ -13,13 +13,23 @@ export function Nav() {
   const path = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
+    // Inside the work stack the bar stays tucked away, even when scrolling up. That is also set as a class on <body> (see .in-work in site.css) and
+    // re-checked on scroll, resize, load and a slow timer, so it can never be left showing by a missed scroll event (page restored mid-stack, reduced motion, zoom).
+    const update = () => {
       const y = window.scrollY;
-      setHide(y > last.current && y > 120);
+      const stack = document.querySelector(".chap-stack")?.getBoundingClientRect();
+      const mid = window.innerHeight / 2; // the stack covers the middle of the screen (no pixel-exact test, which fails on scaled Windows displays)
+      const inWork = !!stack && stack.top <= mid && stack.bottom >= mid;
+      document.body.classList.toggle("in-work", inWork);
+      setHide(inWork || (y > last.current && y > 120));
       last.current = y;
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    window.addEventListener("load", update);
+    const slow = setInterval(update, 300);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); window.removeEventListener("load", update); clearInterval(slow); document.body.classList.remove("in-work"); };
   }, []);
 
   useEffect(() => {

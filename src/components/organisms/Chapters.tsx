@@ -15,14 +15,52 @@ import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { FullPageStack } from "./FullPageStack";
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+
+// The thin bar along the bottom of a work: one equal-width segment per slide or clip, the one on screen fills as it plays (over as long as that item lasts), earlier ones are full.
+// `run` changes whenever the current segment starts over, so its fill restarts.
+// What the bar sits on, so it can be white on dark backgrounds and black on light ones.
+type Tone = "light" | "dark";
+const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light" };
+const toneOfColour = (hex: string): Tone => {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return "light";
+  const n = parseInt(m[1], 16);
+  return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255 < 0.5 ? "dark" : "light";
+};
+// A scene that goes from a light view to a dark one: the bar switches colour at that moment (ms into the scene).
+const SCENE_SWAP: Record<string, { at: number; tone: Tone }> = { approach: { at: 4500, tone: "dark" } };
+const toneOfItem = (it: FilmItem): Tone => (it.type === "slide" ? (it.dark ? "dark" : "light") : it.type === "clip" ? toneOfColour(it.bg) : SCENE_TONE[it.id] ?? "light");
+
+function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[]; index: number; playing: boolean; run: number; tone: Tone; swap?: { at: number; tone: Tone } }) {
+  const [swapped, setSwapped] = useState(-1); // the run in which the switch has happened
+  useEffect(() => {
+    if (!swap || !playing) return;
+    const t = setTimeout(() => setSwapped(run), swap.at);
+    return () => clearTimeout(t);
+  }, [swap, playing, run]);
+  const shown = swap && swapped === run ? swap.tone : tone;
+  return (
+    <div className={`film-progress on-${shown}`} aria-hidden="true">
+      {durs.map((d, i) => (
+        <span key={i} className="fpb-seg">
+          {i < index && <i className="fpb-done" />}
+          {i === index && <i key={run} className="fpb-run" style={{ animationDuration: d + "ms", animationPlayState: playing ? "running" : "paused" }} />}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 // Kinetic-type ad: 10 beats, colour dissolves on its own layer, subject fades fast, slow scale drift.
 function KineticAd() {
   const ref = useRef<HTMLDivElement>(null);
   const [i, setI] = useState(0);
   const [counts, setCounts] = useState<Record<number, number>>({});
+  const [playing, setPlaying] = useState(false);
+  const [run, setRun] = useState(0);
   const still = useReducedMotion();
   const idx = useRef(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -33,12 +71,13 @@ function KineticAd() {
     const advance = () => {
       idx.current = (idx.current + 1) % adBeats.length;
       setI(idx.current);
+      setRun((n) => n + 1);
       timer.current = setTimeout(advance, adBeats[idx.current].dur);
     };
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !timer.current) timer.current = setTimeout(advance, adBeats[idx.current].dur);
-        else if (!e.isIntersecting && timer.current) { clearTimeout(timer.current); timer.current = null; }
+        if (e.isIntersecting && !timer.current) { timer.current = setTimeout(advance, adBeats[idx.current].dur); setPlaying(true); setRun((n) => n + 1); }
+        else if (!e.isIntersecting && timer.current) { clearTimeout(timer.current); timer.current = null; setPlaying(false); }
       },
       { threshold: 0.3 }
     );
@@ -98,12 +137,13 @@ function KineticAd() {
           </div>
         </div>
       ))}
+      {!still && <FilmProgress durs={adBeats.map((b) => b.dur)} index={cur} playing={playing} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
     </div>
   );
 }
 
 // A designed slide that sits between two clips of a chapter film (see ChapterFilm). Static; it only fades in and out.
-function FilmSlideView({ s, active, holdMs = 0 }: { s: FilmSlide; active: boolean; holdMs?: number }) {
+function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; active: boolean; holdMs?: number; idle?: boolean }) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!active || !s.giant) return;
@@ -118,11 +158,21 @@ function FilmSlideView({ s, active, holdMs = 0 }: { s: FilmSlide; active: boolea
     return () => cancelAnimationFrame(raf);
   }, [active, s.giant]);
   return (
-    <div className={`sloop film-slide${s.dark ? " fg-on-dark" : ""}${active ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms` }} aria-hidden={!active}>
+    <div className={`sloop film-slide${s.dark ? " fg-on-dark" : ""}${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms` }} aria-hidden={!active}>
       <div className="sl-bg" style={{ background: s.bg }} />
+      {s.image && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img className="sl-bgimg" alt="" src={s.image} />
+      )}
       <div className={`sl-card${active ? " on" : ""}`} style={{ "--beat": s.dur + "ms" } as React.CSSProperties}>
         <div className="sl-hero">
-          <div className="sl-kicker"><span>{s.kicker}</span></div>
+          {s.kicker && <div className="sl-kicker"><span>{s.kicker}</span></div>}
+          {s.logo && (
+            <div className="sl-brand sl-brand--wide">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={s.logo.src} alt={s.logo.name} />
+            </div>
+          )}
           {s.line && <div className="sl-line">{s.line}</div>}
           {s.giant ? <div className="sl-giant">{(active ? n : 0).toLocaleString("en-US")}{s.suffix}</div> : null}
           {s.tag && <div className="sl-tag">{s.tag}</div>}
@@ -145,6 +195,7 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
   const [step, setStep] = useState(0); // counts items played; the item is items[step % n]
   const [visible, setVisible] = useState(false);
   const [shown, setShown] = useState(0); // which video element is on show (0 or 1)
+  const [clipMs, setClipMs] = useState<Record<string, number>>({}); // how long each clip lasts, once its video has loaded
   const [started, setStarted] = useState(false); // the first clip has played, so the poster is no longer needed
   const n = items.length;
   const hasClips = items.some((it) => it.type === "clip"); // a film made only of scenes and slides has no video to manage
@@ -210,19 +261,20 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
   }, [step, visible, item]);
 
   return (
-    <div ref={root} className="chap-film" style={{ background: hasClips ? clipOf(now).bg : "#fdfdfd" }}>
+    <div ref={root} className="chap-film" style={{ background: !hasClips ? "#fdfdfd" : !poster && !started && step === 0 && items[0].type !== "clip" ? "#ffffff" : clipOf(now).bg }}>
       {hasClips && [0, 1].map((k) => (
         <video
           key={k}
           ref={els[k]}
-          className={`chap-video${shown === k ? " is-on" : ""}`}
+          className={`chap-video${shown === k && !(step === 0 && items[0].type !== "clip") ? " is-on" : ""}`}
           src={held[k]}
           style={{ objectFit: (items.find((it) => it.type === "clip" && it.src === held[k]) as FilmClip | undefined)?.fit }}
-          poster={!started && k === 0 ? poster : undefined}
+          poster={!started && k === 0 && poster ? poster : undefined}
           muted
           playsInline
           preload="auto"
           aria-hidden="true"
+          onLoadedMetadata={(e) => { const v = e.currentTarget; if (v.duration && isFinite(v.duration)) { const key = v.getAttribute("src") ?? ""; setClipMs((m) => (m[key] === Math.round(v.duration * 1000) ? m : { ...m, [key]: Math.round(v.duration * 1000) })); } }}
           onEnded={() => k === live && item.type === "clip" && setStep((s) => s + 1)}
           onError={() => k === live && item.type === "clip" && setStep((s) => s + 1)}
         />
@@ -233,7 +285,7 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
         // when one slide hands over to another, the one that ends stays put until the new one fully covers it
         const holdMs = !active && i === (step + n - 1) % n && item.type !== "clip" ? FADE_MS : 0;
         if (it.type === "scene") {
-          if (it.id === "welcome") return <WelcomeScene key={i} active={active} holdMs={holdMs} idle={!visible} />;
+          if (it.id === "welcome") return <WelcomeScene key={i} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
           if (it.id === "process-challenges") return <ProcessChallenges key={i} active={active} holdMs={holdMs} />;
           if (it.id === "approach") return <ApproachScene key={i} active={active} holdMs={holdMs} />;
           if (it.id === "keysborough") return <KeysboroughScene key={i} active={active} holdMs={holdMs} />;
@@ -242,8 +294,9 @@ function ChapterFilm({ items, poster }: { items: FilmItem[]; poster: string }) {
           if (it.id === "product-features") return <ProductFeatures key={i} active={active} holdMs={holdMs} />;
           return <ProjectsDelivered key={i} active={active} holdMs={holdMs} />;
         }
-        return <FilmSlideView key={i} s={it} active={active} holdMs={holdMs} />;
+        return <FilmSlideView key={i} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
       })}
+      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? clipMs[it.src] ?? 5000 : it.dur))} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
     </div>
   );
 }
@@ -304,15 +357,15 @@ export function Chapters() {
           <div className="sec-intro" style={{ marginBottom: 0 }}>
             <div>
               <h2 className="h2">Selected <em>work</em></h2>
-              <p className="sec-sub">Four pieces of work, from a tax-credit SaaS to a pharma design system.</p>
+              <p className="sec-sub">Three pieces of work, from a tax-credit SaaS to a multi-platform design system.</p>
             </div>
             <BtnCircle href={site.behance} label="On Behance" />
           </div>
         </Reveal>
       </div>
-      <div className="chap-stack">
+      <FullPageStack className="chap-stack">
         {chapters.map((c) => <Chapter key={c.name} c={c} />)}
-      </div>
+      </FullPageStack>
       <div className="shell">
         <div className="chap-out">
           <div className="chap-out-left">
