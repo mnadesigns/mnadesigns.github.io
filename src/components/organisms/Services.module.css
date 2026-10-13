@@ -5,7 +5,15 @@
 .section::after { content: ""; position: absolute; left: 50%; top: -240px; width: 900px; height: 520px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(18, 151, 217, 0.28), transparent); pointer-events: none; }
 .section > :global(.shell) { position: relative; z-index: 1; }
 
-.intro { max-width: 860px; margin-bottom: clamp(36px, 5vw, 64px); }
+/* heading on the left, the robot on the right, both sitting on the same baseline above the grid */
+.top { display: flex; align-items: flex-end; justify-content: space-between; gap: clamp(24px, 4vw, 64px); margin-bottom: clamp(36px, 5vw, 64px); }
+.intro { max-width: 860px; min-width: 0; }
+.bot { flex: none; display: grid; place-items: center; width: 180px; height: 180px; margin-right: clamp(0px, 2vw, 32px); }
+/* below tablet width the heading needs the full row, so the robot moves above it and shrinks */
+@media (max-width: 900px) {
+  .top { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+  .bot { width: 96px; height: 96px; margin: 24px 0 0; }
+}
 .h2 { margin: 0; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(30px, 7.4vw, 104px); line-height: 0.92; color: #fff; white-space: nowrap; }
 .h2 em { font-style: normal; color: #38b6f2; }
 .sub { margin: 22px 0 0; max-width: 60ch; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.55; color: rgba(233, 238, 245, 0.7); }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { RobotHead } from "robot-heads";
 import { services, servicesIntro, type Service } from "@/data/services";
 import { ServiceToolIcon } from "@/components/atoms/ServiceToolIcon";
 import styles from "./Services.module.css";
@@ -58,6 +59,19 @@ function Tile({ s, i }: { s: Service; i: number }) {
 
 export function Services() {
   const root = useRef<HTMLElement>(null);
+  // the robot holds still for people who ask for reduced motion
+  const [calm, setCalm] = useState(false);
+  // and draws smaller below tablet width, where it sits above the heading instead of beside it
+  const [small, setSmall] = useState(false);
+  useEffect(() => {
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const narrow = window.matchMedia("(max-width: 900px)");
+    const sync = () => { setCalm(motion.matches); setSmall(narrow.matches); };
+    sync();
+    motion.addEventListener("change", sync);
+    narrow.addEventListener("change", sync);
+    return () => { motion.removeEventListener("change", sync); narrow.removeEventListener("change", sync); };
+  }, []);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -69,9 +83,15 @@ export function Services() {
   return (
     <section ref={root} className={styles.section} id="services">
       <div className="shell">
-        <div className={styles.intro}>
-          <h2 className={styles.h2}>AI-augmented <em>pipelines</em></h2>
-          <p className={styles.sub}>{servicesIntro.sub}</p>
+        <div className={styles.top}>
+          <div className={styles.intro}>
+            <h2 className={styles.h2}>AI-augmented <em>pipelines</em></h2>
+            <p className={styles.sub}>{servicesIntro.sub}</p>
+          </div>
+          {/* decorative mascot on the right of the heading: thinks while idle, follows the pointer, hops on click */}
+          <div className={styles.bot} aria-hidden="true">
+            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={small ? 96 : 180} paused={calm} interactive={!calm} />
+          </div>
         </div>
         <div className={styles.grid}>
             {services.map((s, i) => <Tile key={s.n} s={s} i={i} />)}
