@@ -45,7 +45,7 @@ export function Nav() {
 
   return (
     <>
-      <nav className={`nav${hide ? " hide" : ""}`} id="nav">
+      <nav className={`nav${hide ? " hide" : ""}`} id="nav" style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>
         <Link href="/" className="nav-logo" aria-label="Home">{site.logo}<i /></Link>
         <div className="nav-links">
           {navLinks.slice(0, -1).map((l) => (
@@ -61,6 +61,7 @@ export function Nav() {
         </button>
       </nav>
       <div className={`menu${open ? " open" : ""}`} aria-hidden={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
+        <Link href="/" className="nav-logo menu-logo" aria-label="Home">{site.logo}<i /></Link>
         <button className="menu-close" aria-label="Close menu" onClick={() => setOpen(false)}>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3l10 10M13 3L3 13" /></svg>
         </button>

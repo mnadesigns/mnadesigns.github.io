@@ -12,6 +12,7 @@ export type Article = {
   excerpt: string;
   date: string;
   kind: IllustrationKind;
+  image?: string; // path without size suffix: the listings use "<image>-640.webp" and "<image>-1100.webp" instead of the illustration
   body: Block[];
 };
 
@@ -23,10 +24,11 @@ export const articles: Article[] = [
     excerpt: "How I turn a pile of user interviews into a foundation the whole team can build on, before anyone opens Figma.",
     date: "October 2026",
     kind: "foundations",
+    image: "/images/writing/ai-driven-ux-foundations",
     body: [
       { p: "A lot of projects start the same way. Someone has run ten interviews, the notes are scattered over five documents, and a designer is already drawing screens. The screens look good. They also answer questions nobody checked." },
       { p: "I try to slow that part down. Before any UI, I build a small foundation: what we learned, what is broken, how the product is organised, how people move through it and why we made each choice." },
-      { fig: "foundations", cap: "Interviews become insights, and insights become a structure, before any UI exists." },
+      { fig: "foundations", cap: "A loom takes in strips of interview notes and weaves them into a floor plan of the product." },
       { h: "How I run it" },
       { ul: [
         "I give Claude Code the transcripts and notes and ask it to group what people said into themes. Every insight keeps a link to the quote it came from.",
@@ -62,10 +64,11 @@ export const articles: Article[] = [
     excerpt: "Why design systems drift apart from the code, and how I keep both sides in sync without anyone copying anything by hand.",
     date: "October 2026",
     kind: "system",
+    image: "/images/writing/two-way-design-system",
     body: [
       { p: "Almost every design system I have seen starts well and then drifts. The Figma library is tidy on day one. A few months later the code has components the library does not have, and the library has styles nobody uses." },
       { p: "Nobody did anything wrong. The two were just maintained by different people, at different speeds." },
-      { fig: "system", cap: "One system with two views, kept in sync in both directions." },
+      { fig: "system", cap: "Two pens joined by one linkage. When one draws a shape, the other draws the same shape." },
       { h: "One system, two views" },
       { p: "I treat the design file and the codebase as two views of the same system, not two sources of truth. A change in Figma can move into code, and a change in code can move back. That only works when both share the same base: design tokens." },
       { h: "Start with tokens" },
@@ -99,9 +102,10 @@ export const articles: Article[] = [
     excerpt: "You do not need to invent a new structure to get a site that feels like yours. Borrow the layout, then make everything else your own.",
     date: "October 2026",
     kind: "reference",
+    image: "/images/writing/reference-driven-redesign",
     body: [
       { p: "Redesigns often go wrong because the team tries to be original at the structure level. That is where originality matters least. People already know how a good services page or product page is laid out, and they find things faster when yours works the way they expect." },
-      { fig: "reference", cap: "A proven layout, rebuilt around your brand and your goals." },
+      { fig: "reference", cap: "A drawing of a building traced onto a fresh sheet, with a compass beside it." },
       { h: "What I mean" },
       { p: "I pick a reference: a site whose layout does the job yours has to do, for the same kind of audience. I work out why it works. Then I rebuild the page around your brand, your content and your priorities. The layout is borrowed. The identity and the message are yours." },
       { h: "How I run it" },
@@ -127,13 +131,14 @@ export const articles: Article[] = [
   {
     slug: "benchmark-led-mvp-sprint",
     n: "04",
-    title: "An MVP in three weeks",
-    excerpt: "How I get from an idea to a clickable front end in two to three weeks, by looking at what already works before building anything.",
+    title: "An MVP in two weeks",
+    excerpt: "How I get from an idea to a clickable front end in two weeks, by looking at what already works before building anything.",
     date: "October 2026",
     kind: "mvp",
+    image: "/images/writing/benchmark-led-mvp-sprint",
     body: [
       { p: "An MVP is not a small version of the product. It is the smallest thing that tells you whether the idea is worth building. Often a clickable front end is enough. People can try the flow, you can watch where they hesitate, and nothing expensive has been built behind it." },
-      { fig: "mvp", cap: "A benchmark, user flows and a coded prototype, in two to three weeks." },
+      { fig: "mvp", cap: "A person walks across a plain bridge. The rest of the structure is only drawn in dashed lines." },
       { h: "Look first" },
       { p: "Almost every idea sits close to products that already exist. A quick benchmark shows you which patterns people already understand and where competitors get it wrong. It also saves you from redrawing something that was settled years ago." },
       { h: "Week one" },
@@ -141,14 +146,11 @@ export const articles: Article[] = [
         "I pull real screens and flows from proven products with Mobbin MCP and note what each does well.",
         "I pick the one flow that proves the idea. Everything else waits.",
         "I draw the user flows: the happy path, and the most important thing that can go wrong.",
-      ] },
-      { h: "Week two" },
-      { ul: [
         "I set up a small design system: tokens, a few components and a few patterns. Not a full library, but enough rules that the screens match.",
         "I design the screens in Figma using that system. Claude Code reads the real components through the Figma MCP, so the design and the build stay aligned.",
         "I show half-finished screens to a real person. A short conversation now saves a rebuild later.",
       ] },
-      { h: "Week three" },
+      { h: "Week two" },
       { ul: [
         "I build the front end from the Figma designs with Claude Code.",
         "I make the core flow clickable from start to finish, with believable content.",
@@ -168,9 +170,10 @@ export const articles: Article[] = [
     excerpt: "Animation is the first thing to get lost between design and development. Here is how I specify it so it survives.",
     date: "October 2026",
     kind: "motion",
+    image: "/images/writing/motion-design-and-implementation",
     body: [
       { p: "Ask a developer to build an animation from a screen recording and you will get something close. Close is not what you approved. The timing is a little off, the easing is a default, and a delay has gone missing. It looks like a small difference on paper and a big one on screen." },
-      { fig: "motion", cap: "Keyframes and an easing curve, built exactly as approved." },
+      { fig: "motion", cap: "A metronome, its arm swinging along a dotted arc." },
       { h: "Why it gets lost" },
       { p: "A static design has a source of truth. You can inspect the sizes, the colours and the text. Motion has none by default. A recording shows what happened, but not how long, with what curve, in what order, or starting when." },
       { h: "How I run it" },
@@ -202,9 +205,10 @@ export const articles: Article[] = [
     excerpt: "Why I deliver finished screens as code in your stack, so your developers spend their time on logic, not on rebuilding pixels.",
     date: "October 2026",
     kind: "code",
+    image: "/images/writing/production-ready-ui-code",
     body: [
       { p: "In a typical handoff, a designer sends a file and a developer rebuilds every screen by hand. They re-measure the spacing, guess the states and add accessibility at the end. The sprint goes on pixels, and the real work waits." },
-      { fig: "code", cap: "A design delivered as UI code, ready for a pull request." },
+      { fig: "code", cap: "A house that is half timber frame and half finished stone, on one foundation." },
       { h: "The idea" },
       { p: "I deliver the screens as code in your stack. Your developers then spend their time wiring up the things only they can: data, state, validation and APIs. The visual layer is already done, and it was built from the design, not from memory." },
       { h: "In your stack" },
@@ -240,9 +244,10 @@ export const articles: Article[] = [
     excerpt: "I am not an engineer, so I cannot read the code line by line. Here are the checks that tell me if the code still matches Figma.",
     date: "October 2026",
     kind: "tests",
+    image: "/images/writing/testing-a-design-system",
     body: [
       { p: "A design system is only useful if people trust it. Developers trust it when they can check it. I am a designer, not an engineer, so I cannot read every line of code to see if it matches Figma. I need checks that tell me, in plain words, that it does." },
-      { fig: "tests", cap: "Figma, token files and code are compared, and the checks pass or fail." },
+      { fig: "tests", cap: "Calipers measuring three blocks that carry the same pattern." },
       { h: "The four checks" },
       { ul: [
         "Typecheck and lint. They catch broken props and hard-coded colours or sizes that should have come from a token.",
@@ -275,9 +280,10 @@ export const articles: Article[] = [
     excerpt: "Figma's agent builds screens fast and guesses badly. Here is the prompt I use to give it exact numbers, and to check what it built.",
     date: "October 2026",
     kind: "agent",
+    image: "/images/writing/prompting-figmas-ai-agent",
     body: [
       { p: "Building every screen through an MCP burns a lot of tokens. So I split the work. Figma's own AI agent assembles the screens from prompts that live inside the Figma file. Claude does the precise work the agent is bad at: measuring, building the design system and writing prompts with no guesswork." },
-      { fig: "agent", cap: "Exact numbers go into the prompt, the agent builds the frame, and the result is diffed against the source." },
+      { fig: "agent", cap: "A drawer with dovetail joints, and one joint pulled out to show how exactly the pieces fit." },
       { h: "Why the agent needs exact numbers" },
       { p: "The agent looks at a screenshot and estimates. It guesses fonts, colours and spacing, and it gets them wrong in small ways that add up. So the prompt carries every value: exact positions, exact names, exact component variants. The agent is told not to measure anything itself." },
       { h: "How I run it" },
@@ -307,9 +313,10 @@ export const articles: Article[] = [
     excerpt: "I am a designer who writes no production code. Here is how I set up a native iOS project so Claude Code does the work, and what I check.",
     date: "October 2026",
     kind: "ios",
+    image: "/images/writing/native-ios-app-with-claude-code",
     body: [
       { p: "I wanted to see how far a designer can go on a native iOS app without writing any production code. The practice project is a to-do and calendar app, in the style of Todoist. The rule is simple: I make the product, UX and design decisions, and Claude Code writes the Swift." },
-      { fig: "ios", cap: "Rules, skills, gates and then SwiftUI code. The designer leads and approves." },
+      { fig: "ios", cap: "A phone-shaped tower on scaffolding, with builders at work on it." },
       { h: "One prompt, used once" },
       { p: "I start every native project with one master prompt. It is not a how-to for each task. It sets the rules, the order of work and how Claude Code finds and uses the detailed skills installed in the project. The goal is a chain that runs from the product to UX, Figma, the design system, SwiftUI, a build, QA and back to a Figma comparison that I approve." },
       { h: "How it works" },
@@ -347,10 +354,11 @@ export const articles: Article[] = [
     excerpt: "A quick experiment in Claude Code turned into a working Design Token Builder. Here is how it happened, step by step.",
     date: "July 2026",
     kind: "tokens",
+    image: "/images/writing/figma-plugin-ai-prompts",
     body: [
       { p: "I have been thinking about design tokens a lot lately. Not in the \"we should have a better system\" way, but in the \"I am starting a new project and I am tired of rebuilding this from scratch\" way. Every new Figma file starts with the same routine: colour scales, type sizes, spacing, semantic aliases. It is not hard. It is just slow and repetitive." },
       { p: "So I started poking around with Claude Code to see if I could speed it up." },
-      { fig: "tokens", cap: "Four inputs go in. A full token set comes out." },
+      { fig: "tokens", cap: "A hand press printing a sheet of swatches, from small to large." },
       { h: "Step 1: a rough prompt" },
       { p: "I began with a raw prompt, nothing polished. I described what I wanted: a structured set of design tokens I could drop into a Figma file, with primitive values and semantic aliases. What came back was better than I expected. It was well organised, logically layered and usable without much cleanup." },
       { p: "That is the part that usually goes wrong. The output looks right, but it needs so much interpretation that you may as well have done it yourself. This did not. I ran it a few times with different brand inputs and the structure held each time." },

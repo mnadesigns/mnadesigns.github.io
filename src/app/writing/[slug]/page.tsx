@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles, articleTag, readTime } from "@/data/articles";
 import { Illustration } from "@/components/atoms/Illustration";
+import { ArticleThumb } from "@/components/atoms/ArticleThumb";
 import { PromptBlock } from "@/components/organisms/PromptBlock";
 import { prompts } from "@/data/prompts";
 import { BackLink } from "@/components/organisms/PageParts";
@@ -38,7 +39,7 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
           : "note" in b ? <aside key={k} className="ar-note">{b.note}</aside>
           : "prompt" in b ? <PromptBlock key={k} title={b.prompt.title} text={prompts[b.prompt.id]} />
           : "src" in b ? <p key={k} className="ar-src"><a href={b.src.href} target="_blank" rel="noopener noreferrer">{b.src.label} ↗</a></p>
-          : <figure key={k} className="ar-fig"><Illustration kind={b.fig} /><figcaption>{b.cap}</figcaption></figure>
+          : <figure key={k} className="ar-fig">{a.image ? <ArticleThumb e={a} sizes="(max-width: 760px) 100vw, 720px" /> : <Illustration kind={b.fig} />}<figcaption>{b.cap}</figcaption></figure>
         )}
         <Link href={`/writing/${next.slug}/`} className="ar-next">
           <span className="ar-next-kicker">Next · {articleTag(next)}</span>

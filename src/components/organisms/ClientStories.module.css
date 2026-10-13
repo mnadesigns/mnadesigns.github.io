@@ -1,0 +1,41 @@
+/* Client Stories, Ploy style: a left-aligned bold heading, then a wall of pinned notes. Each note is a little crooked, has two pin dots at the top, a source tag, the words with the key phrase in bold, and the person at the foot. */
+.section { background: #fff; padding: var(--sp-sec-top) 0 var(--sp-sec-bot-lg); }
+.head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; margin-bottom: clamp(36px, 5vw, 64px); }
+.kicker { display: inline-flex; align-items: center; gap: 10px; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-50); margin-bottom: 24px; }
+.kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); }
+.h2 { margin: 0; display: flex; flex-direction: column; align-items: flex-start; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(40px, 6.4vw, 96px); line-height: 0.92; color: var(--heading); }
+.blue { color: var(--brand); }
+
+/* the wall: columns of notes of different heights */
+.wall { columns: 4; column-gap: 22px; padding: 6px 4px 0; }
+.note { position: relative; display: block; break-inside: avoid; margin: 0 0 26px; padding: 36px 24px 22px; border-radius: 4px; transform: rotate(var(--tilt, 0deg)); box-shadow: 0 1px 1px rgba(11, 26, 46, 0.08), 0 14px 24px -14px rgba(11, 26, 46, 0.35); }
+/* the two pin holes at the top corners */
+.note::before, .note::after { content: ""; position: absolute; top: 9px; width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: 0.85; }
+.note::before { left: 9px; }
+.note::after { right: 9px; }
+
+.white { background: #fff; color: #0b1a2e; border: 1px solid rgba(11, 26, 46, 0.12); }
+
+
+.note blockquote { margin: 0; }
+.note p { margin: 0 0 12px; font-family: var(--sans); font-size: 17px; font-weight: 500; line-height: 1.4; }
+.note p:last-child { margin-bottom: 0; }
+.note strong { font-weight: 800; }
+
+.note figcaption { display: flex; align-items: center; gap: 12px; margin-top: 22px; }
+.av { display: inline-flex; flex: none; }
+.av img, .ini { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: rgba(11, 26, 46, 0.14); }
+.ini { display: inline-flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 18px; letter-spacing: 0.02em; }
+.who { display: block; min-width: 0; }
+.name { display: block; font-family: var(--sans); font-size: 15px; font-weight: 700; }
+.role { display: block; margin-top: 2px; font-family: var(--sans); font-size: 12.5px; line-height: 1.35; opacity: 0.75; }
+
+/* the last note is one big button: the whole card is the link, in the brand blue */
+.cta { display: block; padding-bottom: 36px; background: var(--brand); color: #fff; text-decoration: none; padding-top: 40px; border: 0; }
+.ctaTitle { display: block; font-family: var(--display); text-transform: uppercase; font-size: clamp(38px, 3.8vw, 56px); line-height: 0.92; }
+
+@media (max-width: 899px) { .head { flex-direction: column; align-items: flex-start; gap: 28px; } }
+@media (max-width: 1199px) { .wall { columns: 3; } }
+@media (max-width: 899px) { .wall { columns: 2; } }
+@media (max-width: 599px) { .wall { columns: 1; } .note p { font-size: 16px; } }
+@media (prefers-reduced-motion: reduce) { .note { transform: none; } }

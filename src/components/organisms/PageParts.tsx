@@ -3,14 +3,19 @@ import type { ReactNode } from "react";
 import { Reveal } from "@/components/atoms/Reveal";
 import { Arrow } from "@/components/atoms/Buttons";
 
-export function PageHero({ kicker, title, lead, children }: { kicker: string; title: string; lead?: string; children?: ReactNode }) {
+export function PageHero({ kicker, title, lead, children, aside }: { kicker: string; title: string; lead?: string; children?: ReactNode; aside?: ReactNode }) {
   return (
     <header className="pg-hero shell">
       <Reveal>
-        <span className="pg-kicker">{kicker}</span>
-        <h1 className="pg-title" dangerouslySetInnerHTML={{ __html: title }} />
-        {lead && <p className="pg-lead">{lead}</p>}
-        {children && <div className="pg-cta">{children}</div>}
+        <div className={aside ? "pg-hero-grid" : undefined}>
+          <div>
+            <span className="pg-kicker">{kicker}</span>
+            <h1 className="pg-title" dangerouslySetInnerHTML={{ __html: title }} />
+            {lead && <p className="pg-lead">{lead}</p>}
+            {children && <div className="pg-cta">{children}</div>}
+          </div>
+          {aside}
+        </div>
       </Reveal>
     </header>
   );

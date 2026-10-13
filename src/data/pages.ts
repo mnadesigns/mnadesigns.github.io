@@ -75,29 +75,6 @@ export const consultingPage = {
   cta: { eyebrow: "Currently available for new clients", l1: "Let's build", acc: "something", l3: "together.", sub: "A short line inviting people to get in touch.", foot: "Based in City · Working with teams worldwide" },
 };
 
-export const resumePage = {
-  name: "Your Name",
-  title: "Your Title · Your Specialty",
-  contact: ["City, Country", "hello@example.com", "linkedin.com/in/yourname"],
-  summary: lorem,
-  experience: [
-    { company: "Company One", role: "Role Title", meta: "2022 – Present", desc: "One line describing the company.", bullets: [lorem, lorem, lorem] },
-    { company: "Company Two", role: "Role Title", meta: "2019 – 2022", desc: "One line describing the company.", bullets: [lorem, lorem] },
-    { company: "Company Three", role: "Role Title", meta: "2015 – 2019", desc: "One line describing the company.", bullets: [lorem, lorem] },
-  ],
-  consulting: [
-    { name: "Client One", meta: "2024", desc: "One line describing the engagement." },
-    { name: "Client Two", meta: "2023", desc: "One line describing the engagement." },
-  ],
-  expertise: [
-    { cat: "Design", items: "Product design, design systems, prototyping, research" },
-    { cat: "Leadership", items: "Hiring, mentoring, roadmaps, stakeholder management" },
-    { cat: "Strategy", items: "Product strategy, positioning, experimentation" },
-    { cat: "Tools", items: "Figma, Notion, Linear, Claude" },
-  ],
-  education: [{ school: "University Name", degree: "Degree, Field", year: "2011 – 2015" }],
-};
-
 export const storiesIndex = {
   kicker: "Selected work · 2021 – Present",
   lede: "Three companies, one thread: design systems and AI-augmented products, shipped for real users. Each story is told in full: the stakes, the decisions and the result.",

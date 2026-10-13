@@ -33,12 +33,12 @@ export const services: Service[] = [
   },
   {
     n: "04", title: "Benchmark-Led MVP Sprint",
-    promise: "A clickable front end in 2 to 3 weeks, benchmarked and built on a real design system.",
+    promise: "A clickable front end in 2 weeks, benchmarked and built on a real design system.",
     tools: ["Mobbin MCP", "Figma MCP", "Claude Code", "GitHub"],
     deliverables: ["Competitor benchmark", "User flows", "Starter design system", "Figma screens", "Live coded prototype"],
   },
   {
-    n: "05", title: "Motion Design and Implementation",
+    n: "05", title: "Motion Design",
     promise: "Custom motion designed in Figma and shipped in code exactly as approved.",
     tools: ["Figma AI agent", "Figma MCP", "Claude Code", "GitHub"],
     deliverables: ["Animated Figma frames", "Motion spec", "Implemented animations", "Exported video clips"],

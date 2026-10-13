@@ -11,6 +11,13 @@
 .pg-sec h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 0.9; color: var(--heading); margin-bottom: 40px; }
 .pg-sec h2 em { font-style: normal; color: var(--brand); }
 .pg-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.pg-hero-grid { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.pg-hero-grid > .about-portrait { order: -1; }
+.about-portrait { display: block; width: 100%; height: auto; border-radius: 12px; }
+@media (max-width: 999px) { .pg-hero-grid { grid-template-columns: 1fr; } .about-portrait { max-width: 280px; } }
+.about-story { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.about-story-img { display: block; width: 100%; height: auto; border-radius: 12px; }
+@media (max-width: 999px) { .about-story { grid-template-columns: 1fr; } .about-story-img { max-width: 480px; } }
 .pg-prose p { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.6; color: var(--ink-80); margin-bottom: 20px; max-width: 60ch; }
 .pg-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .pg-cards.four { grid-template-columns: repeat(2, 1fr); }
@@ -68,7 +75,7 @@ a.pg-row:hover .pg-row-name { color: var(--ink); -webkit-text-stroke: 0; }
 .article-body .ar-src { margin-top: 36px; }
 .article-body .ar-src a { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--brand); text-decoration: none; border-bottom: 1px solid currentColor; }
 .article-body .ar-note { margin: 8px 0 36px; padding: 20px 24px; border-left: 3px solid var(--brand); background: var(--ink-08); border-radius: 0 12px 12px 0; font-family: var(--sans); font-size: 17px; line-height: 1.55; font-weight: 500; color: var(--ink); }
-.article-body .ar-fig { margin: 12px 0 44px; } .article-body .ar-fig svg { border-radius: 0; }
+.article-body .ar-fig { margin: 12px 0 44px; } .article-body .ar-fig svg { border-radius: 0; } .article-body .ar-fig img { display: block; width: 100%; height: auto; border-radius: 12px; }
 .article-body .ar-fig figcaption { margin-top: 12px; font-family: var(--sans); font-size: 13px; color: var(--ink-50); letter-spacing: 0.01em; }
 .article-body .ar-next { display: block; margin-top: 64px; padding: 28px 30px; border: 1px solid var(--ink-12); border-radius: 16px; text-decoration: none; transition: border-color 0.3s var(--ease), transform 0.3s var(--ease); }
 .article-body .ar-next:hover { border-color: var(--brand); transform: translateY(-2px); }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { articles, articleTag } from "@/data/articles";
-import { Illustration } from "@/components/atoms/Illustration";
+import { ArticleThumb } from "@/components/atoms/ArticleThumb";
 import { Arrow, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
 
@@ -21,7 +21,7 @@ export function Writing() {
           <div className="wr-wall">
             {articles.slice(0, 4).map((e) => (
               <Link key={e.slug} href={`/writing/${e.slug}/`} className="wr-piece">
-                <span className="wr-art"><Illustration kind={e.kind} /></span>
+                <span className="wr-art"><ArticleThumb e={e} /></span>
                 <span className="wr-label">
                   <span className="wr-label-meta">{articleTag(e)} · {e.date}</span>
                   <span className="wr-label-title">{e.title}</span>

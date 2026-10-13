@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { RobotHead } from "robot-heads";
 import { services, servicesIntro, type Service } from "@/data/services";
 import { ServiceToolIcon } from "@/components/atoms/ServiceToolIcon";
 import styles from "./Services.module.css";
@@ -32,10 +33,7 @@ function Tile({ s, i }: { s: Service; i: number }) {
   return (
     <article ref={ref} onPointerMove={move} className={`${styles.tile} ${styles["t" + (i + 1)]}${s.addon ? ` ${styles.addon}` : ""}`} style={{ "--i": i } as React.CSSProperties}>
       <svg className={styles.trace} aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="20" pathLength="1" /></svg>
-      <div className={styles.head}>
-        <span className={styles.num}>{s.n}</span>
-        {s.addon && <span className={styles.badge}>Add-on</span>}
-      </div>
+      {s.addon && <div className={styles.head}><span className={styles.badge}>Add-on</span></div>}
       <h3 className={styles.title}>{s.title}</h3>
       <p className={styles.promise}>{s.promise}</p>
       <div className={styles.group}>
@@ -58,6 +56,8 @@ function Tile({ s, i }: { s: Service; i: number }) {
 
 export function Services() {
   const root = useRef<HTMLElement>(null);
+  const [still, setStill] = useState(false); // reduced motion: the robot stays on one frame
+  useEffect(() => { setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -69,9 +69,14 @@ export function Services() {
   return (
     <section ref={root} className={styles.section} id="services">
       <div className="shell">
-        <div className={styles.intro}>
-          <h2 className={styles.h2}>AI-augmented <em>pipelines</em></h2>
-          <p className={styles.sub}>{servicesIntro.sub}</p>
+        <div className={styles.top}>
+          <div className={styles.intro}>
+            <h2 className={styles.h2}>AI-augmented <em>pipelines</em></h2>
+            <p className={styles.sub}>{servicesIntro.sub}</p>
+          </div>
+          <div className={styles.bot} aria-hidden="true">
+            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} paused={still} />
+          </div>
         </div>
         <div className={styles.grid}>
             {services.map((s, i) => <Tile key={s.n} s={s} i={i} />)}

@@ -45,6 +45,7 @@ export function Cursor() {
       tx = e.clientX; ty = e.clientY;
       const t = e.target as HTMLElement;
       cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
+      cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']")); // over a brand-blue block the ring turns white
       // hero logo trail (not over links, buttons or other clickable things)
       if (t.closest("#hero") && !t.closest("a, button, [role='button'], .btn, .btn-sec, .btn-circle")) {
         const now = performance.now();

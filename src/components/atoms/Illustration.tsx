@@ -50,7 +50,7 @@ const SPECS: Record<IllustrationKind, Spec> = {
   foundations: { cards: [{ g: "chat", label: "Interviews" }, { g: "dots", label: "Insights" }, { g: "tree", label: "Structure" }], pill: "Before any screen is drawn", arrows: 1 },
   system: { cards: [{ g: "figma", label: "Figma" }, { g: "code", label: "Code" }], pill: "Synced both ways", arrows: 2 },
   reference: { cards: [{ g: "wire", label: "Reference" }, { g: "wireblue", label: "Your site" }], pill: "Layout proven, brand yours", arrows: 1 },
-  mvp: { cards: [{ g: "n1", label: "Benchmark" }, { g: "n2", label: "Flows" }, { g: "n3", label: "Prototype" }], pill: "2 to 3 weeks", arrows: 0, rise: true },
+  mvp: { cards: [{ g: "n1", label: "Benchmark" }, { g: "n2", label: "Flows" }, { g: "n3", label: "Prototype" }], pill: "2 weeks", arrows: 0, rise: true },
   motion: { cards: [{ g: "curve", label: "Easing" }, { g: "frames", label: "Keyframes" }], pill: "Shipped as approved", arrows: 1 },
   code: { cards: [{ g: "win", label: "Design" }, { g: "code", label: "Pull request" }], pill: "Ready to merge", arrows: 1 },
   tokens: { cards: [{ g: "swatches", label: "4 inputs" }, { g: "plugin", label: "Plugin" }, { g: "list", label: "Tokens" }], pill: "A full token set", arrows: 1 },
@@ -69,7 +69,7 @@ const LABELS: Record<IllustrationKind, string> = {
   agent: "A screenshot becomes a prompt with exact numbers, Figma's AI agent builds the frame, and it is checked against the source",
   limits: "What the AI does well, and the edges where a person has to check",
   ios: "A native iOS app set up with rules, gates and then SwiftUI code, with the designer approving each step",
-  mvp: "An MVP sprint: benchmark, flows and a coded prototype in two to three weeks",
+  mvp: "An MVP sprint: benchmark, flows and a coded prototype in two weeks",
   motion: "Motion designed as keyframes and an easing curve, then implemented exactly as approved",
   code: "A design handed over as pull-request-ready UI code",
 };

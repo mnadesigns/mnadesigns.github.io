@@ -123,7 +123,7 @@ export const storyPages: Record<string, StoryPage> = {
     serviceLede: "The same approach, applied to your site or app: a proven reference, tailored to your brand, shipped as clean code.",
     cases: [
       { t: "Reference-driven redesign", p: "A proven reference layout, tailored to your brand and goals, handed over as clean code." },
-      { t: "Benchmark-led MVP sprint", p: "A clickable front end in 2 to 3 weeks, benchmarked and built on a real design system." },
+      { t: "Benchmark-led MVP sprint", p: "A clickable front end in 2 weeks, benchmarked and built on a real design system." },
     ],
     nextKicker: "Next story",
   },

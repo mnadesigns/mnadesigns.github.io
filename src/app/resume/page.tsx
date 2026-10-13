@@ -1,67 +1,103 @@
-import { resumePage as p } from "@/data/pages";
+import { Fragment } from "react";
+import { resume as r } from "@/data/resume";
 import { Doors } from "@/components/organisms/Doors";
-import { BtnSec } from "@/components/atoms/Buttons";
+import { Reveal } from "@/components/atoms/Reveal";
+import styles from "./resume.module.css";
 
-export const metadata = { title: "Resume — Your Name" };
+export const metadata = { title: "Resume — Muhammad Naeem" };
 
+// A clone of abmcooks.github.io/resume with this resume's copy: Experience, Selected consulting, Skills, Earlier experience and Education, in the reference's one-column layout.
 export default function Resume() {
   return (
     <main>
-      <div className="res-page">
-        <header className="res-header">
-          <div className="res-header-top">
-            <div>
-              <h1 className="res-name">{p.name}</h1>
-              <p className="res-title">{p.title}</p>
-            </div>
-            <BtnSec href="#" className="res-print">Download PDF</BtnSec>
-          </div>
-          <div className="res-contact">
-            {p.contact.map((c, i) => (
-              <span key={c}>{i > 0 && <span className="sep" style={{ marginRight: 18, color: "var(--ink-25)" }}>·</span>}{c}</span>
-            ))}
-          </div>
-          <p className="res-summary">{p.summary}</p>
-        </header>
-
-        <section className="res-section">
-          <h2 className="res-section-title">Experience</h2>
-          {p.experience.map((e) => (
-            <div className="res-entry" key={e.company + e.meta}>
-              <div className="res-entry-header">
-                <span className="res-company">{e.company}</span>
-                <span className="res-meta">{e.meta}</span>
+      <div className={styles.page}>
+        <Reveal>
+          <header className={styles.header}>
+            <div className={styles.top}>
+              <div>
+                <h1 className={styles.name}>{r.name}</h1>
+                <div className={styles.title}>{r.title}</div>
               </div>
-              <div className="res-role">{e.role}</div>
-              <p className="res-desc">{e.desc}</p>
-              <ul>{e.bullets.map((b, i) => <li key={i}>{b}</li>)}</ul>
+              <a className="btn-sec res-print" href={r.pdf} download>
+                Save PDF
+                <span className="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M8 2v7M5 6.5 8 9.5l3-3M3 13h10" /></svg></span>
+              </a>
+            </div>
+            <div className={styles.contact}>
+              {r.contact.map((c, i) => (
+                <Fragment key={c.label}>
+                  {i > 0 && <span className={styles.sep}>/</span>}
+                  <a href={c.href} {...(c.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{c.label}</a>
+                </Fragment>
+              ))}
+            </div>
+            <p className={styles.summary}>{r.summary}</p>
+          </header>
+        </Reveal>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Experience</h2>
+          {r.experience.map((e) => (
+            <div className={styles.entry} key={e.company + e.dates}>
+              <div className={styles.entryHeader}>
+                <div>
+                  <span className={styles.company}>{e.company}</span>
+                  <span className={styles.role}> — {e.role}</span>
+                </div>
+                <span className={styles.meta}>{e.dates} · {e.place}</span>
+              </div>
+              {e.desc && <div className={styles.desc}>{e.desc}</div>}
+              <ul>{e.bullets.map((b) => <li key={b}>{b}</li>)}</ul>
             </div>
           ))}
         </section>
 
-        <section className="res-section">
-          <h2 className="res-section-title">Skills</h2>
-          <div className="res-expertise-grid">
-            {p.expertise.map((x) => (
-              <div key={x.cat}>
-                <div className="res-expertise-cat">{x.cat}</div>
-                <div className="res-expertise-items">{x.items}</div>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Selected consulting</h2>
+          <p className={styles.lede}>{r.consultingIntro}</p>
+          {r.consulting.map((c) => (
+            <div className={styles.consult} key={c.name}>
+              <div className={styles.consultHeader}>
+                <span className={styles.consultName}>{c.name}</span>
+                <span className={styles.consultMeta}>{c.kind}</span>
+              </div>
+              <p className={styles.consultDesc}>{c.desc}</p>
+            </div>
+          ))}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Skills</h2>
+          <div className={styles.expertiseGrid}>
+            {r.skills.map((g) => (
+              <div key={g.cat}>
+                <div className={styles.expertiseCat}>{g.cat}</div>
+                <div className={styles.expertiseItems}>{g.items.join(", ")}</div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="res-section">
-          <h2 className="res-section-title">Education</h2>
-          {p.education.map((e) => (
-            <div key={e.school}>
-              <div className="res-edu-row">
-                <span className="res-edu-school">{e.school}</span>
-                <span className="res-edu-year">{e.year}</span>
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Earlier experience</h2>
+          {r.earlier.map((e) => (
+            <div className={styles.consult} key={e.role}>
+              <div className={styles.consultHeader}>
+                <span className={styles.consultName}>{e.role}</span>
+                <span className={styles.consultMeta}>{e.dates}</span>
               </div>
-              <div className="res-edu-degree">{e.degree}</div>
+              <p className={styles.consultDesc}>{e.org}</p>
             </div>
           ))}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Education</h2>
+          <div className={styles.eduRow}>
+            <span className={styles.eduSchool}>{r.education.school}</span>
+            <span className={styles.eduYear}>{r.education.dates}</span>
+          </div>
+          <div className={styles.eduDegree}>{r.education.degree}</div>
         </section>
       </div>
       <Doors />
