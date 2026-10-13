@@ -117,7 +117,10 @@
   .wr-pod-play { width: 52px; height: 52px; padding: 14px; }
 }
 @media (max-width: 560px) {
-  .wr-row { grid-template-columns: 92px 1fr; gap: 16px; }
+  /* the picture across the top of each article, the words under it */
+  .wr-row { grid-template-columns: 1fr; gap: 16px; align-items: start; padding: 28px 0; }
+  .wr-row:hover { background: transparent; padding-left: 0; padding-right: 0; }
+  .wr-row-title { font-size: 28px; }
   .wr-row-go { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
