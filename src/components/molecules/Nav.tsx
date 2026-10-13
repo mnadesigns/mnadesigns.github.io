@@ -10,6 +10,7 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [hide, setHide] = useState(false);
   const last = useRef(0);
+  const dir = useRef(0); // 1 = last scrolled down, -1 = up
   const path = usePathname();
 
   useEffect(() => {
@@ -21,8 +22,11 @@ export function Nav() {
       const mid = window.innerHeight / 2; // the stack covers the middle of the screen (no pixel-exact test, which fails on scaled Windows displays)
       const inWork = !!stack && stack.top <= mid && stack.bottom >= mid;
       document.body.classList.toggle("in-work", inWork);
-      setHide(inWork || (y > last.current && y > 120));
+      // Outside the work stack the bar tucks away while scrolling down and comes back on scrolling up. It only changes with the scroll direction: a tick that sees no movement
+      // (the slow timer, a resize) keeps whatever it was, so the bar no longer pops back in when scrolling pauses.
+      if (y !== last.current) dir.current = y > last.current ? 1 : -1;
       last.current = y;
+      setHide(inWork || (y > 120 && dir.current === 1));
     };
     update();
     window.addEventListener("scroll", update, { passive: true });

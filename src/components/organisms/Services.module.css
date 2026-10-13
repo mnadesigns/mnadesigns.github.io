@@ -1,6 +1,7 @@
 /* AI-augmented services: dark bento grid. Tiles share one structure; the pointer glow and the staggered rise-in are the only motion. */
 .section { background: #07090d; color: #e9eef5; padding: var(--sp-sec-top) 0 var(--sp-sec-bot); position: relative; overflow: hidden; }
-.section::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%); pointer-events: none; }
+/* behind everything: a dense grid of fine lines, 8px apart, fading out toward the edges */
+.section::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.085) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.085) 1px, transparent 1px); background-size: 8px 8px; mask-image: radial-gradient(ellipse at 50% 20%, #000 20%, transparent 75%); pointer-events: none; }
 .section::after { content: ""; position: absolute; left: 50%; top: -240px; width: 900px; height: 520px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(18, 151, 217, 0.28), transparent); pointer-events: none; }
 .section > :global(.shell) { position: relative; z-index: 1; }
 

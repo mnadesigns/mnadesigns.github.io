@@ -3,21 +3,27 @@ const lorem = "Placeholder paragraph. Replace this with your own writing. It is 
 
 export const aboutPage = {
   kicker: "About",
-  title: "A short <em>headline</em> about you",
-  lead: "Two sentences that introduce who you are and what you care about.",
-  story: [lorem, lorem, lorem],
+  title: "I design the systems, then <em style=\"white-space:nowrap\">ship the code.</em>",
+  lead: "I'm Muhammad Naeem, an AI Product Leader based in Lahore, Pakistan, with 10+ years of design across SaaS, Fintech, Data, Health and e-commerce. I turn hard ideas into simple apps with AI.",
+  story: [
+    "I grew from product designer into leading product design across web, desktop and mobile. Today I am Product Designer and Project Manager at SRED.io, where I introduced the platform's first design system and designed four products on top of it: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.",
+    "Before that I was Senior Product Designer at EISST International (2023 to 2025), leading UX and UI across six high-security, privacy-first product lines on QuodArca: more than 500 screens, a design system built from scratch and full WCAG 2.1 AA compliance. At MLK Group (2021 to 2023) I directed digital product design for 50+ Australian brands across fintech and e-commerce, covering 25+ industries.",
+    "Now I work with AI in the loop. Claude Code, Figma MCP and Mobbin MCP take the heavy lifting, and design judgment steers every step: from interviews and benchmarks to a design system and code that developers can wire up instead of rebuild.",
+  ],
   lens: [
-    { n: "01", t: "First principle", d: "One sentence describing how you think about the work." },
-    { n: "02", t: "Second principle", d: "One sentence describing how you think about the work." },
-    { n: "03", t: "Third principle", d: "One sentence describing how you think about the work." },
+    { n: "01", t: "Systems before screens", d: "A shared design system comes first, so every product and every screen starts from the same foundation." },
+    { n: "02", t: "AI does the heavy lifting", d: "AI handles the repetitive work. Taste, accessibility and product decisions stay human." },
+    { n: "03", t: "Design that ships", d: "A design is finished when it is in code, so I hand developers working UI instead of static files." },
   ],
   how: [
-    { n: "01", t: "Understand", d: "How you start a project and what you look for first." },
-    { n: "02", t: "Shape", d: "How you turn findings into direction." },
-    { n: "03", t: "Build", d: "How you work with teams to ship it." },
-    { n: "04", t: "Measure", d: "How you know it worked." },
+    { n: "01", t: "Understand", d: "Interviews, UX audits and benchmarks turn opinions into a validated foundation." },
+    { n: "02", t: "Shape", d: "Information architecture, user flows and a design system turn findings into direction." },
+    { n: "03", t: "Build", d: "Figma and code stay in sync through Figma MCP and GitHub, so what is designed is what ships." },
+    { n: "04", t: "Measure", d: "Accessibility standards, UX laws and results such as conversion and order growth show whether it worked." },
   ],
-  personal: [lorem, lorem],
+  personal: [
+    "Based in Lahore, Pakistan, and open to full-time and long-term contract roles, remote or with relocation.",
+  ],
 };
 
 export const consultingPage = {
@@ -93,23 +99,25 @@ export const resumePage = {
 };
 
 export const storiesIndex = {
-  lede: "A short line explaining that each project below is told in full: the stakes, the decisions and the result.",
+  kicker: "Selected work · 2021 – Present",
+  lede: "Three companies, one thread: design systems and AI-augmented products, shipped for real users. Each story is told in full: the stakes, the decisions and the result.",
   stats: [
-    { v: "30+", l: "Products shipped" },
-    { v: "8", l: "Years" },
-    { v: "3", l: "Companies" },
-    { v: "6M+", l: "Users" },
+    { v: "10+", l: "Years in product design" },
+    { v: "50+", l: "Australian brands" },
+    { v: "25+", l: "Industries" },
+    { v: "500+", l: "Screens at EISST" },
   ],
   features: [
-    { slug: "project-one", eyebrow: "Company One · 2022", name: "Project One", sub: "A one-line summary of this project and its result.", metrics: [{ v: "4M+", l: "Users" }, { v: "700K", l: "Waitlist" }], cap: "Company One" },
-    { slug: "project-two", eyebrow: "Company Two · 2021", name: "Project Two", sub: "A one-line summary of this project and its result.", metrics: [{ v: "$10M", l: "Raised" }, { v: "0 to 1", l: "Product" }], cap: "Company Two" },
-    { slug: "project-three", eyebrow: "Company Three · 2019", name: "Project Three", sub: "A one-line summary of this project and its result.", metrics: [{ v: "Fortune 500", l: "Clients" }], cap: "Company Three" },
+    { slug: "sred-io", eyebrow: "2026 – Present · Product Designer & Project Manager", name: "SRED.io", sub: "The platform's first design system, then four products built on it.", metrics: [{ v: "4", l: "Products" }, { v: "12", l: "Flows" }, { v: "50+", l: "Screens" }], cap: "Product Designer & Project Manager · 2026 – Present", logo: "/images/brands/sredio.png" },
+    { slug: "quodarca", eyebrow: "2023 – 2025 · Senior Product Designer", name: "QuodArca", sub: "Six high-security, privacy-first product lines on one multi-platform design system.", metrics: [{ v: "500+", l: "Screens" }, { v: "6", l: "Product lines" }], cap: "EISST International · 2023 – 2025", logo: "/images/brands/quodarca.png" },
+    { slug: "mlk-group", eyebrow: "2021 – 2023 · Senior UX/UI Designer", name: "MLK Group", sub: "Digital product design for 50+ Australian brands across fintech and e-commerce.", metrics: [{ v: "25+", l: "Industries" }, { v: "3x", l: "Conversion rate" }, { v: "2.5x", l: "Online orders" }], cap: "Senior UX/UI Designer · 2021 – 2023" },
   ],
-  moreSub: "Smaller engagements and earlier work.",
+  moreSub: "Websites, apps and platforms delivered along the way, from clinics to learning tools.",
   more: [
-    { slug: "project-one", name: "Project Four", v: "120K", l: "Monthly users", line: "A one-line summary of this project." },
-    { slug: "project-two", name: "Project Five", v: "35%", l: "Conversion lift", line: "A one-line summary of this project." },
-    { slug: "project-three", name: "Project Six", v: "9", l: "Markets", line: "A one-line summary of this project." },
+    { slug: "mlk-group", name: "Peers", v: "Web + mobile", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png" },
+    { slug: "mlk-group", name: "Specialist Clinic Pharmacy", v: "Web", l: "E-commerce", line: "A full pharmacy storefront: subscriptions, click and collect, health services.", logo: "/images/brands/specialist-clicnic-phramacy.png" },
+    { slug: "mlk-group", name: "Telco ICT", v: "Web", l: "Marketing site", line: "Telecommunications and IT that works every time, across desktop, tablet and phone.", logo: "/images/brands/telco-ict.png" },
+    { slug: "mlk-group", name: "Wonder Pies", v: "Web", l: "E-commerce", line: "Handcrafted and gourmet pies, designed to sell on every screen.", logo: "/images/brands/wonder-pies.png" },
   ],
   footer: "More <em>coming</em>.",
 };
@@ -120,50 +128,8 @@ export const pods = [
 ];
 
 export const stories = [
-  { slug: "project-one", name: "Project One", co: "Company One", line: "A one-line summary of this project and its result.", feature: true },
-  { slug: "project-two", name: "Project Two", co: "Company Two", line: "A one-line summary of this project and its result.", feature: true },
-  { slug: "project-three", name: "Project Three", co: "Company Three", line: "A one-line summary of this project and its result.", feature: true },
-];
-
-export const storyPage = {
-  secondary: "A short secondary line",
-  desc: "Two sentences describing the project, your role and the outcome.",
-  stakesBig: { v: "4M+", l: "Users" },
-  stakesSupporting: [
-    { v: "$10M", l: "Raised" },
-    { v: "18", l: "Months" },
-    { v: "12", l: "Team size" },
-    { v: "3", l: "Markets" },
-  ],
-  stakesHeading: "What was <span class=\"accent\">at stake</span>",
-  stakesParas: [lorem, lorem],
-  arc: ["Brief", "Build", "Launch", "Scale"],
-  storyHeading: "How it came together",
-  storySub: "A short italic line introducing the chapters below.",
-  chapters: [
-    { n: "01", d: "Month Year", t: "The brief", ps: [lorem, lorem], pull: "A short pull quote that captures the turning point." },
-    { n: "02", d: "Month Year", t: "The approach", ps: [lorem, lorem] },
-    { n: "03", d: "Month Year", t: "The build", ps: [lorem, lorem], image: true },
-    { n: "04", d: "Month Year", t: "The result", ps: [lorem] },
-  ],
-  serviceEyebrow: "What it means for you",
-  serviceHeading: "The work, applied",
-  serviceLede: "One or two sentences connecting this project to the kind of work you do for clients.",
-  cases: [
-    { t: "Case one", p: lorem },
-    { t: "Case two", p: lorem },
-  ],
-  nextKicker: "Next story",
-};
-
-export const essaysIndex = [
-  { slug: "essay-one", title: "A placeholder essay title about design systems", meta: "Essay · 6 min", date: "Jan 2026" },
-  { slug: "essay-two", title: "A placeholder essay title about AI and craft", meta: "Essay · 8 min", date: "Feb 2026" },
-  { slug: "essay-three", title: "A placeholder essay title about team ratios", meta: "Essay · 5 min", date: "Mar 2026" },
-  { slug: "essay-four", title: "A placeholder essay title about watching users", meta: "Essay · 7 min", date: "Apr 2026" },
-];
-
-export const articleBody = [
-  { p: lorem }, { p: lorem }, { h: "A section heading" }, { p: lorem }, { p: lorem }, { h: "Another section heading" }, { p: lorem },
+  { slug: "sred-io", name: "SRED.io", co: "SRED.io · 2026 – Present", line: "The platform's first design system, then four products built on it: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.", feature: true },
+  { slug: "quodarca", name: "QuodArca", co: "EISST International · 2023 – 2025", line: "Six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.", feature: true },
+  { slug: "mlk-group", name: "MLK Group", co: "MLK Group · 2021 – 2023", line: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.", feature: true },
 ];
 

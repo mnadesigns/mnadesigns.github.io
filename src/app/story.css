@@ -18,6 +18,7 @@
 
 .st-video { background: var(--coal); position: relative; width: 100%; height: 100vh; min-height: 560px; overflow: hidden; }
 .st-video .ph-box { border-radius: 0; }
+.st-video-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .st-stakes { background: var(--paper); padding: 180px var(--st-edge); }
 .st-stakes-inner { max-width: var(--st-max); margin: 0 auto; }
@@ -55,10 +56,12 @@
 .st-chapter-body p:last-child { margin-bottom: 0; }
 .st-chapter-body .st-pull { font-family: var(--display); font-size: clamp(24px, 2.5vw, 36px); font-weight: 400; line-height: 1.15; text-transform: uppercase; color: var(--ink-80); margin: 28px 0; padding-left: 20px; border-left: 2px solid var(--brand); max-width: none; }
 .st-chapter-image { margin-top: 40px; display: flex; justify-content: center; }
+.st-chapter-image img { display: block; width: 100%; max-width: 760px; height: auto; border-radius: 16px; box-shadow: 0 24px 56px rgba(6, 6, 6, 0.14), 0 8px 24px rgba(6, 6, 6, 0.08); }
 .st-chapter-image .ph-box { max-width: 320px; aspect-ratio: 9/19; height: auto; border-radius: 20px; box-shadow: 0 24px 56px rgba(6, 6, 6, 0.14), 0 8px 24px rgba(6, 6, 6, 0.08); }
 
 .st-cardshow { background: var(--paper); padding: 80px var(--st-edge); border-top: 1px solid var(--ink-12); }
 .st-cardshow-inner { max-width: var(--st-max); margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.st-cardshow img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: var(--r); background: var(--ink-08); }
 .st-cardshow .ph-box { aspect-ratio: 4/3; height: auto; border-radius: var(--r); }
 
 .st-service { background: var(--paper); padding: 140px var(--st-edge); border-top: 1px solid var(--ink-12); }

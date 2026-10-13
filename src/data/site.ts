@@ -20,7 +20,7 @@ export const socials = [
 
 // "Consulting" is not offered (open to full-time and long-term contract roles), so it is not in the nav.
 export const navLinks = [
-  { label: "Work", href: "/#chapters" },
+  { label: "Work", href: "/stories/" },
   { label: "About", href: "/about/" },
   { label: "Writing", href: "/writing/" },
   { label: "Resume", href: "/resume/" },
@@ -157,15 +157,6 @@ export const breakerWords = ["design systems", "SaaS products", "AI-augmented wo
 // Testimonials and Upwork review screenshots are hidden until real, approved ones are supplied (People section is not rendered).
 export const quotes: { by: string; role: string; text: string; variant: string }[] = [];
 export const receipts: number[] = [];
-
-export const essays = [
-  {
-    slug: "figma-plugin-ai-prompts",
-    meta: "Medium · Jul 7",
-    title: "I Built a Figma Plugin Using AI Prompts and It Actually Works",
-    href: "https://medium.com/@me.naeem88/i-built-a-figma-plugin-using-ai-prompts-and-it-actually-works-b6ba12a15e1a",
-  },
-];
 
 export const doors = [
   { kicker: "For hiring managers", title: "Let's <em>talk</em>", line: "Open to full-time and long-term contract roles, remote or with relocation.", href: "/resume/", cta: "See resume" },

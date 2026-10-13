@@ -3,7 +3,7 @@ import { PageHero, Section, Cards, Prose } from "@/components/organisms/PagePart
 import { Doors } from "@/components/organisms/Doors";
 import { Btn } from "@/components/atoms/Buttons";
 
-export const metadata = { title: "About — Your Name" };
+export const metadata = { title: "About — Muhammad Naeem" };
 
 export default function About() {
   return (

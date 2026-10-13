@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { stories, storyPage as p } from "@/data/pages";
+import { stories } from "@/data/pages";
+import { storyPages } from "@/data/storyPages";
 import { StoryGate } from "@/components/organisms/StoryGate";
 import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
@@ -14,6 +16,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
   const i = stories.findIndex((x) => x.slug === slug);
   if (i < 0) notFound();
   const s = stories[i];
+  const p = storyPages[slug];
   const next = stories[(i + 1) % stories.length];
   return (
     <StoryGate>
@@ -29,7 +32,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
           <span className="st-scroll">Scroll</span>
         </section>
 
-        <section className="st-video"><div className="ph-box">Film placeholder 16:9</div></section>
+        <section className="st-video"><img className="st-video-img" src={p.poster} alt={s.name} /></section>
 
         <section className="st-stakes">
           <div className="st-stakes-inner">
@@ -70,7 +73,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
                   <h3>{c.t}</h3>
                   {c.ps.map((t, k) => <p key={k}>{t}</p>)}
                   {c.pull && <p className="st-pull">{c.pull}</p>}
-                  {c.image && <div className="st-chapter-image"><div className="ph-box">Screen placeholder</div></div>}
+                  {c.image && <div className="st-chapter-image"><img src={c.image} alt={c.t} /></div>}
                 </div>
               </article>
             ))}
@@ -78,7 +81,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
         </section>
 
         <section className="st-cardshow">
-          <div className="st-cardshow-inner">{[1, 2, 3].map((n) => <div key={n}><div className="ph-box">Screen {n}</div></div>)}</div>
+          <div className="st-cardshow-inner">{p.shots.map((src) => <div key={src}><img src={src} alt="" /></div>)}</div>
         </section>
 
         <section className="st-service">

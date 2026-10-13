@@ -1,16 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { storiesIndex as s } from "@/data/pages";
 import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
 
-export const metadata = { title: "Stories — Your Name" };
+export const metadata = { title: "Stories — Muhammad Naeem" };
 
 export default function Stories() {
   return (
     <main>
       <header className="sti-hero shell">
         <Reveal className="sti-hero-in">
-          <div className="sti-kicker"><span className="sti-kicker-rule" />Stories<span className="sti-kicker-rule" /></div>
+          <div className="sti-kicker"><span className="sti-kicker-rule" />{s.kicker}<span className="sti-kicker-rule" /></div>
           <h1 className="sti-title">The <em>work.</em></h1>
           <p className="sti-lede">{s.lede}</p>
           <div className="sti-stats">
@@ -36,7 +37,8 @@ export default function Stories() {
               </div>
               <div className="sti-feat-visual">
                 <div className="sti-logo-panel">
-                  <div className="sti-logo-box">Logo</div>
+                  
+                  {f.logo ? <img className="sti-logo-img" src={f.logo} alt={f.name} /> : <div className="sti-logo-box">{f.name}</div>}
                   <div className="sti-logo-rule" />
                   <div className="sti-logo-cap">{f.cap}</div>
                 </div>
@@ -56,13 +58,13 @@ export default function Stories() {
           </div>
           <div className="sti-index">
             {s.more.map((m) => (
-              <Link key={m.slug} href={`/stories/${m.slug}/`} className="sti-row">
+              <Link key={m.name} href={`/stories/${m.slug}/`} className="sti-row">
                 <div className="sti-row-meta">
                   <span className="sti-row-name">{m.name}</span>
                   <span className="sti-row-stat"><b>{m.v}</b><i>{m.l}</i></span>
                   <span className="sti-row-line">{m.line}</span>
                 </div>
-                <div className="sti-row-logo"><div className="sti-logo-box">Logo</div></div>
+                <div className="sti-row-logo">{m.logo ? <img className="sti-logo-img" src={m.logo} alt={m.name} /> : <div className="sti-logo-box">{m.name}</div>}</div>
               </Link>
             ))}
           </div>
