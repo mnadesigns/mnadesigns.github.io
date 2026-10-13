@@ -117,7 +117,7 @@
 .sg-input { flex: 1 1 auto; min-width: 0; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 999px; padding: 13px 20px; color: #fff; font-size: 15px; font-family: inherit; outline: none; transition: border-color 0.2s; cursor: text !important; }
 .sg-input::placeholder { color: rgba(255, 255, 255, 0.4); }
 .sg-input:focus { border-color: #1297d9; }
-.sg-btn { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; background: #1297d9; color: #fff; border: 0; cursor: pointer !important; border-radius: 999px; padding: 13px 22px; font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s, transform 0.15s; }
+.sg-btn { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; background: var(--brand); color: #fff; border: 0; cursor: pointer !important; border-radius: 999px; padding: 13px 22px; font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s, transform 0.15s; }
 .sg-btn:hover { background: #0d77ad; }
 .sg-btn:active { transform: scale(0.97); }
 .sg-btn svg { width: 14px; height: 14px; }

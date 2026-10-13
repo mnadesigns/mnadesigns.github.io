@@ -44,7 +44,7 @@
 .title { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(28px, 2.4vw, 36px); line-height: 1.05; letter-spacing: 0.01em; color: #fff; }
 .promise { flex: 1; margin: 0; font-family: var(--sans); font-size: 15.5px; line-height: 1.55; color: rgba(233, 238, 245, 0.72); }
 .group { display: flex; flex-direction: column; gap: 10px; }
-.label { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(233, 238, 245, 0.45); }
+.label { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(233, 238, 245, 0.66); }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .chips li { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 14px; color: #fff; background: rgba(56, 182, 242, 0.12); border: 1px solid rgba(56, 182, 242, 0.34); cursor: default; outline: none; translate: var(--lx, 0px) var(--ly, 0px); transition: background-color 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), translate 0.18s var(--ease); }
 .chips li:hover, .chips li:focus-visible { background: rgba(56, 182, 242, 0.24); border-color: #38b6f2; transform: translateY(-2px); }

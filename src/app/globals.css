@@ -136,15 +136,15 @@
   --white: #ffffff;
   --ink-80: rgba(11, 11, 10, 0.8);
   --ink-65: rgba(11, 11, 10, 0.65);
-  --ink-50: rgba(11, 11, 10, 0.5);
+  --ink-50: rgba(11, 11, 10, 0.6); /* grey meta text: 5.4:1 on white (was 0.5, 3.7:1) */
   --ink-25: rgba(11, 11, 10, 0.25);
   --ink-12: rgba(11, 11, 10, 0.12);
   --ink-08: rgba(11, 11, 10, 0.08);
   --white-50: rgba(255, 255, 255, 0.5);
   --white-25: rgba(255, 255, 255, 0.25);
   --white-12: rgba(255, 255, 255, 0.12);
-  --brand: #1297d9;
-  --brand-deep: #0d77ad;
+  --brand: #0e7cb6; /* UI blue: 4.6:1 against white text and on white (the slide blue #1297d9 is --cyan and stays as it is) */
+  --brand-deep: #0b6794;
   --emerald: #0e9f6e;
   --emerald-ink: #0a7b55;
 

@@ -6,7 +6,7 @@ import styles from "./resume.module.css";
 
 export const metadata = { title: "Resume — Muhammad Naeem" };
 
-// A clone of abmcooks.github.io/resume with this resume's copy: Experience, Selected consulting, Skills, Earlier experience and Education, in the reference's one-column layout.
+// A clone of abmcooks.github.io/resume with this resume's copy: Experience, Selected consulting, Earlier experience, Skills and Education, in the reference's one-column layout.
 export default function Resume() {
   return (
     <main>
@@ -67,18 +67,6 @@ export default function Resume() {
         </section>
 
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Skills</h2>
-          <div className={styles.expertiseGrid}>
-            {r.skills.map((g) => (
-              <div key={g.cat}>
-                <div className={styles.expertiseCat}>{g.cat}</div>
-                <div className={styles.expertiseItems}>{g.items.join(", ")}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className={styles.section}>
           <h2 className={styles.sectionTitle}>Earlier experience</h2>
           {r.earlier.map((e) => (
             <div className={styles.consult} key={e.role}>
@@ -89,6 +77,18 @@ export default function Resume() {
               <p className={styles.consultDesc}>{e.org}</p>
             </div>
           ))}
+        </section>
+
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Skills</h2>
+          <div className={styles.expertiseGrid}>
+            {r.skills.map((g) => (
+              <div key={g.cat}>
+                <div className={styles.expertiseCat}>{g.cat}</div>
+                <div className={styles.expertiseItems}>{g.items.join(", ")}</div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section className={styles.section}>
