@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-// Static export for GitHub Pages user site (repo: mnalabs.github.io, served from "/").
+// Static export for GitHub Pages user site (repo: naeemdesigns.github.io, served from "/").
 const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
