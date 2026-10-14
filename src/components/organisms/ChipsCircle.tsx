@@ -36,8 +36,10 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
 
     (async () => {
       const Matter = (await import("matter-js")).default;
-      await document.fonts.ready; // measure the chips with the final font, so their widths are right
+      // measure the chips with the final font, so their widths are right (but never wait for ever: in-app browsers can leave this pending)
+      await Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, 1500))]);
       if (disposed) return;
+      host.classList.add(styles.sim); // from here the physics places the chips; if anything fails the resting layout is restored below
       const { Engine, Bodies, Body, Composite, Mouse, MouseConstraint } = Matter;
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const els = Array.from(host.querySelectorAll<HTMLElement>("[data-chip]"));
@@ -258,6 +260,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
 
       build();
 
+      if (typeof IntersectionObserver === "undefined") { started = true; (sim as { start: (i: boolean) => void } | null)?.start(true); return; }
       const io = new IntersectionObserver(
         ([e]) => {
           visible = e.isIntersecting;
@@ -267,6 +270,8 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
         { threshold: 0.35 }
       );
       io.observe(host.parentElement ?? host);
+      // safety net: if the circle is on screen but the drop never fired, show the chips settled
+      const failsafe = setTimeout(() => { if (!started && host.getBoundingClientRect().top < window.innerHeight) { started = true; sim?.start(true); } }, 4000);
 
       // re-fit when the circle changes size
       let timer: ReturnType<typeof setTimeout>;
@@ -278,11 +283,17 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
 
       teardown = () => {
         clearTimeout(timer);
+        clearTimeout(failsafe);
         ro.disconnect();
         io.disconnect();
         sim?.dispose();
       };
-    })();
+    })().catch(() => {
+      // the physics could not start (module failed to load, an old WebView...): fall back to the resting layout
+      teardown();
+      host.classList.remove(styles.sim);
+      host.querySelectorAll<HTMLElement>("[data-chip]").forEach((e) => { e.style.transform = ""; e.style.visibility = ""; });
+    });
 
     return () => { disposed = true; teardown(); };
   }, [chips]);
