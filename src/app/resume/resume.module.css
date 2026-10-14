@@ -3,10 +3,14 @@
 .header { margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--ink-12); }
 .top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 6px; }
 .name { margin: 0; font-family: var(--display); font-size: 44px; font-weight: 400; color: var(--ink); text-transform: uppercase; line-height: 1.02; letter-spacing: -0.01em; }
-.title { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--brand); letter-spacing: 0.02em; margin-top: 8px; }
+.title { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink-65); letter-spacing: 0.02em; margin-top: 8px; }
+/* the Save PDF button is as small as the Resume button in the navbar: 40px tall, 14px text, a 24px arrow circle */
+.top .save { padding: 6px 6px 6px 16px; gap: 8px; font-size: 14px; flex: none; }
+.top .save :global(.ico) { width: 24px; height: 24px; }
 .contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; }
-.contact a, .contact span { font-family: var(--sans); font-size: 16px; font-weight: 400; color: var(--ink-65); text-decoration: none; transition: color 0.2s; }
-.contact a:hover { color: var(--brand); }
+.contact a, .contact span { font-family: var(--sans); font-size: 16px; font-weight: 400; color: var(--ink-65); text-decoration: none; transition: color 0.2s, text-decoration-color 0.2s; }
+.contact a { color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(14, 124, 182, 0.45); } /* links look like links: blue and underlined */
+.contact a:hover { color: var(--brand-deep); text-decoration-color: currentColor; }
 .contact .sep { color: var(--ink-25); }
 .summary { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--ink-80); line-height: 1.65; max-width: 720px; margin: 18px 0 0; }
 
@@ -17,11 +21,11 @@
 .entry { margin-bottom: 32px; }
 .entry:last-child { margin-bottom: 0; }
 .entryHeader, .consultHeader, .eduRow { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-.entryHeader { margin-bottom: 2px; }
+.entryHeader { margin-bottom: 12px; }
 .company { font-family: var(--sans); font-size: 19px; font-weight: 600; color: var(--ink); }
 .role { font-family: var(--sans); font-size: 16px; font-weight: 500; color: var(--ink-65); }
 .meta, .consultMeta, .eduYear { font-family: var(--sans); font-size: 15px; font-weight: 400; color: var(--ink-50); flex-shrink: 0; }
-.desc { font-family: var(--serif); font-size: 16px; font-weight: 400; font-style: italic; color: var(--ink-65); margin-top: 4px; margin-bottom: 10px; }
+.desc { font-family: var(--serif); font-size: 16px; font-weight: 400; font-style: italic; color: var(--ink-65); margin-top: 0; margin-bottom: 10px; }
 .entry ul { list-style: none; padding: 0; margin: 0; }
 .entry li { font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--ink-80); line-height: 1.7; padding-left: 18px; position: relative; margin-bottom: 8px; }
 .entry li::before { content: ""; position: absolute; left: 0; top: 12px; width: 5px; height: 5px; border-radius: 50%; background: rgba(18, 151, 217, 0.5); }
@@ -48,8 +52,9 @@
 @media print {
   .page { max-width: none; padding: 0; margin: 0; }
   .name { color: #1a1a1a; font-size: 28px; }
-  .title { color: #0d6fa0; font-size: 12px; }
+  .title { color: #555; font-size: 12px; }
   .contact a, .contact span { color: #444; font-size: 11px; }
+  .contact a { color: #0b6794; }
   .summary { color: #444; font-size: 12px; }
   .section { margin-top: 22px; }
   .sectionTitle { color: #0b6794; font-size: 10px; margin-bottom: 12px; padding-bottom: 5px; border-color: #e0e0e0; }

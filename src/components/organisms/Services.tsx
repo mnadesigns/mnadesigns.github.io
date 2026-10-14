@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { RobotHead } from "robot-heads";
+import dynamic from "next/dynamic";
 import { services, servicesIntro, type Service } from "@/data/services";
 import { ServiceToolIcon } from "@/components/atoms/ServiceToolIcon";
 import styles from "./Services.module.css";
+
+// the robot is decoration below the fold, so its code loads after the page does
+const RobotHead = dynamic(() => import("robot-heads").then((m) => m.RobotHead), { ssr: false });
 
 // The AI-augmented pipelines: a dark bento grid. Every tile shows all of its copy in the same order (number, title, promise, tools, deliverables), so nothing is hidden behind a click.
 // Motion: each tile's border draws itself and its content comes up out of a blur, one tile after another, as the section scrolls into view; a glow follows the pointer along the borders;

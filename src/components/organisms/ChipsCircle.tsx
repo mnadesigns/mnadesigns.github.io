@@ -288,7 +288,7 @@ export function ChipsCircle({ chips }: { chips: Chip[] }) {
   }, [chips]);
 
   return (
-    <div ref={wrap} className={styles.circle} aria-label="Skills">
+    <div ref={wrap} className={styles.circle} role="group" aria-label="Skills">
       {chips.map((c) => (
         <span key={c.label} data-chip className={`${styles.chip} ${c.tone === "brand" ? styles.brandChip : styles.white}`}>{c.icon && <ToolIcon name={c.icon} className={styles.chipIcon} />}{c.label}</span>
       ))}

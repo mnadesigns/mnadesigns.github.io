@@ -1,5 +1,5 @@
 /* AI-augmented services: dark bento grid. Tiles share one structure; the pointer glow and the staggered rise-in are the only motion. */
-.section { background: #07090d; color: #e9eef5; padding: var(--sp-sec-top) 0 var(--sp-sec-bot); position: relative; overflow: hidden; }
+.section { background: #07090d; color: #e9eef5; padding: var(--sp-sec-top) 0 clamp(32px, 3.5vw, 48px); position: relative; overflow: hidden; }
 .section::after { content: ""; position: absolute; left: 50%; top: -240px; width: 900px; height: 520px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(18, 151, 217, 0.28), transparent); pointer-events: none; }
 .section > :global(.shell) { position: relative; z-index: 1; }
 

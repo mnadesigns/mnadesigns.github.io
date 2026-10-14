@@ -14,7 +14,7 @@ const IMG = "/images/work/pharmacy";
 function Mock({ phone = false }: { phone?: boolean }) {
   return (
     <div className={`${styles.mock}${phone ? ` ${styles.phoneMock}` : ""}`}>
-      <div className={styles.win}><img className={styles.page} alt="The Specialist Clinic Pharmacy home page, scrolling from the top banner to the footer." src={`${IMG}/page.webp`} /></div>
+      <div className={styles.win}><img className={styles.page} alt="The Specialist Clinic Pharmacy home page, scrolling from the top banner to the footer." src={`${IMG}/page.webp`} width={2712} height={11547} /></div>
       <img className={styles.frame} alt="" src={`${IMG}/mockup.webp`} />
     </div>
   );

@@ -28,7 +28,6 @@ function Letters({ text, accent, start }: { text: string; accent?: string; start
 }
 
 export function Hero() {
-  const ghost = "SREDIO · QUODARCA · PEERS · APPLIED ELECTRONICS · CUPFFEE · CYTOSITE BIO · TELCO ICT · ";
   return (
     <header className="hero shell" id="hero">
       <div className="hero-band">
@@ -43,9 +42,6 @@ export function Hero() {
         <span className="l"><Letters text={hero.line2} start={hero.line1.replace(/ /g, "").length} /></span>
       </h1>
       <p className="hero-sub">{hero.sub}</p>
-      <div className="hero-ghost" aria-hidden="true">
-        <span>{ghost}</span><span>{ghost}</span>
-      </div>
     </header>
   );
 }

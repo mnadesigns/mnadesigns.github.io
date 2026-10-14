@@ -60,7 +60,7 @@ export function Nav() {
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h14M3 14h14" /></svg>
         </button>
       </nav>
-      <div className={`menu${open ? " open" : ""}`} aria-hidden={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
+      <div className={`menu${open ? " open" : ""}`} aria-hidden={!open} inert={!open} onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}>
         <Link href="/" className="nav-logo menu-logo" aria-label="Home">{site.logo}<i /></Link>
         <button className="menu-close" aria-label="Close menu" onClick={() => setOpen(false)}>
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 3l10 10M13 3L3 13" /></svg>

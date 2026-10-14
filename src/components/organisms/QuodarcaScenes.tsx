@@ -151,7 +151,7 @@ function ProjectsStage() {
     <>
       <div className={styles.rocketWrap}>
         <div className={styles.rocketTurn}>
-          <div className={styles.rocket}><img alt="" src={`${IMG}/projects/rocket.png`} /></div>
+          <div className={styles.rocket}><img alt="" src={`${IMG}/projects/rocket.webp`} /></div>
         </div>
       </div>
       <p className={styles.title}>{"Projects   delivered"}</p>

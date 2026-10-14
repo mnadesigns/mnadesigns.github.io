@@ -81,7 +81,7 @@ const RANGES: [number, number][] = [[0, 720], [720, 1190], [1190, 2000]]; // whi
 function PortraitProcess() {
   return (
     <div className={styles.mView}>
-      <div className={styles.mHead}><p className={styles.mHeadTitle}>The Process</p><img className={styles.mHeadIcon} alt="" src={`${A}/rocket.png`} /></div>
+      <div className={styles.mHead}><p className={styles.mHeadTitle}>The Process</p><img className={styles.mHeadIcon} alt="" src={`${A}/rocket.webp`} /></div>
       <div className={styles.mWorld}>
         <div className={styles.lower}>
           {COLS.map((c, i) => (
@@ -104,7 +104,7 @@ export function ProcessChallenges(props: SceneProps) {
     <Scene {...props} speed={1} portrait={<PortraitProcess />} bars="#ffffff" stage="white">
       <div className={styles.groupA}>
         <p className={`${styles.t} ${styles.processTitle}`}>The<br />Process</p>
-        <div className={styles.rocket}><img alt="" src={`${A}/rocket.png`} /></div>
+        <div className={styles.rocket}><img alt="" src={`${A}/rocket.webp`} /></div>
         <div className={styles.lower}>
         {COLS.map((c) => (
           <div key={c.name}>

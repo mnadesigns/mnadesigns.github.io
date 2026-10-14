@@ -296,7 +296,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
           controlsList="nodownload noremoteplayback"
           disablePictureInPicture
           disableRemotePlayback
-          preload="auto"
+          preload={visible ? "auto" : "metadata"}
           aria-hidden="true"
           onLoadedMetadata={(e) => { const v = e.currentTarget; if (v.duration && isFinite(v.duration)) { const key = v.getAttribute("src") ?? ""; setClipMs((m) => (m[key] === Math.round(v.duration * 1000) ? m : { ...m, [key]: Math.round(v.duration * 1000) })); } }}
           onEnded={() => k === live && item.type === "clip" && setStep((s) => s + 1)}
