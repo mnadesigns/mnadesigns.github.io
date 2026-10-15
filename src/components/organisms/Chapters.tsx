@@ -211,6 +211,9 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
 // is swapped in underneath; when the slide ends it fades out over that clip, which is already in place. Clips are shown whole,
 // never cropped; the bars beside them are one colour per clip, the same on both sides (see .chap-film).
 const FADE_MS = 400;
+// fit "cover" fills the panel; fit "height" always fills the panel's full height and centres the clip: bars of the clip colour at the sides when the panel is wider than the clip, the sides cropped when it is narrower
+const clipStyle = (fit?: FilmClip["fit"]): React.CSSProperties | undefined =>
+  fit === "height" ? { objectFit: "contain", width: "auto", maxWidth: "none", height: "100%", left: "50%", right: "auto", transform: "translateX(-50%)" } : fit ? { objectFit: fit } : undefined;
 function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
   const phone = usePhone();
   // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
@@ -269,7 +272,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
       // a clip that cannot load (missing or broken file) is skipped, so the film never stalls on it
       if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { setTimeout(() => setStep((s) => s + 1), 0); return; }
       if (v.currentTime > 0.05) v.currentTime = 0;
-      v.playbackRate = FILM_SPEED;
+      v.playbackRate = (item as FilmClip).speed ?? FILM_SPEED;
       v.play().then(() => setStarted(true)).catch(() => {});
     } else v.pause();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -296,7 +299,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
           ref={els[k]}
           className={`chap-video${shown === k && !(step === 0 && items[0].type !== "clip") ? " is-on" : ""}`}
           src={held[k]}
-          style={{ objectFit: (items.find((it) => it.type === "clip" && it.src === held[k]) as FilmClip | undefined)?.fit }}
+          style={clipStyle((items.find((it) => it.type === "clip" && it.src === held[k]) as FilmClip | undefined)?.fit)}
           poster={!started && k === 0 && poster ? poster : undefined}
           muted
           playsInline
@@ -333,7 +336,7 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
         }
         return <FilmSlideView key={i} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
       })}
-      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? clipMs[it.src] ?? 5000 : it.dur) / FILM_SPEED)} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
+      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? (clipMs[it.src] ?? 5000) / (it.speed ?? FILM_SPEED) : it.dur / FILM_SPEED))} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
     </div>
   );
 }

@@ -58,3 +58,9 @@ dev.err
 
 # motionmaxxing skill (third-party, 47 MB): keep it local, not in the site repo
 .claude/skills/motionmaxxing/
+
+# Pumba film working files (the source and assets are kept; renders are not)
+film/pumba/stills/
+film/pumba/look/
+film/pumba/*.png
+film/pumba/final.mp4*
