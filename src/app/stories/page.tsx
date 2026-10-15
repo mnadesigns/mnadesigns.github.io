@@ -11,7 +11,6 @@ export default function Stories() {
     <main>
       <header className="sti-hero shell">
         <Reveal className="sti-hero-in">
-          <div className="sti-kicker"><span className="sti-kicker-rule" />{s.kicker}<span className="sti-kicker-rule" /></div>
           <h1 className="sti-title">The <em>work.</em></h1>
           <p className="sti-lede">{s.lede}</p>
           <div className="sti-stats">
