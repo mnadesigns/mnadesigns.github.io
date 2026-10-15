@@ -61,7 +61,7 @@ export const chapters = [
   {
     kind: "ad",
     name: "SRED.io",
-    role: "Product Designer & Project Manager, <em>2026 to Present</em>",
+    role: "Product Designer & Project Manager",
     sub: "Introduced the platform's first design system, then designed four products: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.",
     stats: [
       { v: "4", l: "Projects" },
@@ -74,7 +74,7 @@ export const chapters = [
   {
     kind: "film",
     name: "QuodArca",
-    role: "Senior Product Designer, EISST International, <em>2023 to 2025</em>",
+    role: "Senior Product Designer, EISST International",
     sub: "Led UX/UI across six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.",
     stats: [
       { v: "500+", l: "Screens" },
@@ -103,7 +103,7 @@ export const chapters = [
   {
     kind: "film",
     name: "MLK Group",
-    role: "Senior UX/UI Designer, <em>2021 to 2023</em>",
+    role: "Senior UX/UI Designer",
     sub: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.",
     stats: [
       { v: "25+", l: "Industries" },
