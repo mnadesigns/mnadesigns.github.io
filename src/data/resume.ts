@@ -18,8 +18,8 @@ export const resume = {
       bullets: [
         "Built the platform's first design system on Flowbite, giving engineering one shared component library.",
         "Cut core page length by 70% through a layout redesign, with no loss of content.",
-        "Designed four products (Staff & Teams, File Vaults, Timesheets, Feedback Widget): 12 end-to-end flows and 50+ screens.",
-        "Lead design and manage a front-end developer, taking designs into production code through a Figma MCP workflow.",
+        "Worked on more than 17 microservices and designed 100+ screens.",
+        "Lead design and manage a front-end developer, taking designs into production code with Claude Code in Cursor, connected to Figma.",
       ],
     },
     {

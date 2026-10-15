@@ -6,9 +6,10 @@ export const aboutPage = {
   title: "I design the systems, then <em style=\"white-space:nowrap\">ship the code.</em>",
   lead: "I'm Muhammad Naeem, an AI Product Leader based in Lahore, Pakistan, with 10+ years of design across SaaS, Fintech, Data, Health and e-commerce. I turn hard ideas into simple apps with AI.",
   story: [
-    "I grew from product designer into leading product design across web, desktop and mobile. Today I am Product Designer and Project Manager at SRED.io, where I introduced the platform's first design system and designed four products on top of it: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.",
-    "Before that I was Senior Product Designer at EISST International (2023 to 2025), leading UX and UI across six high-security, privacy-first product lines on QuodArca: more than 500 screens, a design system built from scratch and full WCAG 2.1 AA compliance. At MLK Group (2021 to 2023) I directed digital product design for 50+ Australian brands across fintech and e-commerce, covering 25+ industries.",
-    "Now I work with AI in the loop. Claude Code, Figma MCP and Mobbin MCP take the heavy lifting, and design judgment steers every step: from interviews and benchmarks to a design system and code that developers can wire up instead of rebuild.",
+    "I started as a front-end designer: the person who turns a layout into HTML and CSS and notices where the two disagree. That habit never left. It is why I care about tokens, component states and what a developer actually receives, and it pulled me from single screens into whole products, from a hotel booking engine and a pharma brand to crypto platforms and e-commerce.",
+    "Systems are where I do my best work. At MLK Group I led three designers and a shared component library that halved revision cycles across 50+ Australian brands, and for flagship e-commerce clients conversion rose 3x and online orders 2.5x. At EISST I rebuilt onboarding and setup for six high-security, privacy-first products: 500+ screens, a multi-platform design system with tokens, and full WCAG 2.1 AA, so one action finally looked and behaved the same on Mac, iOS and Android.",
+    "Today I lead design at SRED.io, a tax-credit platform for Canadian companies. I introduced its first design system on Flowbite, cut core pages by 70% with no loss of content, and worked on more than 17 microservices. I work with a front-end developer, and the designs reach production through Claude Code in Cursor, with Figma and Claude Code connected.",
+    "AI sits in the loop, not in charge. Claude Code takes the repetitive build work, in Cursor with Figma connected. Interviews, benchmarks, accessibility and product decisions stay with me, which is how a design system becomes code that developers can wire up instead of rebuild.",
   ],
   lens: [
     { n: "01", t: "Systems before screens", d: "A shared design system comes first, so every product and every screen starts from the same foundation." },
@@ -85,7 +86,7 @@ export const storiesIndex = {
     { v: "500+", l: "Screens at EISST" },
   ],
   features: [
-    { slug: "sred-io", eyebrow: "Product Designer & Project Manager", name: "SRED.io", sub: "The platform's first design system, then four products built on it.", metrics: [{ v: "4", l: "Products" }, { v: "12", l: "Flows" }, { v: "50+", l: "Screens" }], cap: "Product Designer & Project Manager", logo: "/images/brands/sredio.png" },
+    { slug: "sred-io", eyebrow: "Product Designer & Project Manager", name: "SRED.io", sub: "The platform's first design system, then more than 17 microservices.", metrics: [{ v: "17+", l: "Microservices" }, { v: "100+", l: "Screens designed" }], cap: "Product Designer & Project Manager", logo: "/images/brands/sredio.png" },
     { slug: "quodarca", eyebrow: "Senior Product Designer", name: "QuodArca", sub: "Six high-security, privacy-first product lines on one multi-platform design system.", metrics: [{ v: "500+", l: "Screens" }, { v: "6", l: "Product lines" }], cap: "EISST International", logo: "/images/brands/quodarca.png" },
     { slug: "mlk-group", eyebrow: "Senior UX/UI Designer", name: "MLK Group", sub: "Digital product design for 50+ Australian brands across fintech and e-commerce.", metrics: [{ v: "25+", l: "Industries" }, { v: "3x", l: "Conversion rate" }, { v: "2.5x", l: "Online orders" }], cap: "Senior UX/UI Designer" },
   ],
@@ -105,7 +106,7 @@ export const pods = [
 ];
 
 export const stories = [
-  { slug: "sred-io", name: "SRED.io", co: "SRED.io · 2026 – Present", line: "The platform's first design system, then four products built on it: Staff & Teams, File Vaults, Timesheets and the Feedback Widget.", feature: true },
+  { slug: "sred-io", name: "SRED.io", co: "SRED.io · 2026 – Present", line: "The platform's first design system, then more than 17 microservices.", feature: true },
   { slug: "quodarca", name: "QuodArca", co: "EISST International · 2023 – 2025", line: "Six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.", feature: true },
   { slug: "mlk-group", name: "MLK Group", co: "MLK Group · 2021 – 2023", line: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.", feature: true },
 ];
