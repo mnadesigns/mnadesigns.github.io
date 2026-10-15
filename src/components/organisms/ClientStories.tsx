@@ -55,7 +55,7 @@ export function ClientStories() {
         <Reveal>
           <div className={styles.wall}>
             {clientStories.map((s, i) => <Fragment key={s.slug}><Note s={s} i={i} /></Fragment>)}
-            <Link href="/consulting/" data-cursor="light" className={`${styles.note} ${styles.cta}`} style={{ "--tilt": "-0.8deg" } as React.CSSProperties}>
+            <Link href="/resume/" data-cursor="light" className={`${styles.note} ${styles.cta}`} style={{ "--tilt": "-0.8deg" } as React.CSSProperties}>
               <span className={styles.ctaTitle}>Your story could be next.</span>
             </Link>
           </div>
