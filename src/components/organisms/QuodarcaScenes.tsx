@@ -10,7 +10,7 @@ const IMG = "/images/work/quodarca";
 export type SceneProps = { active: boolean; holdMs?: number; idle?: boolean; focus?: [number, number] };
 
 // Phone layout for the scenes that are one picture of devices on white: the picture at the full width of the panel, centred, with the same entrance as on desktop (fades in over 0.8 s while easing from 106% down to 100%).
-const PIC_EASE: Easing = [0.23, 1, 0.32, 1];
+const PIC_EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve
 export function PortraitPicture({ src, alt, active, zoom }: { src: string; alt: string; active: boolean; zoom?: { from: number; to: number; origin: string } }) {
   // zoom: instead of the small settling movement, the picture glides from one size to another (about the point origin), so it zooms in (to > from) or out (to < from)
   const from = zoom ? zoom.from : 1.06, to = zoom ? zoom.to : 1;
@@ -21,8 +21,8 @@ export function PortraitPicture({ src, alt, active, zoom }: { src: string; alt: 
         src={src}
         style={zoom ? { transformOrigin: zoom.origin } : undefined}
         initial={{ opacity: 0, scale: from }}
-        animate={active ? { opacity: 1, scale: to } : { opacity: 0, scale: from }}
-        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: zoom ? { duration: 3.2, delay: 0.5, ease: [0.45, 0, 0.25, 1] } : { duration: 4.2, ease: PIC_EASE } }}
+        animate={active ? { opacity: 1, scale: zoom ? to : [from, 1, 1.025] } : { opacity: 0, scale: from }}
+        transition={{ opacity: { duration: 0.2, ease: "linear" }, scale: zoom ? { duration: 3.2, delay: 0.5, ease: [0.45, 0, 0.25, 1] } : { duration: 4.2, ease: PIC_EASE } }}
       />
     </div>
   );
@@ -37,8 +37,8 @@ export function PortraitCover({ src, alt, active, position = "50% 50%" }: { src:
         src={src}
         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: position }}
         initial={{ opacity: 0, scale: 1.06 }}
-        animate={active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
-        transition={{ opacity: { duration: 0.8, ease: PIC_EASE }, scale: { duration: 4.2, ease: PIC_EASE } }}
+        animate={active ? { opacity: 1, scale: [1.06, 1, 1.025] } : { opacity: 0, scale: 1.06 }}
+        transition={{ opacity: { duration: 0.2, ease: "linear" }, scale: { duration: 4.2, times: [0, 0.17, 1], ease: [PIC_EASE, "linear"] } }}
       />
     </div>
   );
@@ -77,9 +77,16 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
     ro.observe(el);
     return () => ro.disconnect();
   }, [fx, fy, bottomAnchor]);
+  // the art stays as it ended while the slide holds and fades out; dropping the class at once would blank the stage for the length of the fade
+  const [linger, setLinger] = useState(false);
+  useEffect(() => {
+    if (active) { setLinger(true); return; }
+    const t = setTimeout(() => setLinger(false), 900);
+    return () => clearTimeout(t);
+  }, [active]);
   return (
     <div data-speed={speed} className={`sloop film-slide${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms`, background: bars }} aria-hidden={!active}>
-      <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active ? ` ${styles.on}` : ""}`}>
+      <div ref={frame} data-active={active} style={stage === "white" ? { background: "#fff" } : base ? { background: base } : undefined} className={`${styles.frame}${active || linger ? ` ${styles.on}` : ""}`}>
         {fill && <div className={styles.fill}>{fill}</div>}
         {cover && <div className={styles.cover}>{cover}</div>}
         {anchors && !fit.narrow && ((["tl", "tr", "bl", "br"] as const).map((k) => anchors[k] && <div key={k} className={`${styles.anchor} ${styles[k]}`} style={{ transform: `scale(${fit.scale})` }}>{anchors[k]}</div>))}

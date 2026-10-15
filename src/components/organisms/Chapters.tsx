@@ -173,6 +173,13 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [active, s.giant]);
+  // the content stays as it ended while the slide holds and fades out, so the stage never goes empty
+  const [linger, setLinger] = useState(false);
+  useEffect(() => {
+    if (active) { setLinger(true); return; }
+    const t = setTimeout(() => setLinger(false), 900);
+    return () => clearTimeout(t);
+  }, [active]);
   return (
     <div className={`sloop film-slide${s.dark ? " fg-on-dark" : ""}${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms` }} aria-hidden={!active}>
       <div className="sl-bg" style={{ background: s.bg }} />
@@ -180,7 +187,7 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
         // eslint-disable-next-line @next/next/no-img-element
         <img className="sl-bgimg" alt="" src={s.image} />
       )}
-      <div className={`sl-card${active ? " on" : ""}`} style={{ "--beat": s.dur + "ms" } as React.CSSProperties}>
+      <div className={`sl-card${active || linger ? " on" : ""}`} style={{ "--beat": s.dur + "ms" } as React.CSSProperties}>
         <div className="sl-hero">
           {s.kicker && <div className="sl-kicker"><span>{s.kicker}</span></div>}
           {s.logo && (
@@ -190,7 +197,7 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
             </div>
           )}
           {s.line && <div className="sl-line">{s.line}</div>}
-          {s.giant ? <div className="sl-giant">{(active ? n : 0).toLocaleString("en-US")}{s.suffix}</div> : null}
+          {s.giant ? <div className="sl-giant">{(active || linger ? n : 0).toLocaleString("en-US")}{s.suffix}</div> : null}
           {s.tag && <div className="sl-tag">{s.tag}</div>}
         </div>
       </div>
@@ -306,8 +313,8 @@ function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string
       {items.map((it, i) => {
         if (it.type === "clip") return null;
         const active = visible && step % n === i; // scenes only start animating once the panel is on screen
-        // when one slide hands over to another, the one that ends stays put until the new one fully covers it
-        const holdMs = !active && i === (step + n - 1) % n && item.type !== "clip" ? FADE_MS : 0;
+        // a slide that ends stays put for one fade: until the new slide fully covers it, or until the next clip has started playing underneath (otherwise its empty first frame shows through)
+        const holdMs = !active && i === (step + n - 1) % n ? FADE_MS : 0;
         if (it.type === "scene") {
           if (it.id === "welcome") return <WelcomeScene key={i} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
           if (it.id === "process-challenges") return <ProcessChallenges key={i} active={active} holdMs={holdMs} />;

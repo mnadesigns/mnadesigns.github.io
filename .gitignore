@@ -55,3 +55,6 @@ docs/research/
 dev.log
 dev.err
 .env*
+
+# motionmaxxing skill (third-party, 47 MB): keep it local, not in the site repo
+.claude/skills/motionmaxxing/

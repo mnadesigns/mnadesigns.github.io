@@ -60,11 +60,20 @@ function Tile({ s, i }: { s: Service; i: number }) {
 export function Services() {
   const root = useRef<HTMLElement>(null);
   const [still, setStill] = useState(false); // reduced motion: the robot stays on one frame
+  const [onScreen, setOnScreen] = useState(false); // the robot only animates while the section is near the screen: its canvas redraws on the main thread every frame, which starves the work videos above if it never stops
   useEffect(() => { setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
     const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add(styles.in); io.disconnect(); } }, { threshold: 0.08 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { rootMargin: "120px 0px" });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -78,7 +87,7 @@ export function Services() {
             <p className={styles.sub}>{servicesIntro.sub}</p>
           </div>
           <div className={styles.bot} aria-hidden="true">
-            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} paused={still} />
+            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} paused={still || !onScreen} />
           </div>
         </div>
         <div className={styles.grid}>

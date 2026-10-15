@@ -1,3 +1,5 @@
+/* measured eases (motionmaxxing: 12 curves fitted to 53 films) as CSS curves: softLand lands firm and decelerates, accelExit leaves accelerating */
+:root { --e-land: cubic-bezier(0.2, 0.7, 0.3, 1); --e-exit: cubic-bezier(0.6, 0, 0.9, 0.74); }
 /* Landing page composition. Tokens only; measurements per docs/research/abmcooks/SPEC.md. */
 @keyframes tick { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
@@ -91,11 +93,11 @@ html { scroll-snap-type: y proximity; }
 .sl-screen--contain { object-fit: contain; padding: 2vh 2vw; box-sizing: border-box; } /* show the whole picture, nothing cropped */
 /* a screen shown as it is, centred on a pale background */
 .sl-screen--card { transform: scale(1.04); object-fit: cover; object-position: 50% 0%; } /* the picture as it is, edge to edge: no radius, no shadow, no padding; any crop is taken from the bottom */
-.sl-card.on .sl-screen { opacity: 1; transform: scale(1); transition: opacity 0.8s var(--ease), transform 4.2s var(--ease); }
+.sl-card.on .sl-screen { opacity: 1; transform: scale(1); transition: opacity 0.2s linear, transform 0.7s var(--e-land); }
 .sl-card.on .sl-screen.sl-screen--card { transform: scale(1); }
 /* stat slides between the scenes of a chapter film: the same kicker, number and tag as the Sred.io beats, fading in and out as a whole */
-.film-slide { z-index: 3; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; } /* a slide only fades in and out */
-.film-slide.on { opacity: 1; }
+.film-slide { z-index: 3; opacity: 0; pointer-events: none; transition: opacity 0.4s var(--e-exit); } /* a slide only fades in and out */
+.film-slide.on { opacity: 1; transition-timing-function: var(--e-land); }
 .film-slide .sl-card { transition: none; }
 .sl-kicker { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: clamp(16px, 2.4vw, 34px); font-family: var(--sans); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: clamp(12px, 1.3vw, 19px); }
 .sl-icons { display: flex; align-items: center; justify-content: center; width: 100%; gap: clamp(20px, 3vw, 48px); margin-bottom: clamp(16px, 2.4vw, 36px); }
@@ -105,7 +107,7 @@ html { scroll-snap-type: y proximity; }
 .sl-brand img { height: clamp(80px, 11vw, 190px); width: auto; display: block; }
 .sl-brand--wide { align-items: center; }
 .sl-brand--wide img { height: auto; width: clamp(260px, 38vw, 720px); }
-.film-slide .sl-card.on .sl-brand { animation: slLogoIn 1.3s var(--ease) both; }
+.film-slide .sl-card.on .sl-brand { animation: slLogoIn 0.5s var(--e-land) both; }
 @keyframes slLogoIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: none; } }
 .sl-tag { font-family: var(--sans); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: clamp(16px, 1.8vw, 26px); opacity: 0.8; }
 .sloop.static .sl-card { opacity: 0; animation: none; }

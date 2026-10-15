@@ -5,7 +5,7 @@ import { Scene, type SceneProps } from "./QuodarcaScenes";
 
 /* eslint-disable @next/next/no-img-element */
 
-const EASE: Easing = [0.23, 1, 0.32, 1]; // --ease in globals.css
+const EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve (--e-land in landing.css)
 const IMG = "/images/work/zigbis";
 
 // "Zigbis" (Figma frame 3027:978): nine tilted windows onto two full-length screenshots of the Zigbis home page, tiled across the slide. Standing still.
@@ -30,8 +30,8 @@ export function ZigbisScene(props: SceneProps) {
       <motion.div
         style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080 }}
         initial={{ opacity: 0, scale: 1.06 }}
-        animate={props.active ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.06 }}
-        transition={{ opacity: { duration: 0.8, ease: EASE }, scale: { duration: 4.2, ease: EASE } }}
+        animate={props.active ? { opacity: 1, scale: [1.06, 1, 1.025] } : { opacity: 0, scale: 1.06 }}
+        transition={{ opacity: { duration: 0.2, ease: "linear" }, scale: { duration: 4.2, times: [0, 0.17, 1], ease: [EASE, "linear"] } }}
       >
         {PANELS.map((p, i) => (
           <div key={i} style={{ position: "absolute", left: p.wrap[0], top: p.wrap[1], width: p.wrap[2], height: p.wrap[3], display: "flex", alignItems: "center", justifyContent: "center" }}>
