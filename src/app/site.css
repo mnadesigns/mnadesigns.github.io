@@ -72,11 +72,13 @@ body.menu-locked { overflow: hidden; }
 @keyframes dotPop { 0%, 40% { transform: scale(0); opacity: 0; } 55% { transform: scale(1.2); opacity: 1; } 65%, 100% { transform: scale(1); opacity: 1; } }
 
 /* cursor */
-.cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); border: 2px solid var(--brand); transform: translate(-50%, -50%); transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); opacity: 0; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); border: 2px solid var(--brand); transform: translate(-50%, -50%); transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), border-radius var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); opacity: 0; }
 body.cursor-on .cursor { opacity: 1; }
 .cursor.is-link { width: 44px; height: 44px; background: transparent; }
 .cursor.is-light { border-color: #fff; }
 .cursor.is-down { transform: translate(-50%, -50%) scale(0.8); }
+/* the AI-augmented section: the cursor is the deliverables bullet shape, at 10px (2px radius, #38b6f2 with its glow) */
+.cursor.is-bullet, .cursor.is-bullet.is-link { width: 10px; height: 10px; border: 0; border-radius: 2px; background: #38b6f2; box-shadow: 0 0 10px rgba(56, 182, 242, 0.7); }
 body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
 .trail-frame { position: fixed; z-index: 90; left: 0; top: 0; width: 132px; height: 104px; margin: -52px 0 0 -66px; display: flex; align-items: center; justify-content: center; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); box-shadow: var(--sh-float); pointer-events: none; opacity: 0; transform: scale(0.5); transition: opacity 0.14s var(--ease), transform 0.2s var(--ease); font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-50); }
 .trail-frame img { width: 112px; height: 84px; object-fit: contain; }

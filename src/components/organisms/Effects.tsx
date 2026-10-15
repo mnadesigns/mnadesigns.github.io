@@ -41,11 +41,16 @@ export function Cursor() {
     // each trail card shows one brand logo from site.ts `brands`; load them up front so the cards never flash empty
     brands.forEach((b) => { new Image().src = b.src; });
 
+    // the look of the cursor follows what is under it
+    const mode = (t: Element) => {
+      cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
+      cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']")); // over a brand-blue block the ring turns white
+      cur.classList.toggle("is-bullet", !!t.closest("#services")); // in the AI-augmented section the cursor is the small square bullet of the deliverables lists
+    };
     const onMove = (e: MouseEvent) => {
       tx = e.clientX; ty = e.clientY;
       const t = e.target as HTMLElement;
-      cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
-      cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']")); // over a brand-blue block the ring turns white
+      mode(t);
       // hero logo trail (not over links, buttons or other clickable things)
       if (t.closest("#hero") && !t.closest("a, button, [role='button'], .btn, .btn-sec, .btn-circle")) {
         const now = performance.now();
@@ -93,6 +98,13 @@ export function Cursor() {
       setTimeout(() => (target.style.transition = ""), 500);
     };
 
+    // scrolling (a two-finger trackpad swipe, the wheel, the keys) moves the page under a still pointer and fires no mousemove, so look again at what is under it
+    let sr = 0;
+    const onScroll = () => {
+      if (sr) return;
+      sr = requestAnimationFrame(() => { sr = 0; const el = document.elementFromPoint(tx, ty); if (el) mode(el); });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mousemove", mag);
     document.addEventListener("mouseout", magOut);
@@ -103,6 +115,8 @@ export function Cursor() {
       cur.remove();
       document.body.classList.remove("cursor-on");
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(sr);
       window.removeEventListener("mousemove", mag);
       document.removeEventListener("mouseout", magOut);
       window.removeEventListener("mousedown", down);

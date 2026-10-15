@@ -91,6 +91,7 @@ html { scroll-snap-type: y proximity; }
 /* product screens fill the whole slide and drift in slowly when it comes on */
 .sl-screen { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); }
 .sl-screen--contain { object-fit: contain; padding: 2vh 2vw; box-sizing: border-box; } /* show the whole picture, nothing cropped */
+.sl-screen--frame { object-fit: contain; padding: 4vh 4vw; box-sizing: border-box; } /* the whole picture with a margin of the slide colour, on every screen size (the product collage) */
 /* a screen shown as it is, centred on a pale background */
 .sl-screen--card { transform: scale(1.04); object-fit: cover; object-position: 50% 0%; } /* the picture as it is, edge to edge: no radius, no shadow, no padding; any crop is taken from the bottom */
 .sl-card.on .sl-screen { opacity: 1; transform: scale(1); transition: opacity 0.2s linear, transform 0.7s var(--e-land); }

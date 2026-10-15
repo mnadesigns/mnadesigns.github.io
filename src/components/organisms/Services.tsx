@@ -70,6 +70,29 @@ export function Services() {
     return () => io.disconnect();
   }, []);
 
+  // The glow and the pixel grid follow the pointer. A scroll moves the cards under a still pointer without any pointer event, so on scroll the card under the pointer is found again
+  // (the "hot" class stands in for :hover, which the browser only refreshes after the scroll settles) and the glow is placed where the pointer is.
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    let px = -1, py = -1, raf = 0;
+    const track = (e: PointerEvent) => { px = e.clientX; py = e.clientY; };
+    const look = () => {
+      raf = 0;
+      if (px < 0) return;
+      el.querySelectorAll<HTMLElement>("article").forEach((a) => {
+        const r = a.getBoundingClientRect();
+        const inside = px >= r.left && px <= r.right && py >= r.top && py <= r.bottom;
+        a.classList.toggle(styles.hot, inside);
+        if (inside) { a.style.setProperty("--mx", `${px - r.left}px`); a.style.setProperty("--my", `${py - r.top}px`); }
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(look); };
+    window.addEventListener("pointermove", track, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("pointermove", track); window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+
   useEffect(() => {
     const el = root.current;
     if (!el) return;

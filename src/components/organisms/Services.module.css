@@ -27,9 +27,16 @@
 
 .tile { --mx: 50%; --my: 0%; position: relative; display: flex; flex-direction: column; gap: 16px; padding: 28px 28px 30px; border-radius: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.09); overflow: hidden; opacity: 0; transform: translateY(36px); filter: blur(14px); transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
 .tile::before { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(420px circle at var(--mx) var(--my), rgba(56, 182, 242, 0.2), transparent 55%); opacity: 0; transition: opacity 0.35s var(--ease); pointer-events: none; }
-.tile:hover::before { opacity: 1; }
+.tile:hover::before, .tile.hot::before { opacity: 1; }
+/* a faint pixel pattern (2px squares every 10px) sits inside the glow and stays as long as the glow does, in a muted blue-grey so it blends into the card */
+.tile::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: rgba(120, 172, 204, 0.2); opacity: 0; transition: opacity 0.35s var(--ease);
+  -webkit-mask-image: radial-gradient(circle 200px at var(--mx) var(--my), #000 0%, transparent 100%), linear-gradient(90deg, #000 2px, transparent 2px), linear-gradient(#000 2px, transparent 2px);
+  mask-image: radial-gradient(circle 200px at var(--mx) var(--my), #000 0%, transparent 100%), linear-gradient(90deg, #000 2px, transparent 2px), linear-gradient(#000 2px, transparent 2px);
+  -webkit-mask-size: auto, 10px 10px, 10px 10px; mask-size: auto, 10px 10px, 10px 10px;
+  -webkit-mask-composite: source-in, source-in; mask-composite: intersect, intersect; }
+.tile:hover::after, .tile.hot::after { opacity: 1; }
 .in .tile { animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--i) * 0.09s) forwards; }
-.in .tile:hover { border-color: #38b6f2; box-shadow: inset 0 0 0 1px #38b6f2; } /* 1px border + 1px inside it = a 2px edge on hover, without moving anything */
+.in .tile:hover, .in .tile.hot { border-color: #38b6f2; box-shadow: inset 0 0 0 1px #38b6f2; } /* 1px border + 1px inside it = a 2px edge on hover, without moving anything */
 @keyframes rise { from { opacity: 0; transform: translateY(36px); filter: blur(14px); } to { opacity: 1; transform: none; filter: blur(0); } }
 
 /* each tile's border is drawn by a bright line that runs round it once, then fades, as the tile comes in */
@@ -87,5 +94,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .trace { display: none; }
+  .tile::after { display: none; }
   .tile { filter: none; opacity: 1; transform: none; animation: none !important; transition: none; }
 }

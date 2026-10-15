@@ -147,7 +147,7 @@ export const adBeats = [
   { bg: "#003A66", dark: true, dur: 3200, line: "The first design system, built on Flowbite", kicker: "The foundation" },
   { bg: "#ffffff", dark: false, dur: 4000, shot: { src: "/images/work/sredio/design-system.webp", alt: "The Sred.io design system: components built on Flowbite", fit: "contain" as const } },
   { bg: "#1297D9", dark: true, dur: 5400, line: "Staff & Teams, File Vaults, Timesheets, Feedback Widget" },
-  { bg: "#1E2939", dark: true, dur: 4000, shot: { src: "/images/work/sredio/products-collage.webp", alt: "Screens from the four Sred.io products" } },
+  { bg: "#1E2939", dark: true, dur: 4000, shot: { src: "/images/work/sredio/products-collage.webp", alt: "Screens from the four Sred.io products", fit: "frame" as const } },
   { bg: "#003A66", dark: true, dur: 2900, line: "Figma to code through MCP", kicker: "Design to code, with AI", icons: ["figma", "mcp", "claude", "cursor"] as ToolIconName[] },
   { bg: "#ffffff", dark: false, dur: 3600, line: "Shipped, <em>with AI</em> <span style=\"white-space:nowrap\">in the loop</span>" },
 ];
