@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/atoms/Reveal";
 import { Arrow } from "@/components/atoms/Buttons";
+import { extProps } from "@/lib/links";
 
 export function PageHero({ kicker, title, lead, children, aside }: { kicker: string; title: string; lead?: string; children?: ReactNode; aside?: ReactNode }) {
   return (
@@ -58,7 +59,7 @@ export function Row({ href, name, co, line, plain }: { href?: string; name: stri
     </>
   );
   const cls = `pg-row${plain ? " plain" : ""}`;
-  return href ? <Link href={href} className={cls}>{inner}</Link> : <div className={cls}>{inner}</div>;
+  return href ? <Link href={href} {...extProps(href)} className={cls}>{inner}</Link> : <div className={cls}>{inner}</div>;
 }
 
 export function Media({ label }: { label: string }) {
@@ -66,5 +67,5 @@ export function Media({ label }: { label: string }) {
 }
 
 export function BackLink({ href, label }: { href: string; label: string }) {
-  return <Link href={href} className="btn-text">{label} <Arrow /></Link>;
+  return <Link href={href} {...extProps(href)} className="btn-text">{label} <Arrow /></Link>;
 }

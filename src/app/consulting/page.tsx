@@ -97,9 +97,9 @@ export default function Consulting() {
           <p className="cs-cta-sub">{p.cta.sub}</p>
           <div className="cs-methods">
             <a href={`mailto:${site.email}`} className="cs-method"><span className="cs-method-label">Email</span><span className="cs-method-value">{site.email}</span><span className="cs-method-action">Copy</span></a>
-            <a href="https://cal.com/" className="cs-method"><span className="cs-method-label">Book</span><span className="cs-method-value">30-minute call</span><span className="cs-method-action">Open Cal</span></a>
-            <a href="https://www.linkedin.com/" className="cs-method"><span className="cs-method-label">LinkedIn</span><span className="cs-method-value">@yourname</span><span className="cs-method-action">Open LinkedIn</span></a>
-            <a href="https://wa.me/" className="cs-method"><span className="cs-method-label">WhatsApp</span><span className="cs-method-value">+00 000 000 0000</span><span className="cs-method-action">Open WhatsApp</span></a>
+            <a href="https://cal.com/" target="_blank" rel="noopener noreferrer" className="cs-method"><span className="cs-method-label">Book</span><span className="cs-method-value">30-minute call</span><span className="cs-method-action">Open Cal</span></a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="cs-method"><span className="cs-method-label">LinkedIn</span><span className="cs-method-value">@yourname</span><span className="cs-method-action">Open LinkedIn</span></a>
+            <a href="https://wa.me/923218886461" target="_blank" rel="noopener noreferrer" className="cs-method"><span className="cs-method-label">WhatsApp</span><span className="cs-method-value">+92 321 888 6461</span><span className="cs-method-action">Open WhatsApp</span></a>
           </div>
           <p className="cs-cta-footnote">{p.cta.foot}</p>
         </div>

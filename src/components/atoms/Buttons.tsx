@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { extProps } from "@/lib/links";
 
 export function Arrow() {
   return (
@@ -13,7 +14,7 @@ type Props = { href: string; children: ReactNode; className?: string };
 
 export function Btn({ href, children, className = "" }: Props) {
   return (
-    <Link href={href} className={`btn ${className}`}>
+    <Link href={href} {...extProps(href)} className={`btn ${className}`}>
       {children}
       <span className="ico big"><Arrow /></span>
     </Link>
@@ -22,7 +23,7 @@ export function Btn({ href, children, className = "" }: Props) {
 
 export function BtnSec({ href, children, className = "" }: Props) {
   return (
-    <Link href={href} className={`btn-sec ${className}`}>
+    <Link href={href} {...extProps(href)} className={`btn-sec ${className}`}>
       {children}
       <span className="ico big"><Arrow /></span>
     </Link>
@@ -31,7 +32,7 @@ export function BtnSec({ href, children, className = "" }: Props) {
 
 export function BtnText({ href, children }: Props) {
   return (
-    <Link href={href} className="btn-text">
+    <Link href={href} {...extProps(href)} className="btn-text">
       {children}
       <Arrow />
     </Link>
@@ -40,7 +41,7 @@ export function BtnText({ href, children }: Props) {
 
 export function BtnCircle({ href, label }: { href: string; label: string }) {
   return (
-    <Link href={href} className="btn-circle">
+    <Link href={href} {...extProps(href)} className="btn-circle">
       <span className="big"><Arrow /></span>
       <span className="lbl">{label}</span>
     </Link>

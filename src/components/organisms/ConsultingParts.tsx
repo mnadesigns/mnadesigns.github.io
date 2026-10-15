@@ -39,7 +39,7 @@ export function Problems() {
         <div className={`cs-slide${active === total - 1 ? " is-active" : ""}`}>
           <p className="cs-closer">{p.closer}</p>
           <p className="cs-closer-sub">{p.closerSub}</p>
-          <Btn href="#contact">Get in touch</Btn>
+          <Btn href="/resume/">Get in touch</Btn>
         </div>
       </div>
       <div className="cs-progress"><div className="cs-progress-fill" ref={fill} /></div>

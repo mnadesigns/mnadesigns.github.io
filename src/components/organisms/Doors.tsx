@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { doors, site } from "@/data/site";
 import { Arrow } from "@/components/atoms/Buttons";
+import { extProps } from "@/lib/links";
 
 export function Doors() {
   return (
     <section className="doors on-coal" id="contact">
       <div className="doors-grid">
         {doors.map((d) => (
-          <Link key={d.title} href={d.href} className="door">
+          <Link key={d.title} href={d.href} {...extProps(d.href)} className="door">
             <span className="door-kicker">{d.kicker}</span>
             <span className="door-title" dangerouslySetInnerHTML={{ __html: d.title }} />
             <p className="door-line">{d.line}</p>
@@ -20,9 +21,9 @@ export function Doors() {
         <span className="foot-links">
           <Link href="/resume/">Resume</Link>
           <a href={`mailto:${site.email}`}>Email</a>
-          <a href={site.linkedin}>LinkedIn</a>
-          <a href={site.behance}>Behance</a>
-          <a href={site.medium}>Medium</a>
+          <a href={site.linkedin} {...extProps(site.linkedin)}>LinkedIn</a>
+          <a href={site.behance} {...extProps(site.behance)}>Behance</a>
+          <a href={site.medium} {...extProps(site.medium)}>Medium</a>
         </span>
       </footer>
     </section>

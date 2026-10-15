@@ -5,7 +5,7 @@ export const resume = {
   pdf: "/Muhammad-Naeem-Resume.pdf",
   contact: [
     { label: "me.naeem88@gmail.com", href: "mailto:me.naeem88@gmail.com" },
-    { label: "+92 321 888 6461", href: "tel:+923218886461" },
+    { label: "+92 321 888 6461", href: "https://wa.me/923218886461" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
     { label: "Portfolio", href: "https://muhammadnaeem.vercel.app" },
   ],

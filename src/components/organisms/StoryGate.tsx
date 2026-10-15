@@ -53,7 +53,7 @@ export function StoryGate({ children }: { children: React.ReactNode }) {
           <div className="sg-contacts">
             <span className="sg-ask">Get the password</span>
             <a className="sg-contact" href={`mailto:${site.email}?subject=Case%20study%20access`}>Email</a>
-            <a className="sg-contact" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+            <a className="sg-contact" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
         </div>
       </div>

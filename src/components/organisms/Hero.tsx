@@ -35,7 +35,7 @@ export function Hero() {
           <b>{site.name}</b>
           <span>{site.role}</span>
         </div>
-        <BtnSec href={`mailto:${site.email}`}>{hero.cta}</BtnSec>
+        <BtnSec href="/resume/">{hero.cta}</BtnSec>
       </div>
       <h1 className="hero-claim" id="heroClaim">
         <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>

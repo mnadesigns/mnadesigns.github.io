@@ -80,8 +80,8 @@ body.cursor-on .cursor { opacity: 1; }
 /* the AI-augmented section: the cursor is the deliverables bullet shape, at 10px (2px radius, #38b6f2 with its glow) */
 .cursor.is-bullet, .cursor.is-bullet.is-link { width: 10px; height: 10px; border: 0; border-radius: 2px; background: #38b6f2; box-shadow: 0 0 10px rgba(56, 182, 242, 0.7); }
 body.cursor-on, body.cursor-on a, body.cursor-on button { cursor: none; }
-.trail-frame { position: fixed; z-index: 90; left: 0; top: 0; width: 132px; height: 104px; margin: -52px 0 0 -66px; display: flex; align-items: center; justify-content: center; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); box-shadow: var(--sh-float); pointer-events: none; opacity: 0; transform: scale(0.5); transition: opacity 0.14s var(--ease), transform 0.2s var(--ease); font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-50); }
-.trail-frame img { width: 112px; height: 84px; object-fit: contain; }
+.trail-frame { position: fixed; z-index: 90; left: 0; top: 0; width: 145px; height: 114px; margin: -57px 0 0 -72.5px; display: flex; align-items: center; justify-content: center; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); box-shadow: var(--sh-float); pointer-events: none; opacity: 0; transform: scale(0.5); transition: opacity 0.14s var(--ease), transform 0.2s var(--ease); font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-50); }
+.trail-frame img { width: 123px; height: 92px; object-fit: contain; }
 .trail-frame.in { opacity: 1; transform: scale(1); }
 .trail-frame.out { opacity: 0; transform: scale(0.9); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
 
