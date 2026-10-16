@@ -76,7 +76,11 @@ export function Services() {
     const el = root.current;
     if (!el) return;
     let px = -1, py = -1, raf = 0;
-    const track = (e: PointerEvent) => { px = e.clientX; py = e.clientY; };
+    // once the pointer itself moves, the browser's own :hover is right again, so the stand-in is dropped (otherwise the card lit by a scroll would stay lit beside the one now under the pointer)
+    const track = (e: PointerEvent) => {
+      px = e.clientX; py = e.clientY;
+      el.querySelectorAll<HTMLElement>("article." + styles.hot).forEach((a) => a.classList.remove(styles.hot));
+    };
     const look = () => {
       raf = 0;
       if (px < 0) return;
