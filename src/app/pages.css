@@ -68,6 +68,13 @@
   .sti-index .sti-row:hover { padding-left: 0; }
   .sti-row-logo { justify-content: flex-start; width: auto; order: -1; }
 }
+/* phones only: on the Work page each work shows its picture first, above its copy, and the box with the slides runs from edge to edge of the screen (no side margin, no frame) at the width of the screen */
+@media (max-width: 700px) {
+  .sti-feat { gap: 24px; padding: 32px 0 40px; }
+  .sti-feat-visual { order: -1; }
+  .sti-feat--film .sti-feat-visual { width: 100vw; margin-inline: calc(50% - 50vw); }
+  .sti-feat--film .sti-film { border-radius: 0; border-left: 0; border-right: 0; }
+}
 
 /* ── writing index ── */
 .wr-hero, .wr-list, .wr-pods { --edge: clamp(24px, 5vw, 80px); --max: 1280px; }

@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { site } from "@/data/site";
+import { extProps } from "@/lib/links";
 import { storiesIndex as s } from "@/data/pages";
 import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
@@ -25,7 +27,7 @@ export default function Stories() {
       <section className="sti-feats shell">
         {s.features.map((f) => (
           <Reveal key={f.slug}>
-            <Link href={`/stories/${f.slug}/`} className={`sti-feat${"film" in f && f.film ? " sti-feat--film" : ""}`}>
+            <Link href={site.behance} {...extProps(site.behance)} className={`sti-feat${"film" in f && f.film ? " sti-feat--film" : ""}`}>
               <div>
                 <div className="sti-feat-eyebrow">{f.eyebrow}</div>
                 <h2 className="sti-feat-name">{f.name}</h2>
@@ -59,7 +61,7 @@ export default function Stories() {
           </div>
           <div className="sti-index">
             {s.more.map((m) => (
-              <Link key={m.name} href={`/stories/${m.slug}/`} className="sti-row">
+              <Link key={m.name} href={site.behance} {...extProps(site.behance)} className="sti-row">
                 <div className="sti-row-meta">
                   <span className="sti-row-name">{m.name}</span>
                   <span className="sti-row-stat"><b>{m.v}</b><i>{m.l}</i></span>
