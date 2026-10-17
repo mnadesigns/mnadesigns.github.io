@@ -70,7 +70,7 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
 }
 
 // Kinetic-type ad: 10 beats, colour dissolves on its own layer, subject fades fast, slow scale drift.
-function KineticAd() {
+export function KineticAd() {
   const ref = useRef<HTMLDivElement>(null);
   useFilmClock(ref);
   const [i, setI] = useState(0);
@@ -214,7 +214,7 @@ const FADE_MS = 400;
 // fit "cover" fills the panel; fit "height" always fills the panel's full height and centres the clip: bars of the clip colour at the sides when the panel is wider than the clip, the sides cropped when it is narrower
 const clipStyle = (fit?: FilmClip["fit"]): React.CSSProperties | undefined =>
   fit === "height" ? { objectFit: "contain", width: "auto", maxWidth: "none", height: "100%", left: "50%", right: "auto", transform: "translateX(-50%)" } : fit ? { objectFit: fit } : undefined;
-function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
+export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
   const phone = usePhone();
   // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
   const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 11250 } : it)) : all), [all, phone]);

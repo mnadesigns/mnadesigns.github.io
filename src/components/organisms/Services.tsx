@@ -7,17 +7,24 @@ import { ServiceToolIcon } from "@/components/atoms/ServiceToolIcon";
 import styles from "./Services.module.css";
 
 // the robot is decoration below the fold, so its code loads after the page does
-const RobotHead = dynamic(() => import("robot-heads").then((m) => m.RobotHead), { ssr: false });
+const RobotHead = dynamic(() => import("@/vendor/robot-heads").then((m) => m.RobotHead), { ssr: false });
 
 // The AI-augmented pipelines: a dark bento grid. Every tile shows all of its copy in the same order (number, title, promise, tools, deliverables), so nothing is hidden behind a click.
 // Motion: each tile's border draws itself and its content comes up out of a blur, one tile after another, as the section scrolls into view; a glow follows the pointer along the borders;
 // the tool icons lean toward the pointer; and on hover the bullets of the deliverables light up one after another.
 function Tile({ s, i }: { s: Service; i: number }) {
   const ref = useRef<HTMLElement>(null);
+  // the glow position is written once per frame, not once per pointer event (a fast mouse sends several events per frame)
+  const frame = useRef(0);
   const move = (e: React.PointerEvent) => {
-    const r = ref.current!.getBoundingClientRect();
-    ref.current!.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    ref.current!.style.setProperty("--my", `${e.clientY - r.top}px`);
+    const x = e.clientX, y = e.clientY;
+    cancelAnimationFrame(frame.current);
+    frame.current = requestAnimationFrame(() => {
+      const t = ref.current; if (!t) return;
+      const r = t.getBoundingClientRect();
+      t.style.setProperty("--mx", `${x - r.left}px`);
+      t.style.setProperty("--my", `${y - r.top}px`);
+    });
   };
   // the tool icons lean up to 7px toward the pointer while it is within 90px of them
   const lean = (e: React.PointerEvent<HTMLUListElement>) => {
@@ -59,8 +66,9 @@ function Tile({ s, i }: { s: Service; i: number }) {
 
 export function Services() {
   const root = useRef<HTMLElement>(null);
+  const bot = useRef<HTMLDivElement>(null);
   const [still, setStill] = useState(false); // reduced motion: the robot stays on one frame
-  const [onScreen, setOnScreen] = useState(false); // the robot only animates while the section is near the screen: its canvas redraws on the main thread every frame, which starves the work videos above if it never stops
+  const [onScreen, setOnScreen] = useState(false); // the robot only animates while the robot itself is near the screen (not the whole section, or it would keep drawing while the cards below are being used and slow the pointer): its canvas redraws on the main thread every frame, which starves the work videos above if it never stops
   useEffect(() => { setStill(window.matchMedia("(prefers-reduced-motion: reduce)").matches); }, []);
   useEffect(() => {
     const el = root.current;
@@ -98,9 +106,9 @@ export function Services() {
   }, []);
 
   useEffect(() => {
-    const el = root.current;
+    const el = bot.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { rootMargin: "120px 0px" });
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { rootMargin: "60px 0px" });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -113,8 +121,8 @@ export function Services() {
             <h2 className={styles.h2}>AI-augmented <em>pipelines</em></h2>
             <p className={styles.sub}>{servicesIntro.sub}</p>
           </div>
-          <div className={styles.bot} aria-hidden="true">
-            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} paused={still || !onScreen} />
+          <div ref={bot} className={styles.bot} aria-hidden="true">
+            <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} interactive={false} paused={still || !onScreen} />
           </div>
         </div>
         <div className={styles.grid}>

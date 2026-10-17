@@ -4,7 +4,7 @@ import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
 import styles from "./resume.module.css";
 
-export const metadata = { title: "Resume — Muhammad Naeem" };
+export const metadata = { title: "Resume", description: "Resume of Muhammad Naeem, Lead Product Designer: 10+ years across SaaS, fintech and health, building design systems and shipping them as production UI." };
 
 // A clone of abmcooks.github.io/resume with this resume's copy: Experience, Selected consulting, Earlier experience, Skills and Education, in the reference's one-column layout.
 export default function Resume() {

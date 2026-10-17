@@ -30,8 +30,16 @@
 .sti-feat .btn-circle .big svg { width: 24px; height: 24px; }
 .sti-feat:hover .btn-circle .big { transform: translate(6px, -6px) scale(1.18); background: var(--brand-deep); }
 .sti-feat-visual { width: clamp(280px, 30vw, 380px); flex: 0 0 auto; }
+/* the feature with the slides: the box takes most of the row, so the slides are as large as the space allows */
+.sti-feat--film { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.sti-feat--film .sti-feat-visual { width: 100%; max-width: none; }
 .sti-logo-panel { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 48px 40px; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); transition: border-color var(--t-base) var(--ease); }
 .sti-feat:hover .sti-logo-panel { border-color: var(--brand); }
+/* the Work 1 slides in a box: a stage the size of the viewport, scaled to the box (see SredFilmBox) */
+.sti-film { position: relative; width: 100%; overflow: hidden; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); transition: border-color var(--t-base) var(--ease); }
+.sti-feat:hover .sti-film { border-color: var(--brand); }
+.sti-film-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.sti-film .film-progress, .sti-film .film-total { display: none; }
 .sti-logo-box { width: 160px; height: 96px; background: var(--ink-08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-50); }
 .sti-logo-img { display: block; width: min(100%, 220px); height: auto; max-height: 120px; object-fit: contain; }
 .sti-row-logo .sti-logo-img { width: min(100%, 200px); }

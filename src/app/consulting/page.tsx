@@ -2,7 +2,7 @@ import { consultingPage as p } from "@/data/pages";
 import { Problems, Testimonials } from "@/components/organisms/ConsultingParts";
 import { site } from "@/data/site";
 
-export const metadata = { title: "Consulting — Your Name" };
+export const metadata = { title: "Consulting" };
 
 export default function Consulting() {
   const ticker = [...p.ticker, ...p.ticker];

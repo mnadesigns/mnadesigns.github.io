@@ -86,8 +86,8 @@ export const storiesIndex = {
     { v: "500+", l: "Screens at EISST" },
   ],
   features: [
-    { slug: "sred-io", eyebrow: "Product Designer & Project Manager", name: "SRED.io", sub: "The platform's first design system, then more than 17 microservices.", metrics: [{ v: "17+", l: "Microservices" }, { v: "100+", l: "Screens designed" }], cap: "Product Designer & Project Manager", logo: "/images/brands/sredio.png" },
-    { slug: "quodarca", eyebrow: "Senior Product Designer", name: "QuodArca", sub: "Six high-security, privacy-first product lines on one multi-platform design system.", metrics: [{ v: "500+", l: "Screens" }, { v: "6", l: "Product lines" }], cap: "EISST International", logo: "/images/brands/quodarca.png" },
+    { slug: "sred-io", film: true, eyebrow: "Product Designer & Project Manager", name: "SRED.io", sub: "The platform's first design system, then more than 17 microservices.", metrics: [{ v: "17+", l: "Microservices" }, { v: "100+", l: "Screens designed" }], cap: "Product Designer & Project Manager", logo: "/images/brands/sredio.png" },
+    { slug: "quodarca", film: true, eyebrow: "Senior Product Designer", name: "QuodArca", sub: "Six high-security, privacy-first product lines on one multi-platform design system.", metrics: [{ v: "500+", l: "Screens" }, { v: "6", l: "Product lines" }], cap: "EISST International", logo: "/images/brands/quodarca.png" },
     { slug: "mlk-group", eyebrow: "Senior UX/UI Designer", name: "MLK Group", sub: "Digital product design for 50+ Australian brands across fintech and e-commerce.", metrics: [{ v: "25+", l: "Industries" }, { v: "3x", l: "Conversion rate" }, { v: "2.5x", l: "Online orders" }], cap: "Senior UX/UI Designer" },
   ],
   moreSub: "Websites, apps and platforms delivered along the way, from clinics to learning tools.",

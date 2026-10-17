@@ -21,8 +21,8 @@ const serif = Literata({
 });
 
 export const metadata: Metadata = {
-  title: "Your Name — Your headline goes here",
-  description: "Placeholder portfolio description.",
+  title: { default: "Muhammad Naeem | AI Product Leader & Lead Product Designer", template: "%s | Muhammad Naeem" },
+  description: "Muhammad Naeem is a Lead Product Designer and AI product leader in Lahore, Pakistan: design systems and products for SaaS, fintech and e-commerce, shipped as production code with AI in the loop.",
 };
 
 export default function RootLayout({

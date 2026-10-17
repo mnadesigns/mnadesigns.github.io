@@ -3,7 +3,7 @@ import { PageHero, Section, Cards, Prose } from "@/components/organisms/PagePart
 import { Doors } from "@/components/organisms/Doors";
 import { Btn } from "@/components/atoms/Buttons";
 
-export const metadata = { title: "About — Muhammad Naeem" };
+export const metadata = { title: "About", description: "How Muhammad Naeem grew from front-end designer into leading product design: design systems, accessible interfaces and AI-assisted design to code." };
 
 export default function About() {
   return (

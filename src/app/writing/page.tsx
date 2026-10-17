@@ -4,7 +4,7 @@ import { ArticleThumb } from "@/components/atoms/ArticleThumb";
 import { Doors } from "@/components/organisms/Doors";
 import { Arrow } from "@/components/atoms/Buttons";
 
-export const metadata = { title: "Writing — Muhammad Naeem" };
+export const metadata = { title: "Writing" };
 
 export default function Writing() {
   return (

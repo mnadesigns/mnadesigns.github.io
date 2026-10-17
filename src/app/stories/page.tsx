@@ -3,8 +3,9 @@ import Link from "next/link";
 import { storiesIndex as s } from "@/data/pages";
 import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
+import { WorkFilmBox } from "@/components/organisms/WorkFilmBox";
 
-export const metadata = { title: "Stories — Muhammad Naeem" };
+export const metadata = { title: "Work", description: "Selected work by Muhammad Naeem: a first design system and 17+ microservices at SRED.io, a multi-platform design system at QuodArca, and 50+ Australian brands at MLK Group." };
 
 export default function Stories() {
   return (
@@ -24,7 +25,7 @@ export default function Stories() {
       <section className="sti-feats shell">
         {s.features.map((f) => (
           <Reveal key={f.slug}>
-            <Link href={`/stories/${f.slug}/`} className="sti-feat">
+            <Link href={`/stories/${f.slug}/`} className={`sti-feat${"film" in f && f.film ? " sti-feat--film" : ""}`}>
               <div>
                 <div className="sti-feat-eyebrow">{f.eyebrow}</div>
                 <h2 className="sti-feat-name">{f.name}</h2>
@@ -35,12 +36,13 @@ export default function Stories() {
                 <span className="btn-circle"><span className="big"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12L12 4M5 4h7v7" /></svg></span></span>
               </div>
               <div className="sti-feat-visual">
-                <div className="sti-logo-panel">
-                  
-                  {f.logo ? <img className="sti-logo-img" src={f.logo} alt={f.name} /> : <div className="sti-logo-box">{f.name}</div>}
-                  <div className="sti-logo-rule" />
-                  <div className="sti-logo-cap">{f.cap}</div>
-                </div>
+                {"film" in f && f.film ? <WorkFilmBox slug={f.slug} /> : (
+                  <div className="sti-logo-panel">
+                    {f.logo ? <img className="sti-logo-img" src={f.logo} alt={f.name} /> : <div className="sti-logo-box">{f.name}</div>}
+                    <div className="sti-logo-rule" />
+                    <div className="sti-logo-cap">{f.cap}</div>
+                  </div>
+                )}
               </div>
             </Link>
           </Reveal>

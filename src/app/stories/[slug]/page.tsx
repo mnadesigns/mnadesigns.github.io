@@ -11,6 +11,13 @@ export function generateStaticParams() {
   return stories.map((s) => ({ slug: s.slug }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const s = stories.find((x) => x.slug === slug);
+  const p = storyPages[slug];
+  return { title: s ? `${s.name}: case study` : "Work", description: p?.desc };
+}
+
 export default async function Story({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const i = stories.findIndex((x) => x.slug === slug);
