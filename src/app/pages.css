@@ -36,8 +36,7 @@
 .sti-logo-panel { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 48px 40px; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); transition: border-color var(--t-base) var(--ease); }
 .sti-feat:hover .sti-logo-panel { border-color: var(--brand); }
 /* the Work 1 slides in a box: a stage the size of the viewport, scaled to the box (see SredFilmBox) */
-.sti-film { position: relative; width: 100%; overflow: hidden; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); transition: border-color var(--t-base) var(--ease); }
-.sti-feat:hover .sti-film { border-color: var(--brand); }
+.sti-film { position: relative; width: 100%; overflow: hidden; background: var(--white); border: 1px solid var(--ink-12); border-radius: var(--r); } /* a light gray line, also on hover (no blue) */
 .sti-film-stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
 .sti-film .film-progress, .sti-film .film-total { display: none; }
 .sti-logo-box { width: 160px; height: 96px; background: var(--ink-08); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-50); }
