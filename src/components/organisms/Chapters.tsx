@@ -69,8 +69,33 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
   );
 }
 
+// The round play/pause button of the work details page (the slides and the clips can be held there).
+function PlayPause({ paused, onClick }: { paused: boolean; onClick: () => void }) {
+  return (
+    <button type="button" className="film-pp" onClick={onClick} aria-label={paused ? "Play" : "Pause"}>
+      {paused ? <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3l8 5-8 5z" /></svg> : <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5h2.6v11H4zM9.4 2.5H12v11H9.4z" /></svg>}
+    </button>
+  );
+}
+
+// Holds every running animation under el while paused (CSS animations and the ones the motion library runs through the Web Animations API); only the ones it held are let go again.
+function useFreeze(ref: React.RefObject<HTMLElement | null>, paused: boolean) {
+  const held = useRef<Animation[]>([]);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof el.getAnimations !== "function") return;
+    if (paused) {
+      held.current = el.getAnimations({ subtree: true }).filter((a) => a.playState === "running");
+      held.current.forEach((a) => a.pause());
+    } else {
+      held.current.forEach((a) => { if (a.playState === "paused") a.play(); });
+      held.current = [];
+    }
+  }, [ref, paused]);
+}
+
 // Kinetic-type ad: 10 beats, colour dissolves on its own layer, subject fades fast, slow scale drift.
-export function KineticAd() {
+export function KineticAd({ controls }: { controls?: boolean } = {}) {
   const ref = useRef<HTMLDivElement>(null);
   useFilmClock(ref);
   const [i, setI] = useState(0);
@@ -80,19 +105,36 @@ export function KineticAd() {
   const still = useReducedMotion();
   const idx = useRef(0);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [paused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
+  const due = useRef(0); // when the running beat ends
+  const left = useRef(0); // what was left of the beat when it was paused
+  const armRef = useRef<(ms: number) => void>(() => {});
+  useFreeze(ref, paused);
+  const toggle = () => {
+    const next = !pausedRef.current;
+    pausedRef.current = next;
+    setPaused(next);
+    if (next) {
+      if (timer.current) { clearTimeout(timer.current); timer.current = null; left.current = Math.max(0, due.current - Date.now()); }
+    } else if (left.current) armRef.current(left.current);
+  };
 
   useEffect(() => {
     if (still) return;
     const el = ref.current!;
+    const arm = (ms: number) => { due.current = Date.now() + ms; timer.current = setTimeout(advance, ms); };
+    armRef.current = arm;
     const advance = () => {
       idx.current = (idx.current + 1) % adBeats.length;
       setI(idx.current);
       setRun((n) => n + 1);
-      timer.current = setTimeout(advance, adBeats[idx.current].dur / FILM_SPEED);
+      arm(adBeats[idx.current].dur / FILM_SPEED);
     };
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && !timer.current) { timer.current = setTimeout(advance, adBeats[idx.current].dur / FILM_SPEED); setPlaying(true); setRun((n) => n + 1); }
+        if (pausedRef.current) return;
+        if (e.isIntersecting && !timer.current) { arm(adBeats[idx.current].dur / FILM_SPEED); setPlaying(true); setRun((n) => n + 1); }
         else if (!e.isIntersecting && timer.current) { clearTimeout(timer.current); timer.current = null; setPlaying(false); }
       },
       { threshold: 0.3 }
@@ -153,7 +195,8 @@ export function KineticAd() {
           </div>
         </div>
       ))}
-      {!still && <FilmProgress durs={adBeats.map((b) => b.dur / FILM_SPEED)} index={cur} playing={playing} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
+      {!still && <FilmProgress durs={adBeats.map((b) => b.dur / FILM_SPEED)} index={cur} playing={playing && !paused} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
+      {controls && !still && <PlayPause paused={paused} onClick={toggle} />}
     </div>
   );
 }
@@ -214,7 +257,7 @@ const FADE_MS = 400;
 // fit "cover" fills the panel; fit "height" always fills the panel's full height and centres the clip: bars of the clip colour at the sides when the panel is wider than the clip, the sides cropped when it is narrower
 const clipStyle = (fit?: FilmClip["fit"]): React.CSSProperties | undefined =>
   fit === "height" ? { objectFit: "contain", width: "auto", maxWidth: "none", height: "100%", left: "50%", right: "auto", transform: "translateX(-50%)" } : fit ? { objectFit: fit } : undefined;
-export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster: string }) {
+export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[]; poster: string; controls?: boolean }) {
   const phone = usePhone();
   // on a phone the process scene is only its first part (the three steps): the Key UX Challenges part is left out, so the scene is shorter
   const items = useMemo(() => (phone ? all.map((it) => (it.type === "scene" && it.id === "process-challenges" ? { ...it, dur: 11250 } : it)) : all), [all, phone]);
@@ -222,6 +265,12 @@ export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster:
   const root = useRef<HTMLDivElement>(null);
   useFilmClock(root);
   const still = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  useFreeze(root, paused);
+  const clipStep = useRef(-1); // the step whose clip has been rewound, so a resume carries on instead of restarting
+  const beatLeft = useRef(0);
+  const beatDue = useRef(0);
+  const beatStep = useRef(-1);
   const [step, setStep] = useState(0); // counts items played; the item is items[step % n]
   const [visible, setVisible] = useState(false);
   const [shown, setShown] = useState(0); // which video element is on show (0 or 1)
@@ -268,15 +317,15 @@ export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster:
     const v = els[live].current;
     els[1 - live].current?.pause();
     if (!v) return;
-    if (visible && item.type === "clip") {
+    if (visible && !paused && item.type === "clip") {
       // a clip that cannot load (missing or broken file) is skipped, so the film never stalls on it
       if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) { setTimeout(() => setStep((s) => s + 1), 0); return; }
-      if (v.currentTime > 0.05) v.currentTime = 0;
+      if (clipStep.current !== step) { clipStep.current = step; if (v.currentTime > 0.05) v.currentTime = 0; }
       v.playbackRate = (item as FilmClip).speed ?? FILM_SPEED;
       v.play().then(() => setStarted(true)).catch(() => {});
-    } else v.pause();
+    } else { v.pause(); if (!visible) clipStep.current = -1; }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step, visible]);
+  }, [step, visible, paused]);
 
   // a clip shows its own element at once; during a slide, the next clip is swapped in only after the slide fully covers the old one
   useEffect(() => {
@@ -287,9 +336,12 @@ export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster:
 
   useEffect(() => {
     if (!visible || item.type === "clip") return;
-    const t = setTimeout(() => setStep((s) => s + 1), item.dur / FILM_SPEED);
-    return () => clearTimeout(t);
-  }, [step, visible, item]);
+    if (beatStep.current !== step) { beatStep.current = step; beatLeft.current = item.dur / FILM_SPEED; }
+    if (paused) return;
+    beatDue.current = Date.now() + beatLeft.current;
+    const t = setTimeout(() => setStep((s) => s + 1), beatLeft.current);
+    return () => { clearTimeout(t); beatLeft.current = Math.max(0, beatDue.current - Date.now()); };
+  }, [step, visible, item, paused]);
 
   return (
     <div ref={root} className="chap-film" style={{ background: !hasClips ? "#fdfdfd" : !poster && !started && step === 0 && items[0].type !== "clip" ? "#ffffff" : clipOf(now).bg }}>
@@ -315,28 +367,30 @@ export function ChapterFilm({ items: all, poster }: { items: FilmItem[]; poster:
       ))}
       {items.map((it, i) => {
         if (it.type === "clip") return null;
+        const k = n === 1 ? `${i}-${step}` : i; // a film of one slide starts that slide over on each loop
         const active = visible && step % n === i; // scenes only start animating once the panel is on screen
         // a slide that ends stays put for one fade: until the new slide fully covers it, or until the next clip has started playing underneath (otherwise its empty first frame shows through)
         const holdMs = !active && i === (step + n - 1) % n ? FADE_MS : 0;
         if (it.type === "scene") {
-          if (it.id === "welcome") return <WelcomeScene key={i} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
-          if (it.id === "process-challenges") return <ProcessChallenges key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "approach") return <ApproachScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "wonderpies") return <WonderPiesScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "telcoict") return <TelcoIctScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "pharmacy") return <PharmacyScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "peers") return <PeersScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "zigbis") return <ZigbisScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "spoonful") return <SpoonfulScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "keysborough") return <KeysboroughScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "zerogaspi") return <ZeroGaspiScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "design-system") return <DesignSystemScene key={i} active={active} holdMs={holdMs} />;
-          if (it.id === "product-features") return <ProductFeatures key={i} active={active} holdMs={holdMs} />;
-          return <ProjectsDelivered key={i} active={active} holdMs={holdMs} />;
+          if (it.id === "welcome") return <WelcomeScene key={k} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
+          if (it.id === "process-challenges") return <ProcessChallenges key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "approach") return <ApproachScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "wonderpies") return <WonderPiesScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "telcoict") return <TelcoIctScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "pharmacy") return <PharmacyScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "peers") return <PeersScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "zigbis") return <ZigbisScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "spoonful") return <SpoonfulScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "keysborough") return <KeysboroughScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "zerogaspi") return <ZeroGaspiScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "design-system") return <DesignSystemScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "product-features") return <ProductFeatures key={k} active={active} holdMs={holdMs} />;
+          return <ProjectsDelivered key={k} active={active} holdMs={holdMs} />;
         }
-        return <FilmSlideView key={i} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
+        return <FilmSlideView key={k} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
       })}
-      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? (clipMs[it.src] ?? 5000) / (it.speed ?? FILM_SPEED) : it.dur / FILM_SPEED))} index={step % n} playing={visible} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
+      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? (clipMs[it.src] ?? 5000) / (it.speed ?? FILM_SPEED) : it.dur / FILM_SPEED))} index={step % n} playing={visible && !paused} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
+      {controls && !still && <PlayPause paused={paused} onClick={() => setPaused((p) => !p)} />}
     </div>
   );
 }

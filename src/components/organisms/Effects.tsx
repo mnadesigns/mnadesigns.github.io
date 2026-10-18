@@ -41,14 +41,32 @@ export function Cursor() {
     // each trail card shows one brand logo from site.ts `brands`; load them up front so the cards never flash empty
     brands.forEach((b) => { new Image().src = b.src; });
 
+    // the dot is the brand blue, so over a block of that blue it disappears: it turns white there. The block is found by its background colour (any section or card in the brand blue or the slide blue), or marked with data-cursor="light".
+    let seen: Element | null = null, seenBlue = false;
+    const onBlue = (t: Element) => {
+      if (t === seen) return seenBlue;
+      seen = t;
+      seenBlue = false;
+      for (let el: Element | null = t; el; el = el.parentElement) {
+        const m = getComputedStyle(el).backgroundColor.match(/rgba?\(([^)]+)\)/);
+        if (!m) continue;
+        const [r, g, b, a = 1] = m[1].split(",").map((v) => parseFloat(v));
+        if (a < 0.6) continue; // see-through: look at what is behind
+        seenBlue = [[14, 124, 182], [18, 151, 217]].some(([R, G, B]) => Math.hypot(r - R, g - G, b - B) < 40);
+        break;
+      }
+      return seenBlue;
+    };
     // the look of the cursor follows what is under it
     const mode = (t: Element) => {
       cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
-      cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']")); // over a brand-blue block the ring turns white
-      cur.classList.toggle("is-bullet", !!t.closest("#services")); // in the AI-augmented section the cursor is the small square bullet of the deliverables lists
+      cur.classList.toggle("is-hidden", !!t.closest(".wk-car-zone:not(:disabled)")); // over the carousel the big circle of the carousel is the cursor, so the site's dot and ring step aside
+      cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']") || onBlue(t)); // over a brand-blue block the dot and the ring turn white
+      cur.classList.toggle("is-bullet", !!t.closest("#services, [data-cursor='bullet']")); // in the AI-augmented section the cursor is the small square bullet of the deliverables lists
     };
     const onMove = (e: MouseEvent) => {
       tx = e.clientX; ty = e.clientY;
+      if (!cur.classList.contains("is-live")) { cx = tx; cy = ty; cur.classList.add("is-live"); } // the dot shows only once the pointer has moved, and starts under it (not in the middle of the page)
       const t = e.target as HTMLElement;
       mode(t);
       // hero logo trail (not over links, buttons or other clickable things)

@@ -73,9 +73,11 @@ body.menu-locked { overflow: hidden; }
 
 /* cursor */
 .cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); border: 2px solid var(--brand); transform: translate(-50%, -50%); transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), border-radius var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); opacity: 0; }
-body.cursor-on .cursor { opacity: 1; }
+body.cursor-on .cursor.is-live { opacity: 1; }
 .cursor.is-link { width: 44px; height: 44px; background: transparent; }
-.cursor.is-light { border-color: #fff; }
+.cursor.is-light { border-color: #fff; background: #fff; }
+.cursor.is-light.is-link { background: transparent; }
+.cursor.is-hidden { opacity: 0 !important; }
 .cursor.is-down { transform: translate(-50%, -50%) scale(0.8); }
 /* the AI-augmented section: the cursor is the deliverables bullet shape, at 10px (2px radius, #38b6f2 with its glow) */
 .cursor.is-bullet, .cursor.is-bullet.is-link { width: 10px; height: 10px; border: 0; border-radius: 2px; background: #38b6f2; box-shadow: 0 0 10px rgba(56, 182, 242, 0.7); }

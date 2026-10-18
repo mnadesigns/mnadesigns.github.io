@@ -1,0 +1,225 @@
+/* the same container as the writing listing page (.wr-list) */
+.wk-col .shell { max-width: 1280px; padding-left: clamp(24px, 5vw, 80px); padding-right: clamp(24px, 5vw, 80px); }
+
+/* type: Tanker for titles, the UI sans for copy and labels (no serif on the details pages) */
+.wk-head { padding-top: clamp(120px, 16vh, 180px); padding-bottom: clamp(32px, 5vh, 56px); }
+.wk-back { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 56px; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink-50); text-decoration: none; transition: color 0.2s, gap 0.2s; }
+.wk-back:hover { color: var(--brand); gap: 14px; }
+.wk-title { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(56px, 5.8vw, 94px); line-height: 1; color: var(--heading); text-wrap: balance; }
+
+/* the numbers of the work */
+.wk-stats { display: flex; flex-wrap: wrap; gap: 28px clamp(32px, 5vw, 72px); margin: 40px 0 0; }
+.wk-stat { margin: 0; }
+.wk-stat dt { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1; color: var(--brand); }
+.wk-stat dd { margin: 10px 0 0; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: uppercase; color: var(--ink-50); }
+@media (max-width: 640px) { .wk-stats { display: grid; grid-template-columns: 1fr 1fr; } }
+
+/* evidence links: the small ghost button of the resume page (Save PDF); it opens in a new tab through BtnSec */
+.wk-links { display: flex; flex-wrap: wrap; gap: 12px 16px; margin-top: 28px; }
+.wk-btn { padding: 6px 6px 6px 16px; gap: 8px; font-size: 14px; }
+.wk-btn .ico { width: 24px; height: 24px; }
+.wk-ico { width: 14px; height: 14px; flex: 0 0 auto; margin-right: -2px; }
+
+.wk-media { display: flex; flex-direction: column; gap: clamp(16px, 2vw, 32px); }
+.wk-item { overflow: hidden; border: 1px solid var(--ink-12); border-radius: var(--r); background: #fff; }
+.wk-item img, .wk-item video { display: block; width: 100%; height: auto; }
+
+/* the banner and More by MNA at the foot */
+.wk-dark { margin-top: 0; } /* the banner follows the last media at the same gap as the media have between them */
+
+/* player controls (the Dribbble style): a round white play/pause button and a progress bar in the primary colour over the bottom of the media.
+   The slides are drawn on a scaled stage, so their controls are scaled back by 1/--k to keep their real size. */
+.wk-ctl { position: absolute; left: 20px; right: 20px; bottom: 20px; z-index: 5; display: flex; align-items: center; gap: 12px; }
+.film-pp { flex: 0 0 auto; width: 44px; height: 44px; border: 0; border-radius: 50%; background: #fff; color: var(--ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); transition: transform 0.15s; pointer-events: auto; }
+.film-pp:hover { transform: scale(1.06); }
+.film-pp svg { width: 16px; height: 16px; fill: currentColor; }
+.wk-bar { position: relative; flex: 1 1 auto; height: 8px; border-radius: 99px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); cursor: pointer; touch-action: none; }
+.wk-bar i { position: absolute; inset: 0; border-radius: 99px; background: var(--brand); transform-origin: left center; transform: scaleX(0); }
+/* the bar of the slides is the work's total progress (.film-total), shown only here; the segmented bars at the top stay hidden */
+.sti-film.has-ctl .film-total { display: block; position: absolute; z-index: 40; left: calc(76px / var(--k)); bottom: calc(38px / var(--k)); width: calc(100% * var(--k) - 96px); height: 8px; border-radius: 99px; overflow: hidden; background: #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); transform: scale(calc(1 / var(--k))); transform-origin: left bottom; }
+.sti-film.has-ctl .film-total i { background: var(--brand); border-radius: 99px; }
+.sti-film.has-ctl .film-pp { position: absolute; z-index: 40; left: calc(20px / var(--k)); bottom: calc(20px / var(--k)); transform: scale(calc(1 / var(--k))); transform-origin: left bottom; }
+.sti-film.has-ctl .film-pp:hover { transform: scale(calc(1.06 / var(--k))); }
+.wk-vid { position: relative; }
+
+/* the controls show on hover (and keyboard focus), and stay while the media is paused; on touch screens they are always there */
+.wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { opacity: 0; transition: opacity 0.25s var(--ease); }
+.wk-vid:hover .wk-ctl, .wk-vid:focus-within .wk-ctl, .wk-vid:has(.film-pp[aria-label="Play"]) .wk-ctl,
+.sti-film.has-ctl:hover .film-pp, .sti-film.has-ctl:hover .film-total,
+.sti-film.has-ctl:focus-within .film-pp, .sti-film.has-ctl:focus-within .film-total,
+.sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-pp, .sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-total { opacity: 1; }
+@media (hover: none) { .wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { opacity: 1; } }
+
+/* the overview as copy: the story on the left, the facts of the project on the right (the way case-study pages on Behance and Dribbble set it) */
+.wk-copy { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px clamp(40px, 7vw, 112px); padding: clamp(32px, 5vw, 72px) 0; }
+.wk-copy-label { margin: 0 0 20px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand); }
+.wk-copy-lead { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1; color: var(--heading); text-wrap: balance; }
+.wk-copy-body { max-width: 58ch; margin: 28px 0 0; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.65; color: var(--ink-65); }
+.wk-copy-meta { margin: 0 0 40px; }
+.wk-copy-meta div { padding: 16px 0; border-top: 1px solid var(--ink-12); }
+.wk-copy-meta div:last-child { border-bottom: 1px solid var(--ink-12); }
+.wk-copy-meta dt { font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-50); }
+.wk-copy-meta dd { margin: 6px 0 0; font-family: var(--sans); font-size: 17px; line-height: 1.45; color: var(--heading); }
+.wk-copy-did { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.wk-copy-did li { position: relative; padding-left: 20px; font-family: var(--sans); font-size: 16px; line-height: 1.55; color: var(--ink-65); }
+.wk-copy-did li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+@media (max-width: 900px) { .wk-copy { grid-template-columns: 1fr; } }
+
+/* a chapter as copy on a soft light-gray panel (the way case studies on Dribbble set text): dark text, a blue bar on the pulled-out line, a white card for the role */
+.wk-story { padding: clamp(32px, 5vw, 72px); border-radius: var(--r); background: #f5f5f4; color: var(--heading); }
+.wk-story-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 32px clamp(32px, 6vw, 96px); align-items: start; }
+.wk-story-title { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1; color: var(--heading); }
+.wk-story-quote { margin: 0; padding: 4px 0 4px 24px; border-left: 3px solid var(--brand); font-family: var(--sans); font-size: clamp(19px, 1.9vw, 26px); line-height: 1.4; color: var(--heading); }
+.wk-story-body { white-space: pre-line; max-width: 66ch; margin: clamp(28px, 4vw, 48px) 0 0; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.65; color: var(--ink-65); }
+.wk-story-card { margin-top: clamp(28px, 4vw, 48px); padding: clamp(24px, 3vw, 40px); border-radius: var(--r); background: #fff; }
+.wk-story-card p { max-width: 62ch; margin: 0; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.6; color: var(--heading); }
+.wk-story-card ul { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.wk-story-card li { position: relative; padding-left: 22px; font-family: var(--sans); font-size: 16px; line-height: 1.5; color: var(--ink-65); }
+.wk-story-card li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+@media (max-width: 760px) { .wk-story-head { grid-template-columns: 1fr; } }
+
+
+/* the primary-blue version of the panel: white text, a white bar on the pulled-out line, a lighter card */
+.wk-story--brand { background: var(--brand); color: var(--white); }
+.wk-story--brand .wk-story-title, .wk-story--brand .wk-story-quote, .wk-story--brand .wk-story-card p { color: var(--white); }
+.wk-story--brand .wk-story-quote { border-left-color: var(--white); }
+.wk-story--brand .wk-story-body, .wk-story--brand .wk-story-card li { color: rgba(255, 255, 255, 0.92); }
+.wk-story--brand .wk-story-card { background: rgba(255, 255, 255, 0.14); }
+.wk-story--brand .wk-story-card li::before { background: var(--white); }
+
+/* the role card on its own, in the dark navy of the QuodArca slides (#24243b) */
+.wk-role { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px clamp(32px, 6vw, 96px); align-items: start; padding: clamp(28px, 4vw, 56px); border-radius: var(--r); background: #24243b; color: var(--white); }
+.wk-role p { margin: 0; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.6; color: var(--white); }
+.wk-role ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.wk-role li { position: relative; padding-left: 22px; font-family: var(--sans); font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, 0.78); }
+.wk-role li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); }
+@media (max-width: 760px) { .wk-role { grid-template-columns: 1fr; } }
+
+/* the same card in the primary blue */
+.wk-role--brand { background: var(--brand); }
+.wk-role--brand li { color: rgba(255, 255, 255, 0.92); }
+.wk-role--brand li::before { background: var(--white); }
+
+/* no background: the copy sits on the page, spaced like the overview */
+.wk-story--plain { padding: clamp(32px, 5vw, 72px) 0 0; background: none; } /* no space below: the card that follows sets the gap */
+
+/* line icons in the copy: a soft tile, the stroke draws itself in when the row scrolls into view, and the tile lifts on hover */
+.wk-lico { display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px; background: rgba(14, 124, 182, 0.1); color: var(--brand); transition: transform 0.3s var(--ease), background-color 0.25s, color 0.25s; }
+.wk-lico svg { width: 20px; height: 20px; fill: none; stroke: currentColor; }
+.wk-lico.is-ready svg * { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset 0.9s cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms), opacity 0.2s var(--d, 0ms); }
+.wk-lico.is-in svg * { stroke-dashoffset: 0; opacity: 1; }
+li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translateY(-3px) rotate(-6deg); background: var(--brand); color: var(--white); }
+@media (prefers-reduced-motion: reduce) { .wk-lico, .wk-lico.is-ready svg * { transition: none; } }
+
+.wk-copy-meta > div.has-ico { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: 16px; align-items: center; }
+.wk-copy-meta > div.has-ico .wk-lico { grid-row: 1 / span 2; }
+.wk-copy-meta > div.has-ico dd { margin-top: 2px; }
+.wk-copy-did li.has-ico, .wk-story-card li.has-ico, .wk-role li.has-ico, .wk-story-asks li { display: flex; align-items: center; gap: 14px; padding-left: 0; }
+.wk-copy-did li.has-ico::before, .wk-story-card li.has-ico::before, .wk-role li.has-ico::before { content: none; }
+.wk-copy-did li.has-ico, .wk-story-card li.has-ico, .wk-role li.has-ico { gap: 14px; }
+.wk-story-asks { list-style: none; margin: clamp(28px, 4vw, 48px) 0 0; padding: 0; display: grid; gap: 14px; max-width: 66ch; }
+.wk-story-asks li { font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.5; color: var(--ink-65); }
+/* on the blue and dark surfaces the tile turns white-tinted */
+.wk-story--brand .wk-lico, .wk-role--brand .wk-lico { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+.wk-story--brand li:hover > .wk-lico, .wk-role--brand li:hover > .wk-lico { background: var(--white); color: var(--brand); }
+.wk-role:not(.wk-role--brand) .wk-lico { background: rgba(255, 255, 255, 0.08); color: var(--cyan); }
+.wk-role:not(.wk-role--brand) li:hover > .wk-lico { background: var(--cyan); color: #24243b; }
+
+/* the opening line as a headline: Tanker, big; the first part is struck out in the primary blue, the second is highlighted by a marker */
+.wk-story-open { max-width: 18ch; max-width: none; }
+.wk-statement { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(38px, 6vw, 92px); line-height: 1.02; color: var(--heading); }
+.wk-statement-line { display: block; }
+/* the strike and the marker are painted as backgrounds of the words (not as positioned pseudo-elements), so they follow the words onto a second line and nothing is left behind as a dot while they draw */
+.wk-statement s { text-decoration: none; color: rgba(11, 11, 10, 0.34); background: linear-gradient(90deg, var(--brand), #38b6f2) no-repeat 0 54% / 100% 0.075em; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: color 0.5s ease 0.5s, background-size 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.5s; }
+.wk-statement mark { padding: 0 0.12em; margin: 0 -0.12em; color: var(--white); border-radius: 0.12em; background: linear-gradient(var(--brand), var(--brand)) no-repeat 0 55% / 100% 88%; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: color 0.3s ease 1.3s, background-size 0.8s cubic-bezier(0.65, 0, 0.35, 1) 1.2s; }
+.wk-statement.is-ready:not(.is-in) s { background-size: 0% 0.075em; color: var(--heading); }
+.wk-statement.is-ready:not(.is-in) mark { background-size: 0% 88%; color: var(--heading); }
+.wk-statement.is-ready.is-in s { color: rgba(11, 11, 10, 0.34); }
+.wk-statement.is-ready.is-in mark { color: var(--white); }
+@media (prefers-reduced-motion: reduce) { .wk-statement s, .wk-statement mark { transition: none; } }
+
+/* the questions as three cards */
+.wk-story--plain .wk-story-asks { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; gap: 24px; margin-top: clamp(32px, 5vw, 64px); }
+.wk-story--plain .wk-story-asks li { flex-direction: column; align-items: flex-start; gap: 18px; padding: 24px; border-top: 0; border-radius: var(--r); background: #f5f6f9; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.35; color: var(--heading); }
+.wk-story--plain .wk-story-asks li:hover > .wk-lico { background: var(--brand); color: var(--white); }
+@media (max-width: 640px) { .wk-story--plain .wk-story-asks { grid-template-columns: 1fr; } } /* three cards in a row down to a large phone */
+
+/* the carousel of related views: two real buttons on the halves, the site's big circle as the cursor, Apple-style dots */
+.wk-car { position: relative; overflow: hidden; border: 1px solid var(--ink-12); border-radius: var(--r); background: #fff; }
+.wk-car-track { display: flex; }
+.wk-car-slide { flex: 0 0 100%; aspect-ratio: 16 / 9; user-select: none; }
+.wk-car-slide img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.wk-car-zone { position: absolute; top: 0; bottom: 0; z-index: 2; width: 50%; padding: 0; border: 0; background: none; cursor: pointer; }
+.wk-car-zone--left { left: 0; }
+.wk-car-zone--right { right: 0; }
+.wk-car-zone:disabled { cursor: default; }
+.wk-car-zone:focus-visible { outline: 3px solid var(--brand); outline-offset: -3px; }
+@media (hover: hover) { .wk-car-zone:not(:disabled) { cursor: none; } }
+/* the circle that replaces the pointer: a 96px white circle (the size of the site's circle button) with a dark arrow */
+.wk-car-cursor { position: absolute; left: 0; top: 0; z-index: 4; width: 0; height: 0; pointer-events: none; }
+.wk-car-cursor-in { position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%; background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22); opacity: 0; transform: scale(0.5); transition: opacity 0.2s var(--ease), transform 0.35s var(--ease); }
+.wk-car-cursor-in svg { width: 36px; height: 36px; }
+.wk-car-cursor.is-on .wk-car-cursor-in { opacity: 1; transform: scale(1); }
+.wk-car-cursor.is-left .wk-car-cursor-in svg { transform: scaleX(-1); }
+@media (hover: none) { .wk-car-cursor { display: none; } }
+/* touch and keyboard: the same circle sits at the edge of each half (smaller, so it never covers the picture) */
+.wk-car-edge { position: absolute; top: 50%; right: 16px; width: 64px; height: 64px; margin-top: -32px; border-radius: 50%; background: #fff; color: var(--ink); display: none; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22); }
+.wk-car-edge--left { right: auto; left: 16px; }
+.wk-car-edge--left svg { transform: scaleX(-1); }
+.wk-car-edge svg { width: 28px; height: 28px; }
+@media (hover: none) { .wk-car-zone:not(:disabled) .wk-car-edge { display: flex; } }
+.wk-car-zone:focus-visible .wk-car-edge { display: flex; }
+/* the dots: a frosted pill, small grey dots, the active one a dark capsule (the pagination of Apple's galleries) */
+.wk-car-dots { position: absolute; left: 50%; bottom: 20px; z-index: 3; transform: translateX(-50%); display: flex; align-items: center; padding: 4px 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--ink-08); box-shadow: var(--sh-nav); } /* the same white frosted glass as the top navigation (.nav) */
+.wk-car-dots button { display: flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0; border: 0; border-radius: 99px; background: none; cursor: pointer; }
+.wk-car-dots button i { display: block; width: 8px; height: 8px; border-radius: 99px; background: rgba(29, 29, 31, 0.32); transition: width 0.45s var(--ease), background-color 0.3s; }
+.wk-car-dots button:hover i { background: rgba(29, 29, 31, 0.6); }
+.wk-car-dots button.is-on i { width: 28px; background: #1d1d1f; }
+.wk-car-dots button:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+/* announced to screen readers, not shown */
+.wk-car-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* the question cards sit on a lighter slate gray (#f5f6f9, the White Smoke of the QuodArca palette); the icon tile fills with the primary blue on hover */
+.wk-story--plain .wk-story-asks li { padding: clamp(20px, 2.4vw, 32px); border-top: 0; border-radius: var(--r); background: #f5f6f9; color: var(--heading); transition: transform 0.3s var(--ease); }
+.wk-story--plain .wk-story-asks li:hover { transform: translateY(-4px); }
+.wk-story--plain .wk-story-asks li:hover > .wk-lico { background: var(--brand); color: var(--white); }
+
+/* click any image or video on the page: it opens in a full view (the Dribbble way) */
+.wk-item[role="button"] { }
+.wk-item[role="button"]:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.wk-car-expand { position: absolute; top: 16px; right: 16px; z-index: 5; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); opacity: 0; transition: opacity 0.25s var(--ease), transform 0.15s; }
+.wk-car-expand svg { width: 20px; height: 20px; }
+.wk-car:hover .wk-car-expand, .wk-car-expand:focus-visible { opacity: 1; }
+.wk-car-expand:hover { transform: scale(1.06); }
+@media (hover: none) { .wk-car-expand { opacity: 1; } }
+.wk-lb { position: fixed; inset: 0; z-index: 250; background: rgba(34, 34, 36, 0.94); animation: wk-lb-in 0.22s ease both; }
+.wk-lb.is-out { animation: wk-lb-out 0.18s ease both; }
+@keyframes wk-lb-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes wk-lb-out { from { opacity: 1; } to { opacity: 0; } }
+.wk-lb-tools { position: fixed; top: 20px; right: 20px; z-index: 2; display: flex; gap: 8px; }
+.wk-lb-btn { width: 48px; height: 48px; padding: 0; border: 0; border-radius: 50%; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.2s, transform 0.15s; }
+.wk-lb-btn:hover { background: var(--brand); transform: scale(1.06); }
+.wk-lb-btn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.wk-lb-btn svg { width: 22px; height: 22px; }
+.wk-lb-stage { position: absolute; inset: 0; display: flex; overflow: auto; padding: 24px; animation: wk-lb-pop 0.28s var(--ease) both; }
+@keyframes wk-lb-pop { from { transform: scale(0.97); } to { transform: none; } }
+.wk-lb-stage img, .wk-lb-stage video { display: block; margin: auto; max-width: 100%; max-height: 100%; width: auto; height: auto; border-radius: var(--r); background: #fff; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); }
+.wk-lb-stage.is-zoom img { max-width: none; max-height: none; width: max(2200px, 170vw); }
+@media (prefers-reduced-motion: reduce) { .wk-lb, .wk-lb.is-out, .wk-lb-stage { animation: none; } }
+
+/* quality pass: visible focus on every control, taps without the 300ms delay or double-tap zoom, no scroll chaining out of the full view */
+.film-pp:focus-visible, .wk-bar:focus-visible, .wk-car-expand:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.film-pp, .wk-lb-btn, .wk-car-zone, .wk-car-dots button, .wk-car-expand, .wk-item[role="button"], .wk-btn { touch-action: manipulation; }
+.wk-lb-stage { overscroll-behavior: contain; }
+
+/* small screens: the four numbers sit in two even columns, sized so "WCAG 2.1 AA" stays on one line */
+@media (max-width: 640px) { .wk-stats { gap: 24px 16px; align-items: start; } .wk-stat dt { font-size: 32px; white-space: nowrap; } }
+@media (max-width: 360px) { .wk-stat dt { font-size: 28px; } }
+
+/* phones: the page control follows Apple's HIG: small 6pt dots about 12pt apart on a slim capsule, the current page a solid dark dot (no stretched bar) */
+@media (max-width: 640px) {
+  .wk-car-dots { bottom: 10px; padding: 2px 6px; }
+  .wk-car-dots button { min-width: 18px; height: 24px; }
+  .wk-car-dots button i { width: 6px; height: 6px; }
+  .wk-car-dots button.is-on i { width: 6px; background: #1d1d1f; }
+}

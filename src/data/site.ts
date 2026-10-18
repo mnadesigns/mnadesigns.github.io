@@ -67,7 +67,7 @@ export const chapters = [
       { v: "17+", l: "Microservices" },
       { v: "100+", l: "Screens" },
     ],
-    href: site.behance,
+    href: "/work/sred-io/",
     tag: "",
   },
   {
@@ -79,7 +79,7 @@ export const chapters = [
       { v: "500+", l: "Screens" },
       { v: "6", l: "Product lines" },
     ],
-    href: site.behance,
+    href: "/work/quodarca/",
     // Clips, scenes drawn in code and slides play one after another and loop. A clip is preloaded while the item before it shows.
     film: {
       poster: "/images/work/quodarca/poster.webp",
@@ -109,7 +109,7 @@ export const chapters = [
       { v: "3x", l: "Conversion rate" },
       { v: "2.5x", l: "Online orders" },
     ],
-    href: site.behance,
+    href: "/work/mlk-group/",
     // The Zero Gaspi scene, the Applied Electronics and Vyno videos, the Keysborough, Spoonful OS and Wonder Pies scenes, then a few plain stat slides, on a loop.
     film: {
       poster: "", // no poster: the film opens on a scene, and a picture of the phone would show before it plays
