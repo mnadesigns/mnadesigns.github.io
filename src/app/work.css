@@ -42,13 +42,12 @@
 .sti-film.has-ctl .film-pp:hover { transform: scale(calc(1.06 / var(--k))); }
 .wk-vid { position: relative; }
 
-/* the controls show on hover (and keyboard focus), and stay while the media is paused; on touch screens they are always there */
+/* the controls show on hover (and keyboard focus), and stay while the media is paused; on phones and touch screens there are none */
 .wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { opacity: 0; transition: opacity 0.25s var(--ease); }
 .wk-vid:hover .wk-ctl, .wk-vid:focus-within .wk-ctl, .wk-vid:has(.film-pp[aria-label="Play"]) .wk-ctl,
 .sti-film.has-ctl:hover .film-pp, .sti-film.has-ctl:hover .film-total,
 .sti-film.has-ctl:focus-within .film-pp, .sti-film.has-ctl:focus-within .film-total,
 .sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-pp, .sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-total { opacity: 1; }
-@media (hover: none) { .wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { opacity: 1; } }
 
 /* the overview as copy: the story on the left, the facts of the project on the right (the way case-study pages on Behance and Dribbble set it) */
 .wk-copy { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px clamp(40px, 7vw, 112px); padding: clamp(32px, 5vw, 72px) 0; }
@@ -167,7 +166,7 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 .wk-car-edge--left { right: auto; left: 16px; }
 .wk-car-edge--left svg { transform: scaleX(-1); }
 .wk-car-edge svg { width: 28px; height: 28px; }
-@media (hover: none) { .wk-car-zone:not(:disabled) .wk-car-edge { display: flex; } }
+/* touch screens get no arrow circles: the halves still turn the page when tapped, and the dots show where you are */
 .wk-car-zone:focus-visible .wk-car-edge { display: flex; }
 /* the dots: a frosted pill, small grey dots, the active one a dark capsule (the pagination of Apple's galleries) */
 .wk-car-dots { position: absolute; left: 50%; bottom: 20px; z-index: 3; transform: translateX(-50%); display: flex; align-items: center; padding: 4px 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.78); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--ink-08); box-shadow: var(--sh-nav); } /* the same white frosted glass as the top navigation (.nav) */
@@ -191,7 +190,7 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 .wk-car-expand svg { width: 20px; height: 20px; }
 .wk-car:hover .wk-car-expand, .wk-car-expand:focus-visible { opacity: 1; }
 .wk-car-expand:hover { transform: scale(1.06); }
-@media (hover: none) { .wk-car-expand { opacity: 1; } }
+@media (hover: none), (max-width: 640px) { .wk-car-expand { display: none; } } /* no zoom button on phones */
 .wk-lb { position: fixed; inset: 0; z-index: 250; background: rgba(34, 34, 36, 0.94); animation: wk-lb-in 0.22s ease both; }
 .wk-lb.is-out { animation: wk-lb-out 0.18s ease both; }
 @keyframes wk-lb-in { from { opacity: 0; } to { opacity: 1; } }
@@ -222,4 +221,20 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
   .wk-car-dots button { min-width: 18px; height: 24px; }
   .wk-car-dots button i { width: 6px; height: 6px; }
   .wk-car-dots button.is-on i { width: 6px; background: #1d1d1f; }
+}
+
+/* touch screens: swipe left or right to change view (the carousel passes vertical moves to the page), so the two halves stop catching taps */
+.wk-car { touch-action: pan-y; }
+@media (hover: none) { .wk-car-zone { pointer-events: none; } }
+
+/* phones and touch screens: no play, pause or progress controls on any video or film (they play on their own while on screen) */
+@media (hover: none), (max-width: 640px) { .wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { display: none; } }
+
+/* phones: the media run edge to edge (no side padding, no rounded corners), each ends in a 6px light slate bottom border, and there is no gap between one media and the next */
+@media (max-width: 640px) {
+  .wk-media { gap: 0; }
+  .wk-item, .wk-car, .wk-media .sti-film { margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-bottom: 6px solid #e2e8f0; border-radius: 0; }
+  .wk-media .sti-film { width: auto; } /* the film box had width: 100%, so the negative margins would not widen it */
+  .wk-story, .wk-role { margin-block: 12px; }
+  .wk-story + .wk-role { margin-top: 0; }
 }

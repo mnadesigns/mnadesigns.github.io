@@ -12,7 +12,7 @@ const ArrowIcon = () => (
 );
 
 // The Framer University custom carousel pattern: the slides sit side by side in one wide track; the left and right halves of the stage are two real buttons
-// (previous and next), and over them the pointer becomes the big circle of the site's own circle button; a click slides the track to the neighbour. A dark-on-light glass pill of dots,
+// (previous and next; on touch screens they are inert and you swipe instead), and over them the pointer becomes the big circle of the site's own circle button; a click slides the track to the neighbour. A dark-on-light glass pill of dots,
 // in the manner of Apple's product galleries, shows where you are. Touch screens and keyboard focus get the circle at the edge of each half.
 export function WorkCarousel({ slides, label = "Design system views" }: { slides: Slide[]; label?: string }) {
   const [i, setI] = useState(0);
@@ -50,6 +50,15 @@ export function WorkCarousel({ slides, label = "Design system views" }: { slides
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.removeEventListener("pointermove", onMove); window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
   }, []);
+  // swipe on touch screens: a mostly-horizontal move of 40px or more turns to the next or the previous view (a vertical move is left to the page, which scrolls)
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+  const down = (e: React.PointerEvent) => { swipe.current = e.pointerType === "mouse" || (e.target as HTMLElement).closest("button") ? null : { x: e.clientX, y: e.clientY }; };
+  const up = (e: React.PointerEvent) => {
+    const s0 = swipe.current; swipe.current = null;
+    if (!s0) return;
+    const dx = e.clientX - s0.x, dy = e.clientY - s0.y;
+    if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  };
   const atEnd = side === "left" ? i === 0 : i === last;
 
   return (
@@ -61,6 +70,9 @@ export function WorkCarousel({ slides, label = "Design system views" }: { slides
       aria-label={label}
       onKeyDown={(e) => { if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); }}
       onPointerLeave={() => setSide(null)}
+      onPointerDown={down}
+      onPointerUp={up}
+      onPointerCancel={() => { swipe.current = null; }}
     >
       <motion.div
         className="wk-car-track"
