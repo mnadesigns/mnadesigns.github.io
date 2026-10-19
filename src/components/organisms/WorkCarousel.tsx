@@ -14,7 +14,7 @@ const ArrowIcon = () => (
 // The Framer University custom carousel pattern: the slides sit side by side in one wide track; the left and right halves of the stage are two real buttons
 // (previous and next; on touch screens they are inert and you swipe instead), and over them the pointer becomes the big circle of the site's own circle button; a click slides the track to the neighbour. A dark-on-light glass pill of dots,
 // in the manner of Apple's product galleries, shows where you are. Touch screens and keyboard focus get the circle at the edge of each half.
-export function WorkCarousel({ slides, label = "Design system views" }: { slides: Slide[]; label?: string }) {
+export function WorkCarousel({ slides, label = "Design system views", top }: { slides: Slide[]; label?: string; top?: boolean }) { // top: taller screens are cropped from the bottom, never from the top
   const [i, setI] = useState(0);
   const [side, setSide] = useState<"left" | "right" | null>(null);
   const calm = useReducedMotion();
@@ -82,7 +82,7 @@ export function WorkCarousel({ slides, label = "Design system views" }: { slides
         {slides.map((s, n) => (
           <div className="wk-car-slide" key={s.src} role="group" aria-roledescription="slide" aria-label={`${n + 1} of ${slides.length}`} aria-hidden={n !== i}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={s.src} alt={s.alt} width={1920} height={1080} draggable={false} loading="lazy" />
+            <img src={s.src} alt={s.alt} width={1920} height={1080} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
           </div>
         ))}
       </motion.div>

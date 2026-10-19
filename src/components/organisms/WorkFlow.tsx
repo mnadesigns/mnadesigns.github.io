@@ -54,7 +54,7 @@ export function WorkFlow({ flow }: { flow: Flow }) {
             <img key={s.src} src={s.src} alt="" width={3126} height={Math.round(3126 / ratio)} loading="lazy" draggable={false} style={{ visibility: n === i ? "visible" : "hidden" }} />
           ))}
           {step.click && (
-            <motion.i key={i} className="wk-flow-ripple" aria-hidden="true" style={{ left: `${step.click.x}%`, top: `${step.click.y}%` }} initial={{ scale: 0.3, opacity: 0 }} animate={calm ? { opacity: 0 } : { scale: [0.3, 1.8], opacity: [0.6, 0] }} transition={{ duration: 0.7, delay: 0.95, ease: "easeOut" }} />
+            <motion.i key={i} className="wk-flow-ripple" aria-hidden="true" style={{ left: `${step.click.x}%`, top: `${step.click.y}%` }} initial={{ scale: 0.3, opacity: 0 }} animate={calm ? { opacity: 0 } : { scale: [0.4, 1.4, 1.9], opacity: [1, 0.7, 0] }} transition={{ duration: 0.9, delay: 0.95, ease: "easeOut" }} />
           )}
         </motion.div>
         <motion.span key={i} className={`wk-flow-chip${step.tone ? ` is-${step.tone}` : ""}`} role="status" initial={calm ? false : { y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}><i aria-hidden="true" />{step.cap}</motion.span>

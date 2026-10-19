@@ -9,10 +9,18 @@ export type WorkStory = { tone?: "brand" | "plain"; cardOutside?: boolean; cardT
 // type "flow" is a product flow played like a screen recording (WorkFlow): per step the still, where the camera looks (cam: centre x and y in % of the picture, zoom) and what gets clicked (click: x and y in %)
 export type WorkFlow = { title: string; note: string; ratio: number; steps: { src: string; alt: string; cap: string; cam: { x: number; y: number; z: number }; click?: { x: number; y: number }; tone?: "info" | "ok" | "error"; hold?: number }[] };
 // the set pieces of WorkViews: type "intro" is an opening statement, "sitemap" where the screens sit in the product, "loop" the design to code steps
-export type WorkIntro = { label: string; headline: string; rows: { l: string; v: string }[] }; // headline: **bold** marks the bold words
+export type WorkIntro = { label: string; headline: string; body?: string; rows: { l: string; v: string }[]; didLabel?: string; did?: string[] }; // headline: **bold** marks the bold words
 export type WorkSitemap = { title: string; note: string; root: string; logo?: string; groups: { name: string; designed?: boolean; items: { t: string; designed?: boolean }[] }[] };
 export type WorkLoop = { title: string; note: string; steps: { t: string; d: string }[] };
-export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop"; src: string; alt: string; note?: string; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
+// "chapter" a chapter of the story as big type, "pairs" challenge and solution rows with a screen detail, "annotated" one screen with numbered markers (x and y in % of the screen)
+export type WorkChapter = { tone: "dark" | "light"; eyebrow: string; title: string; body: string[]; steps?: { t: string; d: string }[] };
+export type WorkPairs = { title: string; note: string; pairs: { challenge: string; solution: string; src: string; alt: string; wide?: boolean }[] }; // wide: the copy runs in two columns and the whole screen sits below it
+export type WorkAnnotated = { title: string; note: string; src: string; alt: string; ratio: number; marks: { x: number; y: number; t: string; d: string }[] };
+// "pan" a wide picture that drifts as the page scrolls
+export type WorkPan = { src: string; alt: string; ratio: number };
+// "compare" two screens side by side
+export type WorkCompare = { title: string; note: string; shots: { src: string; alt: string; label: string }[] };
+export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "compare"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; compare?: WorkCompare; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -117,39 +125,59 @@ const quodarcaScreens: WorkMedia[] = (() => {
 const sredioShots = (key: string, alts: string[]) => alts.map((alt, i) => ({ src: `/images/work/sredio/details/${key}-${i + 1}.webp`, alt }));
 const sredioFlow = (key: string, steps: Omit<WorkFlow["steps"][number], "src">[]) => steps.map((s, i) => ({ ...s, src: `/images/work/sredio/details/${key}-${i + 1}.webp` }));
 
-const sredioOverview: WorkCopy = {
-  label: "About",
-  lead: "A tax-credit platform that had never been designed",
-  body: "I joined as Lead Product Designer in July 2026. Every screen was a one-off and the pages ran on and on, so the first job was a system, then the services on top of it.",
-  meta: [
-    { l: "Platform", v: "Web app (SaaS)", icon: "monitor-smartphone" },
-    { l: "Client", v: "SRED.io, Toronto", icon: "building" },
-    { l: "Role", v: "Lead Product Designer", icon: "pen-tool" },
-    { l: "Tools", v: "Figma, Flowbite, Claude Code, Cursor", icon: "wrench" },
-  ],
-  didLabel: "What I did",
-  didIcons: ["blocks", "layers", "route", "workflow"],
-  did: [
-    "Set up the platform's first design system on top of Flowbite, so engineers reuse components instead of rebuilding them.",
-    "Cut the core pages by 70% by reworking the layout. Nothing was removed.",
-    "Designed 100+ screens across 17+ microservices. Three of them are below.",
-    "I manage a front-end developer. Designs go to code through Claude Code in Cursor, linked to Figma.",
-  ],
-};
-
 const sredioScreens: WorkMedia[] = [
   { type: "slides", src: "slides", alt: "SRED.io slides" },
-  { type: "intro", src: "intro", alt: "What is SRED.io", intro: {
-    label: "What is SRED.io?",
+  { type: "intro", src: "intro", alt: "About SRED.io", intro: {
+    label: "About SRED.io",
     headline: "SRED.io is a **platform** that helps Canadian companies **claim R&D tax credits** from the work their teams already track in Jira, GitHub and Azure DevOps.",
+    body: "I joined as Lead Product Designer in July 2026. Every screen was a one-off and the pages ran on and on, so the first job was a system, then the services on top of it.",
     rows: [
       { l: "Industry", v: "SaaS, SR&ED tax credits" },
       { l: "Location", v: "Toronto, Canada (remote)" },
-      { l: "Team", v: "Lead Product Designer, front-end developer" },
+      { l: "Role", v: "Lead Product Designer" },
+      { l: "Team", v: "Me and a front-end developer I manage" },
+      { l: "Tools", v: "Figma, Flowbite, Claude Code, Cursor" },
+    ],
+    didLabel: "What I did",
+    did: [
+      "Set up the platform's first design system on top of Flowbite, so engineers reuse components instead of rebuilding them.",
+      "Cut the core pages by 70% by reworking the layout. Nothing was removed.",
+      "Designed 100+ screens across 17+ microservices. Three of them are below.",
+      "Took designs to production code with Claude Code in Cursor, linked to Figma.",
     ],
   } },
-  { type: "copy", src: "copy", alt: "SRED.io overview", copy: sredioOverview },
+  { type: "pan", src: "pan-angled", alt: "SRED.io screens from the three services set at an angle", pan: { src: "/images/work/sredio/details/angled.webp", alt: "SRED.io screens from the three services set at an angle", ratio: 2000 / 1125 } },
+  { type: "chapter", src: "problem", alt: "The problem", chapter: {
+    tone: "dark",
+    eyebrow: "The problem",
+    title: "Built fast, never designed",
+    body: [
+      "SRED.io grew function first. Pages ran long and made people scroll, every screen was a one-off, and the services shared no rules.",
+      "The platform needed a foundation before it needed more screens: one system every service could share.",
+    ],
+  } },
+  { type: "chapter", src: "strategy", alt: "The strategy", chapter: {
+    tone: "light",
+    eyebrow: "The strategy",
+    title: "A system first, then the services",
+    body: ["Fixing screens one at a time would have kept the one-offs. So the order was the system, then the layouts, then the services, with the developer in the loop."],
+    steps: [
+      { t: "Build the system", d: "The platform's first design system, on top of Flowbite: one set of components for every service." },
+      { t: "Shorten the pages", d: "Reworked the layouts on the new components. Core pages came out 70% shorter, with the content kept." },
+      { t: "Design the services", d: "17+ microservices and 100+ screens so far, all from the same components." },
+      { t: "Ship with the developer", d: "Designs go to code through Claude Code in Cursor, linked to Figma, built with the front-end developer I manage." },
+    ],
+  } },
   { type: "image", src: "/images/work/sredio/design-system.webp", alt: "The SRED.io design system: components built on Flowbite" },
+  { type: "pairs", src: "pairs", alt: "Challenges and solutions", pairs: {
+    title: "Three problems, and how the screens solve them",
+    note: "Each one shown with the part of the design that handles it.",
+    pairs: [
+      { challenge: "People arrive from several integrations", solution: "Each integration gets its own import: bring in only the staff you ticked, or everyone from that source. Whatever the source, the people end up in one list.", src: "/images/work/sredio/details/pair-import.webp", alt: "The Import Staff from Integrations menu" },
+      { challenge: "Pages that scrolled on and on", solution: "I rebuilt the layout on the design system. The vault list and its files now share one screen, and the core pages came out 70% shorter with nothing removed.", src: "/images/work/sredio/details/pair-shorter.webp", alt: "File Portal Administration: the vault list and the files of a vault on one screen", wide: true },
+      { challenge: "A setting that adds people on its own", solution: "Switching it on or off is a deliberate step. The modal says what it does, shows how many active staff are in weekly reporting, and waits for a Continue before anything changes.", src: "/images/work/sredio/details/pair-sync.webp", alt: "The Staff Sync & Reporting modal asking to confirm disabling the automatic staff creation" },
+    ],
+  } },
   { type: "flow", src: "flow-vault", alt: "SRED.io: create a vault", flow: {
     title: "File vaults", ratio: 3126 / 1724,
     note: "Only a Vault Admin can create a vault, and SRED.io staff only get view access. So the panel asks for a name, a manager, then who can view or edit.",
@@ -161,6 +189,14 @@ const sredioScreens: WorkMedia[] = [
       { alt: "The chosen viewers listed before creating", cap: "Check the list", cam: { x: 88, y: 70, z: 1.4 }, click: { x: 95, y: 95 } },
       { alt: "The new vault, with a confirmation message", cap: "Done", cam: { x: 55, y: 55, z: 1 } },
     ]),
+  } },
+  { type: "compare", src: "compare", alt: "The same vault for staff and for clients", compare: {
+    title: "One vault, two views",
+    note: "SRED.io staff and the client's own users open the same vault, each in the navigation that fits them.",
+    shots: [
+      { src: "/images/work/sredio/details/vault-compare-1.webp", alt: "A vault as an internal user sees it", label: "Internal user view" },
+      { src: "/images/work/sredio/details/vault-compare-2.webp", alt: "The same vault as an external user sees it", label: "External user view" },
+    ],
   } },
   { type: "sitemap", src: "sitemap", alt: "Where the screens sit in SRED.io", sitemap: {
     title: "Where these screens sit",
@@ -175,13 +211,17 @@ const sredioScreens: WorkMedia[] = [
       { name: "More", items: [{ t: "Projects" }, { t: "Performance Platform" }, { t: "Data Tools" }, { t: "Cost Schedule" }] },
     ],
   } },
-  { type: "carousel", src: "carousel-staff-interface", alt: "SRED.io Staff & Teams", label: "Staff & Teams: the interface", note: "The staff list with its filters and actions, the fiscal period switcher, and the full columns view with country, account mappings and rules.", slides: sredioShots("staff-interface", [
-    "Staff & Teams: the staff list with filters and actions",
-    "Switching the fiscal period",
-    "The account menu",
-    "Full columns view of the staff table",
-    "Columns for country, account mappings and rules",
-  ]) },
+  { type: "annotated", src: "ann-staff", alt: "Staff & Teams, annotated", ann: {
+    title: "Staff & Teams: the list",
+    note: "One list for everyone on the claim. Four things to notice.",
+    src: "/images/work/sredio/details/staff-interface-1.webp", alt: "The Staff & Teams list", ratio: 3126 / 2052,
+    marks: [
+      { x: 69.5, y: 3, t: "Fiscal period", d: "The period sits in the header of every screen." },
+      { x: 52, y: 17, t: "Filters and actions", d: "Search, filter, and an Actions menu for the teams." },
+      { x: 72.5, y: 22.6, t: "Three groups", d: "Staff and two excluded groups, each with a count." },
+      { x: 93, y: 17, t: "Merge accounts", d: "Duplicates merge from one link at the top right." },
+    ],
+  } },
   { type: "flow", src: "flow-bulk", alt: "SRED.io: bulk staff actions", flow: {
     title: "Staff & Teams: bulk actions", ratio: 3126 / 2052,
     note: "Tick a few people and a bar appears at the bottom. Move them to a team, set a date, switch the weekly emails or mark them as contractors, all in one go.",
@@ -192,22 +232,47 @@ const sredioScreens: WorkMedia[] = [
       { alt: "Set the selected staff as contractors", cap: "Contractors", cam: { x: 50, y: 50, z: 1.4 }, click: { x: 38, y: 69 } },
     ]),
   } },
-  { type: "carousel", src: "carousel-timesheets", alt: "SRED.io timesheets", label: "Timesheets: the views", note: "Weekly hours for each person, the client and customer views, and updating a single week.", slides: sredioShots("timesheets", [
-    "Timesheets: staff list and weekly hours",
-    "Timesheets, client view",
-    "Timesheets, customer view",
-    "Updating a specific week",
-    "Updating a specific week, next step",
-  ]) },
+  { type: "flow", src: "flow-merge", alt: "SRED.io: merge staff accounts", flow: {
+    title: "Staff & Teams: merge accounts", ratio: 3126 / 2052,
+    note: "Duplicate people merge into one account. Pick the users, check them against the destination user, and confirm. Their timesheets move with them.",
+    steps: sredioFlow("staff-merge", [
+      { alt: "Merge Staff Accounts, with the list of users to merge and the destination user", cap: "Pick the users", cam: { x: 35, y: 38, z: 1.4 }, click: { x: 21.5, y: 27 } },
+      { alt: "Four users selected, with a compare table for each side", cap: "Check the compare tables", cam: { x: 70, y: 70, z: 1.4 }, click: { x: 95, y: 94 } },
+      { alt: "The Merge Users confirmation listing the users and the destination user", cap: "Confirm the merge", cam: { x: 50, y: 50, z: 1.4 }, click: { x: 40, y: 76 } },
+      { alt: "The merge finished, with a Merged successfully message", cap: "Merged", tone: "ok", cam: { x: 60, y: 70, z: 1.4 } },
+    ]),
+  } },
+  { type: "annotated", src: "ann-time", alt: "Timesheets, annotated", ann: {
+    title: "Timesheets: weekly hours",
+    note: "Hours for each person, week by week. Four things to notice.",
+    src: "/images/work/sredio/details/timesheets-1.webp", alt: "The Timesheets screen", ratio: 3126 / 2052,
+    marks: [
+      { x: 37.5, y: 11.2, t: "Last synced", d: "When the data last synced always sits under the title." },
+      { x: 95, y: 9.5, t: "Export CSV", d: "One button exports the fiscal period to CSV." },
+      { x: 42, y: 16, t: "Included and excluded", d: "Two tabs with counts: 387 included, 100 excluded." },
+      { x: 60.5, y: 57, t: "Status on every week", d: "Confirmed - System, Unconfirmed - System or Confirmed - Manual." },
+    ],
+  } },
   { type: "flow", src: "flow-sync", alt: "SRED.io: timesheet export and sync", flow: {
     title: "Timesheets: sync and export", ratio: 3126 / 2052,
     note: "Timesheets sync in the background. The line under the title shows the progress, then Success or Failed, and the last good data stays on screen either way.",
     steps: sredioFlow("timesheets-states", [
       { alt: "Export timesheets to CSV dialog", cap: "Export to CSV", cam: { x: 50, y: 50, z: 1.4 } },
-      { alt: "Sync in progress, with the percentage in the status line", cap: "Syncing", tone: "info", cam: { x: 38, y: 22, z: 1.4 } },
-      { alt: "Synced successfully, with the number of timesheets updated", cap: "Synced successfully", tone: "ok", cam: { x: 38, y: 22, z: 1.4 } },
-      { alt: "Sync failed, with the last good data still showing", cap: "Sync failed", tone: "error", cam: { x: 38, y: 22, z: 1.4 } },
+      { alt: "Sync in progress, with the percentage in the status line", cap: "Syncing", tone: "info", cam: { x: 30, y: 22, z: 1.4 } },
+      { alt: "Synced successfully, with the number of timesheets updated", cap: "Synced successfully", tone: "ok", cam: { x: 30, y: 22, z: 1.4 } },
+      { alt: "Sync failed, with the last good data still showing", cap: "Sync failed", tone: "error", cam: { x: 30, y: 22, z: 1.4 } },
     ]),
+  } },
+  { type: "annotated", src: "ann-feedback", alt: "Feedback form, annotated", ann: {
+    title: "Feedback",
+    note: "A short form, opened from the Feedback button in the sidebar, that asks how the platform is working.",
+    src: "/images/work/sredio/details/feedback-1.webp", alt: "The Feedback form: a five face rating and a list of what is working well", ratio: 3126 / 1796,
+    marks: [
+      { x: 35, y: 29, t: "Rate in one tap", d: "Five faces, from angry to in love, so a rating takes one tap." },
+      { x: 31.5, y: 38.7, t: "A follow up that fits", d: "The next question answers the rating given. Here, a happy face gets: Glad to hear it. What is working well?" },
+      { x: 35, y: 49.5, t: "Answers in plain words", d: "Six short reasons to tick, with Other for anything else." },
+      { x: 30, y: 82.2, t: "Support one line away", d: "Go Back, Submit and a support email sit on the same screen." },
+    ],
   } },
   { type: "loop", src: "loop", alt: "SRED.io design to code", loop: {
     title: "Design to code",
@@ -221,7 +286,7 @@ const sredioScreens: WorkMedia[] = [
 ];
 
 export const workDetails: Record<string, WorkDetail> = {
-  "sred-io": { live: "https://sred.io/", media: sredioScreens },
+  "sred-io": { figma: "https://www.figma.com/design/kF3kIgL9u0AMO5M6SngsmE/Sredio---Platform?node-id=0-1&t=E37gAyxdjLa0CCFW-1", live: "https://sred.io/", media: sredioScreens },
   quodarca: {
     figma: "https://www.figma.com/design/bV0Ia7OeqXlFNlNggseg07/QuoadArca---Web-App?node-id=2-104650&t=5sQYp6ZsshnBPTk4-4",
     live: "https://eisst.com/en",
