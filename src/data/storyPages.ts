@@ -25,7 +25,7 @@ export const storyPages: Record<string, StoryPage> = {
   "sred-io": {
     poster: "/images/work/sredio/products-collage.webp",
     secondary: "The platform's first design system, then more than 17 microservices",
-    desc: "As Product Designer and Project Manager I introduced SRED.io's first design system, then worked on more than 17 microservices.",
+    desc: "As Lead Product Designer I introduced SRED.io's first design system, then worked on more than 17 microservices.",
     stakesBig: { v: "17+", l: "Microservices" },
     stakesSupporting: [
       { v: "100+", l: "Screens designed" },

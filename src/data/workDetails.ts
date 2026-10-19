@@ -9,7 +9,7 @@ export type WorkStory = { tone?: "brand" | "plain"; cardOutside?: boolean; cardT
 // type "flow" is a product flow played like a screen recording (WorkFlow): per step the still, where the camera looks (cam: centre x and y in % of the picture, zoom) and what gets clicked (click: x and y in %)
 export type WorkFlow = { title: string; note: string; ratio: number; steps: { src: string; alt: string; cap: string; cam: { x: number; y: number; z: number }; click?: { x: number; y: number }; tone?: "info" | "ok" | "error"; hold?: number }[] };
 // the set pieces of WorkViews: type "intro" is an opening statement, "sitemap" where the screens sit in the product, "loop" the design to code steps
-export type WorkIntro = { label: string; headline: string; body?: string; rows: { l: string; v: string }[]; didLabel?: string; did?: string[] }; // headline: **bold** marks the bold words
+export type WorkIntro = { label: string; headline: string; body?: string; rows: { l: string; v?: string; tools?: { id: "figma" | "flowbite" | "claude" | "cursor"; name: string }[] }[]; didLabel?: string; did?: string[] }; // headline: **bold** marks the bold words; a row with tools shows logo tiles instead of text
 export type WorkSitemap = { title: string; note: string; root: string; logo?: string; groups: { name: string; designed?: boolean; items: { t: string; designed?: boolean }[] }[] };
 export type WorkLoop = { title: string; note: string; steps: { t: string; d: string }[] };
 // "chapter" a chapter of the story as big type, "pairs" challenge and solution rows with a screen detail, "annotated" one screen with numbered markers (x and y in % of the screen)
@@ -18,9 +18,9 @@ export type WorkPairs = { title: string; note: string; pairs: { challenge: strin
 export type WorkAnnotated = { title: string; note: string; src: string; alt: string; ratio: number; marks: { x: number; y: number; t: string; d: string }[] };
 // "pan" a wide picture that drifts as the page scrolls
 export type WorkPan = { src: string; alt: string; ratio: number };
-// "compare" two screens side by side
-export type WorkCompare = { title: string; note: string; shots: { src: string; alt: string; label: string }[] };
-export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "compare"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; compare?: WorkCompare; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
+// "beforeafter" the old screen and the new one in a wipe slider
+export type WorkBeforeAfter = { title: string; note: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
+export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -117,6 +117,13 @@ const quodarcaScreens: WorkMedia[] = (() => {
   if (from < 0 || after < 0) return list;
   const [m20] = list.splice(from, 1);
   list.splice(after + 1, 0, m20);
+  // the Authenticator App (screen 30) comes right before the Visual Device Manager (screen 23)
+  const from30 = list.findIndex((m) => m.src.endsWith("/30.webp"));
+  if (from30 >= 0) {
+    const [m30] = list.splice(from30, 1);
+    const at23 = list.findIndex((m) => m.src.endsWith("/23.webp"));
+    list.splice(at23 < 0 ? from30 : at23, 0, m30);
+  }
   return list;
 })();
 
@@ -135,8 +142,7 @@ const sredioScreens: WorkMedia[] = [
       { l: "Industry", v: "SaaS, SR&ED tax credits" },
       { l: "Location", v: "Toronto, Canada (remote)" },
       { l: "Role", v: "Lead Product Designer" },
-      { l: "Team", v: "Me and a front-end developer I manage" },
-      { l: "Tools", v: "Figma, Flowbite, Claude Code, Cursor" },
+      { l: "Tools", tools: [{ id: "figma", name: "Figma" }, { id: "flowbite", name: "Flowbite" }, { id: "claude", name: "Claude Code" }, { id: "cursor", name: "Cursor" }] },
     ],
     didLabel: "What I did",
     did: [
@@ -178,6 +184,13 @@ const sredioScreens: WorkMedia[] = [
       { challenge: "A setting that adds people on its own", solution: "Switching it on or off is a deliberate step. The modal says what it does, shows how many active staff are in weekly reporting, and waits for a Continue before anything changes.", src: "/images/work/sredio/details/pair-sync.webp", alt: "The Staff Sync & Reporting modal asking to confirm disabling the automatic staff creation" },
     ],
   } },
+  { type: "beforeafter", src: "ba-vault", alt: "File vaults, before and after", ba: {
+    title: "File vaults: before and after",
+    note: "Before, every vault opened as a long form: manager, access and viewers first, the files far below. Now the vault list sits on the left and the files of the chosen vault on the right, on one screen.",
+    ratio: 1907 / 897,
+    before: { src: "/images/work/sredio/details/ba-vault-before.webp", alt: "The old File Portal Administration page, with each vault opening as a long form" },
+    after: { src: "/images/work/sredio/details/vault-compare-1.webp", alt: "The new File Portal Administration page, with the vault list and the files side by side" },
+  } },
   { type: "flow", src: "flow-vault", alt: "SRED.io: create a vault", flow: {
     title: "File vaults", ratio: 3126 / 1724,
     note: "Only a Vault Admin can create a vault, and SRED.io staff only get view access. So the panel asks for a name, a manager, then who can view or edit.",
@@ -189,14 +202,6 @@ const sredioScreens: WorkMedia[] = [
       { alt: "The chosen viewers listed before creating", cap: "Check the list", cam: { x: 88, y: 70, z: 1.4 }, click: { x: 95, y: 95 } },
       { alt: "The new vault, with a confirmation message", cap: "Done", cam: { x: 55, y: 55, z: 1 } },
     ]),
-  } },
-  { type: "compare", src: "compare", alt: "The same vault for staff and for clients", compare: {
-    title: "One vault, two views",
-    note: "SRED.io staff and the client's own users open the same vault, each in the navigation that fits them.",
-    shots: [
-      { src: "/images/work/sredio/details/vault-compare-1.webp", alt: "A vault as an internal user sees it", label: "Internal user view" },
-      { src: "/images/work/sredio/details/vault-compare-2.webp", alt: "The same vault as an external user sees it", label: "External user view" },
-    ],
   } },
   { type: "sitemap", src: "sitemap", alt: "Where the screens sit in SRED.io", sitemap: {
     title: "Where these screens sit",
@@ -241,6 +246,13 @@ const sredioScreens: WorkMedia[] = [
       { alt: "The Merge Users confirmation listing the users and the destination user", cap: "Confirm the merge", cam: { x: 50, y: 50, z: 1.4 }, click: { x: 40, y: 76 } },
       { alt: "The merge finished, with a Merged successfully message", cap: "Merged", tone: "ok", cam: { x: 60, y: 70, z: 1.4 } },
     ]),
+  } },
+  { type: "beforeafter", src: "ba-time", alt: "Timesheets, before and after", ba: {
+    title: "Timesheets: before and after",
+    note: "Before, the toggles, the timesheet config and two search fields sat above the staff list. Now the list starts right under one header, with Filters and Timesheet Config a click away.",
+    ratio: 1918 / 917,
+    before: { src: "/images/work/sredio/details/ba-time-before.webp", alt: "The old Timesheets page, with toggles and the timesheet config above the staff list" },
+    after: { src: "/images/work/sredio/details/timesheets-1.webp", alt: "The new Timesheets page, with the staff list directly under the header" },
   } },
   { type: "annotated", src: "ann-time", alt: "Timesheets, annotated", ann: {
     title: "Timesheets: weekly hours",

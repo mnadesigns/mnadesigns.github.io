@@ -1,9 +1,10 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Code, PenTool, Rocket } from "lucide-react";
-import type { WorkAnnotated as Annotated, WorkCompare as Compare, WorkChapter as Chapter, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
+import { ToolIcon } from "@/components/atoms/ToolIcons";
+import type { WorkAnnotated as Annotated, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
 
 // The set pieces of a case study page, built from the work's own facts and screens (inspired by Hyperactive's Behance cases and the Conceptzilla shots):
 // an opening statement, a map of where the screens sit in the product, and the design to code loop. Everything arrives by moving, decelerating (no fades from nothing).
@@ -20,6 +21,18 @@ const Head = ({ title, note }: { title: string; note: string }) => (
 // "plain **bold** plain": the bold words of a headline
 const Marked = ({ text }: { text: string }) => <>{text.split("**").map((t, i) => (i % 2 ? <strong key={i}>{t}</strong> : <Fragment key={i}>{t}</Fragment>))}</>;
 
+// the logos of the tools used, each in its own colours (the Figma mark is drawn here, Flowbite is its official file, Claude and Cursor are Simple Icons paths); shown only to say which tools are used
+function ToolLogo({ id }: { id: "figma" | "flowbite" | "claude" | "cursor" }) {
+  if (id === "figma") return (
+    <svg viewBox="0 0 38 57" aria-hidden="true">
+      <path fill="#F24E1E" d="M19 0H9.5a9.5 9.5 0 0 0 0 19H19V0z" /><path fill="#FF7262" d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" /><path fill="#A259FF" d="M19 19H9.5a9.5 9.5 0 0 0 0 19H19V19z" /><path fill="#1ABCFE" d="M28.5 19a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19z" /><path fill="#0ACF83" d="M9.5 38H19v9.5A9.5 9.5 0 1 1 9.5 38z" />
+    </svg>
+  );
+  // eslint-disable-next-line @next/next/no-img-element
+  if (id === "flowbite") return <img src="/images/brands/flowbite.svg" alt="" width={32} height={33} />;
+  return <ToolIcon name={id} className={id === "claude" ? "wk-tool-claude" : "wk-tool-cursor"} />;
+}
+
 export function WorkIntro({ intro }: { intro: Intro }) {
   const calm = !!useReducedMotion();
   return (
@@ -30,7 +43,7 @@ export function WorkIntro({ intro }: { intro: Intro }) {
       {intro.body && <motion.p className="wk-intro-body" {...rise(1, calm)}>{intro.body}</motion.p>}
       <dl className="wk-intro-rows">
         {intro.rows.map((r, i) => (
-          <motion.div className="wk-intro-row" key={r.l} {...rise(i + 1, calm)}><dt>{r.l}</dt><dd>{r.v}</dd></motion.div>
+          <motion.div className="wk-intro-row" key={r.l} {...rise(i + 1, calm)}><dt>{r.l}</dt><dd>{r.tools ? <ul className="wk-tools">{r.tools.map((t) => <li key={t.id} title={t.name}><ToolLogo id={t.id} /><span className="wk-sr">{t.name}</span></li>)}</ul> : r.v}</dd></motion.div>
         ))}
       </dl>
     </section>
@@ -149,17 +162,19 @@ export function WorkAnnotated({ ann }: { ann: Annotated }) {
           <img src={ann.src} alt={ann.alt} width={3126} height={Math.round(3126 / ann.ratio)} loading="lazy" draggable={false} />
           <button type="button" className="wk-flow-open" data-lightbox-src={ann.src} data-lightbox-alt={ann.alt} aria-label={`View ${ann.alt} full size`} />
           {ann.marks.map((m, i) => (
-            <button
-              type="button"
-              key={m.t}
-              className={`wk-ann-dot${open === i ? " is-open" : ""}${m.x > 62 ? " is-left" : ""}${m.y < 28 ? " is-below" : ""}`}
-              style={{ left: `${m.x}%`, top: `${m.y}%`, animationDelay: `${i * 0.5}s` }}
-              aria-expanded={open === i}
-              onClick={() => setOpen(open === i ? null : i)}
-            >
-              <b>{i + 1}</b>
-              <span className="wk-ann-tip" role="tooltip"><strong>{m.t}</strong>{m.d}</span>
-            </button>
+            <Fragment key={m.t}>
+              <button
+                type="button"
+                className={`wk-ann-dot${open === i ? " is-open" : ""}`}
+                style={{ left: `${m.x}%`, top: `${m.y}%`, animationDelay: `${i * 0.5}s` }}
+                aria-expanded={open === i}
+                onClick={() => setOpen(open === i ? null : i)}
+              >
+                <b>{i + 1}</b>
+              </button>
+              {/* the note sits in the stage, not in the marker: its left edge is clamped so it never runs past either side of the screen */}
+              <span className={`wk-ann-tip${open === i ? " is-open" : ""}${m.y < 28 ? " is-below" : ""}`} role="tooltip" style={{ "--x": m.x, "--y": m.y } as React.CSSProperties}><strong>{m.t}</strong>{m.d}</span>
+            </Fragment>
           ))}
         </div>
       </div>
@@ -195,21 +210,45 @@ export function WorkPan({ pan }: { pan: Pan }) {
   );
 }
 
-// two screens side by side, each opening full size on a click
-export function WorkCompare({ compare }: { compare: Compare }) {
+// the old and the new screen in one frame: drag (or use the arrow keys on) the handle to wipe between them. It sweeps once when it scrolls into view.
+export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
   const calm = !!useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const seen = useInView(ref, { once: true, margin: "-20% 0px" });
+  const pos = useMotionValue(calm ? 50 : 96); // % of the frame that shows the old screen
+  const touched = useRef(false);
+  const clip = useTransform(pos, (v) => `inset(0 ${100 - v}% 0 0)`);
+  const left = useTransform(pos, (v) => `${v}%`);
+  const [shown, setShown] = useState(50);
+  useEffect(() => {
+    if (!seen || calm) return;
+    const c = animate(pos, 50, { duration: 1.5, ease: EASE, delay: 0.2 });
+    return () => c.stop();
+  }, [seen, calm, pos]);
+  useEffect(() => pos.on("change", (v) => setShown(Math.round(v))), [pos]);
   return (
-    <section className="wk-flow" aria-label={compare.title}>
-      <Head title={compare.title} note={compare.note} />
-      <div className="wk-compare">
-        {compare.shots.map((sh, i) => (
-          <motion.figure className="wk-compare-shot" key={sh.src} {...rise(i, calm)}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={sh.src} alt={sh.alt} width={3126} height={1724} loading="lazy" draggable={false} />
-            <figcaption>{sh.label}</figcaption>
-            <button type="button" className="wk-flow-open" data-lightbox-src={sh.src} data-lightbox-alt={sh.alt} aria-label={`View ${sh.alt} full size`} />
-          </motion.figure>
-        ))}
+    <section className="wk-flow" aria-label={ba.title}>
+      <Head title={ba.title} note={ba.note} />
+      <div className="wk-ba" ref={ref} style={{ aspectRatio: ba.ratio }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="wk-ba-img" src={ba.after.src} alt={ba.after.alt} loading="lazy" draggable={false} />
+        <motion.div className="wk-ba-old" style={{ clipPath: clip }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="wk-ba-img" src={ba.before.src} alt={ba.before.alt} loading="lazy" draggable={false} />
+        </motion.div>
+        <span className="wk-ba-tag wk-ba-tag--old">Before</span>
+        <span className="wk-ba-tag wk-ba-tag--new">After</span>
+        <motion.span className="wk-ba-handle" style={{ left }} aria-hidden="true"><i><b /></i></motion.span>
+        <input
+          className="wk-ba-range"
+          type="range"
+          min={4}
+          max={96}
+          step={0.5}
+          value={shown}
+          aria-label="Wipe between the old and the new screen"
+          onChange={(e) => { touched.current = true; pos.stop(); pos.set(Number(e.target.value)); }}
+        />
       </div>
     </section>
   );

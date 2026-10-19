@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 type Slide = { src: string; alt: string };
 
 const ArrowIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
   </svg>
 );

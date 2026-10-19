@@ -61,7 +61,7 @@ export const chapters = [
   {
     kind: "ad",
     name: "SRED.io",
-    role: "Product Designer & Project Manager",
+    role: "Lead Product Designer",
     sub: "Introduced the platform's first design system, then worked on more than 17 microservices.",
     stats: [
       { v: "17+", l: "Microservices" },

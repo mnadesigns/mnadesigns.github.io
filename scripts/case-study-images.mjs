@@ -14,7 +14,7 @@ const PLANS = {
     "timesheets": [["time-sheets/Export Time Sheet", 1]],
     "feedback": [["staff-and-teams/Feedback", 4]],
     "staff-merge": [["staff-and-teams/Merge Staff Accounts", 1], ["staff-and-teams/Merge Staff Accounts", 2], ["staff-and-teams/Merge Staff Accounts", 3], ["staff-and-teams/Merge Staff Accounts", 4]],
-    "vault-compare": [["file-vaults/Internal Users View", 0], ["file-vaults/External Users View", 2]],
+    "vault-compare": [["file-vaults/Internal Users View", 0]], // the new vault screen of the before and after slide
     "timesheets-states": [["time-sheets/Export Time Sheet", 2], ["time-sheets/Time-Sheet-Sync-bar", 1], ["time-sheets/Time-Sheet-Sync-bar", 2], ["time-sheets/Time-Sheet-Sync-bar", 3]],
   },
 };
