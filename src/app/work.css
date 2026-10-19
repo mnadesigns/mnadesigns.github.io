@@ -230,10 +230,10 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 /* phones and touch screens: no play, pause or progress controls on any video or film (they play on their own while on screen) */
 @media (hover: none), (max-width: 640px) { .wk-ctl, .sti-film.has-ctl .film-pp, .sti-film.has-ctl .film-total { display: none; } }
 
-/* phones: the media run edge to edge (no side padding, no rounded corners), each ends in a 6px light slate bottom border, and there is no gap between one media and the next */
+/* phones: the media run edge to edge (no side padding, no rounded corners), each ends in a 6px dark gray bottom border, and there is no gap between one media and the next */
 @media (max-width: 640px) {
   .wk-media { gap: 0; }
-  .wk-item, .wk-car, .wk-media .sti-film { margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-bottom: 6px solid #e2e8f0; border-radius: 0; }
+  .wk-item, .wk-car, .wk-media .sti-film { margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-bottom: 6px solid #4b5563; border-radius: 0; }
   .wk-media .sti-film { width: auto; } /* the film box had width: 100%, so the negative margins would not widen it */
   .wk-story, .wk-role { margin-block: 12px; }
   .wk-story + .wk-role { margin-top: 0; }

@@ -53,7 +53,7 @@ export function PortraitCanvas({ children }: { children: React.ReactNode }) {
 // film's other slides (see .film-slide), and its parts only animate while it is the active one.
 // base/fill/backdrop paint a coloured scene's background across the whole panel (not just the 16:9 stage): base is the colour, fill is a picture that
 // covers the panel, backdrop is artwork placed in stage coordinates that may spill past the stage edges.
-export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bottomAnchor = false, speed, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bottomAnchor?: boolean; speed?: number; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
+export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], portrait, bottomAnchor = false, fitWidth, speed, bars, stage, base, fill, cover, corner, anchors, bleed, backdrop, children }: SceneProps & { portrait?: React.ReactNode; bottomAnchor?: boolean; fitWidth?: number; speed?: number; bars: string; stage: "welcome" | "white" | "purple"; base?: string; fill?: React.ReactNode; cover?: React.ReactNode; corner?: React.ReactNode; bleed?: boolean; anchors?: { tl?: React.ReactNode; tr?: React.ReactNode; bl?: React.ReactNode; br?: React.ReactNode }; backdrop?: React.ReactNode; children?: React.ReactNode }) {
   const frame = useRef<HTMLDivElement>(null);
   const [fx, fy] = focus;
   const [fit, setFit] = useState({ scale: 1, tx: 0, ty: 0, narrow: false, pu: 1, pw: 0, psw: 1920, psh: 1080 }); // scale of the 1920 x 1080 stage and how far it is shifted from the panel centre (px)
@@ -63,7 +63,7 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
       const w = el.clientWidth, h = el.clientHeight;
       if (w < 700) {
         // phone: the stage covers the whole panel, slid so the slide's focus point (a fraction of the 1920 x 1080 stage) sits at the centre of the panel, never so far that an edge shows
-        const s = Math.max(w / 1920, h / 1080);
+        const s = Math.min(Math.max(w / 1920, h / 1080), fitWidth ? (w - 32) / fitWidth : Infinity); // fitWidth: the width (stage px) of the art that must never be cropped at the sides
         const lim = (stageSize: number, panel: number) => Math.max(0, (stageSize * s - panel) / 2);
         const clamp = (v: number, m: number) => Math.max(-m, Math.min(m, v));
         setFit({ narrow: true, psw: w, psh: h, pu: Math.min(w / 390, h / 514), pw: w - 32, scale: s, tx: clamp((0.5 - fx) * 1920 * s, lim(1920, w)), ty: clamp((0.5 - fy) * 1080 * s, lim(1080, h)) });
@@ -76,7 +76,7 @@ export function Scene({ active, holdMs = 0, idle = false, focus = [0.5, 0.5], po
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [fx, fy, bottomAnchor]);
+  }, [fx, fy, bottomAnchor, fitWidth]);
   // the art stays as it ended while the slide holds and fades out; dropping the class at once would blank the stage for the length of the fade
   const [linger, setLinger] = useState(false);
   useEffect(() => {

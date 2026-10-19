@@ -79,6 +79,7 @@ export function ZeroGaspiScene(props: SceneProps) {
       bars="#ffffff"
       stage="purple"
       base="#ffffff"
+      fitWidth={895}
       anchors={{
         tl: <M on={on} s={bracket(-170, -130)}><img className={`${styles.metal} ${styles.metalTl}`} alt="" src={`${IMG}/metal-tl.webp`} /></M>,
         br: <M on={on} s={bracket(170, 130)}><img className={`${styles.metal} ${styles.metalBr}`} alt="" src={`${IMG}/metal-br.webp`} /></M>,
