@@ -154,15 +154,15 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 .wk-car-zone:disabled { cursor: default; }
 .wk-car-zone:focus-visible { outline: 3px solid var(--brand); outline-offset: -3px; }
 @media (hover: hover) { .wk-car-zone:not(:disabled) { cursor: none; } }
-/* the circle that replaces the pointer: a 96px white circle (the size of the site's circle button) with a dark arrow */
+/* the circle that replaces the pointer: a 96px circle in the primary colour (the size of the site's circle button) with a white arrow */
 .wk-car-cursor { position: absolute; left: 0; top: 0; z-index: 4; width: 0; height: 0; pointer-events: none; }
-.wk-car-cursor-in { position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%; background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22); opacity: 0; transform: scale(0.5); transition: opacity 0.2s var(--ease), transform 0.35s var(--ease); }
+.wk-car-cursor-in { position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22); opacity: 0; transform: scale(0.5); transition: opacity 0.2s var(--ease), transform 0.35s var(--ease); }
 .wk-car-cursor-in svg { width: 36px; height: 36px; }
 .wk-car-cursor.is-on .wk-car-cursor-in { opacity: 1; transform: scale(1); }
 .wk-car-cursor.is-left .wk-car-cursor-in svg { transform: scaleX(-1); }
 @media (hover: none) { .wk-car-cursor { display: none; } }
 /* touch and keyboard: the same circle sits at the edge of each half (smaller, so it never covers the picture) */
-.wk-car-edge { position: absolute; top: 50%; right: 16px; width: 64px; height: 64px; margin-top: -32px; border-radius: 50%; background: #fff; color: var(--ink); display: none; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22); }
+.wk-car-edge { position: absolute; top: 50%; right: 16px; width: 64px; height: 64px; margin-top: -32px; border-radius: 50%; background: var(--brand); color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22); }
 .wk-car-edge--left { right: auto; left: 16px; }
 .wk-car-edge--left svg { transform: scaleX(-1); }
 .wk-car-edge svg { width: 28px; height: 28px; }
@@ -186,7 +186,7 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 /* click any image or video on the page: it opens in a full view (the Dribbble way) */
 .wk-item[role="button"] { }
 .wk-item[role="button"]:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
-.wk-car-expand { position: absolute; top: 16px; right: 16px; z-index: 5; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); opacity: 0; transition: opacity 0.25s var(--ease), transform 0.15s; }
+.wk-car-expand { position: absolute; top: 16px; right: 16px; z-index: 5; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: var(--brand); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); opacity: 0; transition: opacity 0.25s var(--ease), transform 0.15s; }
 .wk-car-expand svg { width: 20px; height: 20px; }
 .wk-car:hover .wk-car-expand, .wk-car-expand:focus-visible { opacity: 1; }
 .wk-car-expand:hover { transform: scale(1.06); }
