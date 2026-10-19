@@ -10,6 +10,8 @@ import { WorkCopy } from "@/components/organisms/WorkCopy";
 import { MediaLightbox } from "@/components/organisms/MediaLightbox";
 import { WorkCarousel } from "@/components/organisms/WorkCarousel";
 import { WorkVideo } from "@/components/organisms/WorkVideo";
+import { WorkFlow } from "@/components/organisms/WorkFlow";
+import { WorkIntro, WorkLoop, WorkSitemap } from "@/components/organisms/WorkViews";
 import { WorkFilmBox } from "@/components/organisms/WorkFilmBox";
 import { ContactBanner } from "@/components/organisms/ContactBanner";
 import { MoreByMna } from "@/components/organisms/MoreByMna";
@@ -74,7 +76,7 @@ export default async function WorkDetails({ params }: { params: Promise<{ slug: 
 
         <MediaLightbox>
           {slides && <WorkFilmBox slug={slug} controls />}
-          {(d.media ?? []).map((m) => m.type === "scene" && m.scene ? <WorkFilmBox key={m.src} slug={slug} scene={m.scene} controls /> : m.type === "carousel" && m.slides ? <WorkCarousel key={m.src} slides={m.slides} label={m.label} /> : m.type === "story" && m.story ? <WorkStory key={m.src} story={m.story} /> : m.type === "copy" && m.copy ? <WorkCopy key={m.src} copy={m.copy} /> : m.type === "slides" ? <WorkFilmBox key={m.src} slug={slug} count={m.count} controls /> : m.type === "video" ? <WorkVideo key={m.src} src={m.src} poster={m.poster} alt={m.alt} /> : (
+          {(d.media ?? []).map((m) => m.type === "scene" && m.scene ? <WorkFilmBox key={m.src} slug={slug} scene={m.scene} controls /> : m.type === "intro" && m.intro ? <WorkIntro key={m.src} intro={m.intro} /> : m.type === "sitemap" && m.sitemap ? <WorkSitemap key={m.src} map={m.sitemap} /> : m.type === "loop" && m.loop ? <WorkLoop key={m.src} loop={m.loop} /> : m.type === "flow" && m.flow ? <WorkFlow key={m.src} flow={m.flow} /> : m.type === "carousel" && m.slides ? <div className="wk-flow" key={m.src}>{m.label && <header className="wk-flow-head"><h2 className="wk-flow-title">{m.label}</h2>{m.note && <p className="wk-flow-note">{m.note}</p>}</header>}<WorkCarousel slides={m.slides} label={m.label} /></div> : m.type === "story" && m.story ? <WorkStory key={m.src} story={m.story} /> : m.type === "copy" && m.copy ? <WorkCopy key={m.src} copy={m.copy} /> : m.type === "slides" ? <WorkFilmBox key={m.src} slug={slug} count={m.count} controls /> : m.type === "video" ? <WorkVideo key={m.src} src={m.src} poster={m.poster} alt={m.alt} /> : (
             <div className="wk-item" key={m.src} role="button" tabIndex={0} aria-label={`View ${m.alt} full size`}>
               <img src={m.src} alt={m.alt} width={1920} height={1080} loading="lazy" />
             </div>
