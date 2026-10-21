@@ -23,3 +23,6 @@
 .sec.slide .shot { margin-right: 1cqw; }
 .sec.slide .logo img { height: calc(6.4cqw * var(--k, 1)); }
 .sec.slide .dot { width: 0.7cqw; height: 0.7cqw; margin: 0 3.2cqw; }
+
+/* phones: the band in a work page runs edge to edge, flat, with no border */
+@media (max-width: 640px) { .sec.slide { border: 0; border-radius: 0; } }
