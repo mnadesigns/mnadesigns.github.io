@@ -22,7 +22,7 @@ const Head = ({ title, note }: { title: string; note: string }) => (
 const Marked = ({ text }: { text: string }) => <>{text.split("**").map((t, i) => (i % 2 ? <strong key={i}>{t}</strong> : <Fragment key={i}>{t}</Fragment>))}</>;
 
 // the logos of the tools used, each in its own colours (the Figma mark is drawn here, Flowbite is its official file, Claude and Cursor are Simple Icons paths); shown only to say which tools are used
-function ToolLogo({ id }: { id: "figma" | "flowbite" | "claude" | "cursor" }) {
+function ToolLogo({ id }: { id: "figma" | "flowbite" | "antd" | "claude" | "cursor" }) {
   if (id === "figma") return (
     <svg viewBox="0 0 38 57" aria-hidden="true">
       <path fill="#F24E1E" d="M19 0H9.5a9.5 9.5 0 0 0 0 19H19V0z" /><path fill="#FF7262" d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" /><path fill="#A259FF" d="M19 19H9.5a9.5 9.5 0 0 0 0 19H19V19z" /><path fill="#1ABCFE" d="M28.5 19a9.5 9.5 0 1 0 0 19 9.5 9.5 0 0 0 0-19z" /><path fill="#0ACF83" d="M9.5 38H19v9.5A9.5 9.5 0 1 1 9.5 38z" />
@@ -30,6 +30,8 @@ function ToolLogo({ id }: { id: "figma" | "flowbite" | "claude" | "cursor" }) {
   );
   // eslint-disable-next-line @next/next/no-img-element
   if (id === "flowbite") return <img src="/images/brands/flowbite.svg" alt="" width={32} height={33} />;
+  // eslint-disable-next-line @next/next/no-img-element
+  if (id === "antd") return <img src="/images/brands/antd.svg" alt="" width={32} height={32} />;
   return <ToolIcon name={id} className={id === "claude" ? "wk-tool-claude" : "wk-tool-cursor"} />;
 }
 
@@ -139,10 +141,10 @@ export function WorkPairs({ pairs }: { pairs: Pairs }) {
   const calm = !!useReducedMotion();
   return (
     <section className="wk-flow" aria-label={pairs.title}>
-      <Head title={pairs.title} note={pairs.note} />
+      {pairs.title && <Head title={pairs.title} note={pairs.note} />}
       <ol className="wk-pairs">
         {pairs.pairs.map((p) => (
-          <motion.li className={`wk-pair${p.wide ? " wk-pair--wide" : ""}`} key={p.challenge} {...rise(0, calm)}>
+          <motion.li className={`wk-pair${p.wide ? " wk-pair--wide" : ""}${p.bare ? " wk-pair--bare" : ""}`} key={p.challenge} {...rise(0, calm)}>
             <div className="wk-pair-text">
               <div>
                 <p className="wk-pair-tag">Challenge</p>
@@ -302,6 +304,7 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="wk-ba-img" src={ba.before.src} alt={ba.before.alt} loading="lazy" draggable={false} />
         </motion.div>
+        {!ba.noTags && (<>
         <span ref={oldTag} className={`wk-ba-react wk-ba-react--old${swept.old ? " is-clean" : ""}${wasSwept.old ? " was-clean" : ""}`}>
           <button type="button" className="wk-ba-tag wk-ba-tag--old is-shaking" onClick={() => snap(96)}>Before</button>
           {/* the dust the handle sweeps off the label */}
@@ -315,6 +318,7 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
           {/* hearts rise from the After label like the reactions on a live stream */}
           {[0, 1, 2, 3, 4].map((i) => <Heart key={i} className="wk-ba-thumb" style={{ "--i": i } as React.CSSProperties} aria-hidden="true" />)}
         </span>
+        </>)}
         <motion.span className="wk-ba-handle" style={{ left }} aria-hidden="true"><i><b /></i></motion.span>
         <input
           className="wk-ba-range"

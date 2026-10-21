@@ -112,11 +112,11 @@ export const storyPages: Record<string, StoryPage> = {
     storySub: "One team, every solution: 25+ industries served.",
     chapters: [
       { n: "01", d: "Apps", t: "Native mobile apps", ps: ["Zero Gaspi, an anti-food-waste mobile marketplace on iOS and Android; Vyno, a carpooling app; and Spoonful OS, a family health app. Each one a product designed end to end."], image: "/images/work/spoonful/collage.webp" },
-      { n: "02", d: "Platforms", t: "A learning platform on web and phone", ps: ["Peers, a skills platform with assessment results and team views, designed to work on desktop and on a phone."], image: "/images/work/peers/frame.webp" },
+      { n: "02", d: "Platforms", t: "A learning platform on web and phone", ps: ["Peers, a skills platform with assessment results and team views, designed to work on desktop and on a phone."], image: "/images/work/peers/cover-16x9.webp" },
       { n: "03", d: "Websites", t: "Websites that sell", ps: ["Websites and e-commerce for Applied Electronics, Keysborough Veterinary Practice, Wonder Pies, Telco ICT, Specialist Clinic Pharmacy and Zigbis, designed to look right on every screen."], image: "/images/work/wonderpies/devices.webp" },
       { n: "04", d: "Results", t: "What it did for the business", ps: ["For flagship e-commerce clients the work lifted conversion rates three times over and grew online orders two and a half times."], pull: "25+ industries. One team. Every solution." },
     ],
-    shots: ["/images/work/telcoict/devices.webp", "/images/work/wonderpies/devices.webp", "/images/work/peers/frame.webp"],
+    shots: ["/images/work/telcoict/devices.webp", "/images/work/wonderpies/devices.webp", "/images/work/peers/cover-16x9.webp"],
     serviceEyebrow: "What it means for you",
     serviceHeading: "The work, applied",
     serviceLede: "The same approach, applied to your site or app: a proven reference, tailored to your brand, shipped as clean code.",
@@ -126,4 +126,44 @@ export const storyPages: Record<string, StoryPage> = {
     ],
     nextKicker: "Next story",
   },
+};
+
+// the Specialist Clinic Pharmacy page starts as a copy of the QuodArca one: the same layout and placeholder copy, to be replaced with its own story
+storyPages["specialist-clinic-pharmacy"] = { ...storyPages.quodarca };
+
+// VYNO, a carpooling app: the page is its own media list in workDetails.ts; these are the hero figures (weeks, platforms and the 150+ screens) and the page description
+storyPages.vyno = {
+  ...storyPages.quodarca,
+  poster: "/images/work/vyno/vyno-app-poster.webp",
+  secondary: "A carpooling app that connects drivers and passengers across Cameroon",
+  desc: "VYNO connects drivers and passengers for affordable, shared carpool rides. I designed the native iOS and Android app and its admin panel in five weeks.",
+  stakesBig: { v: "5", l: "Weeks, kick-off to handoff" },
+  stakesSupporting: [
+    { v: "2", l: "Native apps: iOS and Android" },
+    { v: "150+", l: "Screens designed" },
+  ],
+};
+
+// Peers, a skills and learning platform: its page is its own media list in workDetails.ts; these are the hero figures (counted from the Figma file) and the page description
+storyPages.peers = {
+  ...storyPages.quodarca,
+  poster: "/images/work/peers/cover-16x9.webp",
+  secondary: "A learning platform that turns skill gaps into a learning path",
+  desc: "Peers shows a company where its people's skills fall short of their roles and builds each person a learning path. I designed the learner, manager and admin flows, from a 375px phone to a 1920px desktop.",
+  stakesBig: { v: "320+", l: "Screens and states" },
+  stakesSupporting: [
+    { v: "5", l: "Screen widths, 375 to 1920px" },
+    { v: "3", l: "Roles: learner, manager, admin" },
+    { v: "5", l: "Steps in the path generator" },
+  ],
+};
+
+// Zero Gaspi, an anti-food-waste marketplace: its page is its own media list in workDetails.ts; these are the hero figures and the page description
+storyPages["zero-gaspi"] = {
+  ...storyPages.quodarca,
+  poster: "/images/work/zerogaspi/phone-tilt.webp",
+  secondary: "An anti-food-waste marketplace that connects food merchants with consumers",
+  desc: "Zero Gaspi lets consumers buy unsold food from local merchants as Surprise Baskets. I designed the native iOS and Android apps.",
+  stakesBig: { v: "30–35%", l: "Of the original price, per Surprise Basket" },
+  stakesSupporting: [],
 };

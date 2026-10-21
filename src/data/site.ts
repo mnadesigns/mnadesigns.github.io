@@ -5,7 +5,7 @@ import type { ToolIconName } from "@/components/atoms/ToolIcons";
 export const clientCopy = {
   role: "Product Designer",
   name: "And more.",
-  sub: "Every project has a longer story behind it: the problem, the thinking and every screen. Here is more work, from a founder's rough idea to shipped screens, with the full case studies on Behance.",
+  sub: "More work, from a founder's rough idea to shipped screens. The full case studies are on Behance.",
   stats: [
     { v: "Web + apps", l: "What I design" },
     { v: "1:1", l: "Straight with the founder" },
@@ -42,7 +42,7 @@ export const hero = {
   line1: "Design with AI.",
   line2: "Ship in days.",
   accent: "AI.",
-  sub: "I turn hard ideas into simple apps with AI. I have 10+ years of design in SaaS, Fintech, Data, Health and e-commerce. I design the systems, then ship the code.",
+  sub: "I turn hard ideas into simple apps with AI: 10+ years of SaaS, Fintech and Health design, then I ship the code.",
   cta: "Get in touch",
 };
 
@@ -85,7 +85,7 @@ export const chapters = [
     kind: "film",
     name: "QuodArca",
     role: "Senior Product Designer, EISST International",
-    sub: "Led UX/UI across six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.",
+    sub: "Led UX/UI across six privacy-first product lines, with a multi-platform design system and WCAG 2.1 AA compliance.",
     stats: [
       { v: "500+", l: "Screens" },
       { v: "6", l: "Product lines" },

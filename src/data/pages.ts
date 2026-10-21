@@ -92,10 +92,9 @@ export const storiesIndex = {
   ],
   moreSub: "Websites, apps and platforms delivered along the way, from clinics to learning tools.",
   more: [
-    { slug: "mlk-group", name: "Peers", v: "Web + mobile", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png" },
-    { slug: "mlk-group", name: "Specialist Clinic Pharmacy", v: "Web", l: "E-commerce", line: "A full pharmacy storefront: subscriptions, click and collect, health services.", logo: "/images/brands/specialist-clicnic-phramacy.png" },
-    { slug: "mlk-group", name: "Telco ICT", v: "Web", l: "Marketing site", line: "Telecommunications and IT that works every time, across desktop, tablet and phone.", logo: "/images/brands/telco-ict.png" },
-    { slug: "mlk-group", name: "Wonder Pies", v: "Web", l: "E-commerce", line: "Handcrafted and gourmet pies, designed to sell on every screen.", logo: "/images/brands/wonder-pies.png" },
+    { slug: "zero-gaspi", name: "Zero Gaspi", v: "iOS + Android", l: "Anti-food-waste marketplace", line: "Unsold food from local merchants, sold as Surprise Baskets at about 30 to 35% of the original price.", logo: "/images/work/zerogaspi/logo-mark.svg" },
+    { slug: "vyno", name: "VYNO Carpool", v: "iOS + Android", l: "Carpooling app", line: "Affordable shared rides for Cameroon: verified drivers, smart filters and QR pickups.", logo: "/images/brands/vyno.png", shot: "/images/work/vyno/vyno-app-poster.webp", video: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3" },
+    { slug: "peers", name: "Peers", v: "Web + mobile", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png", shot: "/images/work/peers/cover-16x9.webp", cover: true },
   ],
   footer: "More <em>coming</em>.",
 };
@@ -111,3 +110,5 @@ export const stories = [
   { slug: "mlk-group", name: "MLK Group", co: "MLK Group · 2021 – 2023", line: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.", feature: true },
 ];
 
+// details pages of works that are not one of the three featured ones (the "And more." list links to them)
+export const extraStories = [{ slug: "specialist-clinic-pharmacy", name: "Specialist Clinic Pharmacy" }, { slug: "vyno", name: "VYNO Carpool" }, { slug: "zero-gaspi", name: "Zero Gaspi" }, { slug: "peers", name: "Peers" }];

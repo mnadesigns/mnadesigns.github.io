@@ -19,7 +19,7 @@ const ArrowIcon = () => (
 // The media area of a work details page, with a full-view overlay (the way Dribbble opens a shot): click an image or a video and it opens large over the page on a dark backdrop,
 // with a close button at the top right. Esc, the close button or a click outside the picture closes it; the page behind does not scroll.
 // The full view of a carousel has the carousel's own arrows: the halves of the screen are the previous and the next buttons, and the pointer becomes the big circle.
-export function MediaLightbox({ children }: { children: React.ReactNode }) {
+export function MediaLightbox({ children, work }: { children: React.ReactNode; work?: string }) { // work: the slug of the page, so a stylesheet can set one page's rhythm on its own
   const [item, setItem] = useState<Item | null>(null);
   const [side, setSide] = useState<"left" | "right" | null>(null);
   const cursor = useRef<HTMLSpanElement>(null);
@@ -99,6 +99,7 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
     <>
       <section
         className="shell wk-media"
+        data-work={work}
         onClick={(e) => open(e.target as HTMLElement)}
         onKeyDown={(e) => {
           const t = e.target as HTMLElement;

@@ -1,5 +1,6 @@
 import type { WorkCopy as Copy } from "@/data/workDetails";
 import { LineIcon } from "@/components/atoms/LineIcon";
+import { WorkDidCards } from "./WorkDidCards";
 
 // The overview block of a case study, as live text between the media: the story on the left, the facts of the project on the right.
 export function WorkCopy({ copy }: { copy: Copy }) {
@@ -20,16 +21,17 @@ export function WorkCopy({ copy }: { copy: Copy }) {
             </div>
           ))}
         </dl>
-        <p className="wk-copy-label">{copy.didLabel}</p>
-        <ul className="wk-copy-did">
+        {!copy.didCards && <p className="wk-copy-label">{copy.didLabel}</p>}
+        {!copy.didCards && <ul className="wk-copy-did">
           {copy.did.map((t, i) => (
             <li key={t} className={copy.didIcons?.[i] ? "has-ico" : undefined}>
               {copy.didIcons?.[i] && <LineIcon name={copy.didIcons[i]} delay={i * 120} />}
               <span>{t}</span>
             </li>
           ))}
-        </ul>
+        </ul>}
       </div>
+      {copy.didCards && <WorkDidCards label={copy.didLabel} did={copy.did} titles={copy.didTitles} />}
     </section>
   );
 }

@@ -3,28 +3,28 @@ import type { IconName } from "@/components/atoms/LineIcon";
 // `media`, when set, is the whole media list of the page (it replaces the slides and the images listed in storyPages.ts); a video is an mp4/webm in /public.
 // type "slides" shows the animated slides of the work (WorkFilmBox); `count` plays only the first slides (1 = the first slide); its src is not used
 // type "copy" is a block of live text (WorkCopy) in the flow of the media, built from `copy`
-export type WorkCopy = { label: string; lead: string; body: string; meta: { l: string; v: string; icon?: IconName }[]; didLabel: string; did: string[]; didIcons?: IconName[] };
+export type WorkCopy = { label: string; lead: string; body: string; meta: { l: string; v: string; icon?: IconName }[]; didLabel: string; did: string[]; didIcons?: IconName[]; didCards?: boolean; didTitles?: string[] }; // didCards: "what I did" as numbered cards across the block, with didTitles as their headings
 // type "story" is a chapter as live text on a dark panel (WorkStory), built from `story`
 export type WorkStory = { tone?: "brand" | "plain"; cardOutside?: boolean; cardTone?: "brand"; title: string; quote?: string; statement?: { lead: string; strike: string; then: string; mark: string }; body: string; cardIntro: string; cardList: string[]; cardIcons?: IconName[]; bodyIcon?: IconName };
 // type "flow" is a product flow played like a screen recording (WorkFlow): per step the still, where the camera looks (cam: centre x and y in % of the picture, zoom) and what gets clicked (click: x and y in %)
 export type WorkFlow = { title: string; note: string; ratio: number; steps: { src: string; alt: string; cap: string; cam: { x: number; y: number; z: number }; click?: { x: number; y: number }; tone?: "info" | "ok" | "error"; hold?: number }[] };
 // the set pieces of WorkViews: type "intro" is an opening statement, "sitemap" where the screens sit in the product, "loop" the design to code steps
-export type WorkIntro = { label: string; headline: string; body?: string; rows: { l: string; v?: string; tools?: { id: "figma" | "flowbite" | "claude" | "cursor"; name: string }[] }[]; didLabel?: string; did?: string[] }; // headline: **bold** marks the bold words; a row with tools shows logo tiles instead of text
+export type WorkIntro = { label: string; headline: string; body?: string; rows: { l: string; v?: string; tools?: { id: "figma" | "flowbite" | "antd" | "claude" | "cursor"; name: string }[] }[]; didLabel?: string; did?: string[] }; // headline: **bold** marks the bold words; a row with tools shows logo tiles instead of text
 export type WorkSitemap = { title: string; note: string; root: string; logo?: string; groups: { name: string; designed?: boolean; items: { t: string; designed?: boolean }[] }[] };
 export type WorkLoop = { title: string; note: string; steps: { t: string; d: string }[] };
 // "chapter" a chapter of the story as big type, "pairs" challenge and solution rows with a screen detail, "annotated" one screen with numbered markers (x and y in % of the screen)
 export type WorkChapter = { tone: "dark" | "light"; eyebrow: string; title: string; body: string[]; steps?: { t: string; d: string }[] };
-export type WorkPairs = { title: string; note: string; pairs: { challenge: string; solution: string; src: string; alt: string; wide?: boolean }[] }; // wide: the copy runs in two columns and the whole screen sits below it
+export type WorkPairs = { title: string; note: string; pairs: { challenge: string; solution: string; src: string; alt: string; wide?: boolean; bare?: boolean }[] }; // wide: the copy runs in two columns and the whole screen sits below it; bare: no box around the row, the copy sits on the page
 export type WorkAnnotated = { title: string; note: string; src: string; alt: string; ratio: number; marks: { x: number; y: number; t: string; d: string }[] };
 // "pan" a wide picture that drifts as the page scrolls
 export type WorkPan = { src: string; alt: string; ratio: number };
 // "beforeafter" the old screen and the new one in a wipe slider
-export type WorkBeforeAfter = { scrub?: boolean; title?: string; note?: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
+export type WorkBeforeAfter = { noTags?: boolean; scrub?: boolean; title?: string; note?: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
 // "band" a band in the brand's colour, its name sliding sideways, three redesign changes (old to new) under it as the page scrolls (WorkBand); "collage" a collage that grows in and zooms slowly
 // "figures" challenge and solution rows led by one big figure each, text only
 export type WorkFigures = { eyebrow: string; title: string; rows: { fig: string; unit: string; challenge: string; solution: string }[] };
 export type WorkBand = { name: string; bg: string; changes: { from: string; to: string }[] };
-export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band" | "figures"; src: string; alt: string; note?: string; kicker?: string; top?: boolean; lead?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; figures?: WorkFigures; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
+export type WorkMedia = { type: "image" | "head" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band" | "figures"; src: string; alt: string; note?: string; kicker?: string; top?: boolean; lead?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; figures?: WorkFigures; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" | "zerogaspi" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -379,7 +379,133 @@ const sredioScreens: WorkMedia[] = [
   } },
 ];
 
+// VYNO carpool app: the case study slides (the vyno folder) as live blocks. Every line of copy comes from those slides.
+const vynoAbout: WorkCopy = {
+  label: "About",
+  lead: "VYNO is a carpooling app for Africa",
+  body: "It connects drivers and passengers heading the same way, so rides cost less, cities move better and people share trips they can trust. Designed for Cameroon first, as a native app on iOS and Android.",
+  meta: [
+    { l: "Platform", v: "iOS and Android, native apps", icon: "smartphone" },
+    { l: "Client", v: "Skyvue Solutions", icon: "building" },
+    { l: "Region", v: "Cameroon: intra city and intercity", icon: "route" },
+    { l: "Timeline", v: "5 weeks", icon: "workflow" },
+  ],
+  didLabel: "What I did",
+  didCards: true,
+  didTitles: ["Research and personas", "Flows to hi-fi", "Admin panel"],
+  didIcons: ["search", "pen-tool", "monitor-smartphone"],
+  did: [
+    "Researched how people share rides in Cameroon and shaped two personas: the driver and the passenger.",
+    "Designed the passenger and driver flows, from wireframes to hi-fi screens.",
+    "Designed the admin panel for ride and user insights.",
+  ],
+};
+const vynoResearch = [
+  { src: "/images/work/vyno/vyno-04.webp", alt: "The 3D approach: define, design and deliver, with the steps inside each" },
+  { src: "/images/work/vyno/vyno-05.webp", alt: "User research: what we looked for and the key insights it gave" },
+  { src: "/images/work/vyno/vyno-06.webp", alt: "Persona: the driver, with goals, needs, pain points and trust factors" },
+  { src: "/images/work/vyno/vyno-07.webp", alt: "Persona: the passenger, with goals, needs, pain points and trust factors" },
+  { src: "/images/work/vyno/vyno-08.webp", alt: "User journey map: the scenario of a passenger finding an intercity ride" },
+  { src: "/images/work/vyno/vyno-09.webp", alt: "The journey in six steps, from discover to pay and review, with thoughts, pain points and opportunities" },
+  { src: "/images/work/vyno/vyno-10.webp", alt: "The passenger user flow, from launch to requesting a seat" },
+];
+const vynoSystem = [
+  { src: "/images/work/vyno/vyno-13.webp", alt: "Typography: Inter in regular, medium and bold" },
+  { src: "/images/work/vyno/vyno-14.webp", alt: "Colours: a primary blue, a lighter secondary blue and neutral greys" },
+];
+const vynoMedia: WorkMedia[] = [
+  { type: "video", src: "/images/work/vyno/vyno-app.mp4", poster: "/images/work/vyno/vyno-app-poster.webp", alt: "VYNO, a carpooling app: sharing starts on the home screen" },
+  { type: "copy", src: "copy", alt: "About VYNO", copy: vynoAbout },
+  { type: "image", src: "/images/work/vyno/vyno-03.webp", alt: "VYNO Carpool solution: the brand, with drivers and passengers sharing a ride" },
+  { type: "band", src: "band-vyno", alt: "VYNO", band: { name: "VYNO", bg: "#026DA8", changes: [{ from: "Taxis hard to find in rush hour", to: "Browse and book a shared lift" }, { from: "Low trust in unknown drivers", to: "Verified profiles and ratings" }, { from: "Confusion at the pickup", to: "A QR code and a map pin" }] } },
+  { type: "carousel", src: "carousel-vyno-research", alt: "VYNO research and flows", slides: vynoResearch, label: "VYNO research and flows", kicker: "Research", lead: true, note: "Two people, six steps, one question: can I trust this ride?" },
+  { type: "head", src: "head-vyno-challenges", alt: "Three problems, three fixes", label: "Three problems, three fixes", note: "What the research showed riders struggle with, and the screen that answers each." },
+  { type: "image", src: "/images/work/vyno/vyno-15.webp", alt: "Problem and solution, challenge 1: confusion at pickup, solved with a QR code, a map pin and the driver's car photo and plate" },
+  { type: "image", src: "/images/work/vyno/vyno-16.webp", alt: "Problem and solution, challenge 2: improving ride discovery, solved with a smart filter and a virtual lift request" },
+  { type: "image", src: "/images/work/vyno/vyno-17.webp", alt: "Problem and solution, challenge 3: trust in unknown drivers, solved with verified badges, ratings and ID status" },
+  { type: "beforeafter", src: "ba-vyno", alt: "VYNO wireframes and hi-fi designs", ba: {
+    noTags: true, scrub: true, ratio: 16 / 9, title: "From grey boxes to hi-fi", note: "Wireframes first to test the flow, then the final screens.",
+    before: { src: "/images/work/vyno/vyno-11.webp", alt: "The VYNO low fidelity wireframes" },
+    after: { src: "/images/work/vyno/vyno-20.webp", alt: "The VYNO hi-fi designs" },
+  } },
+  { type: "carousel", src: "carousel-vyno-system", alt: "VYNO type and colour", slides: vynoSystem, label: "VYNO type and colour", kicker: "Type and colour", lead: true, note: "Inter for clarity, one confident blue for action." },
+  { type: "head", src: "head-vyno-screens", alt: "Final screens", label: "Final screens", note: "From sign up to the admin dashboard, every screen in the app." },
+  { type: "image", src: "/images/work/vyno/vyno-18.webp", alt: "The home screen: account balance, lift requests and recent lifts" },
+  { type: "image", src: "/images/work/vyno/vyno-19.webp", alt: "Driver onboarding and profile management, with account verification" },
+  { type: "image", src: "/images/work/vyno/vyno-21.webp", alt: "Hi-fi designs: sign up, lift preferences, driver profiles and booking history" },
+  { type: "image", src: "/images/work/vyno/vyno-22.webp", alt: "Hi-fi designs: confirming a pickup, ratings and the virtual lift request" },
+  { type: "image", src: "/images/work/vyno/vyno-23.webp", alt: "The admin panel: users, cities reached and lifts created over time" },
+];
+
+// Peers, a skills and learning platform. Every screen comes from the Peers Figma file (page Peers Web App); the stills are made by scripts/peers-images.mjs.
+// Every fact below is read off those screens: the three roles, the five generator steps, the 1 to 7 scale, the five widths. Nothing about dates, team size or results is claimed.
+const peersImg = (key: string) => `/images/work/peers/details/${key}.webp`;
+const peersGenerator = [
+  { src: peersImg("gen-1"), alt: "Step 1: choose a challenge, an optional step" },
+  { src: peersImg("gen-2"), alt: "Step 2: choose skills, from the job profile and from the challenge" },
+  { src: peersImg("gen-3"), alt: "Step 3: rate each skill from Beginner to Expert" },
+  { src: peersImg("gen-4"), alt: "Step 4: define time, formats and languages" },
+  { src: peersImg("gen-5"), alt: "Step 5: adjust the learning path before confirming" },
+];
+const peersMedia: WorkMedia[] = [
+  { type: "image", src: "/images/work/peers/cover.webp", alt: "Peers, a skill management platform: the Assessment results screen on desktop and phone" },
+  { type: "intro", src: "intro", alt: "About Peers", intro: {
+    label: "About Peers",
+    headline: "Peers is a **learning platform** that shows a company where its people's **skills fall short** of their roles, then builds each person a path to close the gap.",
+    body: "Employees rate their own skills, managers read the gaps across a team, and admins run the organisation behind it. Three roles on one web app, designed from a 375px phone to a 1920px desktop.",
+    rows: [
+      { l: "Industry", v: "HR tech, skills and learning" },
+      { l: "Users", v: "Learner, manager and admin" },
+      { l: "Platform", v: "Responsive web app, 375 to 1920px" },
+      { l: "Tools", tools: [{ id: "figma", name: "Figma" }, { id: "antd", name: "Ant Design" }] },
+    ],
+    didLabel: "What I did",
+    did: [
+      "Designed the learning path generator: five steps from a goal to a path the learner can still adjust.",
+      "Designed the skill overview and the team's assessment results as bars, a donut and a radar chart.",
+      "Designed the admin side: the organisation, its users and the challenges.",
+      "Built the screens on Ant Design, so every screen shares one set of components and tokens.",
+      "Covered every width from 375 to 1920px, with loading, empty and error states for the screens that need them.",
+    ],
+  } },
+  { type: "chapter", src: "approach", alt: "The approach", chapter: {
+    tone: "light",
+    eyebrow: "The approach",
+    title: "One question for each role",
+    body: [],
+    steps: [
+      { t: "Learner", d: "What should I learn next?" },
+      { t: "Manager", d: "Where does my team stand?" },
+      { t: "Admin", d: "How is it all set up?" },
+      { t: "Every width", d: "From a 375px phone to a 1920px desktop." },
+    ],
+  } },
+  { type: "carousel", src: "carousel-generator", alt: "Peers: the five steps of the learning path generator", slides: peersGenerator, label: "Learning path generator", kicker: "Learner", lead: true, note: "Five steps take a learner from a goal to a path. The first step is optional, so someone who already knows their role's skills can skip straight past it." },
+  { type: "pairs", src: "pairs", alt: "Challenges and solutions", pairs: {
+    title: "", // no heading: the rows speak for themselves
+    note: "",
+    pairs: [
+      { wide: true, bare: true, challenge: "A score alone says nothing", solution: "Two bars per skill: the target, and where you are. The gap shows before you read a single number.", src: peersImg("skill-level"), alt: "My skill overview: skill scores as target and own score bars, with the Beginner, Advanced and Expert bands" },
+      { wide: true, bare: true, challenge: "One person, or the whole branch?", solution: "Switch between team and organisation, pick a name in the tree, and the radar redraws.", src: peersImg("manager-view"), alt: "Assessment results: the available challenges, the employee tree and the radar chart" },
+    ],
+  } },
+  { type: "head", src: "head-antd", alt: "The design system", label: "Built on Ant Design", note: "The design system behind every Peers screen: one set of components and tokens for all of them." },
+  { type: "image", src: "/images/work/peers/shots/peers-antd.webp", alt: "Ant Design, the design system Peers is built on: buttons, inputs, modals, steps, progress, calendar, tabs and more" },
+  { type: "head", src: "head-screens", alt: "The screens", label: "The screens", note: "Onboarding, skills, learning paths, team results and administration: the learner, manager and admin screens, one after another." },
+  { type: "image", src: "/images/work/peers/shots/peers-03.webp", alt: "Onboarding: choosing a challenge in the learning path generator" },
+  { type: "image", src: "/images/work/peers/shots/peers-04.webp", alt: "Onboarding: assessing skill knowledge, one question at a time" },
+  { type: "image", src: "/images/work/peers/shots/peers-05.webp", alt: "My skill overview: skill pool and skill scores" },
+  { type: "image", src: "/images/work/peers/shots/peers-06.webp", alt: "My learning path: the units of each skill" },
+  { type: "image", src: "/images/work/peers/shots/peers-07.webp", alt: "My employees: the team and each person's learning path progress" },
+  { type: "image", src: "/images/work/peers/shots/peers-08.webp", alt: "Assessment results: the radar chart with the organisation tree" },
+  { type: "image", src: "/images/work/peers/shots/peers-09.webp", alt: "Administration: the organisation, its departments and job profiles" },
+  { type: "image", src: "/images/work/peers/shots/peers-10.webp", alt: "User management: the list of users" },
+  { type: "image", src: "/images/work/peers/shots/peers-11.webp", alt: "User management: a user profile and user type" },
+  { type: "image", src: "/images/work/peers/shots/peers-12.webp", alt: "Manage Challenges: system and custom challenges" },
+];
+
 export const workDetails: Record<string, WorkDetail> = {
+  peers: { figma: "https://www.figma.com/design/TvOhcrBuAa5zOGvJa1VLbs/Peers?node-id=777-30052", media: peersMedia },
   "sred-io": { figma: "https://www.figma.com/design/kF3kIgL9u0AMO5M6SngsmE/Sredio---Platform?node-id=0-1&t=E37gAyxdjLa0CCFW-1", live: "https://sred.io/", media: sredioScreens },
   quodarca: {
     figma: "https://www.figma.com/design/bV0Ia7OeqXlFNlNggseg07/QuoadArca---Web-App?node-id=2-104650&t=5sQYp6ZsshnBPTk4-4",
@@ -434,3 +560,28 @@ export const workDetails: Record<string, WorkDetail> = {
   { type: "collage", src: "/images/work/mlk/ba/zigbis-collage.webp", alt: "Zigbis: the redesigned pages as a collage" },
 ] },
 };
+
+// Specialist Clinic Pharmacy: a copy of the QuodArca details (placeholder), without QuodArca's Figma and live links
+workDetails["specialist-clinic-pharmacy"] = { ...workDetails.quodarca, figma: undefined, live: undefined };
+workDetails.vyno = { media: vynoMedia };
+
+// Zero Gaspi: the Work page slide, then the case study slides in order
+workDetails["zero-gaspi"] = { media: [
+  { type: "scene", src: "scene-zerogaspi", alt: "Zero Gaspi app screens", scene: "zerogaspi" }, // the same slide as on the Work page
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-01.webp", alt: "Zero Gaspi: the platform overview, project facts and the app on a phone" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-02.webp", alt: "Challenges: a 50+ page requirements document, a 14-day deadline, a low budget and a complex multi-actor ecosystem" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-03.webp", alt: "Leveraging an LLM to simplify a 50+ page requirements document" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-04.webp", alt: "UX benchmarking strategy: why benchmark, and the patterns found" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-05.webp", alt: "Research screens: marketplace, discovery and order flows collected as references" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-06.webp", alt: "Logo concept: the Harvest Vessel, a grain spire and an eco-carrier" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-07.webp", alt: "Colour palette: four tones with the logo on each" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-08.webp", alt: "Typography: SF Pro Rounded for headings, Inter for text" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-09.webp", alt: "Onboarding: four welcome screens" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-10.webp", alt: "Sign up: phone number, verification code and social sign-in" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-11.webp", alt: "Home: pickups near you, restaurants and Surprise Baskets" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-12.webp", alt: "Search and filters: distance, pickup time, price range and dietary needs" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-13.webp", alt: "Order flow: Surprise Basket details, order status and the pickup QR code" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-14.webp", alt: "After pickup: rating the order, orders list, profile and account details" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-15.webp", alt: "App store screenshots for iOS and Android" },
+  { type: "image", src: "/images/work/zerogaspi/slides/zg-16.webp", alt: "App icon: the grid, the icon on a home screen and the Android and iOS versions" },
+] };

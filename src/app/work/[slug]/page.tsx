@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { stories } from "@/data/pages";
+import { stories, extraStories } from "@/data/pages";
 import { storyPages } from "@/data/storyPages";
 import { workDetails } from "@/data/workDetails";
 import { BtnSec } from "@/components/atoms/Buttons";
@@ -39,18 +39,18 @@ const GlobeIcon = () => (
 );
 
 export function generateStaticParams() {
-  return stories.map((s) => ({ slug: s.slug }));
+  return [...stories, ...extraStories].map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const s = stories.find((x) => x.slug === slug);
+  const s = [...stories, ...extraStories].find((x) => x.slug === slug);
   return { title: s?.name ?? "Work", description: storyPages[slug]?.desc };
 }
 
 export default async function WorkDetails({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const s = stories.find((x) => x.slug === slug);
+  const s = [...stories, ...extraStories].find((x) => x.slug === slug);
   if (!s) notFound();
   const p = storyPages[slug];
   const d = workDetails[slug] ?? {};
@@ -79,9 +79,9 @@ export default async function WorkDetails({ params }: { params: Promise<{ slug: 
           )}
         </header>
 
-        <MediaLightbox>
+        <MediaLightbox work={slug}>
           {(slides || slug === "mlk-group") && <WorkFilmBox slug={slug} controls />}
-          {(d.media ?? []).map((m) => m.type === "morework" ? <MoreWork key={m.src} slide tablets={MLK_TABLETS} logos={MLK_LOGOS} /> : m.type === "motion" ? <MlkMotion key={m.src} /> : m.type === "reel" ? <MlkReel key={m.src} /> : m.type === "portal" ? <MlkPortal key={m.src} /> : m.type === "band" && m.band ? <WorkBand key={m.src} band={m.band} /> : m.type === "collage" ? <WorkZoom key={m.src} src={m.src} alt={m.alt} /> : m.type === "scene" && m.scene ? <WorkFilmBox key={m.src} slug={slug} scene={m.scene} controls /> : m.type === "beforeafter" && m.ba ? <WorkBeforeAfter key={m.src} ba={m.ba} /> : m.type === "pan" && m.pan ? <WorkPan key={m.src} pan={m.pan} /> : m.type === "figures" && m.figures ? <WorkFigures key={m.src} figures={m.figures} /> : m.type === "chapter" && m.chapter ? <WorkChapter key={m.src} chapter={m.chapter} /> : m.type === "pairs" && m.pairs ? <WorkPairs key={m.src} pairs={m.pairs} /> : m.type === "annotated" && m.ann ? <WorkAnnotated key={m.src} ann={m.ann} /> : m.type === "intro" && m.intro ? <WorkIntro key={m.src} intro={m.intro} between={slug === "mlk-group" ? <MoreWork slide tablets={MLK_TABLETS} logos={MLK_LOGOS} /> : undefined} /> : m.type === "sitemap" && m.sitemap ? <WorkSitemap key={m.src} map={m.sitemap} /> : m.type === "loop" && m.loop ? <WorkLoop key={m.src} loop={m.loop} /> : m.type === "flow" && m.flow ? <WorkFlow key={m.src} flow={m.flow} /> : m.type === "carousel" && m.slides ? <div className="wk-flow" key={m.src}>{m.label && <header className="wk-flow-head">{m.kicker && <p className="wk-copy-label wk-flow-kicker">{m.kicker}</p>}{!m.lead && <h2 className="wk-flow-title">{m.label}</h2>}{m.note && <p className={m.lead ? "wk-flow-note wk-flow-note--lead" : "wk-flow-note"}>{m.note}</p>}</header>}<WorkCarousel slides={m.slides} label={m.label} top={m.top} /></div> : m.type === "story" && m.story ? <WorkStory key={m.src} story={m.story} /> : m.type === "copy" && m.copy ? <WorkCopy key={m.src} copy={m.copy} /> : m.type === "slides" ? <WorkFilmBox key={m.src} slug={slug} count={m.count} controls /> : m.type === "video" ? <WorkVideo key={m.src} src={m.src} poster={m.poster} alt={m.alt} /> : (
+          {(d.media ?? []).map((m) => m.type === "morework" ? <MoreWork key={m.src} slide tablets={MLK_TABLETS} logos={MLK_LOGOS} /> : m.type === "motion" ? <MlkMotion key={m.src} /> : m.type === "reel" ? <MlkReel key={m.src} /> : m.type === "portal" ? <MlkPortal key={m.src} /> : m.type === "band" && m.band ? <WorkBand key={m.src} band={m.band} /> : m.type === "collage" ? <WorkZoom key={m.src} src={m.src} alt={m.alt} /> : m.type === "scene" && m.scene ? <WorkFilmBox key={m.src} slug={slug} scene={m.scene} controls /> : m.type === "beforeafter" && m.ba ? <WorkBeforeAfter key={m.src} ba={m.ba} /> : m.type === "pan" && m.pan ? <WorkPan key={m.src} pan={m.pan} /> : m.type === "figures" && m.figures ? <WorkFigures key={m.src} figures={m.figures} /> : m.type === "chapter" && m.chapter ? <WorkChapter key={m.src} chapter={m.chapter} /> : m.type === "pairs" && m.pairs ? <WorkPairs key={m.src} pairs={m.pairs} /> : m.type === "annotated" && m.ann ? <WorkAnnotated key={m.src} ann={m.ann} /> : m.type === "intro" && m.intro ? <WorkIntro key={m.src} intro={m.intro} between={slug === "mlk-group" ? <MoreWork slide tablets={MLK_TABLETS} logos={MLK_LOGOS} /> : undefined} /> : m.type === "sitemap" && m.sitemap ? <WorkSitemap key={m.src} map={m.sitemap} /> : m.type === "loop" && m.loop ? <WorkLoop key={m.src} loop={m.loop} /> : m.type === "flow" && m.flow ? <WorkFlow key={m.src} flow={m.flow} /> : m.type === "head" ? <header className="wk-flow-head" key={m.src}><h2 className="wk-flow-title">{m.label}</h2>{m.note && <p className="wk-flow-note">{m.note}</p>}</header> : m.type === "carousel" && m.slides ? <div className="wk-flow" key={m.src}>{m.label && <header className="wk-flow-head">{m.kicker && <p className="wk-copy-label wk-flow-kicker">{m.kicker}</p>}{!m.lead && <h2 className="wk-flow-title">{m.label}</h2>}{m.note && <p className={m.lead ? "wk-flow-note wk-flow-note--lead" : "wk-flow-note"}>{m.note}</p>}</header>}<WorkCarousel slides={m.slides} label={m.label} top={m.top} /></div> : m.type === "story" && m.story ? <WorkStory key={m.src} story={m.story} /> : m.type === "copy" && m.copy ? <WorkCopy key={m.src} copy={m.copy} /> : m.type === "slides" ? <WorkFilmBox key={m.src} slug={slug} count={m.count} controls /> : m.type === "video" ? <WorkVideo key={m.src} src={m.src} poster={m.poster} alt={m.alt} /> : (
             <div className="wk-item" key={m.src} role="button" tabIndex={0} aria-label={`View ${m.alt} full size`}>
               <img src={m.src} alt={m.alt} width={1920} height={1080} loading="lazy" />
             </div>
