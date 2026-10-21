@@ -33,7 +33,7 @@ export function Hero() {
       <div className="hero-band">
         <div className="hero-id">
           <b>{site.name}</b>
-          <span>{site.role}</span>
+          <span>{site.role.split(" · ").map((r, i) => <span key={r} style={{ whiteSpace: "nowrap" }}>{i > 0 && " · "}{r}</span>)}</span>
         </div>
         <BtnSec href="/resume/">{hero.cta}</BtnSec>
       </div>

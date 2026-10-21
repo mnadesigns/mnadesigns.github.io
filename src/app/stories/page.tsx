@@ -49,7 +49,7 @@ export default function Stories() {
         ))}
       </section>
 
-      <section className="sti-rest shell">
+      <section className="sti-rest shell" id="and-more">
         <Reveal>
           <div className="sec-intro">
             <div>

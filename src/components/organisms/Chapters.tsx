@@ -510,16 +510,7 @@ export function Chapters() {
         </Reveal>
       </div>
       <div className="chap-stack" onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} onCopy={(e) => e.preventDefault()}>
-        {chapters.flatMap((c) => (c.name === "MLK Group" ? [{ ...c, film: c.film && { ...c.film, items: c.film.items.slice(5) } }, { ...c, film: c.film && { ...c.film, items: c.film.items.slice(0, 5) }, role: clientCopy.role, name: clientCopy.name, sub: clientCopy.sub, stats: clientCopy.stats }] : [c])).map((c, i) => <Chapter key={`${c.name}-${i}`} c={c} />)}
-      </div>
-      <div className="shell">
-        <div className="chap-out">
-          <div className="chap-out-left">
-            <h2 className="h2">Want to see <em>more?</em></h2>
-            <p>Every project here has a longer story behind it: the problem, the thinking and every screen.<br />Find the full portfolio and case studies on Behance.</p>
-          </div>
-          <BtnCircle href={site.behance} label="Open Behance" />
-        </div>
+        {chapters.flatMap((c) => (c.name === "MLK Group" ? [{ ...c, film: c.film && { ...c.film, items: c.film.items.slice(5) } }, { ...c, film: c.film && { ...c.film, items: c.film.items.slice(0, 5) }, role: clientCopy.role, name: clientCopy.name, sub: clientCopy.sub, stats: clientCopy.stats, href: "/stories/#and-more" }] : [c])).map((c, i) => <Chapter key={`${c.name}-${i}`} c={c} />)}
       </div>
     </section>
   );

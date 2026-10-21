@@ -298,19 +298,6 @@ const sredioScreens: WorkMedia[] = [
       { alt: "The new vault, with a confirmation message", cap: "Done", cam: { x: 55, y: 55, z: 1 } },
     ]),
   } },
-  { type: "sitemap", src: "sitemap", alt: "Where the screens sit in SRED.io", sitemap: {
-    title: "Where these screens sit",
-    note: "A slice of the platform's navigation. The filled items are the screens shown on this page.",
-    root: "SRED.io",
-    logo: "/images/brands/sredio.png",
-    groups: [
-      { name: "Dashboards", items: [{ t: "Main Dashboard" }, { t: "Financial Dashboard" }, { t: "Claim History Dashboard" }] },
-      { name: "Timesheets", designed: true, items: [{ t: "Weekly hours", designed: true }, { t: "Update a week", designed: true }, { t: "Export to CSV", designed: true }, { t: "Sync status", designed: true }] },
-      { name: "User Management", items: [{ t: "Staff & Teams", designed: true }, { t: "Access & Permissions" }, { t: "Staff Integration Matrix" }, { t: "Login History" }] },
-      { name: "File Portal Administration", designed: true, items: [{ t: "Create a vault", designed: true }, { t: "Internal view", designed: true }, { t: "External view", designed: true }] },
-      { name: "More", items: [{ t: "Projects" }, { t: "Performance Platform" }, { t: "Data Tools" }, { t: "Cost Schedule" }] },
-    ],
-  } },
   { type: "annotated", src: "ann-staff", alt: "Staff & Teams, annotated", ann: {
     title: "Staff & Teams: the list",
     note: "One list for everyone on the claim. Four things to notice.",

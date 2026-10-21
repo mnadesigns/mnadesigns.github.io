@@ -111,10 +111,6 @@ html { scroll-snap-type: y proximity; }
 .sloop.static .sl-card { opacity: 0; animation: none; }
 .sloop.static .sl-card.sl-park { opacity: 1; }
 
-.chap-out { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: var(--sp-sec-top) 0 clamp(40px, 4.5vw, 64px); border-top: 1px solid var(--ink-12); }.chap-out-left { display: flex; flex-direction: column; align-items: flex-start; gap: 28px; }
-.chap-out .h2 { white-space: nowrap; }
-.chap-out-left p { max-width: 100ch; }
-.chap-out p { font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.5; color: var(--ink-65); }
 
 /* breaker */
 .breaker { position: relative; background: var(--coal); padding-top: clamp(40px, 4.5vw, 64px); padding-bottom: var(--sp-breaker); overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
@@ -177,7 +173,6 @@ html { scroll-snap-type: y proximity; }
   .hero-claim .l:nth-child(2) .ch { -webkit-text-stroke-width: 1.5px; }
   .statrow { grid-template-columns: 1fr; gap: 24px; margin-bottom: 64px; }
   .wr-wall { grid-template-columns: 1fr; gap: 24px; }
-  .chap-out { flex-direction: column; align-items: flex-start; gap: 32px; }
   .receipt { width: 300px; height: 190px; }
   /* phone: each work is one full screen, the film on top and a copy panel under it */
   html { scroll-snap-type: none; } /* phones scroll freely: no snapping to the works */

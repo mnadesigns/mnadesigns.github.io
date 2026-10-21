@@ -1,4 +1,4 @@
-.sec { --h: 400px; overflow: hidden; display: grid; gap: clamp(14px, 1.8vw, 28px); padding: 0 0 clamp(40px, 6vw, 88px); background: #fff; }
+.sec { --h: 400px; overflow: hidden; display: grid; gap: clamp(14px, 1.8vw, 28px); padding: clamp(40px, 6vw, 88px) 0; background: #fff; }
 .row { overflow: hidden; }
 .track { display: flex; width: max-content; animation: mw-slide var(--dur, 60s) linear infinite; animation-play-state: paused; }
 .track[data-play="1"] { animation-play-state: running; }

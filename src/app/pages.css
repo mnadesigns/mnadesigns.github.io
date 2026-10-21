@@ -45,6 +45,7 @@
 .sti-logo-rule { width: 48px; height: 2px; background: var(--brand); }
 .sti-logo-cap { font-family: var(--sans); font-size: 13px; color: var(--ink-50); text-align: center; line-height: 1.4; }
 .sti-rest { padding-bottom: var(--sp-sec-bot-lg); }
+#and-more { scroll-margin-top: 96px; } /* the home page sends visitors here: stop it under the fixed navigation */
 .sti-index { margin-top: 8px; border-bottom: 1px solid var(--ink-12); }
 .sti-index .sti-row { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; padding: 48px 0; border-top: 1px solid var(--ink-12); text-decoration: none; transition: padding-left var(--t-base) var(--ease); }
 .sti-index .sti-row:hover { padding-left: 16px; }
