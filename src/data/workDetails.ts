@@ -19,8 +19,10 @@ export type WorkAnnotated = { title: string; note: string; src: string; alt: str
 // "pan" a wide picture that drifts as the page scrolls
 export type WorkPan = { src: string; alt: string; ratio: number };
 // "beforeafter" the old screen and the new one in a wipe slider
-export type WorkBeforeAfter = { title: string; note: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
-export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
+export type WorkBeforeAfter = { scrub?: boolean; title?: string; note?: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
+// "band" a band in the brand's colour, its name sliding sideways, three redesign changes (old to new) under it as the page scrolls (WorkBand); "collage" a collage that grows in and zooms slowly
+export type WorkBand = { name: string; bg: string; changes: { from: string; to: string }[] };
+export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -304,5 +306,55 @@ export const workDetails: Record<string, WorkDetail> = {
     live: "https://eisst.com/en",
     media: quodarcaScreens,
   },
-  "mlk-group": {},
+  "mlk-group": { media: [{ type: "morework", src: "mlk-morework", alt: "The MLK Group websites on iPads, with the brands I have worked with" },
+{ type: "band", src: "band-ae", alt: "Applied Electronics", band: { name: "Applied Electronics", bg: "#1b2a47", changes: [{ from: "Industries sidebar", to: "One clean menu" }, { from: "Boxed button stack", to: "A single orange CTA" }, { from: "Dark, busy header", to: "Light, focused header" }] } },
+  { type: "beforeafter", src: "ba-ae", alt: "Applied Electronics, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/ae-before.webp", alt: "The old Applied Electronics website" },
+    after: { src: "/images/work/mlk/ba/ae-after.webp", alt: "The new Applied Electronics website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/ae-collage.webp", alt: "Applied Electronics: the redesigned pages as a collage" },
+  { type: "band", src: "band-keys", alt: "Keysborough Vet", band: { name: "Keysborough Vet", bg: "#181a22", changes: [{ from: "Text over a busy photo", to: "Headline on a clear dark ground" }, { from: "Hours under the headline", to: "Hours, address and booking in one bar" }, { from: "Plain contact link", to: "A persistent Book an Appointment button" }] } },
+  { type: "beforeafter", src: "ba-keys", alt: "Keysborough Veterinary Practice, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/keys-before.webp", alt: "The old Keysborough Veterinary Practice website" },
+    after: { src: "/images/work/mlk/ba/keys-after.webp", alt: "The new Keysborough Veterinary Practice website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/keys-collage.webp", alt: "Keysborough Veterinary Practice: the redesigned pages as a collage" },
+  { type: "band", src: "band-kombi", alt: "Kombi Love", band: { name: "Kombi Love", bg: "#2f5d7c", changes: [{ from: "Slider and sidebar menu", to: "Full-bleed hero, top menu" }, { from: "A wall of text", to: "One headline, one Book Now" }, { from: "Contact details buried", to: "Phone and email in the top bar" }] } },
+  { type: "beforeafter", src: "ba-kombi", alt: "Kombi, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/kombi-before.webp", alt: "The old Kombi website" },
+    after: { src: "/images/work/mlk/ba/kombi-after.webp", alt: "The new Kombi website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/kombi-collage.webp", alt: "Kombi: the redesigned pages as a collage" },
+  { type: "band", src: "band-scp", alt: "Specialist Clinic Pharmacy", band: { name: "Specialist Clinic Pharmacy", bg: "#ef7b95", changes: [{ from: "Brochure banner", to: "A searchable storefront" }, { from: "A short list of links", to: "Categories, brands and services" }, { from: "Delivery buried in a slide", to: "Delivery and click and collect up front" }] } },
+  { type: "beforeafter", src: "ba-scp", alt: "Specialist Clinic Pharmacy, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/scp-before.webp", alt: "The old Specialist Clinic Pharmacy website" },
+    after: { src: "/images/work/mlk/ba/scp-after.webp", alt: "The new Specialist Clinic Pharmacy website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/scp-collage.webp", alt: "Specialist Clinic Pharmacy: the redesigned pages as a collage" },
+  { type: "band", src: "band-telco", alt: "Telco ICT", band: { name: "Telco ICT", bg: "#4b0a7d", changes: [{ from: "Broken logo, empty hero", to: "A branded header and a clear promise" }, { from: "A form with no context", to: "Two clear paths: book or call" }, { from: "No proof", to: "Proof points under the hero" }] } },
+  { type: "beforeafter", src: "ba-telco", alt: "Telco ICT, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/telco-before.webp", alt: "The old Telco ICT website" },
+    after: { src: "/images/work/mlk/ba/telco-after.webp", alt: "The new Telco ICT website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/telco-collage.webp", alt: "Telco ICT: the redesigned pages as a collage" },
+  { type: "band", src: "band-wp", alt: "Wonder Pies", band: { name: "Wonder Pies", bg: "#3a4249", changes: [{ from: "One pie, a small button", to: "The whole range, Order Online in the menu" }, { from: "Flat, grey page", to: "Warm, food-first imagery" }, { from: "Text-only menu", to: "Search, account and cart icons" }] } },
+  { type: "beforeafter", src: "ba-wp", alt: "Wonder Pies, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/wp-before.webp", alt: "The old Wonder Pies website" },
+    after: { src: "/images/work/mlk/ba/wp-after.webp", alt: "The new Wonder Pies website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/wp-collage.webp", alt: "Wonder Pies: the redesigned pages as a collage" },
+  { type: "band", src: "band-zigbis", alt: "Zigbis", band: { name: "Zigbis", bg: "#e83a3a", changes: [{ from: "Loud full-width type", to: "One calm headline and offer" }, { from: "A long row of links", to: "Menu grouped by service" }, { from: "Red tab and badges", to: "One persistent Book Now" }] } },
+  { type: "beforeafter", src: "ba-zigbis", alt: "Zigbis, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/zigbis-before.webp", alt: "The old Zigbis website" },
+    after: { src: "/images/work/mlk/ba/zigbis-after.webp", alt: "The new Zigbis website" },
+  } },
+  { type: "collage", src: "/images/work/mlk/ba/zigbis-collage.webp", alt: "Zigbis: the redesigned pages as a collage" },
+] },
 };

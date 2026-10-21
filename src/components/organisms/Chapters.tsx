@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { adBeats, chapters, site } from "@/data/site";
+import { adBeats, chapters, site, clientCopy } from "@/data/site";
 import { Btn, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
 import { ProjectsDelivered, WelcomeScene } from "./QuodarcaScenes";
@@ -10,6 +10,8 @@ import { ApproachScene } from "./ApproachScene";
 import { ZeroGaspiScene } from "./ZeroGaspiScene";
 import { KeysboroughScene } from "./KeysboroughScene";
 import { SpoonfulScene } from "./SpoonfulScene";
+import { IpadGridScene } from "./IpadGridScene";
+import { CytositeScene } from "./CytositeScene";
 import { WonderPiesScene } from "./WonderPiesScene";
 import { TelcoIctScene } from "./TelcoIctScene";
 import { PharmacyScene } from "./PharmacyScene";
@@ -29,7 +31,7 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 // `run` changes whenever the current segment starts over, so its fill restarts.
 // What the bar sits on, so it can be white on dark backgrounds and black on light ones.
 type Tone = "light" | "dark";
-const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light", telcoict: "light", pharmacy: "light", peers: "dark", zigbis: "light" };
+const SCENE_TONE: Record<string, Tone> = { welcome: "dark", "process-challenges": "light", approach: "light", "design-system": "light", "product-features": "dark", "projects-delivered": "light", zerogaspi: "light", keysborough: "light", spoonful: "light", wonderpies: "light", telcoict: "light", pharmacy: "light", peers: "dark", zigbis: "light", "ipad-grid": "light", cytosite: "dark" };
 const toneOfColour = (hex: string): Tone => {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return "light";
@@ -40,7 +42,7 @@ const toneOfColour = (hex: string): Tone => {
 const SCENE_SWAP: Record<string, { at: number; tone: Tone }> = { approach: { at: 4500, tone: "dark" } };
 const toneOfItem = (it: FilmItem): Tone => (it.type === "slide" ? (it.dark ? "dark" : "light") : it.type === "clip" ? toneOfColour(it.bg) : SCENE_TONE[it.id] ?? "light");
 
-function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[]; index: number; playing: boolean; run: number; tone: Tone; swap?: { at: number; tone: Tone } }) {
+function FilmProgress({ durs, index, playing, run, tone, swap, onJump }: { durs: number[]; index: number; playing: boolean; run: number; tone: Tone; swap?: { at: number; tone: Tone }; onJump?: (i: number) => void }) {
   const [swapped, setSwapped] = useState(-1); // the run in which the switch has happened
   useEffect(() => {
     if (!swap || !playing) return;
@@ -53,12 +55,15 @@ function FilmProgress({ durs, index, playing, run, tone, swap }: { durs: number[
   const to = from + durs[index] / total;
   return (
     <>
-      <div className={`film-progress on-${shown}`} aria-hidden="true">
+      <div className={`film-progress on-${shown}`}>
         {durs.map((d, i) => (
-          <span key={i} className="fpb-seg">
-            {i < index && <i className="fpb-done" />}
-            {i === index && <i key={run} className="fpb-run" style={{ animationDuration: d + "ms", animationPlayState: playing ? "running" : "paused" }} />}
-          </span>
+          // a click on a segment jumps to that slide
+          <button type="button" key={i} className="fpb-hit" aria-label={`Go to slide ${i + 1} of ${durs.length}`} aria-current={i === index ? "true" : undefined} onClick={(e) => { e.preventDefault(); e.stopPropagation(); onJump?.(i); }}>
+            <span className="fpb-seg">
+              {i < index && <i className="fpb-done" />}
+              {i === index && <i key={run} className="fpb-run" style={{ animationDuration: d + "ms", animationPlayState: playing ? "running" : "paused" }} />}
+            </span>
+          </button>
         ))}
       </div>
       {/* phones: one bar along the bottom of the whole work, filling in the primary colour as the slides play */}
@@ -118,6 +123,17 @@ export function KineticAd({ controls }: { controls?: boolean } = {}) {
     if (next) {
       if (timer.current) { clearTimeout(timer.current); timer.current = null; left.current = Math.max(0, due.current - Date.now()); }
     } else if (left.current) armRef.current(left.current);
+  };
+
+  // a click on the bar: that beat starts now, and the clock carries on from it
+  const jump = (j: number) => {
+    if (timer.current) { clearTimeout(timer.current); timer.current = null; }
+    idx.current = j;
+    setI(j);
+    setRun((n) => n + 1);
+    const ms = adBeats[j].dur / FILM_SPEED;
+    if (pausedRef.current) left.current = ms;
+    else armRef.current(ms);
   };
 
   useEffect(() => {
@@ -195,7 +211,7 @@ export function KineticAd({ controls }: { controls?: boolean } = {}) {
           </div>
         </div>
       ))}
-      {!still && <FilmProgress durs={adBeats.map((b) => b.dur / FILM_SPEED)} index={cur} playing={playing && !paused} run={run} tone={adBeats[cur].dark ? "dark" : "light"} />}
+      {!still && <FilmProgress durs={adBeats.map((b) => b.dur / FILM_SPEED)} index={cur} playing={playing && !paused} run={run} tone={adBeats[cur].dark ? "dark" : "light"} onJump={jump} />}
       {controls && !still && <PlayPause paused={paused} onClick={toggle} />}
     </div>
   );
@@ -204,6 +220,11 @@ export function KineticAd({ controls }: { controls?: boolean } = {}) {
 // A designed slide that sits between two clips of a chapter film (see ChapterFilm). Static; it only fades in and out.
 function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; active: boolean; holdMs?: number; idle?: boolean }) {
   const [n, setN] = useState(0);
+  const zoomRef = useRef<HTMLDivElement>(null);
+  // the run of pictures is decoded before the slide plays, so no frame is spent decoding one as it fades in (that is what shows as a jerk)
+  useEffect(() => {
+    zoomRef.current?.querySelectorAll("img").forEach((im) => { im.decode?.().catch(() => {}); });
+  }, [s.zoom]);
   useEffect(() => {
     if (!active || !s.giant) return;
     let raf = 0;
@@ -224,11 +245,21 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
     return () => clearTimeout(t);
   }, [active]);
   return (
-    <div className={`sloop film-slide${s.dark ? " fg-on-dark" : ""}${active || idle ? " on" : ""}`} style={{ transitionDelay: `${holdMs}ms` }} aria-hidden={!active}>
+    <div className={`sloop film-slide${s.dark ? " fg-on-dark" : ""}${active || idle ? " on" : ""}${!active && !idle && linger ? " hold" : ""}`} style={{ transitionDelay: `${holdMs}ms` }} aria-hidden={!active}>
       <div className="sl-bg" style={{ background: s.bg }} />
       {s.image && (
         // eslint-disable-next-line @next/next/no-img-element
         <img className="sl-bgimg" alt="" src={s.image} />
+      )}
+      {s.zoom && (
+        // the pictures change quickly, each one zooming in as it comes
+        <div className="sl-zoom" aria-hidden="true" ref={zoomRef}>
+          {s.zoom.map((src, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1400}ms` }} />
+          ))}
+          <div className="sl-zshade" />
+        </div>
       )}
       <div className={`sl-card${active || linger ? " on" : ""}`} style={{ "--beat": s.dur + "ms" } as React.CSSProperties}>
         <div className="sl-hero">
@@ -302,6 +333,23 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
     setHeld((h) => (h.every((s, k) => s === (k === shown ? s : want[k])) ? h : h.map((s, k) => (k === shown ? s : want[k]))));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, shown]);
+
+  // a click on the bar: that item starts now. The two video elements are set up for it first, so the right clip is already on show (the pairing assumes the items play in order).
+  const jumpTo = (j: number) => {
+    const s = Math.floor(step / n) * n + j;
+    if (s === step) return;
+    if (hasClips) {
+      const nw = nextClip(s), af = nextClip(nw + 1), lv = clipsBefore(nw) % 2;
+      const w: string[] = [];
+      w[lv] = clipOf(nw).src;
+      w[1 - lv] = clipOf(af).src;
+      setHeld(w);
+      setShown(lv);
+      clipStep.current = -1;
+    }
+    beatStep.current = -1;
+    setStep(s);
+  };
 
   useEffect(() => {
     if (still) return;
@@ -380,6 +428,8 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
           if (it.id === "pharmacy") return <PharmacyScene key={k} active={active} holdMs={holdMs} />;
           if (it.id === "peers") return <PeersScene key={k} active={active} holdMs={holdMs} />;
           if (it.id === "zigbis") return <ZigbisScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "cytosite") return <CytositeScene key={k} active={active} holdMs={holdMs} />;
+          if (it.id === "ipad-grid") return <IpadGridScene key={k} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
           if (it.id === "spoonful") return <SpoonfulScene key={k} active={active} holdMs={holdMs} />;
           if (it.id === "keysborough") return <KeysboroughScene key={k} active={active} holdMs={holdMs} />;
           if (it.id === "zerogaspi") return <ZeroGaspiScene key={k} active={active} holdMs={holdMs} />;
@@ -389,7 +439,7 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
         }
         return <FilmSlideView key={k} s={it} active={active} holdMs={holdMs} idle={!visible && i === 0} />;
       })}
-      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? (clipMs[it.src] ?? 5000) / (it.speed ?? FILM_SPEED) : it.dur / FILM_SPEED))} index={step % n} playing={visible && !paused} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} />}
+      {!still && <FilmProgress durs={items.map((it) => (it.type === "clip" ? (clipMs[it.src] ?? 5000) / (it.speed ?? FILM_SPEED) : it.dur / FILM_SPEED))} index={step % n} playing={visible && !paused} run={step * 2 + (visible ? 1 : 0)} tone={toneOfItem(item)} swap={item.type === "scene" ? SCENE_SWAP[item.id] : undefined} onJump={jumpTo} />}
       {controls && !still && <PlayPause paused={paused} onClick={() => setPaused((p) => !p)} />}
     </div>
   );
@@ -460,12 +510,13 @@ export function Chapters() {
         </Reveal>
       </div>
       <div className="chap-stack" onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} onCopy={(e) => e.preventDefault()}>
-        {chapters.map((c) => <Chapter key={c.name} c={c} />)}
+        {chapters.flatMap((c) => (c.name === "MLK Group" ? [{ ...c, film: c.film && { ...c.film, items: c.film.items.slice(5) } }, { ...c, film: c.film && { ...c.film, items: c.film.items.slice(0, 5) }, role: clientCopy.role, name: clientCopy.name, sub: clientCopy.sub, stats: clientCopy.stats }] : [c])).map((c, i) => <Chapter key={`${c.name}-${i}`} c={c} />)}
       </div>
       <div className="shell">
         <div className="chap-out">
           <div className="chap-out-left">
-            <p>Want to see more? The full portfolio and case studies are on Behance.</p>
+            <h2 className="h2">Want to see <em>more?</em></h2>
+            <p>Every project here has a longer story behind it: the problem, the thinking and every screen.<br />Find the full portfolio and case studies on Behance.</p>
           </div>
           <BtnCircle href={site.behance} label="Open Behance" />
         </div>

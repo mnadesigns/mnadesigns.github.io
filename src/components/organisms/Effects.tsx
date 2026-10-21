@@ -60,7 +60,7 @@ export function Cursor() {
     // the look of the cursor follows what is under it
     const mode = (t: Element) => {
       cur.classList.toggle("is-link", !!t.closest("a, button, .breaker"));
-      cur.classList.toggle("is-hidden", !!t.closest(".wk-car-zone:not(:disabled)")); // over the carousel the big circle of the carousel is the cursor, so the site's dot and ring step aside
+      cur.classList.toggle("is-hidden", !!t.closest(".wk-car-zone:not(:disabled), .fpb-hit")); // over the carousel the big circle of the carousel is the cursor, and over the slide progress bar the normal pointer is, so the site's dot and ring step aside
       cur.classList.toggle("is-light", !!t.closest("[data-cursor='light']") || onBlue(t)); // over a brand-blue block the dot and the ring turn white
       cur.classList.toggle("is-bullet", !!t.closest("#services, [data-cursor='bullet']")); // in the AI-augmented section the cursor is the small square bullet of the deliverables lists
     };

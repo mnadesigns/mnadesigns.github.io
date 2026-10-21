@@ -1,0 +1,50 @@
+/* the stage is a size container: every length is in cqw, so the piece is the same picture at any width. One light theme throughout. */
+.stage { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; container-type: inline-size; background: #f5f5f7; border: 1px solid var(--ink-12); border-radius: var(--r); isolation: isolate; user-select: none; }
+.stage > * { pointer-events: none; }
+.stage > .pp { pointer-events: auto; }
+.act { position: absolute; inset: 0; }
+.fill { position: absolute; inset: 0; pointer-events: none; }
+.center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4cqw; }
+.behind { z-index: 5; padding-bottom: 12cqw; }
+.foot { position: absolute; left: 0; right: 0; bottom: 3.6cqw; z-index: 20; display: flex; justify-content: center; }
+
+/* numerals: each glyph rises out of its own mask */
+.glyphs { display: inline-flex; align-items: baseline; }
+.gmask { display: inline-block; overflow: hidden; padding: 0.07em 0.015em 0.24em; margin: -0.07em 0 -0.24em; line-height: 0.8; }
+.glyph { display: inline-block; font-family: var(--display); font-weight: 400; line-height: 0.8; text-transform: uppercase; will-change: transform; }
+.big { font-size: 42cqw; line-height: 0.8; }
+.medium { font-size: 17cqw; line-height: 0.8; }
+.huge { font-size: 50cqw; line-height: 0.8; }
+.head { position: absolute; left: 5cqw; top: 3.4cqw; z-index: 20; }
+.lmask { display: block; overflow: hidden; padding: 0.5cqw 0; }
+.label { display: block; font-family: var(--display); font-weight: 400; font-size: max(2.5cqw, 11px); letter-spacing: 0.3em; text-transform: uppercase; color: #0e7cb6; padding-left: 0.3em; }
+
+/* a device placed by its centre */
+.dev { position: absolute; translate: -50% -50%; will-change: transform; }
+.dev img { display: block; height: auto; max-width: none; filter: drop-shadow(0 2cqw 3.2cqw rgba(24, 30, 42, 0.26)); }
+
+/* III: the orbit */
+.orbit { position: absolute; left: 0; top: 0; translate: -50% -50%; will-change: transform; }
+.orbit img { display: block; height: auto; max-width: none; filter: drop-shadow(0 2cqw 3cqw rgba(24, 30, 42, 0.3)); }
+
+/* IV: two odometers */
+.pair { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 7cqw; }
+.col2 { display: flex; flex-direction: column; align-items: center; }
+.odo { display: flex; align-items: flex-start; font-family: var(--display); font-weight: 400; font-size: 30cqw; line-height: 0.86; color: #14181f; text-transform: uppercase; }
+.reel { display: inline-block; height: 0.86em; overflow: hidden; }
+.col { display: flex; flex-direction: column; }
+.col span { display: block; height: 0.86em; line-height: 0.86em; }
+.dot { display: inline-block; width: 0.28em; text-align: center; }
+.x { display: inline-block; color: #0e7cb6; }
+
+/* V: the five numbers */
+.recap { display: flex; align-items: flex-start; justify-content: center; padding-top: 8cqw; }
+.row { display: flex; align-items: flex-start; justify-content: center; gap: 2.6cqw; }
+.rc { width: 17.4cqw; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.rn { font-size: 11cqw; line-height: 0.85; }
+.rc .label { font-size: max(1.5cqw, 9px); }
+.rule { position: absolute; left: 7cqw; right: 7cqw; top: 27cqw; height: 0.25cqw; background: #0e7cb6; transform-origin: left center; }
+
+.pp { position: absolute; right: 2cqw; bottom: 2cqw; z-index: 30; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: #14181f; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18); cursor: pointer; }
+.pp svg { width: 18px; height: 18px; fill: currentColor; }
+.pp:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }

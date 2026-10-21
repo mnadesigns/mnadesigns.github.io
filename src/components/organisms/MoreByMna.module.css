@@ -4,6 +4,7 @@
 .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .card { display: block; color: var(--heading); text-decoration: none; }
 .media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--ink-12); border-radius: var(--r); background: #fff; transition: border-color 0.2s; }
+.media :global(.sti-film) { border: 0; border-radius: 0; } /* the card already draws the border, so the film inside must not draw a second one */
 .media > div { height: 100%; } /* the film box fills the 16:9 frame */
 .media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
 .card:hover .media, .card:focus-visible .media { border-color: var(--ink-12); }
@@ -11,7 +12,7 @@
 .meta { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
 .name { font-family: var(--display); text-transform: uppercase; font-size: 28px; line-height: 1; color: var(--heading); }
 .here { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 8px; border-radius: 99px; background: var(--brand); color: var(--white); }
-.arrow { margin-left: auto; font-family: var(--sans); color: var(--ink-50); transition: transform 0.2s, color 0.2s; }
+.arrow { margin-left: auto; font-family: var(--sans); font-size: 24px; font-weight: 600; line-height: 1; color: var(--heading); transition: transform 0.2s, color 0.2s; }
 .card:hover .arrow { color: var(--brand); transform: translate(2px, -2px); }
 .line { margin: 8px 0 0; font-family: var(--sans); font-size: 15px; line-height: 1.5; color: var(--ink-65); }
 @container (max-width: 600px) { .row { grid-template-columns: 1fr; gap: 40px; } }

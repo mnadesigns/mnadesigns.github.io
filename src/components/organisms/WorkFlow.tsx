@@ -35,11 +35,11 @@ export function WorkFlow({ flow }: { flow: Flow }) {
   const playing = seen && !calm;
   useEffect(() => {
     if (!playing) return;
-    const t = setTimeout(() => setI((n) => (n + 1) % steps.length), step.hold ?? 2800);
+    const t = setTimeout(() => setI((n) => (n + 1) % steps.length), step.hold ?? 1900);
     return () => clearTimeout(t);
   }, [playing, i, step.hold, steps.length]);
 
-  const move = calm ? { duration: 0 } : { duration: 0.75, ease: EASE };
+  const move = calm ? { duration: 0 } : { duration: 0.5, ease: EASE };
 
   return (
     <section className="wk-flow" aria-label={flow.title}>
@@ -54,10 +54,10 @@ export function WorkFlow({ flow }: { flow: Flow }) {
             <img key={s.src} src={s.src} alt="" width={3126} height={Math.round(3126 / ratio)} loading="lazy" draggable={false} style={{ visibility: n === i ? "visible" : "hidden" }} />
           ))}
           {step.click && (
-            <motion.i key={i} className="wk-flow-ripple" aria-hidden="true" style={{ left: `${step.click.x}%`, top: `${step.click.y}%` }} initial={{ scale: 0.3, opacity: 0 }} animate={calm ? { opacity: 0 } : { scale: [0.4, 1.4, 1.9], opacity: [1, 0.7, 0] }} transition={{ duration: 0.9, delay: 0.95, ease: "easeOut" }} />
+            <motion.i key={i} className="wk-flow-ripple" aria-hidden="true" style={{ left: `${step.click.x}%`, top: `${step.click.y}%` }} initial={{ scale: 0.3, opacity: 0 }} animate={calm ? { opacity: 0 } : { scale: [0.4, 1.4, 1.9], opacity: [1, 0.7, 0] }} transition={{ duration: 0.6, delay: 0.95, ease: "easeOut" }} />
           )}
         </motion.div>
-        <motion.span key={i} className={`wk-flow-chip${step.tone ? ` is-${step.tone}` : ""}`} role="status" initial={calm ? false : { y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: EASE }}><i aria-hidden="true" />{step.cap}</motion.span>
+        <motion.span key={i} className={`wk-flow-chip${step.tone ? ` is-${step.tone}` : ""}`} role="status" initial={calm ? false : { y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.35, ease: EASE }}><i aria-hidden="true" />{step.cap}</motion.span>
         <button type="button" className="wk-flow-open" data-lightbox-src={step.src} data-lightbox-alt={step.alt} aria-label={`View ${step.alt} full size`} />
       </div>
     </section>

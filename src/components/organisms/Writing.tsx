@@ -11,7 +11,7 @@ export function Writing() {
         <Reveal>
           <div className="sec-intro">
             <div>
-              <h2 className="h2">Writing</h2>
+              <h2 className="h2">Read<em>.</em></h2>
               <p className="sec-sub">Guides to the AI-augmented pipelines I use, and notes from experiments.</p>
             </div>
             <BtnCircle href="/writing/" label="All writing" />

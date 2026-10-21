@@ -4,7 +4,7 @@ import { ArticleThumb } from "@/components/atoms/ArticleThumb";
 import { Doors } from "@/components/organisms/Doors";
 import { Arrow } from "@/components/atoms/Buttons";
 
-export const metadata = { title: "Writing" };
+export const metadata = { title: "Read" };
 
 export default function Writing() {
   return (
@@ -12,7 +12,7 @@ export default function Writing() {
       <section className="wr-hero">
         <div className="wr-hero-inner">
           <p className="wr-hero-kicker">Writing</p>
-          <h1 className="wr-hero-title">Writing<em>.</em></h1>
+          <h1 className="wr-hero-title">Read<em>.</em></h1>
           <p className="wr-hero-sub">Practical guides to the six AI-augmented pipelines I use: how each one works, step by step, so you can use it too.</p>
         </div>
       </section>

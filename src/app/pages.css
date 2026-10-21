@@ -72,7 +72,7 @@
   .sti-feat { gap: 24px; padding: 32px 0 40px; }
   .sti-feat-visual { order: -1; }
   .sti-feat--film .sti-feat-visual { width: 100vw; margin-inline: calc(50% - 50vw); }
-  .sti-feat--film .sti-film { border-radius: 0; border-left: 0; border-right: 0; }
+  .sti-feat--film .sti-film, .sti-feat--film .sti-feat-visual > section { border-radius: 0; border-left: 0; border-right: 0; }
   .sti-feat--film { padding-top: 0; } /* the media starts right under the line above it */
   .sti-lede { padding-inline: 20px; } /* the line under the title no longer touches the edges of the screen */
 }

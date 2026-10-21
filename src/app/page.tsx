@@ -1,6 +1,7 @@
 import { Hero } from "@/components/organisms/Hero";
 import { SkillsStats } from "@/components/organisms/SkillsStats";
 import { Chapters } from "@/components/organisms/Chapters";
+import { MoreWork } from "@/components/organisms/MoreWork";
 import { Services } from "@/components/organisms/Services";
 import { Breaker } from "@/components/organisms/Breaker";
 import { ClientStories } from "@/components/organisms/ClientStories";
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <SkillsStats />
       <Chapters />
+      <MoreWork />
       <Services />
       <Breaker />
       <ClientStories />

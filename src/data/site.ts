@@ -1,6 +1,17 @@
 import type { FilmItem } from "@/types/film";
 import type { ToolIconName } from "@/components/atoms/ToolIcons";
 // Home page content. Sourced from the "Linkdein Profile Optimization" Claude project; only claims confirmed there are used.
+// The client work taken on directly. No platform is named. NEEDS PROOF: the lines below are descriptive, with no figures; confirm or replace.
+export const clientCopy = {
+  role: "Product Designer",
+  name: "Client Work",
+  sub: "A founder comes with a rough idea. I turn it into designed screens and a clear brief for the developers, and stay close until it ships.",
+  stats: [
+    { v: "Web + apps", l: "What I design" },
+    { v: "1:1", l: "Straight with the founder" },
+  ],
+};
+
 export const site = {
   name: "Muhammad Naeem",
   role: "AI Product Leader, Lahore, Pakistan",
@@ -22,7 +33,7 @@ export const socials = [
 export const navLinks = [
   { label: "Work", href: "/stories/" },
   { label: "About", href: "/about/" },
-  { label: "Writing", href: "/writing/" },
+  { label: "Read", href: "/writing/" },
   { label: "Resume", href: "/resume/" },
 ];
 
@@ -120,15 +131,19 @@ export const chapters = [
         { type: "clip", src: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3", fit: "cover" },
         { type: "scene", id: "spoonful", dur: 4000 },
         { type: "scene", id: "peers", dur: 4000 },
-        { type: "slide", bg: "#302f7f", dark: true, dur: 2400, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
+        // the first slide of the third work: the company logo on white
+        { type: "slide", bg: "#ffffff", dark: false, dur: 3000, logo: { src: "/images/brands/mlk-group.png", name: "MLK Group" } },
+        // the cover of the websites film (the second half of this playlist, see Chapters): the tablet versions of the sites, columns jogging up and down
+        { type: "scene", id: "ipad-grid", dur: 5400 },
+        { type: "slide", bg: "#0b3a46", dark: true, dur: 2400, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
         // more websites, a figure in the middle and one at the end
         { type: "scene", id: "keysborough", dur: 4000 },
-        { type: "slide", bg: "#302f7f", dark: true, dur: 2800, kicker: "From fintech to fashion", giant: 25, suffix: "+", tag: "Industries served. One team. Every solution." },
+        { type: "slide", bg: "#302f7f", dark: true, dur: 9800, zoom: ["/images/work/mlk/collage/ae.webp", "/images/work/mlk/collage/keys.webp", "/images/work/mlk/collage/kombi.webp", "/images/work/mlk/collage/scp.webp", "/images/work/mlk/collage/telco.webp", "/images/work/mlk/collage/wp.webp", "/images/work/mlk/collage/zigbis.webp"], kicker: "From fintech to fashion", giant: 25, suffix: "+", tag: "Industries served. One team. Every solution." },
         { type: "scene", id: "wonderpies", dur: 4000 },
         { type: "slide", bg: "#ffffff", dark: false, dur: 2400, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "scene", id: "telcoict", dur: 4000 },
-        { type: "scene", id: "pharmacy", dur: 8333 },
-        { type: "scene", id: "zigbis", dur: 4000 },
+        // CytoSite Bio on an iMac and an iPhone, gliding in and drifting, just before the closing figure
+        { type: "scene", id: "cytosite", dur: 6000 },
         { type: "slide", bg: "#24243b", dark: true, dur: 2400, kicker: "The growth", line: "2.5x", tag: "Online orders" },
       ] as FilmItem[],
     },

@@ -1,10 +1,10 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { Code, PenTool, Rocket } from "lucide-react";
+import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { Code, PenTool, Rocket, Heart, MoveRight } from "lucide-react";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
-import type { WorkAnnotated as Annotated, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
+import type { WorkAnnotated as Annotated, WorkBand as Band, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
 
 // The set pieces of a case study page, built from the work's own facts and screens (inspired by Hyperactive's Behance cases and the Conceptzilla shots):
 // an opening statement, a map of where the screens sit in the product, and the design to code loop. Everything arrives by moving, decelerating (no fades from nothing).
@@ -210,6 +210,31 @@ export function WorkPan({ pan }: { pan: Pan }) {
   );
 }
 
+// a 16:9 collage that zooms in very slowly once it scrolls into view; a click opens it in the full view
+export function WorkZoom({ src, alt }: { src: string; alt: string }) {
+  const calm = !!useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 35%"] });
+  const grow = useTransform(scrollYProgress, [0, 1], [0.84, 1]); // the collage arrives as an inset card and grows to the full width
+  return (
+    <motion.section className="wk-pan" ref={ref} style={calm ? { aspectRatio: 16 / 9 } : { aspectRatio: 16 / 9, scale: grow }} aria-label={alt}>
+      <motion.img
+        src={src}
+        alt={alt}
+        width={2880}
+        height={1620}
+        loading="lazy"
+        draggable={false}
+        initial={calm ? false : { scale: 1 }}
+        whileInView={calm ? undefined : { scale: 1.12 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 16, ease: [0.25, 0.1, 0.25, 1] }}
+      />
+      <button type="button" className="wk-flow-open" data-lightbox-src={src} data-lightbox-alt={alt} aria-label={`View ${alt} full size`} />
+    </motion.section>
+  );
+}
+
 // the old and the new screen in one frame: drag (or use the arrow keys on) the handle to wipe between them. It sweeps once when it scrolls into view.
 export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
   const calm = !!useReducedMotion();
@@ -220,15 +245,19 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
   const clip = useTransform(pos, (v) => `inset(0 ${100 - v}% 0 0)`);
   const left = useTransform(pos, (v) => `${v}%`);
   const [shown, setShown] = useState(50);
+  const snap = (to: number) => { touched.current = true; animate(pos, to, { duration: 0.9, ease: EASE }); };
+  // scrub: the wipe follows the scroll, from the old screen to the new one, until the visitor takes hold of it
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 88%", "end 38%"] });
+  useMotionValueEvent(scrollYProgress, "change", (v) => { if (ba.scrub && !calm && !touched.current) pos.set(96 - v * 90); });
   useEffect(() => {
-    if (!seen || calm) return;
+    if (!seen || calm || ba.scrub) return;
     const c = animate(pos, 50, { duration: 1.5, ease: EASE, delay: 0.2 });
     return () => c.stop();
-  }, [seen, calm, pos]);
+  }, [seen, calm, pos, ba.scrub]);
   useEffect(() => pos.on("change", (v) => setShown(Math.round(v))), [pos]);
   return (
-    <section className="wk-flow" aria-label={ba.title}>
-      <Head title={ba.title} note={ba.note} />
+    <section className="wk-flow" aria-label={ba.title ?? ba.before.alt}>
+      {ba.title && ba.note && <Head title={ba.title} note={ba.note} />}
       <div className="wk-ba" ref={ref} style={{ aspectRatio: ba.ratio }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="wk-ba-img" src={ba.after.src} alt={ba.after.alt} loading="lazy" draggable={false} />
@@ -236,8 +265,12 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="wk-ba-img" src={ba.before.src} alt={ba.before.alt} loading="lazy" draggable={false} />
         </motion.div>
-        <span className="wk-ba-tag wk-ba-tag--old">Before</span>
-        <span className="wk-ba-tag wk-ba-tag--new">After</span>
+        <button type="button" className="wk-ba-tag wk-ba-tag--old" onClick={() => snap(96)}>Before</button>
+        <span className="wk-ba-react">
+          <button type="button" className="wk-ba-tag wk-ba-tag--new is-shaking" onClick={() => snap(4)}>After</button>
+          {/* hearts rise from the After label like the reactions on a live stream */}
+          {[0, 1, 2, 3, 4].map((i) => <Heart key={i} className="wk-ba-thumb" style={{ "--i": i } as React.CSSProperties} aria-hidden="true" />)}
+        </span>
         <motion.span className="wk-ba-handle" style={{ left }} aria-hidden="true"><i><b /></i></motion.span>
         <input
           className="wk-ba-range"
@@ -276,3 +309,30 @@ export function WorkLoop({ loop }: { loop: Loop }) {
     </section>
   );
 }
+
+// the brand band: the brand's colour with its name running sideways as the page scrolls past, one line of redesign changes (old to new) rolling under it; the text is black or white, whichever reads better on the colour
+const inkOn = (hex: string) => {
+  const c = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+  const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  return 1.05 / (L + 0.05) > (L + 0.05) / 0.05 ? "#fff" : "#111";
+};
+export function WorkBand({ band }: { band: Band }) {
+  const calm = !!useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const a = useTransform(scrollYProgress, [0, 1], ["8%", "-34%"]);
+  const run = (t: string) => Array.from({ length: 6 }, () => t).join(" · ");
+  return (
+    <section className="wk-band" ref={ref} style={{ background: band.bg, color: inkOn(band.bg), "--band-bg": band.bg, "--band-ink": inkOn(band.bg) } as React.CSSProperties} aria-label={`${band.name}: ${band.changes.map((c) => `${c.from} became ${c.to}`).join("; ")}`}>
+      <motion.div className="wk-band-row" style={calm ? undefined : { x: a }} aria-hidden="true">{run(band.name.toUpperCase())}</motion.div>
+      <div className="wk-band-tick" aria-hidden="true">
+        <div className="wk-band-track">
+          {[0, 1].map((h) => (
+            <ul key={h}>{[...band.changes, ...band.changes].map((c, i) => <li key={i}><span>{c.from}</span><MoveRight size={30} strokeWidth={1.5} /><b>{c.to}</b></li>)}</ul>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
