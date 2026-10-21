@@ -7,7 +7,7 @@ export const resume = {
     { label: "me.naeem88@gmail.com", href: "mailto:me.naeem88@gmail.com" },
     { label: "+92 321 888 6461", href: "https://wa.me/923218886461" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
-    { label: "Portfolio", href: "https://muhammadnaeem.vercel.app/stories/" },
+    { label: "Portfolio", href: "https://mnadesigns.github.io/stories/" },
   ],
   summary:
     "Lead Product Designer with 10+ years across SaaS, fintech, and health, working remotely with teams in Canada, the UK, and Australia. Builds design systems from scratch, then ships them as production UI using AI-augmented workflows (Claude Code, Cursor, Figma MCP).",
