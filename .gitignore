@@ -64,3 +64,7 @@ film/pumba/stills/
 film/pumba/look/
 film/pumba/*.png
 film/pumba/final.mp4*
+
+# Raw working files (sources of the images and films on the site): kept on this machine, not in the repo
+/source/
+/work-source/
