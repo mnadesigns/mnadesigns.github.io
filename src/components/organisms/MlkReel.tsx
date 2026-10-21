@@ -40,7 +40,7 @@ const STATS = [
   { n: 2.5, dec: 1, suf: "×", label: "Online orders", left: 37, top: 25, at: 12.1 },
   { n: 3, dec: 0, suf: "", label: "Apps, platforms and websites", left: 66, top: 11, at: 12.3 },
 ];
-const BRANDS = ["sredio", "quodarca", "specialist-clicnic-phramacy", "telco-ict", "wonder-pies", "peers", "applied-electronics", "cytosite-bio", "keysborough-ver-prac", "cupffee"];
+const BRANDS = ["sredio", "quodarca", "specialist-clicnic-phramacy", "telco-ict", "wonder-pies", "peers", "applied-electronics", "cytosite-bio", "keysborough-ver-prac"];
 const TITLE = "MLK GROUP".split("");
 const SUB_NOTE = "Senior UX/UI Designer · 2021 – 2023";
 

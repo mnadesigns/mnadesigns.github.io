@@ -33,7 +33,6 @@ const BRANDS = [
   { name: "Applied Electronics", src: "applied-electronics" },
   { name: "Cytosite Bio", src: "cytosite-bio" },
   { name: "Keysborough Veterinary Practice", src: "keysborough-ver-prac" },
-  { name: "Cupffee", src: "cupffee" },
 ];
 
 // One endless row. `speed` is in px per second, `reverse` slides it to the right. It runs only while it is on screen.
