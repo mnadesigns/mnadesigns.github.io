@@ -4,7 +4,7 @@ import type { ToolIconName } from "@/components/atoms/ToolIcons";
 // The client work taken on directly. No platform is named. NEEDS PROOF: the lines below are descriptive, with no figures; confirm or replace.
 export const clientCopy = {
   role: "Product Designer",
-  name: "Client Work",
+  name: "Idea to App",
   sub: "A founder comes with a rough idea. I turn it into designed screens and a clear brief for the developers, and stay close until it ships.",
   stats: [
     { v: "Web + apps", l: "What I design" },
