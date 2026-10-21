@@ -12,13 +12,14 @@ const W = MLK_IPAD_W, H = MLK_IPAD_H; // every mockup is this size, landscape, e
 const SHOT = MLK_IPADS;
 type Key = keyof typeof SHOT;
 
+// no tablet sits next to the same tablet, in its column or in the next one (within two iPad heights), and two dark ones never touch, so every neighbour is a contrast
 // top: where the column starts, in iPad heights; always above the panel so no corner is ever empty, and different for every column; run: the tablets from the top down
 const COLS: { top: number; run: Key[] }[] = [
-  { top: -1.7, run: ["kombi", "ae", "scp", "cytosite", "keys", "zigbis", "telco", "amcp", "ae"] },
-  { top: -0.65, run: ["telco", "cytosite", "keys", "amcp", "kombi", "ae", "zigbis", "scp", "keys"] },
-  { top: -1.25, run: ["zigbis", "scp", "cytosite", "ae", "telco", "keys", "amcp", "kombi", "scp"] },
-  { top: -0.9, run: ["cytosite", "amcp", "kombi", "keys", "zigbis", "scp", "ae", "telco", "kombi"] },
-  { top: -1.45, run: ["keys", "amcp", "telco", "ae", "cytosite", "kombi", "scp", "zigbis", "amcp"] },
+  { top: -1.7, run: ["telco", "kombi", "zigbis", "keys", "amcp", "cytosite", "zigbis"] },
+  { top: -0.65, run: ["amcp", "scp", "kombi", "zigbis", "scp", "amcp", "telco"] },
+  { top: -1.25, run: ["kombi", "zigbis", "telco", "amcp", "keys", "kombi", "zigbis"] },
+  { top: -0.9, run: ["cytosite", "scp", "kombi", "zigbis", "scp", "amcp", "telco"] },
+  { top: -1.45, run: ["amcp", "zigbis", "telco", "amcp", "cytosite", "kombi", "zigbis"] },
 ];
 const SHARP = [0.16, 1, 0.3, 1] as const; // an exponential ease-out: it leaves fast and stops dead
 
@@ -42,7 +43,7 @@ export function IpadGridScene(props: SceneProps) {
                   animate={props.active ? { y: [`${d * 130}%`, "0%", `${-d * 4.5}%`, `${-d * 4.5}%`, `${d * 3}%`] } : { y: `${d * 130}%` }}
                   transition={props.active ? { duration: 3.9, delay: i * 0.07, times: [0, 0.2, 0.42, 0.62, 0.84], ease: [SHARP, SHARP, "linear", SHARP] } : { duration: 0 }}
                 >
-                  {c.run.map((k, j) => <img key={j} src={SHOT[k].src} alt={SHOT[k].alt} width={W} height={H} decoding="async" style={{ position: "relative", inset: "auto", display: "block", width: "100%", height: "auto", objectFit: "fill", willChange: "auto", filter: "drop-shadow(0 22px 30px rgba(24,24,60,0.26))" }} />)}
+                  {c.run.map((k, j) => <img key={j} src={SHOT[k].src} alt={SHOT[k].alt} width={W} height={H} decoding="async" style={{ position: "relative", inset: "auto", display: "block", width: "100%", height: "auto", objectFit: "fill", willChange: "auto" }} />)}
                 </motion.div>
               );
             })}

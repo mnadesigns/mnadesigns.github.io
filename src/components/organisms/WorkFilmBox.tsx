@@ -12,7 +12,10 @@ export function WorkFilmBox({ slug, count, scene, controls }: { slug: string; co
   const box = useRef<HTMLDivElement>(null);
   const [fit, setFit] = useState<{ w: number; h: number; k: number } | null>(null);
   const quodarca = slug === "quodarca";
-  const full = quodarca ? (chapters.find((c) => c.name === "QuodArca") as { film?: { items: FilmItem[]; poster: string } } | undefined)?.film : undefined;
+  const chapterName = quodarca ? "QuodArca" : slug === "mlk-group" ? "MLK Group" : ""; // the works whose own film plays here; any other slug plays the SRED.io ad
+  const whole = chapterName ? (chapters.find((c) => c.name === chapterName) as { film?: { items: FilmItem[]; poster: string } } | undefined)?.film : undefined;
+  // the home page splits the MLK film in two: work 3 is the websites half (from the logo slide on), work 4 the apps; this page plays work 3
+  const full = useMemo(() => (whole && slug === "mlk-group" ? { ...whole, items: whole.items.slice(5) } : whole), [whole, slug]);
   // `count` plays only the first slides of the film (the details page uses the first one)
   // `scene` plays just that one coded scene of the film, on a loop (the details page uses it for Projects delivered)
   const film = useMemo(() => (scene ? { items: [{ type: "scene", id: scene, dur: 4000 }] as FilmItem[], poster: "" } : full && count ? { ...full, items: full.items.slice(0, count) } : full), [full, count, scene]);

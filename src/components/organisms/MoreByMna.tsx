@@ -5,7 +5,7 @@ import { storyPages } from "@/data/storyPages";
 import { WorkFilmBox } from "./WorkFilmBox";
 import styles from "./MoreByMna.module.css";
 
-// The three works as 16:9 cards. SRED.io and QuodArca play their slides in the card, like on the Work page; the page being viewed is marked and works like the others.
+// The three works as 16:9 cards. SRED.io, QuodArca and MLK Group play their films in the card, like on the Work page; the page being viewed is marked and works like the others.
 export function MoreByMna({ current }: { current: string }) {
   return (
     <section className={`shell ${styles.wrap}`}>
@@ -16,7 +16,7 @@ export function MoreByMna({ current }: { current: string }) {
           return (
             <Link key={s.slug} href={`/work/${s.slug}/`} className={styles.card} aria-current={here ? "page" : undefined}>
               <div className={styles.media}>
-                {s.slug === "sred-io" || s.slug === "quodarca"
+                {s.slug === "sred-io" || s.slug === "quodarca" || s.slug === "mlk-group"
                   ? <WorkFilmBox slug={s.slug} />
                   : <img src={storyPages[s.slug].poster} alt={s.name} width={1920} height={1080} loading="lazy" />}
               </div>

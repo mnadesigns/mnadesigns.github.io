@@ -4,7 +4,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { Code, PenTool, Rocket, Heart, MoveRight } from "lucide-react";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
-import type { WorkAnnotated as Annotated, WorkBand as Band, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
+import type { WorkAnnotated as Annotated, WorkBand as Band, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkFigures as Figures, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
 
 // The set pieces of a case study page, built from the work's own facts and screens (inspired by Hyperactive's Behance cases and the Conceptzilla shots):
 // an opening statement, a map of where the screens sit in the product, and the design to code loop. Everything arrives by moving, decelerating (no fades from nothing).
@@ -33,7 +33,7 @@ function ToolLogo({ id }: { id: "figma" | "flowbite" | "claude" | "cursor" }) {
   return <ToolIcon name={id} className={id === "claude" ? "wk-tool-claude" : "wk-tool-cursor"} />;
 }
 
-export function WorkIntro({ intro }: { intro: Intro }) {
+export function WorkIntro({ intro, between }: { intro: Intro; between?: React.ReactNode }) { // between: a block that sits between the statement and the "what I did" card
   const calm = !!useReducedMotion();
   return (
     <>
@@ -47,6 +47,7 @@ export function WorkIntro({ intro }: { intro: Intro }) {
         ))}
       </dl>
     </section>
+    {between}
     {intro.did && (
       <section className="wk-did" aria-label={intro.didLabel}>
         <p className="wk-did-label">{intro.didLabel}</p>
@@ -107,6 +108,28 @@ export function WorkChapter({ chapter }: { chapter: Chapter }) {
           ))}
         </ol>
       )}
+    </section>
+  );
+}
+
+// challenges and solutions as type only: one big figure per row, the challenge and the fix beside it, on a dark panel
+export function WorkFigures({ figures }: { figures: Figures }) {
+  const calm = !!useReducedMotion();
+  return (
+    <section className="wk-fig" aria-label={figures.title}>
+      <p className="wk-fig-eyebrow">{figures.eyebrow}</p>
+      <motion.h2 className="wk-fig-title" {...rise(0, calm)}>{figures.title}</motion.h2>
+      <ol className="wk-fig-rows">
+        {figures.rows.map((r, i) => (
+          <motion.li className="wk-fig-row" key={r.fig} {...rise(i + 1, calm)}>
+            <div className="wk-fig-num"><strong>{r.fig}</strong><span>{r.unit}</span></div>
+            <div className="wk-fig-text">
+              <p className="wk-fig-q">{r.challenge}</p>
+              <p className="wk-fig-a">{r.solution}</p>
+            </div>
+          </motion.li>
+        ))}
+      </ol>
     </section>
   );
 }
@@ -236,6 +259,8 @@ export function WorkZoom({ src, alt }: { src: string; alt: string }) {
 }
 
 // the old and the new screen in one frame: drag (or use the arrow keys on) the handle to wipe between them. It sweeps once when it scrolls into view.
+// the specks a label is dusted into (they blow to the left; the After label flips them to the right)
+const DUST = Array.from({ length: 18 }, (_, i) => <i key={i} className="wk-ba-dust" aria-hidden="true" style={{ "--x": `${(i * 100) / 17}%`, "--dx": `${-(34 + ((i * 37) % 80))}px`, "--dy": `${((i * 53) % 70) - 35}px`, "--sz": `${3 + ((i * 7) % 5)}px`, "--dl": `${(i % 6) * 0.04}s` } as React.CSSProperties} />);
 export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
   const calm = !!useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -245,6 +270,10 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
   const clip = useTransform(pos, (v) => `inset(0 ${100 - v}% 0 0)`);
   const left = useTransform(pos, (v) => `${v}%`);
   const [shown, setShown] = useState(50);
+  const oldTag = useRef<HTMLSpanElement>(null);
+  const newTag = useRef<HTMLSpanElement>(null);
+  const [swept, setSwept] = useState({ old: false, new: false }); // the handle is on a label: it is wiped away as dust (Before to the left, After to the right)
+  const [wasSwept, setWasSwept] = useState({ old: false, new: false }); // it has been wiped once, so it pops back when the handle leaves
   const snap = (to: number) => { touched.current = true; animate(pos, to, { duration: 0.9, ease: EASE }); };
   // scrub: the wipe follows the scroll, from the old screen to the new one, until the visitor takes hold of it
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 88%", "end 38%"] });
@@ -254,7 +283,15 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
     const c = animate(pos, 50, { duration: 1.5, ease: EASE, delay: 0.2 });
     return () => c.stop();
   }, [seen, calm, pos, ba.scrub]);
-  useEffect(() => pos.on("change", (v) => setShown(Math.round(v))), [pos]);
+  useEffect(() => pos.on("change", (v) => {
+    setShown(Math.round(v));
+    const o = oldTag.current, n = newTag.current, f = ref.current;
+    if (!o || !n || !f) return;
+    const x = (v / 100) * f.clientWidth;
+    const hit = { old: x <= o.offsetLeft + o.offsetWidth + 4, new: x >= n.offsetLeft - 4 }; // the handle has reached the label's inner edge
+    setSwept(hit);
+    setWasSwept((w) => (w.old === (w.old || hit.old) && w.new === (w.new || hit.new) ? w : { old: w.old || hit.old, new: w.new || hit.new }));
+  }), [pos]);
   return (
     <section className="wk-flow" aria-label={ba.title ?? ba.before.alt}>
       {ba.title && ba.note && <Head title={ba.title} note={ba.note} />}
@@ -265,9 +302,16 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="wk-ba-img" src={ba.before.src} alt={ba.before.alt} loading="lazy" draggable={false} />
         </motion.div>
-        <button type="button" className="wk-ba-tag wk-ba-tag--old" onClick={() => snap(96)}>Before</button>
-        <span className="wk-ba-react">
+        <span ref={oldTag} className={`wk-ba-react wk-ba-react--old${swept.old ? " is-clean" : ""}${wasSwept.old ? " was-clean" : ""}`}>
+          <button type="button" className="wk-ba-tag wk-ba-tag--old is-shaking" onClick={() => snap(96)}>Before</button>
+          {/* the dust the handle sweeps off the label */}
+          {DUST}
+          {/* sad faces rise from the Before label the same way */}
+          {["😞", "😢", "😞", "😟", "😢"].map((e, i) => <span key={i} className="wk-ba-thumb wk-ba-sad" style={{ "--i": i } as React.CSSProperties} aria-hidden="true">{e}</span>)}
+        </span>
+        <span ref={newTag} className={`wk-ba-react wk-ba-react--new${swept.new ? " is-clean" : ""}${wasSwept.new ? " was-clean" : ""}`}>
           <button type="button" className="wk-ba-tag wk-ba-tag--new is-shaking" onClick={() => snap(4)}>After</button>
+          {DUST}
           {/* hearts rise from the After label like the reactions on a live stream */}
           {[0, 1, 2, 3, 4].map((i) => <Heart key={i} className="wk-ba-thumb" style={{ "--i": i } as React.CSSProperties} aria-hidden="true" />)}
         </span>
@@ -317,14 +361,11 @@ const inkOn = (hex: string) => {
   return 1.05 / (L + 0.05) > (L + 0.05) / 0.05 ? "#fff" : "#111";
 };
 export function WorkBand({ band }: { band: Band }) {
-  const calm = !!useReducedMotion();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const a = useTransform(scrollYProgress, [0, 1], ["8%", "-34%"]);
   const run = (t: string) => Array.from({ length: 6 }, () => t).join(" · ");
   return (
-    <section className="wk-band" ref={ref} style={{ background: band.bg, color: inkOn(band.bg), "--band-bg": band.bg, "--band-ink": inkOn(band.bg) } as React.CSSProperties} aria-label={`${band.name}: ${band.changes.map((c) => `${c.from} became ${c.to}`).join("; ")}`}>
-      <motion.div className="wk-band-row" style={calm ? undefined : { x: a }} aria-hidden="true">{run(band.name.toUpperCase())}</motion.div>
+    <section className="wk-band" style={{ background: band.bg, color: inkOn(band.bg), "--band-bg": band.bg, "--band-ink": inkOn(band.bg) } as React.CSSProperties} aria-label={`${band.name}: ${band.changes.map((c) => `${c.from} became ${c.to}`).join("; ")}`}>
+      {/* the name runs left to right on its own: the row holds the run twice and slides by half its width, so the loop has no seam */}
+      <div className="wk-band-row" aria-hidden="true">{[0, 1].map((h) => <span key={h}>{run(band.name.toUpperCase())}</span>)}</div>
       <div className="wk-band-tick" aria-hidden="true">
         <div className="wk-band-track">
           {[0, 1].map((h) => (

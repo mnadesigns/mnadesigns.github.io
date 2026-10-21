@@ -2,20 +2,27 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type Item = { kind: "image" | "video"; src: string; alt: string; poster?: string };
+type Item = { kind: "image" | "video"; src: string; alt: string; poster?: string; set?: { src: string; alt: string }[]; i?: number }; // set: the other views of a carousel, so the full view can move through them
 
-const Svg = ({ d, circle }: { d: string; circle?: boolean }) => (
+const Svg = ({ d }: { d: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    {circle && <circle cx="11" cy="11" r="7" />}
     <path d={d} />
   </svg>
 );
 
+const ArrowIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" />
+  </svg>
+);
+
 // The media area of a work details page, with a full-view overlay (the way Dribbble opens a shot): click an image or a video and it opens large over the page on a dark backdrop,
-// with a zoom button and a close button at the top right. Esc, the close button or a click outside the picture closes it; the page behind does not scroll.
+// with a close button at the top right. Esc, the close button or a click outside the picture closes it; the page behind does not scroll.
+// The full view of a carousel has the carousel's own arrows: the halves of the screen are the previous and the next buttons, and the pointer becomes the big circle.
 export function MediaLightbox({ children }: { children: React.ReactNode }) {
   const [item, setItem] = useState<Item | null>(null);
-  const [zoom, setZoom] = useState(false);
+  const [side, setSide] = useState<"left" | "right" | null>(null);
+  const cursor = useRef<HTMLSpanElement>(null);
   const [closing, setClosing] = useState(false);
   const [ratio, setRatio] = useState(0); // width / height of the picture, known once it has loaded: the picture is sized to the largest it can be inside the window
   const opener = useRef<Element | null>(null);
@@ -23,12 +30,16 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
 
   const close = useCallback(() => {
     setClosing(true);
-    setTimeout(() => { setItem(null); setClosing(false); setZoom(false); (opener.current as HTMLElement | null)?.focus?.(); }, 180);
+    setTimeout(() => { setItem(null); setClosing(false); (opener.current as HTMLElement | null)?.focus?.(); }, 180);
   }, []);
 
   const pick = (t: HTMLElement): Item | null => {
     const exp = t.closest<HTMLElement>("[data-lightbox-src]"); // the expand button of a carousel
-    if (exp) return { kind: "image", src: exp.dataset.lightboxSrc!, alt: exp.dataset.lightboxAlt ?? "" };
+    if (exp) {
+      let set: Item["set"];
+      try { set = JSON.parse(exp.dataset.lightboxSet ?? "null") ?? undefined; } catch { set = undefined; }
+      return { kind: "image", src: exp.dataset.lightboxSrc!, alt: exp.dataset.lightboxAlt ?? "", set, i: Number(exp.dataset.lightboxI ?? 0) };
+    }
     const img = t.closest<HTMLImageElement>(".wk-item img");
     if (img) return { kind: "image", src: img.currentSrc || img.src, alt: img.alt };
     const vid = t.closest<HTMLVideoElement>(".wk-vid video");
@@ -44,6 +55,23 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
     setItem(next);
   };
 
+  // the arrows of a carousel's full view: the next and the previous view, never past either end
+  const step = useCallback((d: number) => {
+    setItem((it) => {
+      if (!it?.set) return it;
+      const n = Math.max(0, Math.min(it.set.length - 1, (it.i ?? 0) + d));
+      if (n === it.i) return it;
+      setRatio(0);
+      return { ...it, src: it.set[n].src, alt: it.set[n].alt, i: n };
+    });
+  }, []);
+  const track = (e: React.PointerEvent<HTMLButtonElement>, s: "left" | "right") => {
+    if (e.pointerType !== "mouse") return;
+    if (cursor.current) cursor.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    setSide(s);
+  };
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+
   // while it is open: Esc closes, Tab stays inside, the page behind does not scroll
   useEffect(() => {
     if (!item) return;
@@ -53,6 +81,8 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
     html.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") { e.preventDefault(); close(); }
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
       if (e.key === "Tab") {
         const focusable = Array.from(document.querySelectorAll<HTMLElement>(".wk-lb button, .wk-lb video"));
         if (!focusable.length) return;
@@ -63,7 +93,7 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
     };
     document.addEventListener("keydown", onKey);
     return () => { document.removeEventListener("keydown", onKey); html.style.overflow = prev; };
-  }, [item, close]);
+  }, [item, close, step]);
 
   return (
     <>
@@ -81,19 +111,32 @@ export function MediaLightbox({ children }: { children: React.ReactNode }) {
       {item && (
         <div className={`wk-lb${closing ? " is-out" : ""}`} role="dialog" aria-modal="true" aria-label={item.alt || "Full view"} data-cursor="light">
           <div className="wk-lb-tools">
-            {item.kind === "image" && (
-              <button type="button" className="wk-lb-btn" onClick={() => setZoom((z) => !z)} aria-label={zoom ? "Zoom out" : "Zoom in"} aria-pressed={zoom}>
-                {zoom ? <Svg circle d="M8 11h6M21 21l-4.3-4.3" /> : <Svg circle d="M11 8v6M8 11h6M21 21l-4.3-4.3" />}
-              </button>
-            )}
             <button ref={closeBtn} type="button" className="wk-lb-btn" onClick={close} aria-label="Close full view">
               <Svg d="M6 6l12 12M18 6 6 18" />
             </button>
           </div>
-          <div className={`wk-lb-stage${zoom ? " is-zoom" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
+          {item.set && item.set.length > 1 && (
+            <>
+              <button type="button" className="wk-car-zone wk-car-zone--left" onClick={() => step(-1)} disabled={item.i === 0} onPointerMove={(e) => track(e, "left")} onPointerLeave={() => setSide(null)} aria-label="Previous view">
+                <span className="wk-car-edge wk-car-edge--left"><ArrowIcon /></span>
+              </button>
+              <button type="button" className="wk-car-zone wk-car-zone--right" onClick={() => step(1)} disabled={item.i === item.set.length - 1} onPointerMove={(e) => track(e, "right")} onPointerLeave={() => setSide(null)} aria-label="Next view">
+                <span className="wk-car-edge"><ArrowIcon /></span>
+              </button>
+              <span ref={cursor} className={`wk-car-cursor${side && !(side === "left" ? item.i === 0 : item.i === item.set.length - 1) ? " is-on" : ""}${side === "left" ? " is-left" : ""}`} aria-hidden="true">
+                <span className="wk-car-cursor-in"><ArrowIcon /></span>
+              </span>
+              <p className="wk-lb-count" aria-live="polite">{(item.i ?? 0) + 1} / {item.set.length}</p>
+            </>
+          )}
+          <div
+            className="wk-lb-stage"
+            onTouchStart={(e) => { swipe.current = e.touches.length === 1 ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : null; }}
+            onTouchEnd={(e) => { const s0 = swipe.current; swipe.current = null; if (!s0) return; const dx = e.changedTouches[0].clientX - s0.x, dy = e.changedTouches[0].clientY - s0.y; if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1); }}
+            onClick={(e) => { if (e.target === e.currentTarget) close(); }}>
             {item.kind === "image" ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.src} alt={item.alt} onClick={() => setZoom((z) => !z)} onLoad={(e) => setRatio(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)} style={!zoom && ratio ? { width: `min(100%, calc((100vh - 48px) * ${ratio}))` } : undefined} draggable={false} />
+              <img src={item.src} alt={item.alt} onLoad={(e) => setRatio(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)} style={ratio ? { width: `min(100%, calc((100vh - 48px) * ${ratio}))` } : undefined} draggable={false} />
             ) : (
               <video src={item.src} poster={item.poster} controls autoPlay={!window.matchMedia("(prefers-reduced-motion: reduce)").matches} loop muted playsInline aria-label={item.alt} onLoadedMetadata={(e) => setRatio(e.currentTarget.videoWidth / e.currentTarget.videoHeight)} style={ratio ? { width: `min(100%, calc((100vh - 48px) * ${ratio}))` } : undefined} />
             )}

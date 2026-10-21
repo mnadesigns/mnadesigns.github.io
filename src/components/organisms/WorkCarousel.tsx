@@ -12,14 +12,15 @@ const ArrowIcon = () => (
 );
 
 // The Framer University custom carousel pattern: the slides sit side by side in one wide track; the left and right halves of the stage are two real buttons
-// (previous and next; on touch screens they are inert and you swipe instead), and over them the pointer becomes the big circle of the site's own circle button; a click slides the track to the neighbour. A dark-on-light glass pill of dots,
-// in the manner of Apple's product galleries, shows where you are. Touch screens and keyboard focus get the circle at the edge of each half.
+// (previous and next; on touch screens they are inert and you swipe instead), and over them the pointer becomes the big circle of the site's own circle button; a click slides the track to the neighbour. The thumbnails below the stage show where you are
+// (and, on phones, a small count on the picture). Touch screens and keyboard focus get the circle at the edge of each half.
 export function WorkCarousel({ slides, label = "Design system views", top }: { slides: Slide[]; label?: string; top?: boolean }) { // top: taller screens are cropped from the bottom, never from the top
   const [i, setI] = useState(0);
   const [side, setSide] = useState<"left" | "right" | null>(null);
   const calm = useReducedMotion();
   const cursor = useRef<HTMLSpanElement>(null);
   const root = useRef<HTMLDivElement>(null);
+  const thumbs = useRef<HTMLDivElement>(null);
   const last = slides.length - 1;
   const go = (n: number) => setI(Math.max(0, Math.min(last, n)));
   const step = (d: number) => setI((n) => Math.max(0, Math.min(last, n + d))); // from the latest slide, so quick clicks in a row each count
@@ -50,6 +51,11 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.removeEventListener("pointermove", onMove); window.removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
   }, []);
+  // a long strip of thumbnails scrolls so the current one stays in view (the strip only, never the page)
+  useEffect(() => {
+    const strip = thumbs.current, b = strip?.children[i] as HTMLElement | undefined;
+    if (strip && b) strip.scrollLeft = b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2;
+  }, [i]);
   // swipe on touch screens: a mostly-horizontal move of 40px or more turns to the next or the previous view (a vertical move is left to the page, which scrolls)
   const swipe = useRef<{ x: number; y: number } | null>(null);
   const down = (e: React.PointerEvent) => { swipe.current = e.pointerType === "mouse" || (e.target as HTMLElement).closest("button") ? null : { x: e.clientX, y: e.clientY }; };
@@ -62,6 +68,7 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
   const atEnd = side === "left" ? i === 0 : i === last;
 
   return (
+    <>
     <div
       ref={root}
       className="wk-car"
@@ -97,19 +104,24 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
         <span className="wk-car-cursor-in"><ArrowIcon /></span>
       </span>
 
-      <button type="button" className="wk-car-expand" data-lightbox-src={slides[i].src} data-lightbox-alt={slides[i].alt} aria-label={`View ${slides[i].alt} full size`} onPointerEnter={() => setSide(null)}>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M11 8v6M8 11h6M21 21l-4.3-4.3" /></svg>
+      <button type="button" className="wk-car-expand" data-lightbox-src={slides[i].src} data-lightbox-alt={slides[i].alt} data-lightbox-set={JSON.stringify(slides)} data-lightbox-i={i} aria-label={`View ${slides[i].alt} full size`} onPointerEnter={() => setSide(null)}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
       </button>
 
       <p className="wk-car-sr" aria-live="polite">View {i + 1} of {slides.length}: {slides[i].alt}</p>
 
-      <div className="wk-car-dots" role="group" aria-label="Choose a view" style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}> {/* the blur is inline, as on the top navigation: the stylesheet build drops backdrop-filter */}
-        {slides.map((s, n) => (
-          <button key={s.src} type="button" className={n === i ? "is-on" : undefined} onClick={() => go(n)} aria-label={`View ${n + 1}: ${s.alt}`} aria-current={n === i ? "true" : undefined}>
-            <i />
-          </button>
-        ))}
-      </div>
+      <p className="wk-car-count" aria-hidden="true">{i + 1} / {slides.length}</p>
     </div>
+
+    {/* a small picture of every view under the stage, the current one ringed, as on Behance */}
+    <div ref={thumbs} className="wk-car-thumbs" role="group" aria-label={`${label}: thumbnails`}>
+      {slides.map((s, n) => (
+        <button key={s.src} type="button" className={n === i ? "is-on" : undefined} onClick={() => go(n)} aria-label={`View ${n + 1}: ${s.alt}`} aria-current={n === i ? "true" : undefined}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={s.src} alt="" width={160} height={90} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
+        </button>
+      ))}
+    </div>
+    </>
   );
 }

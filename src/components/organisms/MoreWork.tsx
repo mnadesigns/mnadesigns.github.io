@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useRef } from "react";
 import styles from "./MoreWork.module.css";
+import type { MLK_LOGOS } from "@/data/mlkIpads";
 
 // A band of more work, set like the one on designmonks.co: a lilac field, a row of brand logos drifting left, a strip of device screens (tablet, phone, tablet...) drifting left more slowly, and a second row of logos drifting right.
 // Measured there: the strips move at about 13px/s and the text rows at about 23px/s, all linear and endless. The track holds its content twice and slides by half its width, so the loop has no seam.
@@ -72,8 +73,8 @@ function Logos({ list }: { list: typeof BRANDS }) {
 }
 
 // `from` and `to` pick the screens by their number (1 to 14), for a card that shows only some of them
-// `tablets` replaces the screens of the strip with pictures of its own (the MLK iPad mockups)
-export function MoreWork({ slide, from = 1, to = 99, tablets }: { slide?: boolean; from?: number; to?: number; tablets?: { src: string; alt: string; w: number; h: number }[] } = {}) {
+// `tablets` replaces the screens of the strip with pictures of its own (the MLK iPad mockups); `logos` replaces the brand row (the MLK client logos)
+export function MoreWork({ slide, from = 1, to = 99, tablets, logos }: { slide?: boolean; from?: number; to?: number; tablets?: { src: string; alt: string; w: number; h: number }[]; logos?: typeof MLK_LOGOS } = {}) {
   return (
     <section className={`${styles.sec}${slide ? ` ${styles.slide} wk-reel` : ""}`} aria-label="More work, and the brands I have worked with">
       <Row speed={13} className={styles.shots}>
@@ -83,7 +84,14 @@ export function MoreWork({ slide, from = 1, to = 99, tablets }: { slide?: boolea
           <img key={s.n} className={styles.shot} src={`/images/more-work/${s.n}.webp`} alt={s.alt} width={s.w} height={s.h} loading={i < 6 ? "eager" : "lazy"} decoding="async" style={{ aspectRatio: `${s.w} / ${s.h}` }} />
         ))}
       </Row>
-      <Row speed={23} reverse className={styles.logos}><Logos list={[...BRANDS].reverse()} /></Row>
+      <Row speed={23} reverse className={styles.logos}>
+        {logos ? logos.map((b, i) => (
+          <span className={styles.logo} key={b.src + i}>
+            <img src={`/images/work/mlk/logos/${b.src}.png`} alt={b.name} width={b.w} height={b.h} loading="lazy" decoding="async" style={{ "--k": b.k } as React.CSSProperties} />
+            <i className={styles.dot} aria-hidden="true" />
+          </span>
+        )) : <Logos list={[...BRANDS].reverse()} />}
+      </Row>
     </section>
   );
 }

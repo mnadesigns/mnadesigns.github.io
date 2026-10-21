@@ -8,7 +8,7 @@
 
 /* the brand logos are white boxes, so multiply lets the field show through; a dot sits between two logos */
 .logo { display: flex; align-items: center; flex: none; }
-.logo img { display: block; width: auto; height: clamp(56px, 7vw, 92px); mix-blend-mode: multiply; }
+.logo img { display: block; width: auto; height: calc(clamp(56px, 7vw, 92px) * var(--k, 1)); mix-blend-mode: multiply; }
 .dot { width: 8px; height: 8px; margin: 0 clamp(20px, 3.4vw, 52px); border-radius: 50%; background: #c3c8d1; }
 
 .shot { display: block; flex: none; width: auto; height: var(--h); margin-right: 12px; }
@@ -21,5 +21,5 @@
 /* on a work page the band sits in a slide: the same 16:9 box as the other media, every length in cqw so it is the same picture at any width */
 .sec.slide { aspect-ratio: 16 / 9; container-type: inline-size; align-content: center; gap: 2.2cqw; padding: 0; --h: 36cqw; background: #fff; border: 1px solid var(--ink-12); border-radius: var(--r); }
 .sec.slide .shot { margin-right: 1cqw; }
-.sec.slide .logo img { height: 6.4cqw; }
+.sec.slide .logo img { height: calc(6.4cqw * var(--k, 1)); }
 .sec.slide .dot { width: 0.7cqw; height: 0.7cqw; margin: 0 3.2cqw; }

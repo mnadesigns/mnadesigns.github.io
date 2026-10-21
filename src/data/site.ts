@@ -138,7 +138,7 @@ export const chapters = [
         { type: "slide", bg: "#0b3a46", dark: true, dur: 2400, kicker: "The reach", giant: 50, suffix: "+", tag: "Australian brands" },
         // more websites, a figure in the middle and one at the end
         { type: "scene", id: "keysborough", dur: 4000 },
-        { type: "slide", bg: "#302f7f", dark: true, dur: 9800, zoom: ["/images/work/mlk/collage/ae.webp", "/images/work/mlk/collage/keys.webp", "/images/work/mlk/collage/kombi.webp", "/images/work/mlk/collage/scp.webp", "/images/work/mlk/collage/telco.webp", "/images/work/mlk/collage/wp.webp", "/images/work/mlk/collage/zigbis.webp"], kicker: "From fintech to fashion", giant: 25, suffix: "+", tag: "Industries served. One team. Every solution." },
+        { type: "slide", bg: "#302f7f", dark: true, dur: 9800, zoom: ["/images/work/mlk/collage/keys.webp", "/images/work/mlk/collage/kombi.webp", "/images/work/mlk/collage/scp.webp", "/images/work/mlk/collage/telco.webp", "/images/work/mlk/collage/wp.webp", "/images/work/mlk/collage/zigbis.webp"], kicker: "From fintech to fashion", giant: 25, suffix: "+", tag: "Industries served. One team. Every solution." },
         { type: "scene", id: "wonderpies", dur: 4000 },
         { type: "slide", bg: "#ffffff", dark: false, dur: 2400, kicker: "The result", giant: 3, suffix: "x", tag: "Conversion rate" },
         { type: "scene", id: "telcoict", dur: 4000 },

@@ -21,8 +21,10 @@ export type WorkPan = { src: string; alt: string; ratio: number };
 // "beforeafter" the old screen and the new one in a wipe slider
 export type WorkBeforeAfter = { scrub?: boolean; title?: string; note?: string; ratio: number; before: { src: string; alt: string }; after: { src: string; alt: string } };
 // "band" a band in the brand's colour, its name sliding sideways, three redesign changes (old to new) under it as the page scrolls (WorkBand); "collage" a collage that grows in and zooms slowly
+// "figures" challenge and solution rows led by one big figure each, text only
+export type WorkFigures = { eyebrow: string; title: string; rows: { fig: string; unit: string; challenge: string; solution: string }[] };
 export type WorkBand = { name: string; bg: string; changes: { from: string; to: string }[] };
-export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band"; src: string; alt: string; note?: string; top?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
+export type WorkMedia = { type: "image" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band" | "figures"; src: string; alt: string; note?: string; kicker?: string; top?: boolean; lead?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; figures?: WorkFigures; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -92,6 +94,97 @@ const quodarcaProduct = [
   { src: "/images/work/quodarca/details/28.webp", alt: "Users: roles, access control and data usage rules" },
   { src: "/images/work/quodarca/details/29.webp", alt: "Messages: end-to-end encrypted messaging for secure collaboration" },
 ];
+
+const telcoSlides = [
+  { src: "/images/work/mlk/telco/telco-01.webp", alt: "Telco ICT Group: the new website on phone, desktop and tablet" },
+  { src: "/images/work/mlk/telco/telco-02.webp", alt: "Telco ICT Group case study overview: industry, platform and services" },
+  { src: "/images/work/mlk/telco/telco-03.webp", alt: "Project scope: improve user experience for lead generation and service discoverability" },
+  { src: "/images/work/mlk/telco/telco-04.webp", alt: "Process: discovery, design and delivery on a three week timeline" },
+  { src: "/images/work/mlk/telco/telco-05.webp", alt: "The home page on a 12 column grid" },
+  { src: "/images/work/mlk/telco/telco-06.webp", alt: "Breakdown structure: the site map from Home to the specialised content pages" },
+  { src: "/images/work/mlk/telco/telco-07.webp", alt: "Typography: Space Grotesk and the type scale" },
+  { src: "/images/work/mlk/telco/telco-08.webp", alt: "Colours: the purple, magenta and neutral palette" },
+  { src: "/images/work/mlk/telco/telco-09.webp", alt: "Visual language: the six trust points as icons" },
+  { src: "/images/work/mlk/telco/telco-10.webp", alt: "Mobile first approach, shown on a phone" },
+  { src: "/images/work/mlk/telco/telco-11.webp", alt: "The home page and the services section" },
+  { src: "/images/work/mlk/telco/telco-12.webp", alt: "Hover interaction on the case studies that reveals key results" },
+  { src: "/images/work/mlk/telco/telco-13.webp", alt: "Visual consistency that reflects the brand, shown on a laptop" },
+  { src: "/images/work/mlk/telco/telco-14.webp", alt: "The contact page and the Google Ads service page" },
+  { src: "/images/work/mlk/telco/telco-15.webp", alt: "The pages together: about, case studies and the SEO blog" },
+];
+
+const wpSlides = [
+  { src: "/images/work/mlk/wp-slides/wp-01.webp", alt: "Wonder Pies: the new website on desktop, tablet and phone" },
+  { src: "/images/work/mlk/wp-slides/wp-02.webp", alt: "Wonder Pies case study overview: industry, platform and services" },
+  { src: "/images/work/mlk/wp-slides/wp-03.webp", alt: "The product range: meat pies, rolls, pasties, vegetarian, gluten free and more" },
+  { src: "/images/work/mlk/wp-slides/wp-04.webp", alt: "Visual styles: typography and the gold, charcoal and white palette" },
+  { src: "/images/work/mlk/wp-slides/wp-05.webp", alt: "The home page on a 12 column grid" },
+  { src: "/images/work/mlk/wp-slides/wp-06.webp", alt: "Mobile first approach, shown on two phones" },
+  { src: "/images/work/mlk/wp-slides/wp-07.webp", alt: "The home page" },
+  { src: "/images/work/mlk/wp-slides/wp-08.webp", alt: "The about page and store locations" },
+  { src: "/images/work/mlk/wp-slides/wp-09.webp", alt: "The pages together: the daily bake, the pie of the week and store locations" },
+];
+
+const keysSlides = [
+  { src: "/images/work/mlk/keys/keys-01.webp", alt: "Keysborough Veterinary Practice: the new website on desktop, tablet and phone" },
+  { src: "/images/work/mlk/keys/keys-02.webp", alt: "Keysborough Veterinary Practice: the brand, the animals and the team" },
+  { src: "/images/work/mlk/keys/keys-03.webp", alt: "Project overview: a bold dark-themed hero, clear calls to action and a testimonial carousel" },
+  { src: "/images/work/mlk/keys/keys-04.webp", alt: "Approach: from requirements gathering to project delivery with developer notes" },
+  { src: "/images/work/mlk/keys/keys-05.webp", alt: "Project timeline and milestones: define, design, delivery" },
+  { src: "/images/work/mlk/keys/keys-06.webp", alt: "Problem and solution: the cluttered legacy site and the new layout" },
+  { src: "/images/work/mlk/keys/keys-07.webp", alt: "Competitive analysis of two local veterinary clinics" },
+  { src: "/images/work/mlk/keys/keys-08.webp", alt: "Colour and type style: Hero Rounded, with the teal, dark and white palette" },
+  { src: "/images/work/mlk/keys/keys-09.webp", alt: "A responsive 12 column grid for desktop" },
+  { src: "/images/work/mlk/keys/keys-10.webp", alt: "Visual language: the services menu with icons" },
+  { src: "/images/work/mlk/keys/keys-11.webp", alt: "Mobile first approach, shown on two phones" },
+  { src: "/images/work/mlk/keys/keys-12.webp", alt: "The home page" },
+  { src: "/images/work/mlk/keys/keys-13.webp", alt: "The services page" },
+  { src: "/images/work/mlk/keys/keys-14.webp", alt: "The gallery and about pages" },
+  { src: "/images/work/mlk/keys/keys-15.webp", alt: "A simplified contact form designed to reduce friction" },
+  { src: "/images/work/mlk/keys/keys-16.webp", alt: "The pages together: gallery, reviews and the after hours emergency page" },
+];
+
+// MLK Group copy, from my LinkedIn and resume (facts only)
+const mlkAbout: WorkCopy = {
+  label: "About",
+  lead: "An Australian digital agency, from fintech to food",
+  body: "MLK Group builds websites and web apps for Australian brands. I ran design on the client work, from discovery through launch, and the brands came from more than 25 industries.",
+  meta: [
+    { l: "Agency", v: "MLK Group, Australia", icon: "building" },
+    { l: "Reach", v: "50+ client brands in 25+ industries", icon: "layers" },
+    { l: "Built", v: "Responsive websites and web apps", icon: "monitor-smartphone" },
+  ],
+  didLabel: "Clients include",
+  did: ["Telco ICT Group", "Specialist Clinic Pharmacy", "Keysborough Veterinary Practice", "Wonder Pies"],
+};
+
+const mlkRole: WorkIntro = {
+  label: "Role",
+  headline: "I was the **Design Team Lead**, designing client work and leading **three designers**.",
+  rows: [
+    { l: "Title", v: "Design Team Lead" },
+    { l: "Team", v: "Three designers" },
+    { l: "Owned", v: "Design quality from discovery to launch" },
+    { l: "Also made", v: "Pitch decks and investor-facing assets for the agency" },
+  ],
+  didLabel: "What I did",
+  did: [
+    "Designed responsive websites and web apps for clients, from first sketch to launch.",
+    "Built a shared design system and reusable components, so the team did not start from zero on every brand.",
+    "Set design roadmaps against the business OKRs and brought Lean UX and Design Thinking into the way we worked.",
+    "Designed the pitch decks that helped the agency win repeat contracts.",
+  ],
+};
+
+const mlkChallenges: WorkFigures = {
+  eyebrow: "Challenges",
+  title: "Challenges and solutions",
+  rows: [
+    { fig: "50%", unit: "fewer revision cycles", challenge: "Fifty brands, three designers.", solution: "A shared design system and reusable components, so no project started from zero." },
+    { fig: "3x", unit: "conversion, 2.5x online orders", challenge: "Stores that had to sell.", solution: "UX led by the data, and conversion work on the flagship e-commerce sites." },
+    { fig: "Lean", unit: "UX and Design Thinking", challenge: "A process that ran ad hoc.", solution: "One way of working, with design roadmaps tied to the business OKRs." },
+  ],
+};
 
 // screens 1 to 34 in order: 1 is the slides film (all its slides), 9 to 12 are left out
 const quodarcaInOrder: WorkMedia[] = Array.from({ length: 34 }, (_, i): WorkMedia | null => {
@@ -306,21 +399,17 @@ export const workDetails: Record<string, WorkDetail> = {
     live: "https://eisst.com/en",
     media: quodarcaScreens,
   },
-  "mlk-group": { media: [{ type: "morework", src: "mlk-morework", alt: "The MLK Group websites on iPads, with the brands I have worked with" },
-{ type: "band", src: "band-ae", alt: "Applied Electronics", band: { name: "Applied Electronics", bg: "#1b2a47", changes: [{ from: "Industries sidebar", to: "One clean menu" }, { from: "Boxed button stack", to: "A single orange CTA" }, { from: "Dark, busy header", to: "Light, focused header" }] } },
-  { type: "beforeafter", src: "ba-ae", alt: "Applied Electronics, before and after", ba: {
-    scrub: true, ratio: 16 / 9,
-    before: { src: "/images/work/mlk/ba/ae-before.webp", alt: "The old Applied Electronics website" },
-    after: { src: "/images/work/mlk/ba/ae-after.webp", alt: "The new Applied Electronics website" },
-  } },
-  { type: "collage", src: "/images/work/mlk/ba/ae-collage.webp", alt: "Applied Electronics: the redesigned pages as a collage" },
-  { type: "band", src: "band-keys", alt: "Keysborough Vet", band: { name: "Keysborough Vet", bg: "#181a22", changes: [{ from: "Text over a busy photo", to: "Headline on a clear dark ground" }, { from: "Hours under the headline", to: "Hours, address and booking in one bar" }, { from: "Plain contact link", to: "A persistent Book an Appointment button" }] } },
+  "mlk-group": { media: [
+  { type: "copy", src: "copy", alt: "About MLK Group", copy: mlkAbout },
+  { type: "intro", src: "intro", alt: "My role at MLK Group", intro: mlkRole },
+  { type: "figures", src: "challenges", alt: "Challenges and solutions", figures: mlkChallenges },
+{ type: "band", src: "band-keys", alt: "Keysborough Vet", band: { name: "Keysborough Vet", bg: "#181a22", changes: [{ from: "Text over a busy photo", to: "Headline on a clear dark ground" }, { from: "Hours under the headline", to: "Hours, address and booking in one bar" }, { from: "Plain contact link", to: "A persistent Book an Appointment button" }] } },
   { type: "beforeafter", src: "ba-keys", alt: "Keysborough Veterinary Practice, before and after", ba: {
     scrub: true, ratio: 16 / 9,
     before: { src: "/images/work/mlk/ba/keys-before.webp", alt: "The old Keysborough Veterinary Practice website" },
     after: { src: "/images/work/mlk/ba/keys-after.webp", alt: "The new Keysborough Veterinary Practice website" },
   } },
-  { type: "collage", src: "/images/work/mlk/ba/keys-collage.webp", alt: "Keysborough Veterinary Practice: the redesigned pages as a collage" },
+  { type: "carousel", src: "carousel-keys", alt: "Keysborough Veterinary Practice case study slides", slides: keysSlides, kicker: "Case study highlights", label: "Keysborough Veterinary Practice", lead: true, note: "Booking, hours and the phone number used to hide. Now they are one tap away." },
   { type: "band", src: "band-kombi", alt: "Kombi Love", band: { name: "Kombi Love", bg: "#2f5d7c", changes: [{ from: "Slider and sidebar menu", to: "Full-bleed hero, top menu" }, { from: "A wall of text", to: "One headline, one Book Now" }, { from: "Contact details buried", to: "Phone and email in the top bar" }] } },
   { type: "beforeafter", src: "ba-kombi", alt: "Kombi, before and after", ba: {
     scrub: true, ratio: 16 / 9,
@@ -328,6 +417,13 @@ export const workDetails: Record<string, WorkDetail> = {
     after: { src: "/images/work/mlk/ba/kombi-after.webp", alt: "The new Kombi website" },
   } },
   { type: "collage", src: "/images/work/mlk/ba/kombi-collage.webp", alt: "Kombi: the redesigned pages as a collage" },
+  { type: "band", src: "band-telco", alt: "Telco ICT", band: { name: "Telco ICT", bg: "#4b0a7d", changes: [{ from: "Broken logo, empty hero", to: "A branded header and a clear promise" }, { from: "A form with no context", to: "Two clear paths: book or call" }, { from: "No proof", to: "Proof points under the hero" }] } },
+  { type: "carousel", src: "carousel-telco", alt: "Telco ICT Group case study slides", slides: telcoSlides, label: "Telco ICT Group", lead: true, kicker: "Case study highlights", note: "Leads got lost in a maze of menus. Now every page ends in Book or Call." },
+  { type: "beforeafter", src: "ba-telco", alt: "Telco ICT, before and after", ba: {
+    scrub: true, ratio: 16 / 9,
+    before: { src: "/images/work/mlk/ba/telco-before.webp", alt: "The old Telco ICT website" },
+    after: { src: "/images/work/mlk/ba/telco-after.webp", alt: "The new Telco ICT website" },
+  } },
   { type: "band", src: "band-scp", alt: "Specialist Clinic Pharmacy", band: { name: "Specialist Clinic Pharmacy", bg: "#ef7b95", changes: [{ from: "Brochure banner", to: "A searchable storefront" }, { from: "A short list of links", to: "Categories, brands and services" }, { from: "Delivery buried in a slide", to: "Delivery and click and collect up front" }] } },
   { type: "beforeafter", src: "ba-scp", alt: "Specialist Clinic Pharmacy, before and after", ba: {
     scrub: true, ratio: 16 / 9,
@@ -335,21 +431,14 @@ export const workDetails: Record<string, WorkDetail> = {
     after: { src: "/images/work/mlk/ba/scp-after.webp", alt: "The new Specialist Clinic Pharmacy website" },
   } },
   { type: "collage", src: "/images/work/mlk/ba/scp-collage.webp", alt: "Specialist Clinic Pharmacy: the redesigned pages as a collage" },
-  { type: "band", src: "band-telco", alt: "Telco ICT", band: { name: "Telco ICT", bg: "#4b0a7d", changes: [{ from: "Broken logo, empty hero", to: "A branded header and a clear promise" }, { from: "A form with no context", to: "Two clear paths: book or call" }, { from: "No proof", to: "Proof points under the hero" }] } },
-  { type: "beforeafter", src: "ba-telco", alt: "Telco ICT, before and after", ba: {
-    scrub: true, ratio: 16 / 9,
-    before: { src: "/images/work/mlk/ba/telco-before.webp", alt: "The old Telco ICT website" },
-    after: { src: "/images/work/mlk/ba/telco-after.webp", alt: "The new Telco ICT website" },
-  } },
-  { type: "collage", src: "/images/work/mlk/ba/telco-collage.webp", alt: "Telco ICT: the redesigned pages as a collage" },
   { type: "band", src: "band-wp", alt: "Wonder Pies", band: { name: "Wonder Pies", bg: "#3a4249", changes: [{ from: "One pie, a small button", to: "The whole range, Order Online in the menu" }, { from: "Flat, grey page", to: "Warm, food-first imagery" }, { from: "Text-only menu", to: "Search, account and cart icons" }] } },
+  { type: "carousel", src: "carousel-wp", alt: "Wonder Pies case study slides", slides: wpSlides, label: "Wonder Pies", lead: true, kicker: "Case study highlights", note: "One pie and a tiny button became the whole range, a tap from the order." },
   { type: "beforeafter", src: "ba-wp", alt: "Wonder Pies, before and after", ba: {
     scrub: true, ratio: 16 / 9,
     before: { src: "/images/work/mlk/ba/wp-before.webp", alt: "The old Wonder Pies website" },
     after: { src: "/images/work/mlk/ba/wp-after.webp", alt: "The new Wonder Pies website" },
   } },
-  { type: "collage", src: "/images/work/mlk/ba/wp-collage.webp", alt: "Wonder Pies: the redesigned pages as a collage" },
-  { type: "band", src: "band-zigbis", alt: "Zigbis", band: { name: "Zigbis", bg: "#e83a3a", changes: [{ from: "Loud full-width type", to: "One calm headline and offer" }, { from: "A long row of links", to: "Menu grouped by service" }, { from: "Red tab and badges", to: "One persistent Book Now" }] } },
+  { type: "band", src: "band-zigbis", alt: "Zigbis", band: { name: "Zigbis", bg: "#e0cca0", changes: [{ from: "Loud full-width type", to: "One calm headline and offer" }, { from: "A long row of links", to: "Menu grouped by service" }, { from: "Red tab and badges", to: "One persistent Book Now" }] } },
   { type: "beforeafter", src: "ba-zigbis", alt: "Zigbis, before and after", ba: {
     scrub: true, ratio: 16 / 9,
     before: { src: "/images/work/mlk/ba/zigbis-before.webp", alt: "The old Zigbis website" },

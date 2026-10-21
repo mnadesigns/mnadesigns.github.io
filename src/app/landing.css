@@ -207,12 +207,14 @@ html { scroll-snap-type: y proximity; }
   .receipts-belt { overflow-x: auto; }
 }
 
+/* The run runs at its own clock (data-speed 1 on .sl-zoom): the film clock would otherwise change the rate of each picture's animation as it starts, which restarts it and shows as a jerk.
+   The times below are already the ones the viewer sees (the slide is 9.8s of film time = 7.84s at 1.25x, 7 pictures one every 1.12s). */
 /* a stat slide over a run of pictures: each one fades in and zooms in smoothly, and the next lands on top of it.
    The fade and the zoom are two separate animations, so the zoom is one unbroken curve (easing per keyframe would restart its speed at every keyframe and show as a jerk).
    When the slide ends the pictures hold their last frame while it fades out, instead of snapping back to nothing. */
 .sl-zoom { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .sl-zoom img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0; transform: translate3d(0, 0, 0) scale(1); backface-visibility: hidden; will-change: transform, opacity; }
-.film-slide.on .sl-zoom img { animation: sl-fade 1.1s ease-in-out forwards, sl-scale 3.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
+.film-slide.on .sl-zoom img { animation: sl-fade 0.88s ease-in-out forwards, sl-scale 2.88s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
 .film-slide.hold .sl-zoom img { opacity: 1; transform: translate3d(0, 0, 0) scale(1.14); }
 .sl-zshade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 12, 24, 0.5), rgba(10, 12, 24, 0.62)); }
 @keyframes sl-fade { from { opacity: 0; } to { opacity: 1; } }

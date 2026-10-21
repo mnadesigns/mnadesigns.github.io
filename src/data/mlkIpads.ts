@@ -14,6 +14,20 @@ export const MLK_IPADS = {
 } as const;
 export type MlkIpad = keyof typeof MLK_IPADS;
 // all of them in one run, no two neighbours alike in colour
-export const MLK_IPAD_RUN: MlkIpad[] = ["scp", "telco", "zigbis", "cytosite", "amcp", "ae", "keys", "kombi"];
+export const MLK_IPAD_RUN: MlkIpad[] = ["scp", "telco", "zigbis", "cytosite", "amcp", "keys", "kombi"];
 // the same run with its picture size, for the strips of the Work page card and the MLK page
 export const MLK_TABLETS = MLK_IPAD_RUN.map((k) => ({ ...MLK_IPADS[k], w: MLK_IPAD_W, h: MLK_IPAD_H }));
+
+// The logos of the MLK clients, trimmed and enlarged (public/images/work/mlk/logos/). They run under the iPads in the band on the Work page and the MLK page.
+// `k` scales the logo's height so a long wordmark and a round badge look about the same size in the row.
+export const MLK_LOGOS = [
+  { name: "Kombi Love", src: "kombi-love", w: 283, h: 240, k: 1.2 },
+  { name: "Zigbis Hair & Beauty", src: "zigbis", w: 752, h: 240, k: 0.85 },
+  { name: "Mary's Skin Care", src: "marys-skin-care", w: 362, h: 240, k: 1.15 },
+  { name: "Keysborough Veterinary Practice", src: "keysborough-vet", w: 794, h: 240, k: 0.85 },
+  { name: "Telco ICT Group", src: "telco-ict", w: 1263, h: 240, k: 0.5 },
+  { name: "Wonder Pies", src: "wonder-pies", w: 360, h: 360, k: 1.1 },
+  { name: "The Tonic Acupuncture Clinic", src: "the-tonic", w: 1339, h: 300, k: 0.55 },
+  { name: "LS Finance Broking", src: "ls-finance-broking", w: 988, h: 396, k: 1 },
+  { name: "Martor Australia", src: "martor", w: 637, h: 240, k: 0.85 },
+];

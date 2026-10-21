@@ -253,10 +253,10 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
       )}
       {s.zoom && (
         // the pictures change quickly, each one zooming in as it comes
-        <div className="sl-zoom" aria-hidden="true" ref={zoomRef}>
+        <div className="sl-zoom" aria-hidden="true" ref={zoomRef} data-speed={1}>
           {s.zoom.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1400}ms` }} />
+            <img key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1120}ms` }} />
           ))}
           <div className="sl-zshade" />
         </div>
