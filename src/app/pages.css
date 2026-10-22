@@ -68,6 +68,9 @@
 .sti-row-box video { object-fit: cover; padding: 0; }
 /* a picture set in from the top and the sides that runs off the bottom of the box, so the crop looks chosen */
 .sti-row-box--cover img { padding: 0; object-fit: cover; } /* the picture fills the whole box, no ground behind it */
+.sti-row-box--zoom img { animation: sti-zoom 14s ease-in-out infinite alternate; } /* a slow, smooth push in on the cover */
+@keyframes sti-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+@media (prefers-reduced-motion: reduce) { .sti-row-box--zoom img { animation: none; } }
 .sti-more { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 1; color: var(--heading); margin-top: 56px; }
 .sti-more em { font-style: normal; color: var(--brand); }
 @media (max-width: 900px) {

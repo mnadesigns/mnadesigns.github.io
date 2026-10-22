@@ -3,7 +3,7 @@ import type { IconName } from "@/components/atoms/LineIcon";
 // `media`, when set, is the whole media list of the page (it replaces the slides and the images listed in storyPages.ts); a video is an mp4/webm in /public.
 // type "slides" shows the animated slides of the work (WorkFilmBox); `count` plays only the first slides (1 = the first slide); its src is not used
 // type "copy" is a block of live text (WorkCopy) in the flow of the media, built from `copy`
-export type WorkCopy = { label: string; lead: string; body: string; meta: { l: string; v: string; icon?: IconName }[]; didLabel: string; did: string[]; didIcons?: IconName[]; didCards?: boolean; didTitles?: string[] }; // didCards: "what I did" as numbered cards across the block, with didTitles as their headings
+export type WorkCopy = { label: string; lead: string; body: string; meta: { l: string; v: string; icon?: IconName }[]; didLabel: string; did: string[]; didIcons?: IconName[]; didCards?: boolean; didTitles?: string[]; noDid?: boolean; didOnly?: boolean }; // noDid leaves "what I did" out of the block, didOnly shows only that part (so it can sit later in the page); didCards: "what I did" as numbered cards across the block, with didTitles as their headings
 // type "story" is a chapter as live text on a dark panel (WorkStory), built from `story`
 export type WorkStory = { tone?: "brand" | "plain"; cardOutside?: boolean; cardTone?: "brand"; title: string; quote?: string; statement?: { lead: string; strike: string; then: string; mark: string }; body: string; cardIntro: string; cardList: string[]; cardIcons?: IconName[]; bodyIcon?: IconName };
 // type "flow" is a product flow played like a screen recording (WorkFlow): per step the still, where the camera looks (cam: centre x and y in % of the picture, zoom) and what gets clicked (click: x and y in %)
@@ -13,7 +13,7 @@ export type WorkIntro = { label: string; headline: string; body?: string; rows: 
 export type WorkSitemap = { title: string; note: string; root: string; logo?: string; groups: { name: string; designed?: boolean; items: { t: string; designed?: boolean }[] }[] };
 export type WorkLoop = { title: string; note: string; steps: { t: string; d: string }[] };
 // "chapter" a chapter of the story as big type, "pairs" challenge and solution rows with a screen detail, "annotated" one screen with numbered markers (x and y in % of the screen)
-export type WorkChapter = { tone: "dark" | "light"; eyebrow: string; title: string; body: string[]; steps?: { t: string; d: string }[] };
+export type WorkChapter = { tone: "dark" | "light" | "plain"; image?: { src: string; alt: string }; eyebrow: string; title: string; body: string[]; steps?: { t: string; d: string }[] };
 export type WorkPairs = { title: string; note: string; pairs: { challenge: string; solution: string; src: string; alt: string; wide?: boolean; bare?: boolean }[] }; // wide: the copy runs in two columns and the whole screen sits below it; bare: no box around the row, the copy sits on the page
 export type WorkAnnotated = { title: string; note: string; src: string; alt: string; ratio: number; marks: { x: number; y: number; t: string; d: string }[] };
 // "pan" a wide picture that drifts as the page scrolls
@@ -23,8 +23,10 @@ export type WorkBeforeAfter = { noTags?: boolean; scrub?: boolean; title?: strin
 // "band" a band in the brand's colour, its name sliding sideways, three redesign changes (old to new) under it as the page scrolls (WorkBand); "collage" a collage that grows in and zooms slowly
 // "figures" challenge and solution rows led by one big figure each, text only
 export type WorkFigures = { eyebrow: string; title: string; rows: { fig: string; unit: string; challenge: string; solution: string }[] };
-export type WorkBand = { name: string; bg: string; changes: { from: string; to: string }[] };
-export type WorkMedia = { type: "image" | "head" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band" | "figures"; src: string; alt: string; note?: string; kicker?: string; top?: boolean; lead?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; figures?: WorkFigures; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" | "zerogaspi" };
+// "card" a story point as a card (WorkCard): layout "notes" shows the points as paper notes that settle into a stack, "steps" as large numerals on a line that draws in
+export type WorkCard = { tone: "dark" | "teal" | "light"; eyebrow: string; title: string; body: string; points: { t: string; d: string }[]; layout: "notes" | "steps" };
+export type WorkBand = { name: string; bg: string; ink?: string; changes: { from: string; to: string }[] };
+export type WorkMedia = { type: "image" | "head" | "video" | "slides" | "copy" | "story" | "carousel" | "scene" | "flow" | "intro" | "sitemap" | "loop" | "chapter" | "pairs" | "annotated" | "pan" | "beforeafter" | "reel" | "portal" | "motion" | "morework" | "collage" | "band" | "figures" | "card"; src: string; alt: string; note?: string; kicker?: string; top?: boolean; lead?: boolean; chapter?: WorkChapter; pairs?: WorkPairs; ann?: WorkAnnotated; pan?: WorkPan; ba?: WorkBeforeAfter; band?: WorkBand; card?: WorkCard; figures?: WorkFigures; intro?: WorkIntro; sitemap?: WorkSitemap; loop?: WorkLoop; flow?: WorkFlow; poster?: string; count?: number; copy?: WorkCopy; story?: WorkStory; slides?: { src: string; alt: string }[]; label?: string; scene?: "projects-delivered" | "zerogaspi" };
 export type WorkDetail = { figma?: string; live?: string; media?: WorkMedia[] };
 
 // the QuodArca overview, from screens 2 and 3
@@ -584,4 +586,79 @@ workDetails["zero-gaspi"] = { media: [
   { type: "image", src: "/images/work/zerogaspi/slides/zg-14.webp", alt: "After pickup: rating the order, orders list, profile and account details" },
   { type: "image", src: "/images/work/zerogaspi/slides/zg-15.webp", alt: "App store screenshots for iOS and Android" },
   { type: "image", src: "/images/work/zerogaspi/slides/zg-16.webp", alt: "App icon: the grid, the icon on a home screen and the Android and iOS versions" },
+] };
+
+// Applied Electronics: the Work page video, then the case study slides in order
+workDetails["applied-electronics"] = { media: [
+  { type: "video", src: "/images/work/applied-video/applied-electronics.mp4", poster: "/images/work/applied-video/applied-electronics-poster.webp", alt: "Applied Electronics: the redesigned website" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-02.webp", alt: "Overview: Applied Electronics, project facts and the website on screen" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-03.webp", alt: "The initial discussion with the client, and the user-centred design approach" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-04.webp", alt: "The 3D approach: discovery, design and delivery, with the steps inside each" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-05.webp", alt: "The User Centric Design Canvas: user groups and their insights" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-06.webp", alt: "Needs and motivations, and pain points and fears, with insights" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-07.webp", alt: "Our solution, and the unique value proposition, with insights" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-08.webp", alt: "Alternatives and competition, and business goals, with insights" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-09.webp", alt: "Breakdown structure: how the pages of the site connect from Home" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-10.webp", alt: "Wireframes" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-11.webp", alt: "Colours and gradients: orange, dark blue, white and two gradients" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-12.webp", alt: "Typeface: Poppins, with the type scale" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-13.webp", alt: "Visual language: the icon set" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-14.webp", alt: "Grid: a 12 column CSS grid" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-15.webp", alt: "High fidelity designs" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-16.webp", alt: "Mobile first design: fully responsive layouts across desktop, tablet and mobile" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-17.webp", alt: "High fidelity designs: the home page and Our Solutions" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-18.webp", alt: "High fidelity designs: the home page, solutions and contact" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-19.webp", alt: "High fidelity designs: careers, work and the team" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-20.webp", alt: "High fidelity designs: solutions, work and case studies" },
+  { type: "image", src: "/images/work/applied-electronics/slides/ae-22.webp", alt: "The results after the redesign: search visibility, branded search, bounce rate and traffic, with the client's feedback" },
+] };
+
+// Spoonful OS: the same overview block as the other case studies (the story, the facts, and what I did as cards)
+const spoonfulAbout: WorkCopy = {
+  noDid: true,
+  label: "About",
+  lead: "Spoonful OS keeps a child's care in one place",
+  body: "A family health app for parents. It brings a child's symptoms, medications and doses together, so everyone who shares the care sees the same picture.",
+  meta: [
+    { l: "Product", v: "Family health app", icon: "smartphone" },
+    { l: "For", v: "Parents, caregivers and doctors", icon: "accessibility" },
+    { l: "Tracks", v: "Symptoms, medications and doses", icon: "workflow" },
+    { l: "Design base", v: "Apple Human Interface Guidelines", icon: "layers" },
+  ],
+  didLabel: "What I did",
+  didCards: true,
+  didTitles: ["Define the problem", "Research and wireframes", "Hi-fi in Apple HIG"],
+  didIcons: ["search", "pen-tool", "monitor-smartphone"],
+  did: [
+    "Ran sessions with the client to define the problem statement and understand the real challenges.",
+    "Interviewed users to learn their motivations and goals, then sketched low fidelity wireframes before any hi-fi design.",
+    "Designed the screens with the charts and components from Apple's Human Interface Guidelines and component library.",
+  ],
+};
+
+// Spoonful OS: the Dose Tracker cover, then the case study images in order
+workDetails["spoonful-os"] = { media: [
+  { type: "collage", src: "/images/work/spoonful-os/slides/so-01.webp", alt: "Spoonful OS, the Dose Tracker: a child's profile on a phone" }, // zooms in slowly, like the cover on the Stories page
+  { type: "copy", src: "copy", alt: "About Spoonful OS", copy: spoonfulAbout },
+  { type: "card", src: "card-challenge", alt: "The challenge", card: { tone: "dark", eyebrow: "The challenge", title: "When a child is unwell, details slip", body: "Parents, caregivers and doctors all need the same answers, and the answers live in different places.", layout: "notes", points: [
+    { t: "Scattered notes", d: "Symptoms and temperatures are jotted down wherever there is room." },
+    { t: "Unclear doses", d: "Which medicine, how much, and who gave it is hard to say afterwards." },
+    { t: "Care split across people", d: "Each person sees only their part of the picture." },
+  ] } },
+  { type: "card", src: "card-did", alt: "What I did", card: { tone: "light", eyebrow: "What I did", title: "From the problem to the screens", body: "Research and low fidelity came first, so the hi-fi design started from a defined problem.", layout: "steps", points: [
+    { t: "Define the problem", d: "Ran sessions with the client to define the problem statement and understand the real challenges." },
+    { t: "Research and wireframes", d: "Interviewed users to learn their motivations and goals, then sketched low fidelity wireframes before any hi-fi design." },
+    { t: "Hi-fi in Apple HIG", d: "Designed the screens with the charts and components from Apple's Human Interface Guidelines and component library." },
+  ] } },
+  { type: "band", src: "band-spoonful", alt: "Spoonful OS", band: { name: "Spoonful OS", bg: "#1FA3B5", ink: "#ffffff", changes: [
+    { from: "Notes in many places", to: "One profile per child" },
+    { from: "Who gave which dose?", to: "A dose history with names and times" },
+    { from: "Care split across people", to: "One shared care team" },
+  ] } },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-07.webp", alt: "The app screens: the profile, symptoms, medication and care team, with the app icon" },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-02.webp", alt: "Track symptoms: a body temperature chart, the menu and the symptoms list" },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-03.webp", alt: "Track medications with confidence: editing dosage, frequency and expiry dates" },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-04.webp", alt: "Dose tracker: the medication history for today and yesterday" },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-05.webp", alt: "Collaborative: invite parents, caregivers and doctors to build a connected care team" },
+  { type: "image", src: "/images/work/spoonful-os/slides/so-06.webp", alt: "Childcare made easy: symptoms, medication and allergies in one child profile" },
 ] };

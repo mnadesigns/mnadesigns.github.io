@@ -66,7 +66,7 @@ export default function Stories() {
                   <span className="sti-row-line">{m.line}</span>
                   <span className="btn-circle"><span className="big"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 12L12 4M5 4h7v7" /></svg></span></span>
                 </div>
-                {m.slug === "specialist-clinic-pharmacy" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} /></div> : m.slug === "zero-gaspi" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} scene="zerogaspi" /></div> : <div className={`sti-row-box${"cover" in m && m.cover ? " sti-row-box--cover" : ""}`} style={{ background: m.bg }}>{m.video ? <video src={m.video} poster={m.shot} autoPlay muted loop playsInline aria-label={m.name} /> : m.shot ? <img src={m.shot} alt={m.name} loading="lazy" draggable={false} /> : null}</div>}
+                {m.slug === "specialist-clinic-pharmacy" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} /></div> : m.slug === "zero-gaspi" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} scene="zerogaspi" /></div> : <div className={`sti-row-box${"cover" in m && m.cover ? " sti-row-box--cover" : ""}${"zoom" in m && m.zoom ? " sti-row-box--zoom" : ""}`} style={{ background: m.bg }}>{m.video ? <video src={m.video} poster={m.shot} autoPlay muted loop playsInline aria-label={m.name} /> : m.shot ? <img src={m.shot} alt={m.name} loading="lazy" draggable={false} /> : null}</div>}
               </Link>
             ))}
           </div>

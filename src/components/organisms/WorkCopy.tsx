@@ -6,7 +6,7 @@ import { WorkDidCards } from "./WorkDidCards";
 export function WorkCopy({ copy }: { copy: Copy }) {
   return (
     <section className="wk-copy">
-      <div className="wk-copy-main">
+      {!copy.didOnly && <><div className="wk-copy-main">
         <p className="wk-copy-label">{copy.label}</p>
         <h2 className="wk-copy-lead">{copy.lead}</h2>
         <p className="wk-copy-body">{copy.body}</p>
@@ -21,8 +21,8 @@ export function WorkCopy({ copy }: { copy: Copy }) {
             </div>
           ))}
         </dl>
-        {!copy.didCards && <p className="wk-copy-label">{copy.didLabel}</p>}
-        {!copy.didCards && <ul className="wk-copy-did">
+        {!copy.didCards && !copy.noDid && <p className="wk-copy-label">{copy.didLabel}</p>}
+        {!copy.didCards && !copy.noDid && <ul className="wk-copy-did">
           {copy.did.map((t, i) => (
             <li key={t} className={copy.didIcons?.[i] ? "has-ico" : undefined}>
               {copy.didIcons?.[i] && <LineIcon name={copy.didIcons[i]} delay={i * 120} />}
@@ -30,8 +30,8 @@ export function WorkCopy({ copy }: { copy: Copy }) {
             </li>
           ))}
         </ul>}
-      </div>
-      {copy.didCards && <WorkDidCards label={copy.didLabel} did={copy.did} titles={copy.didTitles} />}
+      </div></>}
+      {copy.didCards && !copy.noDid && <WorkDidCards label={copy.didLabel} did={copy.did} titles={copy.didTitles} />}
     </section>
   );
 }

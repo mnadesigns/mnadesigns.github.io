@@ -331,6 +331,19 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 .wk-chap { padding: clamp(28px, 5vw, 72px); border-radius: var(--r); }
 .wk-chap--dark { background: radial-gradient(120% 120% at 0% 0%, #2a4562 0%, #1E2939 60%); color: #fff; }
 .wk-chap--light { background: #fff; border: 1px solid var(--ink-12); color: var(--heading); }
+.wk-chap--plain { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; text-align: left; gap: 14px; padding: clamp(24px, 3.5vw, 44px) 0; border-top: 1px solid var(--ink-12); border-radius: 0; color: var(--heading); } /* no card: one left-aligned column */
+.wk-chap--plain .wk-chap-text { display: grid; gap: 14px; justify-items: start; text-align: left; }
+.wk-chap--img { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: center; padding-block: clamp(20px, 3vw, 40px); } /* About: the copy, and a picture of care on the right */
+.wk-chap-img { display: block; width: 100%; height: auto; border-radius: calc(var(--r) - 4px); }
+@media (max-width: 800px) { .wk-chap--img { grid-template-columns: 1fr; } }
+.wk-chap--plain .wk-chap-title { margin: 0; max-width: 22ch; font-size: clamp(28px, 3.4vw, 44px); color: var(--heading); }
+.wk-chap--plain .wk-chap-steps, .wk-chap--plain .wk-chap-steps:has(> li:nth-child(3):last-child) { grid-column: 1; width: 100%; grid-template-columns: 1fr; gap: 0; margin: clamp(10px, 1.5vw, 18px) 0 0; } /* the points stack in a column */
+.wk-chap--plain .wk-chap-steps li { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 8px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--ink-12); }
+.wk-chap--plain .wk-chap-steps span { grid-row: 1 / span 2; font-size: 22px; }
+.wk-chap--plain .wk-chap-steps h3 { margin: 0 0 4px; font-size: clamp(20px, 1.8vw, 24px); }
+.wk-chap--plain .wk-chap-steps p { max-width: 52ch; color: var(--ink-80); }
+.wk-chap--plain .wk-chap-eyebrow { opacity: 1; color: var(--brand); font-weight: 600; }
+.wk-chap--plain .wk-chap-body p { max-width: 56ch; font-size: 18px; opacity: 1; color: var(--ink-80); }
 .wk-chap-eyebrow { margin: 0; font-family: var(--sans); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.7; }
 .wk-chap-title { margin: clamp(16px, 2.4vw, 28px) 0 clamp(20px, 3vw, 36px); max-width: 16ch; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1.02; }
 .wk-chap--dark .wk-chap-title { color: #fff; }
@@ -471,7 +484,7 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
 
 /* phones: the copy cards run edge to edge like the media, with no border and square corners */
 @media (max-width: 640px) {
-  .wk-story:not(.wk-story--plain), .wk-role, .wk-did, .wk-chap, .wk-fig, .wk-intro, .wk-pair, .wk-loop, .wk-map { margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-radius: 0; }
+  .wk-story:not(.wk-story--plain), .wk-role, .wk-did, .wk-chap:not(.wk-chap--plain), .wk-fig, .wk-intro, .wk-pair, .wk-loop, .wk-map { margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-radius: 0; }
   .wk-story-card, .wk-story--plain .wk-story-asks li, .wk-loop-step, .wk-pair-shot, .wk-pair--wide .wk-pair-shot, .wk-map-group { border: 0; border-radius: 0; }
 }
 @media (max-width: 640px) { .wk-flow-stage { width: auto; margin-inline: calc(-1 * clamp(24px, 5vw, 80px)); border: 0; border-radius: 0; } } /* the interactive flows run edge to edge like the media */
@@ -503,3 +516,31 @@ li:hover > .wk-lico, .wk-copy-meta > div:hover > .wk-lico { transform: translate
   .wk-pair--bare .wk-pair-text > div:last-child, .wk-pair--bare:nth-child(even) .wk-pair-text > div:last-child { grid-row: 2; width: auto; margin: 0 0 20px; transform: rotate(-1deg); }
   .wk-pair--bare .wk-pair-shot { grid-row: 3; }
 }
+
+/* WorkCard: a story point as a card. "notes" = the problems as paper notes, "steps" = titles on a line that draws in */
+.wk-card { display: grid; gap: clamp(28px, 4vw, 56px); padding: clamp(28px, 5vw, 72px); border-radius: var(--r); color: #fff; overflow: hidden; }
+.wk-card--dark { background: radial-gradient(120% 120% at 0% 0%, #2a4562 0%, #1E2939 60%); }
+.wk-card--light { background: #fff; border: 1px solid var(--ink-12); color: var(--heading); }
+.wk-card--notes { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; }
+.wk-card-eyebrow { margin: 0; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.8; } /* the same label tracking as the About block */
+.wk-card--light .wk-card-eyebrow { color: #17899a; opacity: 1; }
+.wk-card-title { margin: clamp(14px, 2vw, 24px) 0 14px; max-width: 18ch; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1.02; letter-spacing: 0.01em; color: #fff; } /* Tanker is tight and condensed: a touch of tracking at headline size */
+.wk-card--light .wk-card-title { color: var(--heading); }
+.wk-card-body { margin: 0; max-width: 52ch; font-family: var(--sans); font-size: var(--fs-body-lg); line-height: 1.5; opacity: 0.92; }
+.wk-card--light .wk-card-body { color: var(--ink-80); opacity: 1; }
+/* the problems, as notes that arrive scattered and settle */
+.wk-notes { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.wk-note { padding: 20px 24px; border-radius: 6px; color: #1E2939; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+.wk-note--1 { background: #FFF3C4; margin-right: 12%; }
+.wk-note--2 { background: #FFFFFF; margin-left: 10%; }
+.wk-note--3 { background: #CFEFF3; margin-right: 6%; }
+.wk-note:hover { transform: rotate(0deg) scale(1.02) !important; }
+.wk-note h3 { margin: 0 0 6px; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.1; letter-spacing: 0.05em; }
+.wk-note p { margin: 0; font-family: var(--sans); font-size: 16px; line-height: 1.5; color: rgba(30, 41, 57, 0.82); }
+/* the steps, as titles under a line that draws in */
+.wk-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 56px); margin: 0; padding: 0; list-style: none; }
+.wk-steps li { position: relative; padding-top: 28px; }
+.wk-steps-line { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: #17899a; transform-origin: left center; }
+.wk-steps h3 { margin: 0 0 10px; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.1; letter-spacing: 0.05em; color: var(--heading); }
+.wk-steps p { margin: 0; max-width: 34ch; font-family: var(--sans); font-size: 16px; line-height: 1.55; color: var(--ink-80); }
+@media (max-width: 900px) { .wk-card--notes { grid-template-columns: 1fr; } .wk-steps { grid-template-columns: 1fr; } }

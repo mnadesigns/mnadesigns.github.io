@@ -95,10 +95,13 @@ export function WorkSitemap({ map }: { map: Sitemap }) {
 export function WorkChapter({ chapter }: { chapter: Chapter }) {
   const calm = !!useReducedMotion();
   return (
-    <section className={`wk-chap wk-chap--${chapter.tone}`} aria-label={chapter.title}>
-      <p className="wk-chap-eyebrow">{chapter.eyebrow}</p>
-      <motion.h2 className="wk-chap-title" {...rise(0, calm)}>{chapter.title}</motion.h2>
-      <div className="wk-chap-body">{chapter.body.map((p, i) => <motion.p key={p} {...rise(i + 1, calm)}>{p}</motion.p>)}</div>
+    <section className={`wk-chap wk-chap--${chapter.tone}${chapter.image ? " wk-chap--img" : ""}`} aria-label={chapter.title}>
+      <div className="wk-chap-text">
+        <p className="wk-chap-eyebrow">{chapter.eyebrow}</p>
+        <motion.h2 className="wk-chap-title" {...rise(0, calm)}>{chapter.title}</motion.h2>
+        <div className="wk-chap-body">{chapter.body.map((p, i) => <motion.p key={p} {...rise(i + 1, calm)}>{p}</motion.p>)}</div>
+      </div>
+      {chapter.image && <img className="wk-chap-img" src={chapter.image.src} alt={chapter.image.alt} width={1600} height={1678} loading="lazy" draggable={false} />}
       {chapter.steps && (
         <ol className="wk-chap-steps">
           {chapter.steps.map((st, i) => (
@@ -367,7 +370,7 @@ const inkOn = (hex: string) => {
 export function WorkBand({ band }: { band: Band }) {
   const run = (t: string) => Array.from({ length: 6 }, () => t).join(" · ");
   return (
-    <section className="wk-band" style={{ background: band.bg, color: inkOn(band.bg), "--band-bg": band.bg, "--band-ink": inkOn(band.bg) } as React.CSSProperties} aria-label={`${band.name}: ${band.changes.map((c) => `${c.from} became ${c.to}`).join("; ")}`}>
+    <section className="wk-band" style={{ background: band.bg, color: band.ink ?? inkOn(band.bg), "--band-bg": band.bg, "--band-ink": band.ink ?? inkOn(band.bg) } as React.CSSProperties} aria-label={`${band.name}: ${band.changes.map((c) => `${c.from} became ${c.to}`).join("; ")}`}>
       {/* the name runs left to right on its own: the row holds the run twice and slides by half its width, so the loop has no seam */}
       <div className="wk-band-row" aria-hidden="true">{[0, 1].map((h) => <span key={h}>{run(band.name.toUpperCase())}</span>)}</div>
       <div className="wk-band-tick" aria-hidden="true">

@@ -95,6 +95,8 @@ export const storiesIndex = {
     { slug: "zero-gaspi", name: "Zero Gaspi", v: "iOS + Android", l: "Anti-food-waste marketplace", line: "Unsold food from local merchants, sold as Surprise Baskets at about 30 to 35% of the original price.", logo: "/images/work/zerogaspi/logo-mark.svg" },
     { slug: "vyno", name: "VYNO Carpool", v: "iOS + Android", l: "Carpooling app", line: "Affordable shared rides for Cameroon: verified drivers, smart filters and QR pickups.", logo: "/images/brands/vyno.png", shot: "/images/work/vyno/vyno-app-poster.webp", video: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3" },
     { slug: "peers", name: "Peers", v: "Web + mobile", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png", shot: "/images/work/peers/cover-16x9.webp", cover: true },
+    { slug: "applied-electronics", name: "Applied Electronics", v: "Website", l: "Audio, video and broadcast technology", line: "A user-centred redesign of the website for Canada's leading provider of integrated media technology.", logo: "/images/brands/applied-electronics.png", shot: "/images/work/applied-video/applied-electronics-poster.webp", video: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560" },
+    { slug: "spoonful-os", name: "Spoonful OS", v: "Mobile app", l: "Family health app", line: "Symptoms, medications and doses for a child, tracked and shared with parents, caregivers and doctors.", logo: "", shot: "/images/work/spoonful-os/slides/so-01.webp", cover: true, zoom: true },
   ],
   footer: "More <em>coming</em>.",
 };
@@ -111,4 +113,4 @@ export const stories = [
 ];
 
 // details pages of works that are not one of the three featured ones (the "And more." list links to them)
-export const extraStories = [{ slug: "specialist-clinic-pharmacy", name: "Specialist Clinic Pharmacy" }, { slug: "vyno", name: "VYNO Carpool" }, { slug: "zero-gaspi", name: "Zero Gaspi" }, { slug: "peers", name: "Peers" }];
+export const extraStories = [{ slug: "specialist-clinic-pharmacy", name: "Specialist Clinic Pharmacy" }, { slug: "vyno", name: "VYNO Carpool" }, { slug: "zero-gaspi", name: "Zero Gaspi" }, { slug: "peers", name: "Peers" }, { slug: "applied-electronics", name: "Applied Electronics" }, { slug: "spoonful-os", name: "Spoonful OS" }];

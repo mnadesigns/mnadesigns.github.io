@@ -167,3 +167,26 @@ storyPages["zero-gaspi"] = {
   stakesBig: { v: "30–35%", l: "Of the original price, per Surprise Basket" },
   stakesSupporting: [],
 };
+
+// Applied Electronics, a website redesign: its page is its own media list in workDetails.ts; these are the hero figures (from the case study's results slide) and the page description
+storyPages["applied-electronics"] = {
+  ...storyPages.quodarca,
+  poster: "/images/work/applied-video/applied-electronics-poster.webp",
+  secondary: "A user-centred website redesign for Canada's leading integrated media technology provider",
+  desc: "Applied Electronics provides audio, video and broadcast technology implementation, integration, design and service. I redesigned its website with a user-centred approach.",
+  stakesBig: { v: "~50%", l: "Organic search visibility growth" },
+  stakesSupporting: [
+    { v: "12.8K to 20K", l: "Branded search volume" },
+    { v: "-46%", l: "Mobile bounce rate" },
+  ],
+};
+
+// Spoonful OS, a family health app: its page is its own media list in workDetails.ts; no hero figures, so the stats row is hidden
+storyPages["spoonful-os"] = {
+  ...storyPages.quodarca,
+  poster: "/images/work/spoonful/collage.webp",
+  secondary: "A family health app for tracking a child's symptoms, medications and doses",
+  desc: "Spoonful OS helps parents track a child's symptoms, medications and doses, and share them with caregivers and doctors. I designed the app.",
+  stakesBig: { v: "", l: "" },
+  stakesSupporting: [],
+};
