@@ -63,7 +63,7 @@ export const resume = {
       ],
     },
   ],
-  consultingIntro: "Independent product design consulting for clients in the US, Germany, and Australia, with 235 completed client projects.",
+  consultingIntro: "Independent product design consulting for clients in the US, Germany, and Australia.",
   consulting: [
     { name: "VYNO", kind: "Mobility app", desc: "Designed a carpooling app around the three things stopping people from booking: trust, discoverability, and ride clarity. Introduced verified profiles, smart ride filters, and QR-based ride confirmations to raise booking confidence and reduce missed connections." },
     { name: "Applied Electronics", kind: "Enterprise website", desc: "Redesigned the web experience for an audio-visual and broadcast technology integrator. Organic search visibility grew about 50%, branded search volume rose from 12.8K to 20K+ (57%), and mobile bounce rate fell about 46% through improved responsiveness and speed." },
