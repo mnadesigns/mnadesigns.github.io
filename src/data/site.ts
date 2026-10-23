@@ -173,7 +173,7 @@ export const receipts: number[] = [];
 
 export const doors = [
   { kicker: "For hiring managers", title: "Let's <em>talk</em>", line: "Open to full-time and long-term contract roles, remote or with relocation.", href: "/resume/", cta: "See resume" },
-  { kicker: "For everyone else", title: "See the <em>work</em>", line: "Case studies and projects live on Behance.", href: site.behance, cta: "Open Behance" },
+  { kicker: "For everyone else", title: "See the <em>work</em>", line: "Case studies and projects, from design systems to apps.", href: "/stories/", cta: "See stories" },
 ];
 
 // Skills circle (below the hero): generic placeholder labels; replace with your own words.
