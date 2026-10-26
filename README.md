@@ -19,11 +19,9 @@ npm run check   # lint + typecheck + static export to ./out
 
 ## Deploy
 
-The site is hosted on Vercel (project `muhammadnaeem`, https://muhammadnaeem.vercel.app). This repo is private. To publish a new version from this folder:
+The site is a static export served by GitHub Pages at https://mnadesigns.github.io/. Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes `out/`.
 
-```bash
-vercel deploy --prod
-```
+Optional free analytics stay off until you add repository variables (Settings > Secrets and variables > Actions > Variables): `NEXT_PUBLIC_GA_ID` (Google Analytics 4, `G-XXXXXXXXXX`) and `NEXT_PUBLIC_CLARITY_ID` (Microsoft Clarity).
 
 ## Credits
 

@@ -7,6 +7,8 @@ import { PromptBlock } from "@/components/organisms/PromptBlock";
 import { prompts } from "@/data/prompts";
 import { BackLink } from "@/components/organisms/PageParts";
 import { Doors } from "@/components/organisms/Doors";
+import { JsonLd } from "@/components/atoms/JsonLd";
+import { abs, breadcrumbs, clip, isoMonth } from "@/lib/seo";
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -15,7 +17,12 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const a = articles.find((x) => x.slug === slug);
-  return { title: a ? a.title : "Writing", description: a?.excerpt };
+  return {
+    title: a ? a.title : "Writing",
+    description: clip(a?.excerpt),
+    alternates: { canonical: `/writing/${slug}/` },
+    openGraph: { type: "article", url: `/writing/${slug}/`, title: a?.title, description: clip(a?.excerpt), publishedTime: a ? isoMonth(a.date) : undefined, authors: ["Muhammad Naeem"] },
+  };
 }
 
 export default async function Article({ params }: { params: Promise<{ slug: string }> }) {
@@ -26,6 +33,12 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
   const next = articles[(i + 1) % articles.length];
   return (
     <main>
+      <JsonLd
+        data={[
+          { "@type": "Article", "@id": abs(`/writing/${slug}/#article`), headline: a.title, description: a.excerpt, datePublished: isoMonth(a.date), inLanguage: "en", mainEntityOfPage: abs(`/writing/${slug}/`), author: { "@id": abs("/#person") }, publisher: { "@id": abs("/#person") } },
+          breadcrumbs([{ name: "Home", path: "/" }, { name: "Read", path: "/writing/" }, { name: a.title, path: `/writing/${slug}/` }]),
+        ]}
+      />
       <section className="ar-hero">
         <div className="ar-pipe">{a.n ? `AI-augmented pipeline ${a.n}` : a.tag ?? "Experiment"}</div>
         <h1 className="ar-title">{a.title}</h1>

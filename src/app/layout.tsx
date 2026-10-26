@@ -6,11 +6,13 @@ import "./landing.css";
 import "./sub.css";
 import "./pages.css";
 import "./consulting.css";
-import "./story.css";
 import "./work.css";
 import { Nav } from "@/components/molecules/Nav";
 import { Loader, Cursor } from "@/components/organisms/Effects";
 import { Prefetcher } from "@/components/organisms/Prefetcher";
+import { JsonLd } from "@/components/atoms/JsonLd";
+import { Analytics } from "@/components/organisms/Analytics";
+import { person, abs } from "@/lib/seo";
 
 // Display font: Tanker (Indian Type Foundry, ITF Free Font License), self-hosted unmodified from
 // public/fonts via @font-face in globals.css. UI font: Inter stands in for General Sans.
@@ -25,7 +27,7 @@ const serif = Literata({
 export const metadata: Metadata = {
   metadataBase: new URL("https://mnadesigns.github.io"),
   title: { default: "Muhammad Naeem | AI Product Leader & Lead Product Designer", template: "%s | Muhammad Naeem" },
-  description: "Muhammad Naeem is a Lead Product Designer and AI product leader in Lahore, Pakistan: design systems and products for SaaS, fintech and e-commerce, shipped as production code with AI in the loop.",
+  description: "Muhammad Naeem is a Lead Product Designer and AI product leader: design systems and products for SaaS, fintech and e-commerce, shipped as production code.",
   // the thumbnail shown when a link is shared: this one for every page, the work pages set their own (see app/work/[slug]/page.tsx)
   openGraph: { type: "website", siteName: "Muhammad Naeem", images: [{ url: "/images/og/og.jpg", width: 1200, height: 630, alt: "Muhammad Naeem" }] },
   twitter: { card: "summary_large_image", images: ["/images/og/og.jpg"] },
@@ -45,10 +47,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: "(function(){var r=matchMedia('(prefers-reduced-motion: reduce)').matches;function go(){document.body.classList.add('loaded');setTimeout(function(){document.body.classList.add('filled')},r?0:1700)}if(r){document.addEventListener('DOMContentLoaded',go)}else{setTimeout(go,650)}document.addEventListener('DOMContentLoaded',function(){if(!('IntersectionObserver' in window))return;var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});document.querySelectorAll('.rv').forEach(function(el){if(el.getBoundingClientRect().top<innerHeight*0.9){el.classList.add('rv-now','in')}else{io.observe(el)}})})})()" }} />
       </head>
       <body>
+        <JsonLd data={[person, { "@type": "WebSite", "@id": abs("/#website"), url: abs("/"), name: "Muhammad Naeem", inLanguage: "en", publisher: { "@id": abs("/#person") } }]} />
         <Loader />
         <Nav />
         <Cursor />
         <Prefetcher />
+        <Analytics />
         {children}
       </body>
     </html>

@@ -8,6 +8,8 @@ import { ClientStories } from "@/components/organisms/ClientStories";
 import { Writing } from "@/components/organisms/Writing";
 import { Doors } from "@/components/organisms/Doors";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function Home() {
   return (
     <main>

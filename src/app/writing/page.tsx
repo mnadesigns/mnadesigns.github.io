@@ -4,7 +4,7 @@ import { ArticleThumb } from "@/components/atoms/ArticleThumb";
 import { Doors } from "@/components/organisms/Doors";
 import { Arrow } from "@/components/atoms/Buttons";
 
-export const metadata = { title: "Read" };
+export const metadata = { title: "Read: articles on AI-augmented design", description: "Articles by Muhammad Naeem on AI-augmented design: UX foundations, design systems in Figma and code, motion, and shipping production-ready UI.", alternates: { canonical: "/writing/" } };
 
 export default function Writing() {
   return (

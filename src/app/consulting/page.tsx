@@ -2,7 +2,7 @@ import { consultingPage as p } from "@/data/pages";
 import { Problems, Testimonials } from "@/components/organisms/ConsultingParts";
 import { site } from "@/data/site";
 
-export const metadata = { title: "Consulting" };
+export const metadata = { title: "Consulting: AI-augmented design services", description: "Design consulting from Muhammad Naeem: AI-driven UX foundations, two-way design systems, and production-ready UI code for your product.", alternates: { canonical: "/consulting/" } };
 
 export default function Consulting() {
   const ticker = [...p.ticker, ...p.ticker];

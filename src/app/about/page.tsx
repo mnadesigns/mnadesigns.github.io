@@ -2,12 +2,15 @@ import { aboutPage as p } from "@/data/pages";
 import { PageHero, Section, Cards, Prose } from "@/components/organisms/PageParts";
 import { Doors } from "@/components/organisms/Doors";
 import { Btn } from "@/components/atoms/Buttons";
+import { JsonLd } from "@/components/atoms/JsonLd";
+import { abs, breadcrumbs } from "@/lib/seo";
 
-export const metadata = { title: "About", description: "How Muhammad Naeem grew from front-end designer into leading product design: design systems, accessible interfaces and AI-assisted design to code." };
+export const metadata = { title: "About", description: "How Muhammad Naeem grew from front-end designer into leading product design: design systems, accessible interfaces and AI-assisted design to code.", alternates: { canonical: "/about/" } };
 
 export default function About() {
   return (
     <main>
+      <JsonLd data={{ "@type": "ProfilePage", "@id": abs("/about/#profile"), url: abs("/about/"), name: "About Muhammad Naeem", inLanguage: "en", mainEntity: { "@id": abs("/#person") }, breadcrumb: breadcrumbs([{ name: "Home", path: "/" }, { name: "About", path: "/about/" }]) }} />
       <PageHero kicker={p.kicker} title={p.title} lead={p.lead} aside={
         <img className="about-portrait" fetchPriority="high" src="/images/portrait-720.webp" srcSet="/images/portrait-720.webp 720w, /images/portrait-1200.webp 1200w" sizes="(min-width: 1000px) 360px, 100vw" width={1200} height={1200} alt="Engraving-style portrait of Muhammad Naeem" decoding="async" />
       }>
