@@ -662,3 +662,27 @@ workDetails["spoonful-os"] = { media: [
   { type: "image", src: "/images/work/spoonful-os/slides/so-05.webp", alt: "Collaborative: invite parents, caregivers and doctors to build a connected care team" },
   { type: "image", src: "/images/work/spoonful-os/slides/so-06.webp", alt: "Childcare made easy: symptoms, medication and allergies in one child profile" },
 ] };
+
+// Pumba: the case study slides in order (slides/pm-01 to pm-18, made by scripts/pumba-images.mjs from the Pumba-NN PNGs)
+const pumbaSlide = (n: number) => `/images/work/pumba/slides/pm-${String(n).padStart(2, "0")}.webp`;
+workDetails.pumba = { media: [
+  { type: "video", src: "/images/work/pumba/pumba-cover.mp4", poster: "/images/work/pumba/pumba-cover-poster.webp", alt: "Pumba: the parking search from sign-in to arrival, then the reported company funding" },
+  { type: "image", src: pumbaSlide(1), alt: "Pumba, street parking in real time: the welcome and home screens on two phones" },
+  { type: "image", src: pumbaSlide(2), alt: "Parking near home or your destination: the app screens, and the reported company funding of $3M as historical context" },
+  { type: "image", src: pumbaSlide(3), alt: "Design foundations: the logo, three colours, SF Pro and Heebo, two interface languages and right to left layout" },
+  { type: "image", src: pumbaSlide(4), alt: "Design approach: understand, structure, design and refine, with the workstreams" },
+  { type: "image", src: pumbaSlide(5), alt: "Sensor requests and new features: ordering a parking sensor, the vehicle size experiment and the confirmation" },
+  { type: "image", src: pumbaSlide(6), alt: "Information architecture: onboarding, account setup, search controls, active search, parking lots and the account menu around Home and search" },
+  { type: "image", src: pumbaSlide(7), alt: "Made for the way you park: the app and street scenes of drivers in Tel Aviv" },
+  { type: "image", src: pumbaSlide(8), alt: "App icon: the p symbol with its teal dot, the icon at two sizes and the wordmark" },
+  { type: "image", src: pumbaSlide(9), alt: "UI kit: inputs, search controls, validation, status labels, buttons, choices and vehicle size" },
+  { type: "image", src: pumbaSlide(10), alt: "Typography: SF Pro for English and Heebo for Hebrew, with the text styles" },
+  { type: "image", src: pumbaSlide(11), alt: "Getting started: phone sign-in, profile and home address, and the location choice" },
+  { type: "image", src: pumbaSlide(12), alt: "Choose your area: address search, the destination with nearby lots, and Pumba's coverage area" },
+  { type: "image", src: pumbaSlide(13), alt: "Search, check, navigate: the active search, the space camera and the route preview" },
+  { type: "image", src: pumbaSlide(14), alt: "Recovery states: address not found, space just taken and lot full" },
+  { type: "image", src: pumbaSlide(15), alt: "Make Pumba yours: plans and subscriptions, parking preferences, and feedback and support" },
+  { type: "image", src: pumbaSlide(16), alt: "Stay in control: parking alerts, navigation method and app language" },
+  { type: "image", src: pumbaSlide(17), alt: "Know what happens next: arrival, search stopped and session expired" },
+  { type: "image", src: pumbaSlide(18), alt: "A clearer way to find your next space: the welcome and home screens, and the portfolio address" },
+] };

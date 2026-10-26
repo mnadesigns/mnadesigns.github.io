@@ -190,3 +190,18 @@ storyPages["spoonful-os"] = {
   stakesBig: { v: "", l: "" },
   stakesSupporting: [],
 };
+
+// Pumba, a street parking app: its page is its own media list in workDetails.ts; no hero figures (the funding figure is company history, not a result), so the stats row is hidden
+storyPages.pumba = {
+  ...storyPages.quodarca,
+  poster: "/images/work/pumba/poster.webp",
+  secondary: "A street parking app that shows where parking is open, in real time",
+  desc: "Pumba helps drivers in Tel Aviv find street parking near home or a destination. I designed the iOS app, in English and Hebrew (right to left).",
+  // the funding is the company's reported figure (Startup Nation Central / Finder, Nov 2023), not a result of the design; the downloads figure is the owner's own; RTL and iOS are read off the case study's foundations slide
+  stakesBig: { v: "$3M", l: "Reported company funding" },
+  stakesSupporting: [
+    { v: "20K+", l: "Downloads" },
+    { v: "RTL", l: "Hebrew reading direction" },
+    { v: "iOS", l: "Native interface patterns" },
+  ],
+};
