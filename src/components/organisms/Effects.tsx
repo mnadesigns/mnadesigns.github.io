@@ -94,7 +94,7 @@ export function Cursor() {
     const up = () => cur.classList.remove("is-down");
     const follow = () => {
       cx += (tx - cx) * 0.22; cy += (ty - cy) * 0.22;
-      cur.style.left = cx + "px"; cur.style.top = cy + "px";
+      cur.style.translate = `${cx}px ${cy}px`; // moved with a transform, not left/top: no layout every frame while it passes over the blurred nav
       raf = requestAnimationFrame(follow);
     };
     follow();

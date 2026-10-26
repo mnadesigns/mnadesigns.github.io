@@ -73,7 +73,7 @@ body.menu-locked { overflow: hidden; }
 @keyframes dotPop { 0%, 40% { transform: scale(0); opacity: 0; } 55% { transform: scale(1.2); opacity: 1; } 65%, 100% { transform: scale(1); opacity: 1; } }
 
 /* cursor */
-.cursor { position: fixed; left: 0; top: 0; z-index: 300; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); border: 2px solid var(--brand); transform: translate(-50%, -50%); transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), border-radius var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); opacity: 0; }
+.cursor { position: fixed; left: 0; top: 0; will-change: translate; z-index: 300; pointer-events: none; width: 12px; height: 12px; border-radius: 50%; background: var(--brand); border: 2px solid var(--brand); transform: translate(-50%, -50%); transition: width var(--t-fast) var(--ease), height var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), border-radius var(--t-fast) var(--ease), transform var(--t-fast) var(--ease); opacity: 0; }
 body.cursor-on .cursor.is-live { opacity: 1; }
 .cursor.is-link { width: 44px; height: 44px; background: transparent; }
 .cursor.is-light { border-color: #fff; background: #fff; }
