@@ -10,6 +10,7 @@ import "./story.css";
 import "./work.css";
 import { Nav } from "@/components/molecules/Nav";
 import { Loader, Cursor } from "@/components/organisms/Effects";
+import { Prefetcher } from "@/components/organisms/Prefetcher";
 
 // Display font: Tanker (Indian Type Foundry, ITF Free Font License), self-hosted unmodified from
 // public/fonts via @font-face in globals.css. UI font: Inter stands in for General Sans.
@@ -37,6 +38,7 @@ export default function RootLayout({
         <Loader />
         <Nav />
         <Cursor />
+        <Prefetcher />
         {children}
       </body>
     </html>

@@ -24,7 +24,7 @@ export function PeersScene(props: SceneProps) {
       stage="purple"
       bleed
       bottomAnchor
-      cover={<motion.img alt={alt} src={`${IMG}/cover-16x9.webp`} {...enter} />}
+      cover={<motion.img loading="lazy" decoding="async" alt={alt} src={`${IMG}/cover-16x9.webp`} {...enter} />}
       portrait={<PortraitCover active={props.active} alt={alt} src={`${IMG}/cover-16x9.webp`} position="50% 50%" />}
     />
   );

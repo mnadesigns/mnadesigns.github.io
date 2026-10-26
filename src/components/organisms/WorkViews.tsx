@@ -29,9 +29,9 @@ function ToolLogo({ id }: { id: "figma" | "flowbite" | "antd" | "claude" | "curs
     </svg>
   );
   // eslint-disable-next-line @next/next/no-img-element
-  if (id === "flowbite") return <img src="/images/brands/flowbite.svg" alt="" width={32} height={33} />;
+  if (id === "flowbite") return <img loading="lazy" decoding="async" src="/images/brands/flowbite.svg" alt="" width={32} height={33} />;
   // eslint-disable-next-line @next/next/no-img-element
-  if (id === "antd") return <img src="/images/brands/antd.svg" alt="" width={32} height={32} />;
+  if (id === "antd") return <img loading="lazy" decoding="async" src="/images/brands/antd.svg" alt="" width={32} height={32} />;
   return <ToolIcon name={id} className={id === "claude" ? "wk-tool-claude" : "wk-tool-cursor"} />;
 }
 
@@ -72,7 +72,7 @@ export function WorkSitemap({ map }: { map: Sitemap }) {
         <motion.div className="wk-map-root" {...rise(0, calm)}>
           {map.logo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={map.logo} alt={map.root} width={269} height={200} draggable={false} />
+            <img loading="lazy" decoding="async" src={map.logo} alt={map.root} width={269} height={200} draggable={false} />
           ) : map.root}
         </motion.div>
         <div className="wk-map-groups">

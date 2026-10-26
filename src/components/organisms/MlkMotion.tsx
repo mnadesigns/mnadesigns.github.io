@@ -73,7 +73,7 @@ function Dev({ n, w, x, y, r = 0, delay, depth, sx, sy, float = 1 }: Px & { n: s
   return (
     <Par sx={sx} sy={sy} d={depth} className={styles.fill}>
       <motion.div className={styles.dev} style={{ left: `${x}cqw`, top: `${y}cqw` }} initial={{ y: "26cqw", opacity: 0, rotate: r * 2.5 }} animate={{ y: "0cqw", opacity: 1, rotate: r }} exit={{ y: "-8cqw", opacity: 0, transition: { duration: 0.45, ease: [0.64, 0, 0.78, 0] } }} transition={{ ...SPRING, stiffness: 120, damping: 15, delay }}>
-        <motion.img src={dev(n)} alt="" style={{ width: `${w}cqw` }} width={tablet ? 1384 : 524} height={tablet ? 1063 : 1068} animate={{ y: [0, -float, 0] }} transition={{ duration: 5.5 + delay, repeat: Infinity, ease: "easeInOut" }} />
+        <motion.img loading="lazy" decoding="async" src={dev(n)} alt="" style={{ width: `${w}cqw` }} width={tablet ? 1384 : 524} height={tablet ? 1063 : 1068} animate={{ y: [0, -float, 0] }} transition={{ duration: 5.5 + delay, repeat: Infinity, ease: "easeInOut" }} />
       </motion.div>
     </Par>
   );
@@ -122,7 +122,7 @@ function Orbit({ d, i, time }: { d: { n: string; w: number }; i: number; time: M
   const tilt = useTransform(a, (v) => Math.cos(v) * -10);
   return (
     <motion.div className={styles.orbit} style={{ x, y, scale, zIndex: z, filter: blur, rotateY: tilt }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.4 } }} transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}>
-      <img src={dev(d.n)} alt="" style={{ width: `${d.w}cqw` }} width={d.w > 20 ? 1384 : 524} height={d.w > 20 ? 1063 : 1068} />
+      <img loading="lazy" decoding="async" src={dev(d.n)} alt="" style={{ width: `${d.w}cqw` }} width={d.w > 20 ? 1384 : 524} height={d.w > 20 ? 1063 : 1068} />
     </motion.div>
   );
 }

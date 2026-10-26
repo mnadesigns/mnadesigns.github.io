@@ -43,7 +43,7 @@ export function IpadGridScene(props: SceneProps) {
                   animate={props.active ? { y: [`${d * 130}%`, "0%", `${-d * 4.5}%`, `${-d * 4.5}%`, `${d * 3}%`] } : { y: `${d * 130}%` }}
                   transition={props.active ? { duration: 3.9, delay: i * 0.07, times: [0, 0.2, 0.42, 0.62, 0.84], ease: [SHARP, SHARP, "linear", SHARP] } : { duration: 0 }}
                 >
-                  {c.run.map((k, j) => <img key={j} src={SHOT[k].src} alt={SHOT[k].alt} width={W} height={H} decoding="async" style={{ position: "relative", inset: "auto", display: "block", width: "100%", height: "auto", objectFit: "fill", willChange: "auto" }} />)}
+                  {c.run.map((k, j) => <img loading="lazy" key={j} src={SHOT[k].src} alt={SHOT[k].alt} width={W} height={H} decoding="async" style={{ position: "relative", inset: "auto", display: "block", width: "100%", height: "auto", objectFit: "fill", willChange: "auto" }} />)}
                 </motion.div>
               );
             })}

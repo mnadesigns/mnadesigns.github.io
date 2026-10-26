@@ -39,7 +39,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
           <span className="st-scroll">Scroll</span>
         </section>
 
-        <section className="st-video"><img className="st-video-img" src={p.poster} alt={s.name} /></section>
+        <section className="st-video"><img loading="lazy" decoding="async" className="st-video-img" src={p.poster} alt={s.name} /></section>
 
         <section className="st-stakes">
           <div className="st-stakes-inner">
@@ -80,7 +80,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
                   <h3>{c.t}</h3>
                   {c.ps.map((t, k) => <p key={k}>{t}</p>)}
                   {c.pull && <p className="st-pull">{c.pull}</p>}
-                  {c.image && <div className="st-chapter-image"><img src={c.image} alt={c.t} /></div>}
+                  {c.image && <div className="st-chapter-image"><img loading="lazy" decoding="async" src={c.image} alt={c.t} /></div>}
                 </div>
               </article>
             ))}
@@ -88,7 +88,7 @@ export default async function Story({ params }: { params: Promise<{ slug: string
         </section>
 
         <section className="st-cardshow">
-          <div className="st-cardshow-inner">{p.shots.map((src) => <div key={src}><img src={src} alt="" /></div>)}</div>
+          <div className="st-cardshow-inner">{p.shots.map((src) => <div key={src}><img loading="lazy" decoding="async" src={src} alt="" /></div>)}</div>
         </section>
 
         <section className="st-service">

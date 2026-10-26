@@ -56,8 +56,11 @@
 .sti-row .btn-circle .big svg { width: 24px; height: 24px; }
 .sti-row:hover .btn-circle .big { transform: translate(6px, -6px) scale(1.18); background: var(--brand-deep); }
 .sti-row-meta { display: flex; flex-direction: column; gap: 12px; max-width: 64ch; }
-.sti-row-stat b { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(28px, 3vw, 44px); line-height: 1; color: var(--ink); }
-.sti-row-stat i { font-style: normal; font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--ink-50); }
+.sti-row-cat { font-family: var(--sans); font-size: 15px; font-weight: 500; color: var(--ink-50); }
+.sti-row-stats { display: flex; flex-wrap: wrap; gap: 20px 36px; }
+.sti-row-stat { display: flex; flex-direction: column; gap: 4px; max-width: 18ch; }
+.sti-row-stat b { display: block; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: clamp(26px, 2.6vw, 36px); line-height: 1; letter-spacing: 0.02em; color: var(--ink); }
+.sti-row-stat i { font-style: normal; font-family: var(--sans); font-size: 14px; line-height: 1.35; font-weight: 500; color: var(--ink-50); }
 .sti-row-line { font-family: var(--serif); font-size: 15px; line-height: 1.5; color: var(--ink-65); }
 /* the right side of a row can play a film of slides (16:9) in place of the logo */
 .sti-row-film { width: 100%; overflow: hidden; border: 1px solid var(--ink-12); border-radius: var(--r); background: #fff; }
@@ -92,6 +95,7 @@
   .sti-feat--film .sti-film, .sti-feat--film .sti-feat-visual > section { border-radius: 0; border-left: 0; border-right: 0; }
   .sti-feat--film { padding-top: 0; } /* the media starts right under the line above it */
   .sti-row-box, .sti-row-film { width: 100vw; margin-inline: calc(50% - 50vw); border-radius: 0; border-left: 0; border-right: 0; } /* the work boxes under "And more." run edge to edge too */
+  .sti-index .sti-row { padding: 0 0 40px; gap: 24px; } /* like the works above: the picture starts right under the separator line, no gap */
   .sti-lede { padding-inline: 20px; } /* the line under the title no longer touches the edges of the screen */
 }
 

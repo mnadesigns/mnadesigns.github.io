@@ -69,8 +69,8 @@ export function Cursor() {
       if (!cur.classList.contains("is-live")) { cx = tx; cy = ty; cur.classList.add("is-live"); } // the dot shows only once the pointer has moved, and starts under it (not in the middle of the page)
       const t = e.target as HTMLElement;
       mode(t);
-      // hero logo trail (not over links, buttons or other clickable things)
-      if (t.closest("#hero") && !t.closest("a, button, [role='button'], .btn, .btn-sec, .btn-circle")) {
+      // hero logo trail, on the home hero and the Work hero (not over links, buttons or other clickable things)
+      if (t.closest("#hero, .sti-hero") && !t.closest("a, button, [role='button'], .btn, .btn-sec, .btn-circle")) {
         const now = performance.now();
         if (Math.hypot(e.clientX - lx, e.clientY - ly) < 42 || now - lt < 75) return;
         lx = e.clientX; ly = e.clientY; lt = now;

@@ -16,7 +16,7 @@ export function PortraitPicture({ src, alt, active, zoom }: { src: string; alt: 
   const from = zoom ? zoom.from : 1.06, to = zoom ? zoom.to : 1;
   return (
     <div className={styles.pPic}>
-      <motion.img
+      <motion.img loading="lazy" decoding="async"
         alt={alt}
         src={src}
         style={zoom ? { transformOrigin: zoom.origin } : undefined}
@@ -32,7 +32,7 @@ export function PortraitPicture({ src, alt, active, zoom }: { src: string; alt: 
 export function PortraitCover({ src, alt, active, position = "50% 50%" }: { src: string; alt: string; active: boolean; position?: string }) {
   return (
     <div className={styles.pPic}>
-      <motion.img
+      <motion.img loading="lazy" decoding="async"
         alt={alt}
         src={src}
         style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: position }}
@@ -111,18 +111,18 @@ export function WelcomeScene(props: SceneProps) {
       bars="#1d1c4e"
       stage="welcome"
       base="#1d1c4e"
-      cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
+      cover={<img loading="lazy" decoding="async" alt="" src={`${IMG}/bg-devices.webp`} />}
       portrait={
         <div className={styles.pFit}>
-          <div className={styles.pWordmark}><img alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
-          <div className={styles.pMonitor}><img alt="" src={`${IMG}/welcome/monitor.webp`} /></div>
+          <div className={styles.pWordmark}><img loading="lazy" decoding="async" alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
+          <div className={styles.pMonitor}><img loading="lazy" decoding="async" alt="" src={`${IMG}/welcome/monitor.webp`} /></div>
         </div>
       }
     >
       <div className={styles.wordmarkWrap}>
-        <div className={styles.wordmark}><img alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
+        <div className={styles.wordmark}><img loading="lazy" decoding="async" alt="QuodArca" src={`${IMG}/welcome/wordmark.svg`} /></div>
       </div>
-      <div className={styles.monitor}><img alt="" src={`${IMG}/welcome/monitor.webp`} /></div>
+      <div className={styles.monitor}><img loading="lazy" decoding="async" alt="" src={`${IMG}/welcome/monitor.webp`} /></div>
     </Scene>
   );
 }
@@ -142,8 +142,8 @@ const OUT = [3.54, 3.55, 3.56, 3.57, 3.58, 3.59]; // seconds: when each ring lif
 function RingView({ r, i }: { r: (typeof RINGS)[number]; i: number }) {
   return (
     <div className={styles.ring} style={{ "--d": `${IN[i]}s`, "--x": `${OUT[i]}s` } as React.CSSProperties}>
-      <img className={styles.base} alt="" src={`${IMG}/projects/ring.svg`} />
-      <div className={styles.arc} style={r.box}><img alt="" src={`${IMG}/projects/${r.arc}`} /></div>
+      <img loading="lazy" decoding="async" className={styles.base} alt="" src={`${IMG}/projects/ring.svg`} />
+      <div className={styles.arc} style={r.box}><img loading="lazy" decoding="async" alt="" src={`${IMG}/projects/${r.arc}`} /></div>
       <p className={styles.label} style={{ left: r.x, top: r.y ?? 91.76 }}>
         {r.small ? <small>{r.lines[0]}</small> : r.lines[0]}
         {r.small ? r.lines[1] : <><br />{r.lines[1]}</>}
@@ -158,7 +158,7 @@ function ProjectsStage() {
     <>
       <div className={styles.rocketWrap}>
         <div className={styles.rocketTurn}>
-          <div className={styles.rocket}><img alt="" src={`${IMG}/projects/rocket.webp`} /></div>
+          <div className={styles.rocket}><img loading="lazy" decoding="async" alt="" src={`${IMG}/projects/rocket.webp`} /></div>
         </div>
       </div>
       <p className={styles.title}>{"Projects   delivered"}</p>

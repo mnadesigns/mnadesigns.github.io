@@ -198,14 +198,14 @@ export function KineticAd({ controls }: { controls?: boolean } = {}) {
             {b.line && <div className="sl-line" dangerouslySetInnerHTML={{ __html: b.line }} />}
             {b.shot && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img className={`sl-screen${b.shot.fit ? " sl-screen--" + b.shot.fit : ""}`} src={b.shot.src} alt={b.shot.alt} />
+              <img loading="lazy" decoding="async" className={`sl-screen${b.shot.fit ? " sl-screen--" + b.shot.fit : ""}`} src={b.shot.src} alt={b.shot.alt} />
             )}
             {b.giant && <div className="sl-giant">{(counts[j] ?? 0).toLocaleString("en-US")}{b.suffix}</div>}
             {b.tag && <div className="sl-tag">{b.tag}</div>}
             {b.logo && (
               <div className="sl-brand">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={b.logo.src} alt={b.logo.name} />
+                <img loading="lazy" decoding="async" src={b.logo.src} alt={b.logo.name} />
               </div>
             )}
           </div>
@@ -249,14 +249,14 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
       <div className="sl-bg" style={{ background: s.bg }} />
       {s.image && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img className="sl-bgimg" alt="" src={s.image} />
+        <img loading="lazy" decoding="async" className="sl-bgimg" alt="" src={s.image} />
       )}
       {s.zoom && (
         // the pictures change quickly, each one zooming in as it comes
         <div className="sl-zoom" aria-hidden="true" ref={zoomRef} data-speed={1}>
           {s.zoom.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1120}ms` }} />
+            <img loading="lazy" key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1120}ms` }} />
           ))}
           <div className="sl-zshade" />
         </div>
@@ -267,7 +267,7 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
           {s.logo && (
             <div className="sl-brand sl-brand--wide">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.logo.src} alt={s.logo.name} />
+              <img loading="lazy" decoding="async" src={s.logo.src} alt={s.logo.name} />
             </div>
           )}
           {s.line && <div className="sl-line">{s.line}</div>}

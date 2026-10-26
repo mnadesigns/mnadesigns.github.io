@@ -10,7 +10,7 @@ const EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve (--e-lan
 export function TelcoIctScene(props: SceneProps) {
   return (
     <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitPicture zoom={{ from: 1, to: 1.75, origin: "50% 38%" }} active={props.active} alt="The Telco ICT Group website on a phone, a desktop and a tablet: telecommunications and IT that works every time." src="/images/work/telcoict/devices.webp" />}>
-      <motion.img
+      <motion.img loading="lazy" decoding="async"
         alt="The Telco ICT Group website on a phone, a desktop and a tablet: telecommunications and IT that works every time."
         src="/images/work/telcoict/devices.webp"
         style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, objectFit: "contain", padding: "16px 24px", boxSizing: "border-box" }}

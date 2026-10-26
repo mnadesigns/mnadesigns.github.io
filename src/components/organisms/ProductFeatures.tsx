@@ -97,7 +97,7 @@ function PortraitView({ c, on }: { c: (typeof CLIPS)[number]; on: boolean }) {
       <div className={styles.pDevices} style={{ aspectRatio: `${W} / ${H}`, "--a": W / H } as React.CSSProperties}>
         {c.devices.map((d) => (
           // eslint-disable-next-line @next/next/no-img-element
-          <img key={d.f} alt="" src={`${IMG}/features/${d.f}.webp`} style={{ left: `${((d.x - x0) / W) * 100}%`, top: `${((d.y - y0) / H) * 100}%`, width: `${(d.w / W) * 100}%`, height: `${(d.h / H) * 100}%` }} />
+          <img loading="lazy" decoding="async" key={d.f} alt="" src={`${IMG}/features/${d.f}.webp`} style={{ left: `${((d.x - x0) / W) * 100}%`, top: `${((d.y - y0) / H) * 100}%`, width: `${(d.w / W) * 100}%`, height: `${(d.h / H) * 100}%` }} />
         ))}
       </div>
       </div>
@@ -115,7 +115,7 @@ export function ProductFeatures(props: SceneProps) {
       stage="purple"
       base="#1d1c4e"
       // eslint-disable-next-line @next/next/no-img-element
-      cover={<img alt="" src={`${IMG}/bg-devices.webp`} />}
+      cover={<img loading="lazy" decoding="async" alt="" src={`${IMG}/bg-devices.webp`} />}
       portrait={<PortraitCanvas>{CLIPS.map((c) => <PortraitView key={c.head} c={c} on={on} />)}</PortraitCanvas>}
     >
       {CLIPS.map((c) => {
@@ -129,7 +129,7 @@ export function ProductFeatures(props: SceneProps) {
             {c.devices.map((d, i) => {
               const dm = deviceMotion(c.start, c.end, i);
               return (
-                <motion.img
+                <motion.img loading="lazy" decoding="async"
                   key={d.f}
                   className={styles.device}
                   alt=""

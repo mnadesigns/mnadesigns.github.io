@@ -224,9 +224,8 @@ const quodarcaScreens: WorkMedia[] = (() => {
   return list;
 })();
 
-// SRED.io. The screens are made by scripts/case-study-images.mjs (key-position.webp); `sredioShots` turns one key into slides, `sredioFlow` into the steps of a flow.
+// SRED.io. The screens are made by scripts/case-study-images.mjs (key-position.webp); `sredioFlow` turns a key into the steps of a flow.
 // Claims still needing proof (no before screens or data in hand): the 70% shorter pages (before/after pair exists only for File Vaults and Timesheets), "nothing was removed", engineers "reuse components".
-const sredioShots = (key: string, alts: string[]) => alts.map((alt, i) => ({ src: `/images/work/sredio/details/${key}-${i + 1}.webp`, alt }));
 const sredioFlow = (key: string, steps: Omit<WorkFlow["steps"][number], "src">[]) => steps.map((s, i) => ({ ...s, src: `/images/work/sredio/details/${key}-${i + 1}.webp` }));
 
 const sredioScreens: WorkMedia[] = [

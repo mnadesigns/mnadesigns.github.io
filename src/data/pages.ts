@@ -1,5 +1,3 @@
-﻿// Placeholder content for sub-pages. Replace with your own; layout does not depend on exact wording.
-const lorem = "Placeholder paragraph. Replace this with your own writing. It is here so the layout, line length and rhythm match the design exactly.";
 
 export const aboutPage = {
   kicker: "About",
@@ -80,10 +78,10 @@ export const storiesIndex = {
   kicker: "Selected work",
   lede: "I turn messy products into systems people trust, then ship them: a first design system for a tax-credit platform, privacy-first software for every device, and sites and apps for 50+ Australian brands.",
   stats: [
-    { v: "10+", l: "Years in product design" },
-    { v: "50+", l: "Australian brands" },
-    { v: "25+", l: "Industries" },
-    { v: "500+", l: "Screens at EISST" },
+    { v: "10+", l: "Years designing products people use" },
+    { v: "50+", l: "Brands shaped, in every kind of business" },
+    { v: "25+", l: "Industries, from fintech to fashion" },
+    { v: "1,000+", l: "Screens designed and shipped" },
   ],
   features: [
     { slug: "sred-io", film: true, eyebrow: "Lead Product Designer", name: "SRED.io", sub: "The platform's first design system, then more than 17 microservices.", metrics: [{ v: "17+", l: "Microservices" }, { v: "100+", l: "Screens designed" }], cap: "Lead Product Designer", logo: "/images/brands/sredio.png" },
@@ -92,12 +90,12 @@ export const storiesIndex = {
   ],
   moreSub: "Websites, apps and platforms delivered along the way, from clinics to learning tools.",
   more: [
-    { slug: "zero-gaspi", name: "Zero Gaspi", v: "iOS + Android", l: "Anti-food-waste marketplace", line: "Unsold food from local merchants, sold as Surprise Baskets at about 30 to 35% of the original price.", logo: "/images/work/zerogaspi/logo-mark.svg" },
-    { slug: "vyno", name: "VYNO Carpool", v: "iOS + Android", l: "Carpooling app", line: "Affordable shared rides for Cameroon: verified drivers, smart filters and QR pickups.", logo: "/images/brands/vyno.png", shot: "/images/work/vyno/vyno-app-poster.webp", video: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3" },
-    { slug: "peers", name: "Peers", v: "Web + mobile", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png", shot: "/images/work/peers/cover-16x9.webp", cover: true },
-    { slug: "applied-electronics", name: "Applied Electronics", v: "Website", l: "Audio, video and broadcast technology", line: "A user-centred redesign of the website for Canada's leading provider of integrated media technology.", logo: "/images/brands/applied-electronics.png", shot: "/images/work/applied-video/applied-electronics-poster.webp", video: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560" },
-    { slug: "spoonful-os", name: "Spoonful OS", v: "Mobile app", l: "Family health app", line: "Symptoms, medications and doses for a child, tracked and shared with parents, caregivers and doctors.", logo: "", shot: "/images/work/spoonful-os/slides/so-01.webp", cover: true, zoom: true },
-    { slug: "pumba", name: "Pumba", v: "iOS app", l: "Street parking app", line: "Real-time street parking search for Tel Aviv drivers, near home or a destination, in English and Hebrew.", logo: "", shot: "/images/work/pumba/pumba-cover-poster.webp", video: "/images/work/pumba/pumba-cover.mp4", bg: "#0B1426" },
+    { slug: "zero-gaspi", name: "Zero Gaspi", l: "Anti-food-waste marketplace", line: "Unsold food from local merchants, sold as Surprise Baskets at about 30 to 35% of the original price.", logo: "/images/work/zerogaspi/logo-mark.svg" },
+    { slug: "pumba", name: "Pumba", l: "Street parking app", line: "Real-time street parking search for Tel Aviv drivers, near home or a destination, in English and Hebrew.", logo: "", shot: "/images/work/pumba/pumba-cover-poster.webp", video: "/images/work/pumba/pumba-cover.mp4", bg: "#0B1426" },
+    { slug: "vyno", name: "VYNO Carpool", l: "Carpooling app", line: "Affordable shared rides for Cameroon: verified drivers, smart filters and QR pickups.", logo: "/images/brands/vyno.png", shot: "/images/work/vyno/vyno-app-poster.webp", video: "/images/work/vyno/vyno-app.mp4", bg: "#017ac3" },
+    { slug: "peers", name: "Peers", l: "Learning platform", line: "Assessment results and team views for a skills platform, on desktop and phone.", logo: "/images/brands/peers.png", shot: "/images/work/peers/cover-16x9.webp", cover: true },
+    { slug: "applied-electronics", name: "Applied Electronics", l: "Audio, video and broadcast technology", line: "A user-centred redesign of the website for Canada's leading provider of integrated media technology.", logo: "/images/brands/applied-electronics.png", shot: "/images/work/applied-video/applied-electronics-poster.webp", video: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560" },
+    { slug: "spoonful-os", name: "Spoonful OS", l: "Family health app", line: "Symptoms, medications and doses for a child, tracked and shared with parents, caregivers and doctors.", logo: "", shot: "/images/work/spoonful-os/slides/so-01.webp", cover: true, zoom: true },
   ],
   footer: "More <em>coming</em>.",
 };

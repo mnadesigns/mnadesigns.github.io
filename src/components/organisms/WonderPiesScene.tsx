@@ -10,7 +10,7 @@ const EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve (--e-lan
 export function WonderPiesScene(props: SceneProps) {
   return (
     <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitPicture zoom={{ from: 1, to: 1.75, origin: "50% 40%" }} active={props.active} alt="The Wonder Pies website on a phone, a desktop and a tablet: handcrafted and gourmet pies and pastries." src="/images/work/wonderpies/devices.webp" />}>
-      <motion.img
+      <motion.img loading="lazy" decoding="async"
         alt="The Wonder Pies website on a phone, a desktop and a tablet: handcrafted and gourmet pies and pastries."
         src="/images/work/wonderpies/devices.webp"
         style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, objectFit: "contain", padding: "16px 24px", boxSizing: "border-box" }}
