@@ -57,10 +57,10 @@ function BubbleView({ b }: { b: Bubble }) {
       <div className={styles.ebox} style={{ left: r.x - wx, top: r.y - wy, width: r.size, height: r.size }}>
         {r.rot !== undefined ? (
           <div className={styles.eturn} style={{ transform: `rotate(${r.rot}deg)` }}>
-            <div className={styles.einner} style={{ width: r.inner, height: r.inner }}><img loading="lazy" decoding="async" alt="" src={`${A}/${r.img}.svg`} /></div>
+            <div className={styles.einner} style={{ width: r.inner, height: r.inner }}><img decoding="async" alt="" src={`${A}/${r.img}.svg`} /></div>
           </div>
         ) : (
-          <div className={styles.eplain} style={{ position: "relative", width: r.size, height: r.size }}><img loading="lazy" decoding="async" alt="" src={`${A}/${r.img}.svg`} /></div>
+          <div className={styles.eplain} style={{ position: "relative", width: r.size, height: r.size }}><img decoding="async" alt="" src={`${A}/${r.img}.svg`} /></div>
         )}
       </div>
       <div className={styles.tbox} style={{ left: t.cx - t.w / 2 - wx, top: t.top - wy, width: t.w, height: t.h }}>
@@ -81,7 +81,7 @@ const RANGES: [number, number][] = [[0, 720], [720, 1190], [1190, 2000]]; // whi
 function PortraitProcess() {
   return (
     <div className={styles.mView}>
-      <div className={styles.mHead}><p className={styles.mHeadTitle}>The Process</p><img loading="lazy" decoding="async" className={styles.mHeadIcon} alt="" src={`/images/work/quodarca/projects/rocket.webp`} /></div>
+      <div className={styles.mHead}><p className={styles.mHeadTitle}>The Process</p><img decoding="async" className={styles.mHeadIcon} alt="" src={`/images/work/quodarca/projects/rocket.webp`} /></div>
       <div className={styles.mWorld}>
         <div className={styles.lower}>
           {COLS.map((c, i) => (
@@ -104,7 +104,7 @@ export function ProcessChallenges(props: SceneProps) {
     <Scene {...props} speed={1} portrait={<PortraitProcess />} bars="#ffffff" stage="white">
       <div className={styles.groupA}>
         <p className={`${styles.t} ${styles.processTitle}`}>The<br />Process</p>
-        <div className={styles.rocket}><img loading="lazy" decoding="async" alt="" src={`/images/work/quodarca/projects/rocket.webp`} /></div>
+        <div className={styles.rocket}><img decoding="async" alt="" src={`/images/work/quodarca/projects/rocket.webp`} /></div>
         <div className={styles.lower}>
         {COLS.map((c) => (
           <div key={c.name}>
@@ -125,13 +125,13 @@ export function ProcessChallenges(props: SceneProps) {
       </div>
       <div className={styles.groupB}>
         <p className={`${styles.t} ${styles.challengeTitle}`} style={{ top: 111.61 }}>Key UX</p>
-        <div className={styles.siren}><img loading="lazy" decoding="async" alt="" src={`${A}/siren.svg`} /></div>
+        <div className={styles.siren}><img decoding="async" alt="" src={`${A}/siren.svg`} /></div>
         <p className={`${styles.t} ${styles.challengeTitle}`} style={{ top: 204.19 }}>Challenges</p>
         <p className={styles.lead}>QuodArca had big ambitions — but a fragmented UX. Here’s what uncovered in my initial audit:</p>
         {NOTES.map((n) => (
           <div key={n.left + "-" + n.top} className={styles.note} style={{ left: n.left, top: n.top, "--d": `${n.d}s` } as React.CSSProperties}>
-            <div className={styles.shadow}><img loading="lazy" decoding="async" alt="" src={`${A}/shadow.svg`} /></div>
-            <div className={styles.paper}><img loading="lazy" decoding="async" alt="" src={`${A}/${n.paper}.svg`} /></div>
+            <div className={styles.shadow}><img decoding="async" alt="" src={`${A}/shadow.svg`} /></div>
+            <div className={styles.paper}><img decoding="async" alt="" src={`${A}/${n.paper}.svg`} /></div>
             <div className={styles.noteText}>
               <h3 style={{ fontSize: n.hs * 1.18 }}>{n.head.map((l, i) => <span key={l}>{i > 0 && <br />}{l}</span>)}</h3>
               <p>{n.body}</p>

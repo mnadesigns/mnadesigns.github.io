@@ -26,7 +26,7 @@ export function CytositeScene(props: SceneProps) {
         animate={on ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 90, scale: 1.06 }}
         transition={on ? { duration: 1.5, ease: GLIDE } : { duration: 0 }}
       >
-        <motion.img loading="lazy"
+        <motion.img
           src="/images/work/cytosite/imac.webp"
           alt="The CytoSite Bio website on an iMac."
           width={2000}
@@ -43,7 +43,7 @@ export function CytositeScene(props: SceneProps) {
         animate={on ? { opacity: 1, y: 0 } : { opacity: 0, y: 320 }}
         transition={on ? { duration: 1.6, ease: GLIDE, delay: 0.45 } : { duration: 0 }}
       >
-        <motion.img loading="lazy"
+        <motion.img
           src="/images/work/cytosite/iphone.webp"
           alt="The CytoSite Bio website on an iPhone."
           width={866}

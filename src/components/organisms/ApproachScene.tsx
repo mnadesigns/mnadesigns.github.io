@@ -45,7 +45,7 @@ export function ApproachScene(props: SceneProps) {
           <div className={styles.pRegion}>
             {/* on a phone the devices start close up and glide out to the full picture, once the second view has arrived */}
             <motion.div className={styles.pZoom} style={{ transformOrigin: "50% 100%" }} initial={{ scale: 1.55 }} animate={on ? { scale: 1 } : { scale: 1.55 }} transition={{ duration: 3.2, delay: SPLIT, ease: [0.45, 0, 0.25, 1] }}>
-              <img loading="lazy" decoding="async" alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-tight.webp`} />
+              <img decoding="async" alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-tight.webp`} />
             </motion.div>
           </div>
         </motion.div>
@@ -53,14 +53,14 @@ export function ApproachScene(props: SceneProps) {
       base="#24243b"
       cover={
         <>
-          <motion.img loading="lazy" decoding="async" alt="Screens from the QuodArca audit: sign-in, security, device approval and empty states." src={`${IMG}/audit.webp`} initial={HIDDEN} animate={on ? one.animate : HIDDEN} transition={one.transition} />
-          <motion.img loading="lazy" decoding="async" alt="" src={`${IMG.replace("/approach", "")}/bg-devices.webp`} initial={{ opacity: 0 }} animate={on ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: T, times: times([0, SPLIT - 0.3, SPLIT + 0.2, T]), ease: "linear" }} />
+          <motion.img decoding="async" alt="Screens from the QuodArca audit: sign-in, security, device approval and empty states." src={`${IMG}/audit.webp`} initial={HIDDEN} animate={on ? one.animate : HIDDEN} transition={one.transition} />
+          <motion.img decoding="async" alt="" src={`${IMG.replace("/approach", "")}/bg-devices.webp`} initial={{ opacity: 0 }} animate={on ? { opacity: [0, 0, 1, 1] } : { opacity: 0 }} transition={{ duration: T, times: times([0, SPLIT - 0.3, SPLIT + 0.2, T]), ease: "linear" }} />
         </>
       }
     >
       {/* the second view lives on the stage, so its heading stays aligned with the devices on any panel shape; your indigo background picture shows behind and around the devices */}
       <motion.div style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080 }} initial={HIDDEN} animate={on ? two.animate : HIDDEN} transition={two.transition}>
-        <img loading="lazy" decoding="async" alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-cutout.webp`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+        <img decoding="async" alt="QuodArca on a laptop and a phone." src={`${IMG}/devices-cutout.webp`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
         <p className={styles.heading}>Think Across Devices<span>.</span></p>
       </motion.div>
     </Scene>

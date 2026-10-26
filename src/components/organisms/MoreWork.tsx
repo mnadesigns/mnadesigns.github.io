@@ -78,9 +78,9 @@ export function MoreWork({ slide, from = 1, to = 99, tablets, logos }: { slide?:
     <section className={`${styles.sec}${slide ? ` ${styles.slide} wk-reel` : ""}`} aria-label="More work, and the brands I have worked with">
       <Row speed={13} className={styles.shots}>
         {tablets ? tablets.map((t, i) => (
-          <img key={t.src} className={styles.shot} src={t.src} alt={t.alt} width={t.w} height={t.h} loading={i < 4 ? "eager" : "lazy"} decoding="async" style={{ aspectRatio: `${t.w} / ${t.h}` }} />
+          <img key={t.src} className={styles.shot} src={t.src} alt={t.alt} width={t.w} height={t.h} loading="lazy" decoding="async" style={{ aspectRatio: `${t.w} / ${t.h}` }} />
         )) : (slide ? SCREENS.filter((s) => s.w > 1000) : SCREENS).filter((s) => +s.n >= from && +s.n <= to).map((s, i) => ( // the work slides show the tablets only
-          <img key={s.n} className={styles.shot} src={`/images/more-work/${s.n}.webp`} alt={s.alt} width={s.w} height={s.h} loading={i < 6 ? "eager" : "lazy"} decoding="async" style={{ aspectRatio: `${s.w} / ${s.h}` }} />
+          <img key={s.n} className={styles.shot} src={`/images/more-work/${s.n}.webp`} alt={s.alt} width={s.w} height={s.h} loading="lazy" decoding="async" style={{ aspectRatio: `${s.w} / ${s.h}` }} />
         ))}
       </Row>
       <Row speed={23} reverse className={styles.logos}>

@@ -2,6 +2,7 @@
 
 import { motion, type Easing } from "motion/react";
 import { PortraitPicture, Scene, type SceneProps } from "./QuodarcaScenes";
+import { responsive } from "@/lib/responsive";
 
 const EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve (--e-land in landing.css)
 
@@ -9,8 +10,8 @@ const EASE: Easing = [0.2, 0.7, 0.3, 1]; // the measured softLand curve (--e-lan
 // Sred.io screens (work 1): it fades in over 0.8 s while easing from 106% down to 100% over 4.2 s.
 export function WonderPiesScene(props: SceneProps) {
   return (
-    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitPicture zoom={{ from: 1, to: 1.75, origin: "50% 40%" }} active={props.active} alt="The Wonder Pies website on a phone, a desktop and a tablet: handcrafted and gourmet pies and pastries." src="/images/work/wonderpies/devices.webp" />}>
-      <motion.img loading="lazy" decoding="async"
+    <Scene {...props} bars="#ffffff" stage="purple" base="#ffffff" portrait={<PortraitPicture zoom={{ from: 1, to: 1.75, origin: "50% 40%" }} active={props.active} alt="The Wonder Pies website on a phone, a desktop and a tablet: handcrafted and gourmet pies and pastries." {...responsive("/images/work/wonderpies/devices.webp")} />}>
+      <motion.img decoding="async"
         alt="The Wonder Pies website on a phone, a desktop and a tablet: handcrafted and gourmet pies and pastries."
         src="/images/work/wonderpies/devices.webp"
         style={{ position: "absolute", left: 0, top: 0, width: 1920, height: 1080, objectFit: "contain", padding: "16px 24px", boxSizing: "border-box" }}

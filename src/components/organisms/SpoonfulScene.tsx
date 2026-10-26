@@ -15,7 +15,7 @@ export function SpoonfulScene(props: SceneProps) {
       stage="purple"
       base="#ffffff"
       cover={
-        <motion.img loading="lazy" decoding="async"
+        <motion.img decoding="async"
           alt="Screens from the Spoonful OS app: a splash screen, a child's profile, medication reminders, a fever chart and the menu."
           src="/images/work/spoonful/collage.webp"
           initial={{ opacity: 0, scale: 1.06 }}

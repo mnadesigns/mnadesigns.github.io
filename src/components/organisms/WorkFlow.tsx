@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import type { WorkFlow as Flow } from "@/data/workDetails";
+import { responsive } from "@/lib/responsive";
 
 // A product flow played like a screen recording, built from the still screens: each step cuts to the next screen, the camera glides to where the action is
 // (landing eases out, as in the measured motion rules) and a blue ring pulses where the control is clicked. It loops while it is on screen; a click opens the current screen in the full view (MediaLightbox, as the other media of the page).
@@ -51,7 +52,7 @@ export function WorkFlow({ flow }: { flow: Flow }) {
         <motion.div className="wk-flow-cam" initial={false} animate={camera(step.cam.x, step.cam.y, step.cam.z)} transition={move}>
           {steps.map((s, n) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={s.src} src={s.src} alt="" width={3126} height={Math.round(3126 / ratio)} loading="lazy" draggable={false} style={{ visibility: n === i ? "visible" : "hidden" }} />
+            <img key={s.src} {...responsive(s.src)} alt="" width={3126} height={Math.round(3126 / ratio)} loading="lazy" draggable={false} style={{ visibility: n === i ? "visible" : "hidden" }} />
           ))}
           {step.click && (
             <motion.i key={i} className="wk-flow-ripple" aria-hidden="true" style={{ left: `${step.click.x}%`, top: `${step.click.y}%` }} initial={{ scale: 0.3, opacity: 0 }} animate={calm ? { opacity: 0 } : { scale: [0.4, 1.4, 1.9], opacity: [1, 0.7, 0] }} transition={{ duration: 0.6, delay: 0.95, ease: "easeOut" }} />

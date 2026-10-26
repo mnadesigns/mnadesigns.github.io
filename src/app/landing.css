@@ -22,14 +22,14 @@
 .hero-claim { position: relative; z-index: 2; font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-2xl); line-height: 0.9; color: var(--heading); }
 .hero-claim .l { display: block; overflow: hidden; padding-bottom: 0.08em; }
 .hero-claim .ch { display: inline-block; transform: translateY(118%) rotate(4deg); }
-body.loaded .hero-claim .ch { animation: chLift 0.85s var(--ease) forwards; animation-delay: calc(0.15s + var(--i) * 0.035s); }
+.hero-claim .ch { animation: chLift 0.85s var(--ease) forwards; animation-delay: calc(0.1s + var(--i) * 0.03s); } /* starts with the page (behind the intro curtain as it fades), not after the scripts have run: the headline is the largest thing on the first screen and its arrival sets the load time */
 .hero-claim .l:nth-child(2) .ch { color: transparent; -webkit-text-stroke: 2.5px var(--heading); transition: color var(--t-fill-lg) var(--ease); }
 body.filled .hero-claim .l:nth-child(2) .ch { color: var(--heading); -webkit-text-stroke: 0; }
 .hero-claim .ch.red { color: var(--brand); -webkit-text-stroke: 0; }
 .hero-sub { position: relative; z-index: 2; font-family: var(--serif); font-size: var(--fs-body-lg); line-height: 1.55; color: var(--ink-65); max-width: 58ch; margin-top: 32px; }
 .hero-band, .hero-sub { opacity: 0; }
-body.loaded .hero-band { animation: fade var(--t-reveal) var(--ease) 0.3s forwards; }
-body.loaded .hero-sub { animation: fade var(--t-reveal) var(--ease) 0.5s forwards; }
+.hero-band { animation: fade var(--t-reveal) var(--ease) 0.2s forwards; }
+.hero-sub { animation: fade var(--t-reveal) var(--ease) 0.4s forwards; }
 
 /* record */
 .record { padding-top: var(--sp-sec-top); padding-bottom: var(--sp-sec-bot); }

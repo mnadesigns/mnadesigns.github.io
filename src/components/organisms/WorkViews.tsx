@@ -5,6 +5,7 @@ import { animate, motion, useInView, useMotionValue, useMotionValueEvent, useRed
 import { Code, PenTool, Rocket, Heart, MoveRight } from "lucide-react";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import type { WorkAnnotated as Annotated, WorkBand as Band, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkFigures as Figures, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
+import { responsive } from "@/lib/responsive";
 
 // The set pieces of a case study page, built from the work's own facts and screens (inspired by Hyperactive's Behance cases and the Conceptzilla shots):
 // an opening statement, a map of where the screens sit in the product, and the design to code loop. Everything arrives by moving, decelerating (no fades from nothing).
@@ -101,7 +102,7 @@ export function WorkChapter({ chapter }: { chapter: Chapter }) {
         <motion.h2 className="wk-chap-title" {...rise(0, calm)}>{chapter.title}</motion.h2>
         <div className="wk-chap-body">{chapter.body.map((p, i) => <motion.p key={p} {...rise(i + 1, calm)}>{p}</motion.p>)}</div>
       </div>
-      {chapter.image && <img className="wk-chap-img" src={chapter.image.src} alt={chapter.image.alt} width={1600} height={1678} loading="lazy" draggable={false} />}
+      {chapter.image && <img className="wk-chap-img" {...responsive(chapter.image.src, "(min-width: 800px) 45vw, 100vw")} alt={chapter.image.alt} width={1600} height={1678} loading="lazy" draggable={false} />}
       {chapter.steps && (
         <ol className="wk-chap-steps">
           {chapter.steps.map((st, i) => (
@@ -160,7 +161,7 @@ export function WorkPairs({ pairs }: { pairs: Pairs }) {
             </div>
             <figure className="wk-pair-shot">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={p.src} alt={p.alt} loading="lazy" draggable={false} />
+              <img {...responsive(p.src, "(min-width: 900px) 640px, 100vw")} alt={p.alt} loading="lazy" draggable={false} />
             </figure>
           </motion.li>
         ))}
@@ -187,7 +188,7 @@ export function WorkAnnotated({ ann }: { ann: Annotated }) {
       <div className="wk-ann">
         <div className="wk-ann-stage" ref={stage} style={{ aspectRatio: ann.ratio }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={ann.src} alt={ann.alt} width={3126} height={Math.round(3126 / ann.ratio)} loading="lazy" draggable={false} />
+          <img {...responsive(ann.src)} alt={ann.alt} width={3126} height={Math.round(3126 / ann.ratio)} loading="lazy" draggable={false} />
           <button type="button" className="wk-flow-open" data-lightbox-src={ann.src} data-lightbox-alt={ann.alt} aria-label={`View ${ann.alt} full size`} />
           {ann.marks.map((m, i) => (
             <Fragment key={m.t}>
@@ -221,7 +222,7 @@ export function WorkPan({ pan }: { pan: Pan }) {
   return (
     <section className="wk-pan" ref={ref} style={{ aspectRatio: pan.ratio }} aria-label={pan.alt}>
       <motion.img
-        src={pan.src}
+        {...responsive(pan.src)}
         alt={pan.alt}
         width={2000}
         height={Math.round(2000 / pan.ratio)}
@@ -247,7 +248,7 @@ export function WorkZoom({ src, alt }: { src: string; alt: string }) {
   return (
     <motion.section className="wk-pan" ref={ref} style={calm ? { aspectRatio: 16 / 9 } : { aspectRatio: 16 / 9, scale: grow }} aria-label={alt}>
       <motion.img
-        src={src}
+        {...responsive(src)}
         alt={alt}
         width={2880}
         height={1620}
@@ -302,10 +303,10 @@ export function WorkBeforeAfter({ ba }: { ba: BeforeAfter }) {
       {ba.title && ba.note && <Head title={ba.title} note={ba.note} />}
       <div className="wk-ba" ref={ref} style={{ aspectRatio: ba.ratio }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="wk-ba-img" src={ba.after.src} alt={ba.after.alt} loading="lazy" draggable={false} />
+        <img className="wk-ba-img" {...responsive(ba.after.src)} alt={ba.after.alt} loading="lazy" draggable={false} />
         <motion.div className="wk-ba-old" style={{ clipPath: clip }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="wk-ba-img" src={ba.before.src} alt={ba.before.alt} loading="lazy" draggable={false} />
+          <img className="wk-ba-img" {...responsive(ba.before.src)} alt={ba.before.alt} loading="lazy" draggable={false} />
         </motion.div>
         {!ba.noTags && (<>
         <span ref={oldTag} className={`wk-ba-react wk-ba-react--old${swept.old ? " is-clean" : ""}${wasSwept.old ? " was-clean" : ""}`}>

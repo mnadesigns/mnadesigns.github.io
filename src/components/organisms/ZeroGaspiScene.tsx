@@ -81,12 +81,12 @@ export function ZeroGaspiScene(props: SceneProps) {
       base="#ffffff"
       fitWidth={895}
       anchors={{
-        tl: <M on={on} s={bracket(-170, -130)}><img loading="lazy" decoding="async" className={`${styles.metal} ${styles.metalTl}`} alt="" src={`${IMG}/metal-tl.webp`} /></M>,
-        br: <M on={on} s={bracket(170, 130)}><img loading="lazy" decoding="async" className={`${styles.metal} ${styles.metalBr}`} alt="" src={`${IMG}/metal-br.webp`} /></M>,
+        tl: <M on={on} s={bracket(-170, -130)}><img decoding="async" className={`${styles.metal} ${styles.metalTl}`} alt="" src={`${IMG}/metal-tl.webp`} /></M>,
+        br: <M on={on} s={bracket(170, 130)}><img decoding="async" className={`${styles.metal} ${styles.metalBr}`} alt="" src={`${IMG}/metal-br.webp`} /></M>,
         bl: (
           <>
             <M on={on} s={text(-1, 0.1)} className={styles.lockup}>
-              <img loading="lazy" decoding="async" className={styles.mark} alt="" src={`${IMG}/logo-mark.svg`} />
+              <img decoding="async" className={styles.mark} alt="" src={`${IMG}/logo-mark.svg`} />
               <p className={styles.wordmark}>ZERO GASPI</p>
             </M>
             <M on={on} s={text(-1, 0.25)} className={styles.tagline}>Anti-Food Waste<br />Mobile Marketplace</M>
@@ -97,15 +97,15 @@ export function ZeroGaspiScene(props: SceneProps) {
     >
       <div className={styles.persp}>
       <M on={on} s={tilted} className={styles.tilted}>
-        <img loading="lazy" decoding="async" className={styles.body} alt="" src={`${IMG}/phone-tilt.webp`} />
-        <img loading="lazy" decoding="async" className={styles.warp} alt="" src={`${IMG}/screen-warp.webp`} />
+        <img decoding="async" className={styles.body} alt="" src={`${IMG}/phone-tilt.webp`} />
+        <img decoding="async" className={styles.warp} alt="" src={`${IMG}/screen-warp.webp`} />
       </M>
 
       <M on={on} s={upright} className={styles.upright}>
-        <img loading="lazy" decoding="async" className={styles.shell} alt="" src={`${IMG}/phone-flat.webp`} />
+        <img decoding="async" className={styles.shell} alt="" src={`${IMG}/phone-flat.webp`} />
         <div className={styles.screen}>
           <M on={on} s={scroll} className={styles.long}>
-            <img loading="lazy" decoding="async" src={`${IMG}/screen-long.webp`} alt="The Zero Gaspi app: pickups near you, recommended restaurants, top-rated partners and the community impact." style={{ width: "100%", height: "100%" }} />
+            <img decoding="async" src={`${IMG}/screen-long.webp`} alt="The Zero Gaspi app: pickups near you, recommended restaurants, top-rated partners and the community impact." style={{ width: "100%", height: "100%" }} />
           </M>
           <div className={styles.status} />
           <div className={styles.island} />

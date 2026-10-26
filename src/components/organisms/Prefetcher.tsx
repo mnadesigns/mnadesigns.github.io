@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 // Warms up the rest of the site while the visitor reads the current page, so the next page opens with its pictures already there.
 // 1. A service worker (public/sw.js) keeps every image, font and script it has seen, so repeat visits are instant.
-// 2. When the browser is idle it reads the pages this page links to, finds the pictures on them and fetches those quietly, a couple at a time. Hovering or touching a link moves that page to the front.
+// 2. Once the visitor has started using the page, and the browser is idle, it reads the pages this page links to, finds the pictures on them and fetches those quietly, a couple at a time. Hovering or touching a link moves that page to the front.
 // It never runs on Save-Data or a slow connection, stops at a data budget, and only fetches pictures (videos wait until they are needed).
 const IMG = /\/images\/[A-Za-z0-9_\-./%]+?\.(?:webp|png|jpe?g|svg|avif)/g;
 const BUDGET = { desktop: 40e6, phone: 15e6 };
@@ -75,10 +75,16 @@ export function Prefetcher() {
       };
       idle(next);
     };
-    const t = window.setTimeout(start, 3000);
+    // it only starts once the visitor has touched the page (scroll, tap, key, pointer): a real person is there, and the page itself has long finished loading
+    let t = 0;
+    const begin = () => { off(); t = window.setTimeout(start, 2500); };
+    const evs = ["pointerdown", "touchstart", "scroll", "keydown"] as const;
+    const off = () => evs.forEach((e) => window.removeEventListener(e, begin));
+    evs.forEach((e) => window.addEventListener(e, begin, { passive: true, once: true }));
 
     return () => {
       stopped = true;
+      off();
       window.clearTimeout(t);
       document.removeEventListener("pointerover", hot);
       document.removeEventListener("touchstart", hot);

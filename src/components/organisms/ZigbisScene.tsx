@@ -37,7 +37,7 @@ export function ZigbisScene(props: SceneProps) {
           <div key={i} style={{ position: "absolute", left: p.wrap[0], top: p.wrap[1], width: p.wrap[2], height: p.wrap[3], display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div style={{ flex: "none", transform: "rotate(-13deg)" }}>
               <div style={{ position: "relative", width: p.inner[0], height: p.inner[1], overflow: "hidden" }}>
-                <img loading="lazy" decoding="async"
+                <img decoding="async"
                   alt={i === 0 ? "The Zigbis hair and beauty website, shown in tilted windows." : ""}
                   src={`${IMG}/${p.img}.webp`}
                   style={{ position: "absolute", maxWidth: "none", height: `${p.pos.h}%`, left: `${p.pos.l}%`, top: `${p.pos.t}%`, width: `${p.pos.w}%` }}

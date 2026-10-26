@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { responsive } from "@/lib/responsive";
 
 type Slide = { src: string; alt: string };
 
@@ -89,7 +90,7 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
         {slides.map((s, n) => (
           <div className="wk-car-slide" key={s.src} role="group" aria-roledescription="slide" aria-label={`${n + 1} of ${slides.length}`} aria-hidden={n !== i}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={s.src} alt={s.alt} width={1920} height={1080} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
+            <img {...responsive(s.src)} alt={s.alt} width={1920} height={1080} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
           </div>
         ))}
       </motion.div>
@@ -118,7 +119,7 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
       {slides.map((s, n) => (
         <button key={s.src} type="button" className={n === i ? "is-on" : undefined} onClick={() => go(n)} aria-label={`View ${n + 1}: ${s.alt}`} aria-current={n === i ? "true" : undefined}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={s.src} alt="" width={160} height={90} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
+          <img {...responsive(s.src, "160px")} alt="" width={160} height={90} draggable={false} loading="lazy" style={top ? { objectPosition: "top" } : undefined} />
         </button>
       ))}
     </div>

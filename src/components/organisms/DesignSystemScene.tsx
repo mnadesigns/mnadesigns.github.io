@@ -15,9 +15,9 @@ export function DesignSystemScene(props: SceneProps) {
       bars="#ffffff"
       stage="purple"
       base="#ffffff"
-      portrait={<div className={styles.pBoard}><img loading="lazy" decoding="async" alt="The QuodArca design system: navigation, buttons, calendar, notifications, forms, media controls and menus." src="/images/work/quodarca/system/board.webp" /></div>}
+      portrait={<div className={styles.pBoard}><img decoding="async" alt="The QuodArca design system: navigation, buttons, calendar, notifications, forms, media controls and menus." src="/images/work/quodarca/system/board.webp" /></div>}
     >
-      <motion.img loading="lazy" decoding="async"
+      <motion.img decoding="async"
         alt="The QuodArca design system: navigation, buttons, calendar, notifications, forms, media controls and menus."
         src="/images/work/quodarca/system/board.webp"
         style={{ position: "absolute", left: 0, top: 26, width: 1920, height: 1028, maxWidth: "none" }}

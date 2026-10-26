@@ -1,29 +1,34 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { adBeats, chapters, site, clientCopy } from "@/data/site";
 import { Btn, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
-import { ProjectsDelivered, WelcomeScene } from "./QuodarcaScenes";
-import { ProcessChallenges } from "./ProcessChallenges";
-import { ApproachScene } from "./ApproachScene";
-import { ZeroGaspiScene } from "./ZeroGaspiScene";
-import { KeysboroughScene } from "./KeysboroughScene";
-import { SpoonfulScene } from "./SpoonfulScene";
-import { IpadGridScene } from "./IpadGridScene";
-import { CytositeScene } from "./CytositeScene";
-import { WonderPiesScene } from "./WonderPiesScene";
-import { TelcoIctScene } from "./TelcoIctScene";
-import { PharmacyScene } from "./PharmacyScene";
-import { PeersScene } from "./PeersScene";
-import { ZigbisScene } from "./ZigbisScene";
-import { DesignSystemScene } from "./DesignSystemScene";
-import { ProductFeatures } from "./ProductFeatures";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
 import { ToolIcon } from "@/components/atoms/ToolIcons";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { usePhone } from "@/hooks/usePhone";
 import { FILM_SPEED, useFilmClock } from "@/lib/filmSpeed";
+import { responsive } from "@/lib/responsive";
+
+// the scenes are only mounted once their film is near the screen, so their code is fetched then, not with the page
+const ProjectsDelivered = dynamic(() => import("./QuodarcaScenes").then((m) => m.ProjectsDelivered), { ssr: false });
+const WelcomeScene = dynamic(() => import("./QuodarcaScenes").then((m) => m.WelcomeScene), { ssr: false });
+const ProcessChallenges = dynamic(() => import("./ProcessChallenges").then((m) => m.ProcessChallenges), { ssr: false });
+const ApproachScene = dynamic(() => import("./ApproachScene").then((m) => m.ApproachScene), { ssr: false });
+const ZeroGaspiScene = dynamic(() => import("./ZeroGaspiScene").then((m) => m.ZeroGaspiScene), { ssr: false });
+const KeysboroughScene = dynamic(() => import("./KeysboroughScene").then((m) => m.KeysboroughScene), { ssr: false });
+const SpoonfulScene = dynamic(() => import("./SpoonfulScene").then((m) => m.SpoonfulScene), { ssr: false });
+const IpadGridScene = dynamic(() => import("./IpadGridScene").then((m) => m.IpadGridScene), { ssr: false });
+const CytositeScene = dynamic(() => import("./CytositeScene").then((m) => m.CytositeScene), { ssr: false });
+const WonderPiesScene = dynamic(() => import("./WonderPiesScene").then((m) => m.WonderPiesScene), { ssr: false });
+const TelcoIctScene = dynamic(() => import("./TelcoIctScene").then((m) => m.TelcoIctScene), { ssr: false });
+const PharmacyScene = dynamic(() => import("./PharmacyScene").then((m) => m.PharmacyScene), { ssr: false });
+const PeersScene = dynamic(() => import("./PeersScene").then((m) => m.PeersScene), { ssr: false });
+const ZigbisScene = dynamic(() => import("./ZigbisScene").then((m) => m.ZigbisScene), { ssr: false });
+const DesignSystemScene = dynamic(() => import("./DesignSystemScene").then((m) => m.DesignSystemScene), { ssr: false });
+const ProductFeatures = dynamic(() => import("./ProductFeatures").then((m) => m.ProductFeatures), { ssr: false });
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -198,14 +203,14 @@ export function KineticAd({ controls }: { controls?: boolean } = {}) {
             {b.line && <div className="sl-line" dangerouslySetInnerHTML={{ __html: b.line }} />}
             {b.shot && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img loading="lazy" decoding="async" className={`sl-screen${b.shot.fit ? " sl-screen--" + b.shot.fit : ""}`} src={b.shot.src} alt={b.shot.alt} />
+              <img decoding="async" className={`sl-screen${b.shot.fit ? " sl-screen--" + b.shot.fit : ""}`} {...responsive(b.shot.src)} alt={b.shot.alt} />
             )}
             {b.giant && <div className="sl-giant">{(counts[j] ?? 0).toLocaleString("en-US")}{b.suffix}</div>}
             {b.tag && <div className="sl-tag">{b.tag}</div>}
             {b.logo && (
               <div className="sl-brand">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img loading="lazy" decoding="async" src={b.logo.src} alt={b.logo.name} />
+                <img decoding="async" src={b.logo.src} alt={b.logo.name} />
               </div>
             )}
           </div>
@@ -249,14 +254,14 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
       <div className="sl-bg" style={{ background: s.bg }} />
       {s.image && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img loading="lazy" decoding="async" className="sl-bgimg" alt="" src={s.image} />
+        <img decoding="async" className="sl-bgimg" alt="" src={s.image} />
       )}
       {s.zoom && (
         // the pictures change quickly, each one zooming in as it comes
         <div className="sl-zoom" aria-hidden="true" ref={zoomRef} data-speed={1}>
           {s.zoom.map((src, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img loading="lazy" key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1120}ms` }} />
+            <img key={src} src={src} alt="" decoding="async" style={{ animationDelay: `${i * 1120}ms` }} />
           ))}
           <div className="sl-zshade" />
         </div>
@@ -267,7 +272,7 @@ function FilmSlideView({ s, active, holdMs = 0, idle = false }: { s: FilmSlide; 
           {s.logo && (
             <div className="sl-brand sl-brand--wide">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img loading="lazy" decoding="async" src={s.logo.src} alt={s.logo.name} />
+              <img decoding="async" src={s.logo.src} alt={s.logo.name} />
             </div>
           )}
           {s.line && <div className="sl-line">{s.line}</div>}
@@ -304,6 +309,7 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
   const beatStep = useRef(-1);
   const [step, setStep] = useState(0); // counts items played; the item is items[step % n]
   const [visible, setVisible] = useState(false);
+  const [near, setNear] = useState(false); // the film is within a screen or so of the viewport: only then are its slides, scenes and clips mounted, so the home page does not load every picture of every film at once
   const [shown, setShown] = useState(0); // which video element is on show (0 or 1)
   const [clipMs, setClipMs] = useState<Record<string, number>>({}); // how long each clip lasts, once its video has loaded
   const [started, setStarted] = useState(false); // the first clip has played, so the poster is no longer needed
@@ -352,6 +358,14 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
   };
 
   useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setNear(true); io.disconnect(); } }, { rootMargin: "900px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (still) return;
     const io = new IntersectionObserver(
       ([e]) => { setVisible(e.isIntersecting); if (!e.isIntersecting) setStep(0); }, // leaving the panel restarts the film
@@ -393,7 +407,7 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
 
   return (
     <div ref={root} className="chap-film" style={{ background: !hasClips ? "#fdfdfd" : !poster && !started && step === 0 && items[0].type !== "clip" ? "#ffffff" : clipOf(now).bg }}>
-      {hasClips && [0, 1].map((k) => (
+      {near && hasClips && [0, 1].map((k) => (
         <video
           key={k}
           ref={els[k]}
@@ -413,7 +427,7 @@ export function ChapterFilm({ items: all, poster, controls }: { items: FilmItem[
           onError={() => k === live && item.type === "clip" && setStep((s) => s + 1)}
         />
       ))}
-      {items.map((it, i) => {
+      {near && items.map((it, i) => {
         if (it.type === "clip") return null;
         const k = n === 1 ? `${i}-${step}` : i; // a film of one slide starts that slide over on each loop
         const active = visible && step % n === i; // scenes only start animating once the panel is on screen
