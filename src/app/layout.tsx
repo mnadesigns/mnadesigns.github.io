@@ -23,8 +23,12 @@ const serif = Literata({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mnadesigns.github.io"),
   title: { default: "Muhammad Naeem | AI Product Leader & Lead Product Designer", template: "%s | Muhammad Naeem" },
   description: "Muhammad Naeem is a Lead Product Designer and AI product leader in Lahore, Pakistan: design systems and products for SaaS, fintech and e-commerce, shipped as production code with AI in the loop.",
+  // the thumbnail shown when a link is shared: this one for every page, the work pages set their own (see app/work/[slug]/page.tsx)
+  openGraph: { type: "website", siteName: "Muhammad Naeem", images: [{ url: "/images/og/og.jpg", width: 1200, height: 630, alt: "Muhammad Naeem" }] },
+  twitter: { card: "summary_large_image", images: ["/images/og/og.jpg"] },
 };
 
 export default function RootLayout({
