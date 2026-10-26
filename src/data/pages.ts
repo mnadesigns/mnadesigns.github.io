@@ -81,7 +81,7 @@ export const storiesIndex = {
     { v: "10+", l: "Years designing products people use" },
     { v: "50+", l: "Brands shaped, in every kind of business" },
     { v: "25+", l: "Industries, from fintech to fashion" },
-    { v: "1,000+", l: "Screens designed and shipped" },
+    { v: "17+", l: "Microservices unified under one design system" },
   ],
   features: [
     { slug: "sred-io", film: true, eyebrow: "Lead Product Designer", name: "SRED.io", sub: "The platform's first design system, then more than 17 microservices.", metrics: [{ v: "17+", l: "Microservices" }, { v: "100+", l: "Screens designed" }], cap: "Lead Product Designer", logo: "/images/brands/sredio.png" },
