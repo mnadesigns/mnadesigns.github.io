@@ -14,7 +14,7 @@ export default function About() {
       <PageHero kicker={p.kicker} title={p.title} lead={p.lead} aside={
         <img className="about-portrait" fetchPriority="high" src="/images/portrait-720.webp" srcSet="/images/portrait-720.webp 720w, /images/portrait-1200.webp 1200w" sizes="(min-width: 1000px) 360px, 100vw" width={1200} height={1200} alt="Engraving-style portrait of Muhammad Naeem" decoding="async" />
       }>
-        <Btn href="/consulting/">Work with me</Btn>
+        <Btn href="/resume/">Work with me</Btn>
       </PageHero>
       <Section title="The <em>story</em>">
         <div className="about-story">
