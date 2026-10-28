@@ -6,6 +6,8 @@ import { storyPages } from "@/data/storyPages";
 import { Doors } from "@/components/organisms/Doors";
 import { Reveal } from "@/components/atoms/Reveal";
 import { WorkFilmBox } from "@/components/organisms/WorkFilmBox";
+import { Hero } from "@/components/organisms/Hero";
+import { SkillsStats } from "@/components/organisms/SkillsStats";
 import { responsive } from "@/lib/responsive";
 
 // The Work page. `share` is the private showcase copy: its links stay inside /showcase/ and there is no contact footer.
@@ -37,17 +39,24 @@ export function WorkIndexView({ share = false }: { share?: boolean }) {
   const Item = share ? Reveal : Plain;
   return (
     <main>
-      <header className="sti-hero shell">
-        <Reveal className="sti-hero-in">
-          <h1 className="sti-title">The <em>work.</em></h1>
-          <p className="sti-lede">{s.lede}</p>
-          <div className="sti-stats">
-            {s.stats.map((x) => (
-              <div className="stat" key={x.l}><div className="stat-v">{x.v}</div><div className="stat-l">{x.l}</div></div>
-            ))}
-          </div>
-        </Reveal>
-      </header>
+      {share ? (
+        <>
+          <Hero bare />
+          <SkillsStats />
+        </>
+      ) : (
+        <header className="sti-hero shell">
+          <Reveal className="sti-hero-in">
+            <h1 className="sti-title">The <em>work.</em></h1>
+            <p className="sti-lede">{s.lede}</p>
+            <div className="sti-stats">
+              {s.stats.map((x) => (
+                <div className="stat" key={x.l}><div className="stat-v">{x.v}</div><div className="stat-l">{x.l}</div></div>
+              ))}
+            </div>
+          </Reveal>
+        </header>
+      )}
 
       {!share && <section className="sti-feats shell">
         {s.features.map((f) => (
