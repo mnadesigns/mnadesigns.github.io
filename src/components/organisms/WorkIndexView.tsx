@@ -17,6 +17,9 @@ const visual = (m: (typeof s.more)[number] | (typeof showcaseMore)[number]) => (
   m.slug === "specialist-clinic-pharmacy" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} /></div> : m.slug === "zero-gaspi" ? <div className="sti-row-film"><WorkFilmBox slug={m.slug} scene="zerogaspi" /></div> : <div className={`sti-row-box${"cover" in m && m.cover ? " sti-row-box--cover" : ""}${"zoom" in m && m.zoom ? " sti-row-box--zoom" : ""}`} style={{ backgroundColor: m.bg }}>{m.video ? <LazyVideo src={m.video} poster={m.shot} label={m.name} /> : m.shot ? <img {...responsive(m.shot, "(min-width: 900px) 700px, 100vw")} alt={m.name} loading="lazy" draggable={false} /> : null}</div>
 );
 
+// no animation: a wrapper that only passes its content through
+const Plain = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+
 // the "And more" rows: a work's name, category, figures, summary and picture
 const row = (m: (typeof s.more)[number] | (typeof showcaseMore)[number]) => ({ slug: m.slug, name: m.name, l: m.l, line: m.line, stats: moreStats(m.slug), picture: visual(m) });
 const moreRows = s.more.map(row);
@@ -29,6 +32,9 @@ const showcaseRows = [
 
 export function WorkIndexView({ share = false }: { share?: boolean }) {
   const base = share ? "/showcase" : "/work";
+  // the Work page fades in its list as one block; the private portfolio fades in each story as it comes into view
+  const Section = share ? Plain : Reveal;
+  const Item = share ? Reveal : Plain;
   return (
     <main>
       <header className="sti-hero shell">
@@ -71,7 +77,7 @@ export function WorkIndexView({ share = false }: { share?: boolean }) {
       </section>}
 
       <section className="sti-rest shell" id="and-more">
-        <Reveal>
+        <Section>
           {!share && (
             <div className="sec-intro">
               <div>
@@ -82,7 +88,8 @@ export function WorkIndexView({ share = false }: { share?: boolean }) {
           )}
           <div className={`sti-index${share ? " sti-index--share" : ""}`}>
             {(share ? showcaseRows : moreRows).map((m) => (
-              <Link key={m.slug} href={`${base}/${m.slug}/`} className="sti-row">
+              <Item key={m.slug}>
+              <Link href={`${base}/${m.slug}/`} className="sti-row">
                 <div className="sti-row-meta">
                   <span className="sti-row-name">{m.name}</span>
                   <span className="sti-row-cat">{m.l}</span>
@@ -92,10 +99,11 @@ export function WorkIndexView({ share = false }: { share?: boolean }) {
                 </div>
                 {m.picture}
               </Link>
+              </Item>
             ))}
           </div>
           <p className="sti-more" dangerouslySetInnerHTML={{ __html: s.footer }} />
-        </Reveal>
+        </Section>
       </section>
       {!share && <Doors />}
     </main>
