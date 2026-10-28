@@ -16,7 +16,8 @@ const Icon = ({ d }: { d: string }) => (
 const MAIL = "M2 3.5h12v9H2zM2.5 4l5.5 4.5L13.5 4";
 const PHONE = "M4 1.8h2.2l1 3-1.5 1a8 8 0 0 0 3.5 3.5l1-1.5 3 1V12a1.8 1.8 0 0 1-2 1.8A10.8 10.8 0 0 1 2.2 5.8 1.8 1.8 0 0 1 4 1.8z";
 
-export function ContactBanner() {
+// `share`: the private showcase copy keeps the robot and the heading but has no email, phone or link into the personal site
+export function ContactBanner({ share = false }: { share?: boolean }) {
   const bot = useRef<HTMLDivElement>(null);
   const card = useRef<HTMLDivElement>(null);
   const frame = useRef(0);
@@ -69,11 +70,11 @@ export function ContactBanner() {
         <div className={styles.copy}>
           <h2 className={styles.title}><span className={styles.outline}>Have a</span> <em>Big Idea</em> <span className={styles.outline}>in mind?</span></h2>
           <p className={styles.sub}>Let&apos;s discuss what we can achieve together!</p>
-          <div className={styles.row}>
+          {!share && <div className={styles.row}>
             <Btn href="/resume/">Get in touch</Btn>
             <a className={styles.link} href={`mailto:${site.email}`}><Icon d={MAIL} />{site.email}</a>
             {phone && <a className={styles.link} href={phone.href} target="_blank" rel="noopener noreferrer"><Icon d={PHONE} />{phone.label}</a>}
-          </div>
+          </div>}
         </div>
         <div className={styles.bot} ref={bot} aria-hidden="true">
           <RobotHead shape="rectangle" state="thinking" color="#1297d9" trimColor="#2a2c31" speed={2} size={205} interactive={false} paused={still || !onScreen} />

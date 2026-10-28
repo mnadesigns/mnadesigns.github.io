@@ -566,6 +566,11 @@ export const workDetails: Record<string, WorkDetail> = {
 workDetails["specialist-clinic-pharmacy"] = { ...workDetails.quodarca, figma: undefined, live: undefined };
 workDetails.vyno = { media: vynoMedia };
 
+// The three MLK Group case study carousels as pages of their own (listed under "And more" in the private showcase): the slides in order, one image per row
+workDetails["keysborough-vet"] = { media: keysSlides.map((m) => ({ type: "image" as const, ...m })) };
+workDetails["telco-ict"] = { media: telcoSlides.map((m) => ({ type: "image" as const, ...m })) };
+workDetails["wonder-pies"] = { media: wpSlides.map((m) => ({ type: "image" as const, ...m })) };
+
 // Zero Gaspi: the Work page slide, then the case study slides in order
 workDetails["zero-gaspi"] = { media: [
   { type: "scene", src: "scene-zerogaspi", alt: "Zero Gaspi app screens", scene: "zerogaspi" }, // the same slide as on the Work page

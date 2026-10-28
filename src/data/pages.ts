@@ -97,7 +97,7 @@ export const storiesIndex = {
     { slug: "applied-electronics", name: "Applied Electronics", l: "Audio, video and broadcast technology", line: "A user-centred redesign of the website for Canada's leading provider of integrated media technology.", logo: "/images/brands/applied-electronics.png", shot: "/images/work/applied-video/applied-electronics-poster.webp", video: "/images/work/applied-video/applied-electronics.mp4", bg: "#324560" },
     { slug: "spoonful-os", name: "Spoonful OS", l: "Family health app", line: "Symptoms, medications and doses for a child, tracked and shared with parents, caregivers and doctors.", logo: "", shot: "/images/work/spoonful-os/slides/so-01.webp", cover: true, zoom: true },
   ],
-  footer: "More <em>coming</em>.",
+  footer: "More <em>coming.</em>",
 };
 
 export const pods = [
@@ -109,6 +109,13 @@ export const stories = [
   { slug: "sred-io", name: "SRED.io", co: "SRED.io · 2026 – Present", line: "The platform's first design system, then more than 17 microservices.", feature: true },
   { slug: "quodarca", name: "QuodArca", co: "EISST International · 2023 – 2025", line: "Six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.", feature: true },
   { slug: "mlk-group", name: "MLK Group", co: "MLK Group · 2021 – 2023", line: "Directed digital product design for 50+ Australian brands across fintech and e-commerce.", feature: true },
+];
+
+// The three MLK Group carousels as stories of their own. Only the private showcase lists them (the cover is each carousel's first slide).
+export const showcaseMore = [
+  { slug: "keysborough-vet", name: "Keysborough Veterinary Practice", l: "Veterinary clinic website", line: "Booking, hours and the phone number used to hide. Now they are one tap away.", logo: "", shot: "/images/work/mlk/keys/keys-01.webp", video: "", bg: "", cover: true },
+  { slug: "telco-ict", name: "Telco ICT Group", l: "Telecom and ICT services website", line: "Leads got lost in a maze of menus. Now every page ends in Book or Call.", logo: "", shot: "/images/work/mlk/telco/telco-01.webp", video: "", bg: "", cover: true },
+  { slug: "wonder-pies", name: "Wonder Pies", l: "Bakery website and online ordering", line: "One pie and a tiny button became the whole range, a tap from the order.", logo: "", shot: "/images/work/mlk/wp-slides/wp-01.webp", video: "", bg: "", cover: true },
 ];
 
 // details pages of works that are not one of the three featured ones (the "And more." list links to them)

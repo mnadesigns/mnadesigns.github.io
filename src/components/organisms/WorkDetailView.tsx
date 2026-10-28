@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { stories, extraStories } from "@/data/pages";
+import { stories, extraStories, showcaseMore } from "@/data/pages";
 import { storyPages } from "@/data/storyPages";
 import { workDetails } from "@/data/workDetails";
 import { BtnSec } from "@/components/atoms/Buttons";
@@ -41,13 +41,13 @@ const GlobeIcon = () => (
 
 // The page of one work. `share` is the private showcase copy: no links back into the personal site (contact banner, more-by, footer doors).
 export function WorkDetailView({ slug, share = false }: { slug: string; share?: boolean }) {
-  const s = [...stories, ...extraStories].find((x) => x.slug === slug)!;
+  const s = [...stories, ...extraStories, ...showcaseMore].find((x) => x.slug === slug)!;
   const p = storyPages[slug];
   const d = workDetails[slug] ?? {};
   const own = (d.media?.length ?? 0) > 0; // media set in workDetails replaces the slides and the story images
   const slides = !own && (slug === "sred-io" || slug === "quodarca");
-  const stats = [p.stakesBig, ...p.stakesSupporting].filter((x) => x.v).slice(0, 4); // the numbers of the work, shown in the hero
-  const images = own ? [] : [...new Set([...p.shots, ...p.chapters.flatMap((c) => (c.image ? [c.image] : []))])];
+  const stats = p ? [p.stakesBig, ...p.stakesSupporting].filter((x) => x.v).slice(0, 4) : []; // the numbers of the work, shown in the hero
+  const images = own || !p ? [] : [...new Set([...p.shots, ...p.chapters.flatMap((c) => (c.image ? [c.image] : []))])];
   return (
     <main>
       <div className="wk-col">
@@ -79,6 +79,7 @@ export function WorkDetailView({ slug, share = false }: { slug: string; share?: 
           {images.map((src) => <div className="wk-item" key={src} role="button" tabIndex={0} aria-label={`View ${s.name} design full size`}><img {...responsive(src)} alt={`${s.name} design`} width={1920} height={1080} loading="lazy" /></div>)}
         </MediaLightbox>
 
+        {share && showcaseMore.some((x) => x.slug === slug) && <div className="wk-dark"><ContactBanner share /></div>}
         {!share && (
           <div className="wk-dark">
             <ContactBanner />

@@ -43,6 +43,8 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  if (path?.startsWith("/showcase")) return null; // the private portfolio has no navbar
+
   return (
     <>
       <nav className={`nav${hide ? " hide" : ""}`} id="nav" style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}>

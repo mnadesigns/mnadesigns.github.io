@@ -74,6 +74,11 @@
 .sti-row-box--zoom img { animation: sti-zoom 14s ease-in-out infinite alternate; } /* a slow, smooth push in on the cover */
 @keyframes sti-zoom { from { transform: scale(1); } to { transform: scale(1.1); } }
 @media (prefers-reduced-motion: reduce) { .sti-row-box--zoom img { animation: none; } }
+/* the private portfolio: a story row turns a very light slate under the pointer (it takes a little side room so the gray does not touch the text) */
+@media (hover: hover) and (min-width: 701px) {
+  .sti-index--share .sti-row { margin-inline: -24px; padding-inline: 24px; border-radius: var(--r); transition: background-color var(--t-base) var(--ease); }
+  .sti-index--share .sti-row:hover { padding-left: 24px; background: #f8fafc; }
+}
 .sti-more { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: var(--fs-display-md); line-height: 1; color: var(--heading); margin-top: 56px; }
 .sti-more em { font-style: normal; color: var(--brand); }
 @media (max-width: 900px) {
