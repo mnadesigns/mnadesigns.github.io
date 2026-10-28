@@ -8,9 +8,8 @@
 /* ── stories index ── */
 .sti-hero { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 140px 0 96px; }
 .hero--bare { padding-top: clamp(40px, 7vh, 72px); }
-.hero--bare .hero-split { display: grid; grid-template-columns: clamp(180px, 22vw, 320px) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4vw, 64px); }
+.hero--bare .hero-split { display: grid; grid-template-columns: clamp(180px, 22vw, 320px) minmax(0, 1fr); align-items: start; gap: clamp(24px, 4vw, 64px); }
 .hero--bare .hero-portrait { display: block; width: 100%; height: auto; border-radius: var(--r); background: var(--white); }
-.hero--bare .hero-claim { font-size: clamp(48px, 7.6vw, 124px); } /* a little smaller than on the home page, so the claim and the portrait share the row */
 @media (max-width: 760px) { .hero--bare .hero-split { grid-template-columns: 1fr; gap: 20px; } .hero--bare .hero-portrait { width: 132px; } } /* the private portfolio's hero has no navbar to clear and no name band above the claim */
 .sti-hero-in { width: 100%; display: flex; flex-direction: column; align-items: center; }
 .sti-kicker { display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-50); }
