@@ -43,18 +43,18 @@ export function Hero({ bare = false }: { bare?: boolean }) {
         <div className="hero-split">
           <img className="hero-portrait" src="/images/portrait-720.webp" alt={`Portrait of ${site.name}`} width={360} height={360} fetchPriority="high" decoding="async" />
           <div className="hero-copy">
-          <h1 className="hero-claim" id="heroClaim">
-            <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>
-            <span className="l"><Letters text={hero.line2} start={hero.line1.replace(/ /g, "").length} /></span>
+          <h1 className="hero-claim" id="heroClaim" aria-label={`${hero.line1} ${hero.line2}`}>
+            <span className="l" aria-hidden="true"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>
+            <span className="l" aria-hidden="true"><Letters text={hero.line2} start={hero.line1.replace(/ /g, "").length} /></span>
           </h1>
           <p className="hero-sub">{hero.sub}</p>
           </div>
         </div>
       ) : (
         <>
-        <h1 className="hero-claim" id="heroClaim">
-          <span className="l"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>
-          <span className="l"><Letters text={hero.line2} start={hero.line1.replace(/ /g, "").length} /></span>
+        <h1 className="hero-claim" id="heroClaim" aria-label={`${hero.line1} ${hero.line2}`}>
+          <span className="l" aria-hidden="true"><Letters text={hero.line1} accent={hero.accent} start={0} /></span>
+          <span className="l" aria-hidden="true"><Letters text={hero.line2} start={hero.line1.replace(/ /g, "").length} /></span>
         </h1>
         <p className="hero-sub">{hero.sub}</p>
         </>
