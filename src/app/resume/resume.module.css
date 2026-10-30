@@ -7,11 +7,17 @@
 /* the Save PDF button is as small as the Resume button in the navbar: 40px tall, 14px text, a 24px arrow circle */
 .top .save { padding: 6px 6px 6px 16px; gap: 8px; font-size: 14px; flex: none; }
 .top .save :global(.ico) { width: 24px; height: 24px; }
-.contact { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; }
+.contact { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 16px; } /* full web addresses are long, so the list wraps: spacing separates the items (no slashes that could be left hanging at the end of a line) */
 .contact a, .contact span { font-family: var(--sans); font-size: 16px; font-weight: 400; color: var(--ink-65); text-decoration: none; transition: color 0.2s, text-decoration-color 0.2s; }
 .contact a { color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; text-decoration-color: rgba(14, 124, 182, 0.45); } /* links look like links: blue and underlined */
 .contact a:hover { color: var(--brand-deep); text-decoration-color: currentColor; }
-.contact .sep { color: var(--ink-25); }
+.contact .sep { display: none; }
+/* touch screens: every address is a full-width row at least 44px tall (Apple's minimum for a tap target), with no gap between rows so the targets sit edge to edge without overlapping */
+@media (pointer: coarse), (max-width: 700px) {
+  .contact { flex-direction: column; align-items: stretch; gap: 0; margin-top: 8px; }
+  .contact a { display: flex; align-items: center; min-height: 44px; }
+  .top .save { min-height: 44px; }
+}
 .summary { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--ink-80); line-height: 1.65; max-width: 720px; margin: 18px 0 0; }
 
 .section { margin-top: 40px; }

@@ -6,8 +6,8 @@ export const resume = {
   contact: [
     { label: "mnaeemhq@gmail.com", href: "mailto:mnaeemhq@gmail.com" },
     { label: "+92 321 888 6461", href: "https://wa.me/923218886461" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
-    { label: "Portfolio", href: "https://mnadesigns.github.io/stories/" },
+    { label: "linkedin.com/in/muhammadnaeem88", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
+    { label: "mnadesigns.github.io/stories", href: "https://mnadesigns.github.io/stories/" },
   ],
   summary:
     "Lead Product Designer with 10+ years across SaaS, fintech, and health, working remotely with teams in Canada, the UK, and Australia. Builds design systems from scratch, then ships them as production UI using AI-augmented workflows (Claude Code, Cursor, Figma MCP).",
@@ -65,7 +65,7 @@ export const resume = {
   ],
   consultingIntro: "Independent product design consulting for clients in the US, Germany, and Australia.",
   consulting: [
-    { name: "VYNO", kind: "Mobility app", desc: "Designed a carpooling app around the three things stopping people from booking: trust, discoverability, and ride clarity. Introduced verified profiles, smart ride filters, and QR-based ride confirmations to raise booking confidence and reduce missed connections." },
+    { name: "Pumba", kind: "iOS app", desc: "Redesigned the iOS app of a real-time street parking finder for Tel Aviv drivers, in English and Hebrew (right to left). Built from native iOS components, with a clear flow from sign-in to a free space and distinct states for sensor-verified, unconfirmed and full parking." },
     { name: "Applied Electronics", kind: "Enterprise website", desc: "Redesigned the web experience for an audio-visual and broadcast technology integrator. Organic search visibility grew about 50%, branded search volume rose from 12.8K to 20K+ (57%), and mobile bounce rate fell about 46% through improved responsiveness and speed." },
     { name: "Zero Gaspi", kind: "iOS & Android", desc: "Designed native iOS and Android apps for an anti-food-waste marketplace connecting food merchants with consumers, who buy unsold food as \"Surprise Baskets\" at about 30 to 35% of the original price." },
   ],
