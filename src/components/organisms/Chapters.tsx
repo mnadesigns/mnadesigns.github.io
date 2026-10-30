@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { adBeats, chapters, site, clientCopy } from "@/data/site";
+import { adBeats, chapters, clientCopy } from "@/data/site";
 import { Btn, BtnCircle } from "@/components/atoms/Buttons";
 import { Reveal } from "@/components/atoms/Reveal";
 import type { FilmClip, FilmItem, FilmSlide } from "@/types/film";
@@ -519,7 +519,7 @@ export function Chapters() {
               <h2 className="h2">Selected <em>work</em></h2>
               <p className="sec-sub">Three pieces of work, from a tax-credit SaaS to a multi-platform design system.</p>
             </div>
-            <BtnCircle href={site.behance} label="On Behance" />
+            <BtnCircle href="/stories/" label="See all work" />
           </div>
         </Reveal>
       </div>

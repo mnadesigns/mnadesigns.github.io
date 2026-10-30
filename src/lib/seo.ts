@@ -2,7 +2,7 @@ import { site } from "@/data/site";
 
 export const SITE_URL = "https://mnadesigns.github.io";
 export const abs = (path: string) => SITE_URL + path;
-export const sameAs = [site.linkedin, site.behance, site.medium];
+export const sameAs = [site.linkedin, site.medium];
 
 // a search result shows about 155 characters: end at a sentence, else a word, and never cut mid-word
 export function clip(text: string | undefined, max = 155): string | undefined {

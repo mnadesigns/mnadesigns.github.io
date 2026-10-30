@@ -100,11 +100,6 @@ export const storiesIndex = {
   footer: "More <em>coming.</em>",
 };
 
-export const pods = [
-  { channel: "Podcast Name", title: "Episode title goes here", date: "Month 2026" },
-  { channel: "Talk Name", title: "Talk title goes here", date: "Month 2025" },
-];
-
 export const stories = [
   { slug: "sred-io", name: "SRED.io", co: "SRED.io · 2026 – Present", line: "The platform's first design system, then more than 17 microservices.", feature: true },
   { slug: "quodarca", name: "QuodArca", co: "EISST International · 2023 – 2025", line: "Six high-security, privacy-first product lines, with a multi-platform design system and full WCAG 2.1 AA compliance.", feature: true },

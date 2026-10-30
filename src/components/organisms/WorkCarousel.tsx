@@ -114,7 +114,7 @@ export function WorkCarousel({ slides, label = "Design system views", top }: { s
       <p className="wk-car-count" aria-hidden="true">{i + 1} / {slides.length}</p>
     </div>
 
-    {/* a small picture of every view under the stage, the current one ringed, as on Behance */}
+    {/* a small picture of every view under the stage, the current one ringed */}
     <div ref={thumbs} className="wk-car-thumbs" role="group" aria-label={`${label}: thumbnails`}>
       {slides.map((s, n) => (
         <button key={s.src} type="button" className={n === i ? "is-on" : undefined} onClick={() => go(n)} aria-label={`View ${n + 1}: ${s.alt}`} aria-current={n === i ? "true" : undefined}>

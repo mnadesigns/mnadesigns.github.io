@@ -22,7 +22,6 @@ export function Doors() {
           <Link href="/resume/">Resume</Link>
           <a href={`mailto:${site.email}`}>Email</a>
           <a href={site.linkedin} {...extProps(site.linkedin)}>LinkedIn</a>
-          <a href={site.behance} {...extProps(site.behance)}>Behance</a>
           <a href={site.medium} {...extProps(site.medium)}>Medium</a>
         </span>
       </footer>

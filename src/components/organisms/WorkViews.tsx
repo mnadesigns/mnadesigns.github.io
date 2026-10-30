@@ -7,7 +7,7 @@ import { ToolIcon } from "@/components/atoms/ToolIcons";
 import type { WorkAnnotated as Annotated, WorkBand as Band, WorkBeforeAfter as BeforeAfter, WorkChapter as Chapter, WorkFigures as Figures, WorkIntro as Intro, WorkLoop as Loop, WorkPan as Pan, WorkPairs as Pairs, WorkSitemap as Sitemap } from "@/data/workDetails";
 import { responsive } from "@/lib/responsive";
 
-// The set pieces of a case study page, built from the work's own facts and screens (inspired by Hyperactive's Behance cases and the Conceptzilla shots):
+// The set pieces of a case study page, built from the work's own facts and screens:
 // an opening statement, a map of where the screens sit in the product, and the design to code loop. Everything arrives by moving, decelerating (no fades from nothing).
 const EASE = [0.22, 1, 0.36, 1] as const;
 const rise = (i = 0, calm = false) => (calm ? {} : { initial: { y: 22, opacity: 0 }, whileInView: { y: 0, opacity: 1 }, viewport: { once: true, margin: "-8% 0px" }, transition: { duration: 0.7, ease: EASE, delay: i * 0.07 } });

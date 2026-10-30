@@ -6,4 +6,4 @@ The content of this website is not covered by the MIT license in `LICENSE`. That
 
 The MIT license in `LICENSE` applies only to the unmodified scaffold code taken from the open-source ai-website-cloner-template, as that license requires.
 
-To ask for permission or report a copy, email me.naeem88@gmail.com.
+To ask for permission or report a copy, email mnaeemhq@gmail.com.

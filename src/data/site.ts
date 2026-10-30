@@ -5,7 +5,7 @@ import type { ToolIconName } from "@/components/atoms/ToolIcons";
 export const clientCopy = {
   role: "Product Designer",
   name: "And more.",
-  sub: "More work, from a founder's rough idea to shipped screens. The full case studies are on Behance.",
+  sub: "More work, from a founder's rough idea to shipped screens.",
   stats: [
     { v: "Web + apps", l: "What I design" },
     { v: "1:1", l: "Straight with the founder" },
@@ -16,18 +16,10 @@ export const site = {
   name: "Muhammad Naeem",
   role: "Lead Product Designer · Design Engineer · AI-Augmented Design",
   logo: "MNA",
-  email: "me.naeem88@gmail.com",
-  behance: "https://www.behance.net/muhammadnaeem",
+  email: "mnaeemhq@gmail.com",
   linkedin: "https://www.linkedin.com/in/muhammadnaeem88/",
   medium: "https://medium.com/@me.naeem88",
 };
-
-// Social links shown beside the hero button. TODO: replace the Upwork link with your own profile URL.
-export const socials = [
-  { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
-  { key: "upwork", label: "Upwork", href: "https://www.upwork.com/" },
-  { key: "medium", label: "Medium", href: "https://medium.com/@me.naeem88" },
-] as const;
 
 // "Consulting" is not offered (open to full-time and long-term contract roles), so it is not in the nav.
 export const navLinks = [

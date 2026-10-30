@@ -49,7 +49,7 @@
 .sti-film.has-ctl:focus-within .film-pp, .sti-film.has-ctl:focus-within .film-total,
 .sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-pp, .sti-film.has-ctl:has(.film-pp[aria-label="Play"]) .film-total { opacity: 1; }
 
-/* the overview as copy: the story on the left, the facts of the project on the right (the way case-study pages on Behance and Dribbble set it) */
+/* the overview as copy: the story on the left, the facts of the project on the right (the way case-study pages usually set it) */
 .wk-copy { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 48px clamp(40px, 7vw, 112px); padding: clamp(32px, 5vw, 72px) 0; }
 .wk-copy-label { margin: 0 0 20px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand); }
 .wk-copy-lead { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: var(--fs-display-md); line-height: 1; color: var(--heading); text-wrap: balance; }

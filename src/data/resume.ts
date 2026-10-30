@@ -4,7 +4,7 @@ export const resume = {
   title: "Lead Product Designer · Design Engineer · AI-Augmented Design",
   pdf: "/Muhammad-Naeem-Resume.pdf",
   contact: [
-    { label: "me.naeem88@gmail.com", href: "mailto:me.naeem88@gmail.com" },
+    { label: "mnaeemhq@gmail.com", href: "mailto:mnaeemhq@gmail.com" },
     { label: "+92 321 888 6461", href: "https://wa.me/923218886461" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/muhammadnaeem88/" },
     { label: "Portfolio", href: "https://mnadesigns.github.io/stories/" },
